@@ -1,6 +1,6 @@
 ---
 title:  "Linux部署dotnetcore记录"
-tags : [netcore,daemon]
+tags : [NETCORE,daemon]
 enabled : true
 ---
 ## Daemon
