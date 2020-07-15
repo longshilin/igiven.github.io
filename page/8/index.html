@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一个不专业的程序员,写着不专业的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IGiven">
+<meta property="og:url" content="http://www.igiven.com/page/8/index.html">
+<meta property="og:site_name" content="IGiven">
+<meta property="og:description" content="一个不专业的程序员,写着不专业的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="zhepama">
+<meta property="article:tag" content="UNITY">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="游戏开发">
+<meta property="article:tag" content="NETCORE">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.igiven.com/page/8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>IGiven</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">IGiven</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不专业的程序员,写着不专业的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-08-11-ugui-eventmanager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-08-11-ugui-eventmanager/" class="post-title-link" itemprop="url">一次精通 eventmanager</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-11 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-11T08:00:00+08:00">2019-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="OnMouse事件"><a href="#OnMouse事件" class="headerlink" title="OnMouse事件"></a>OnMouse事件</h1><p>我们先来看看eventmanager之前unity处理事件的方法,首当其冲的就是MonoBehavior上的事件回调，可以参看<a href="https://link.zhihu.com/?target=https%3A//docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a>文档。这是一系列的OnMouse开头的回调函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OnMouseDown</span><br><span class="line">OnMouseDrag</span><br><span class="line">OnMouseEnter</span><br><span class="line">OnMouseExit</span><br><span class="line">OnMouseOver</span><br><span class="line">OnMouseUp</span><br></pre></td></tr></table></figure>
+
+<p>这个处理方式有以下几个特点：</p>
+<ul>
+<li>MonoBehavior所在的GameObject需要有Collider碰撞组件，并且Physics.queriesHitTriggers设置为True，这个在Edit -&gt; Physics Settings -&gt; Physics or Physics2D中设置。</li>
+<li>或者MonoBehavior所在的GameObject存在GUIElement。</li>
+<li>OnMouse处理函数可以是协程。</li>
+<li>GameObject所有MonoBehavior实现OnMouse的函数都会调用。</li>
+<li>Collider或GUIElement的层级顺序，会遮挡事件的传递。</li>
+</ul>
+<p>按照官方的解释，这是GUI事件的一部分，参看<a href="https://link.zhihu.com/?target=https%3A//docs.unity3d.com/Manual/EventFunctions.html">EventFunctions</a>。设计的初衷也是为了GUI服务的。参看<a href="https://link.zhihu.com/?target=https%3A//docs.unity3d.com/Manual/ExecutionOrder.html">ExecutionOrder</a>最后的unity执行流程图，会发现OnMouse事件是一个独立的Input Event。</p>
+<p><img src="../../assets/images/2019-08-11-ugui-eventmanager/20171106145111819.png" alt="img"></p>
+<p>可以看到，OnMouse事件在，Physics事件之后，Update之前，记住这个顺序，后面会用到。并且，这是引擎本身回调的，就引擎使用而言可以看成是，消息驱动。至于引擎的实现，可是轮询也可以是消息驱动。</p>
+<h4 id="在Update中輪詢Input物件"><a href="#在Update中輪詢Input物件" class="headerlink" title="在Update中輪詢Input物件"></a>在Update中輪詢Input物件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class ExampleClass : MonoBehaviour</span><br><span class="line">&#123; </span><br><span class="line">    public void Update() </span><br><span class="line">    &#123; </span><br><span class="line">       if (Input.GetButtonDown(&quot;Fire1&quot;)) </span><br><span class="line">       &#123; </span><br><span class="line">            Debug.Log(Input.mousePosition); </span><br><span class="line">       &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是官方的例子，Input拥有各种输入设备的数据信息。每一帧不断的检测，查看有没有需要处理的输入信息，利用GameObject本身的层级顺序来控制Update的调用顺序，从而控制了Input的处理顺序。</p>
+<p>Input的信息由引擎自己设置的，明显Unity需要实现不同平台的事件处理，然后对Input进行设置。另外有一个InputManager面板用来配置Input相关属性的，在Edit -&gt; Physics Settings -&gt; Input中。</p>
+<p>由前面的执行流程图可知，OnMouse事件会在Update之前调用，当然我们也可以在OnMouse中使用Input，这样就变成了消息驱动，而不是轮询了。但这样的缺点是，事件必须由touch或pointer碰撞触发，比如键盘或控制器按钮的事件就没有办法捕获了。</p>
+<h1 id="EventSystem"><a href="#EventSystem" class="headerlink" title="EventSystem"></a>EventSystem</h1><p>EventSystem组件主要负责处理输入、射线投射以及发送事件。一个场景中只能有一个EventSystem组件，并且需要BaseInputModule类型组件的协助才能工作。EventSystem在一开始的时候会把自己所属对象下的BaseInputModule类型组件加到一个内部列表，并且在每个Update周期通过接口UpdateModules接口调用这些基本输入模块的UpdateModule接口，然后BaseInputModule会在UpdateModule接口中将自己的状态修改成’Updated’，之后BaseInputModule的Process接口才会被调用。</p>
+<p>BaseInputModule是一个基类模块，负责发送输入事件（点击、拖拽、选中等）到具体对象。EventSystem下的所有输入模块都必须继承自BaseInputModule组件。StandaloneInputModule和TouchInputModule组件是系统提供的标准输入模块和触摸输入模块，我们可以通过继承BaseInputModule实现自己的输入模块。</p>
+<p>BaseRaycaster也是一个基类，前面说的输入模块要检测到鼠标事件必须有射线投射组件才能确定目标对象。系统实现的射线投射类组件有PhysicsRaycaster, Physics2DRaycaster, GraphicRaycaster。这个模块也是可以自己继承BaseRaycaster实现个性化定制。</p>
+<p> <strong>总的来说，EventSystem负责管理，BaseInputModule负责输入，BaseRaycaster负责确定目标对象，目标对象负责接收事件并处理，然后一个完整的事件系统就有了。</strong></p>
+<h1 id="EventSystem與OnMouse的區別"><a href="#EventSystem與OnMouse的區別" class="headerlink" title="EventSystem與OnMouse的區別"></a>EventSystem與OnMouse的區別</h1><ul>
+<li><p>OnMouse 会先于 EventSystem 触发。因为EventSystem的源码显示，其在Update中去轮询检测处理Input的输入。而OnMouse事件先于Update调用。</p>
+</li>
+<li><p>OnMouse脚本需要在同一个GameObject上挂载Collider才能检测。EventSystem的脚本会根据子节点的Collider来触发(平行节点不行)。</p>
+</li>
+<li><p>Rigidbody有个特点，会把子节点所有的Collider统一检测和处理。也就是说，OnMouse脚本与RigidBody在一起就可以检测所有的子节点Collider，而不再需要同级的Collider。而EventSystem的脚本则不依赖于Rigidbody，都可以检测子节点的Collider。</p>
+</li>
+<li><p>OnMouse依赖于Tag为MainCamera相机的Culling Mask来过滤射线。EventSystem则是依赖挂载Physics Raycaster的相机。</p>
+</li>
+</ul>
+<p>另外，当在有Collider的子节点都挂载OnMouse或EventSystem事件的时候，只会触发一次事件。但在同一个GameObject上挂载多个脚本，就会触发多次。</p>
+<h1 id="Unity-Raycasters-和事件处理"><a href="#Unity-Raycasters-和事件处理" class="headerlink" title="Unity Raycasters 和事件处理"></a>Unity Raycasters 和事件处理</h1><p>Raycasters 用来检测当前事件发送给哪个对象，检测原理就是 Raycast。当给定一个屏幕坐标系中的位置，Raycasters 就会利用射线检测寻找潜在的对象，并返回一个离当前屏幕最近的对象。</p>
+<p>在 Unity Raycasters 中有三种类型的 Raycasters:</p>
+<ul>
+<li>Graphic Raycaster - 存在于 Canvas 下，用于检测 Canvas 中所有的物体</li>
+<li>Physics 2D Raycaster - 用于检测 2D 物体</li>
+<li>Physics Raycaster - 用于检测 3D 物体</li>
+</ul>
+<p>接下来，就来分析一下各个类型 Raycaster 的源码来看看其的工作流程。</p>
+<p>Raycast 在 Event System 流程中所处的位置大致如下图:</p>
+<p><img src="../../assets/images/2019-08-11-ugui-eventmanager/unity_event_system_raycaster.png" alt="unity_event_system_raycaster.png"></p>
+<h3 id="unity的事件处理"><a href="#unity的事件处理" class="headerlink" title="unity的事件处理"></a>unity的事件处理</h3><p>当 Event System 处理输入事件并找到合适的接收者，将该接收者作为参数执行 ExecuteEvents 类中的 <code>Execute</code> 或 <code>ExecuteHierarchy</code> 方法；如果此时该接收对象 GameObject 绑定了 EventTrigger 组件，由于 EventTrigger 类实现了所有常用的 UI 事件接口(即实现了 <code>IEventSystemHandler</code> 接口)，因此会执行 EventTrigger 类中相应事件接口对应的方法，转而执行 EventTrigger 类的 <code>Execute</code> 方法，最终回调在编辑器中设定的方法。</p>
+<p>所以如果当一个点击事件被触发,首先会拿到射线检测返回的gameobject，然后搜索当前的<strong>gameobejct以及其父节点</strong>上面是否有实现了IPointerDownHandler的接口的控件，如果有实现了的就把newPressed赋值为这个控件的gameobject，如果没有，就去搜索实现了IPointerClickHandler这个接口的控件，如果没有在自身上找到的话，会依次地向父节点层层搜索，直到找到为止，然后依然是把newPressed赋值为这个控件的gameobject。接着会按照类似的方式去搜索自身以及父节点上是否有实现了IDragHandler的组件，如果有的话紧接着便会去触发OnPointerDown和OnDrag方法。</p>
+<p>当鼠标按下并抬起的时候，首先会触发IPointerUpHandler接口中的函数OnPointerUp()，然后会再次搜索当前gameobject以及其父节点上是否有实现了IPointerClickHandler接口的控件，如果有的的话，会和之前存下来的newPressd进行比较，看两者是否为同一个gameobject。如果两者为同一个gameobject的话就会触发Click事件。</p>
+<p>因此我们需要注意，如果一个物体没有父节点的话，那么只实现IPointerClickHandler接口便是可以接收到点击事件的。如果他有父节点，父节点挂载的脚本也是只实现IPointerClickHandler接口的话，点击事件也是可以接收到的。但是如果父节点实现了IPointerDownHandler和IPointerClickHandler接口，子节点只实现IPointerClickHandler接口的话，两者便会都接收不到点击事件，需要子节点也实现IPointerDownHandler这个接口才行。</p>
+<p><img src="../../assets/images/2019-08-11-ugui-eventmanager/unity_event_trigger_2.jpeg" alt="unity_event_trigger_2.jpeg"></p>
+<p><strong>事件透传</strong></p>
+<p>如果事件被接收后,就不会再被父节点的监听处理,如果需要,则得使用message手动触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line">using UnityEngine.EventSystems;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line"> </span><br><span class="line">public class Test : MonoBehaviour,IPointerClickHandler ,IPointerDownHandler,IPointerUpHandler</span><br><span class="line">&#123; </span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;监听按下</span><br><span class="line">    public void OnPointerDown(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        PassEvent(eventData,ExecuteEvents.pointerDownHandler);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;监听抬起</span><br><span class="line">    public void OnPointerUp(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        PassEvent(eventData,ExecuteEvents.pointerUpHandler);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;监听点击</span><br><span class="line">    public void OnPointerClick(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        PassEvent(eventData,ExecuteEvents.submitHandler);</span><br><span class="line">        PassEvent(eventData,ExecuteEvents.pointerClickHandler);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;把事件透下去</span><br><span class="line">    public void  PassEvent&lt;T&gt;(PointerEventData data,ExecuteEvents.EventFunction&lt;T&gt; function)</span><br><span class="line">        where T : IEventSystemHandler</span><br><span class="line">    &#123;</span><br><span class="line">        List&lt;RaycastResult&gt; results &#x3D; new List&lt;RaycastResult&gt;();</span><br><span class="line">        EventSystem.current.RaycastAll(data, results); </span><br><span class="line">        GameObject current &#x3D; data.pointerCurrentRaycast.gameObject ;</span><br><span class="line">        for(int i &#x3D;0; i&lt; results.Count;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(current!&#x3D; results[i].gameObject)</span><br><span class="line">            &#123;</span><br><span class="line">                ExecuteEvents.Execute(results[i].gameObject, data,function);</span><br><span class="line">                &#x2F;&#x2F;RaycastAll后ugui会自己排序，如果你只想响应透下去的最近的一个响应，这里ExecuteEvents.Execute后直接break就行。</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>事件忽略</strong></p>
+<p>如果需要当前节点及子节点都不响应UI事件</p>
+<ul>
+<li>勾选Raycast Targe </li>
+<li>在当前节点上添加一个组件CanvasGroup，然后取消其Interactable和Blocks Raycasts的勾选</li>
+<li>添加脚本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line">public class TouchIgnore : MonoBehaviour, ICanvasRaycastFilter</span><br><span class="line">&#123;</span><br><span class="line">	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)</span><br><span class="line">	&#123;</span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ugui事件和射线穿透的问题</strong></p>
+<p>UGUI的时候遇到了鼠标穿透的问题，就是说在UGUI和3D场景混合的情况下，点击UI区域同时也会 触发3D中物体的鼠标事件。比如下图中</p>
+<p><img src="../../assets/images/2019-08-11-ugui-eventmanager/111933063635939.png" alt="img"></p>
+<p>，EventSystem用做UI的事件处理，射线检测用做非UI碰撞的判断，但需要手动添加Collider。EventSystem使用了，GraphicRaycaster组件来检测UI元素的事件，其底层还是使用了射线来检测碰撞的。</p>
+<p>虽然UI组件勾选Raycast Target能够按照层级关系阻挡穿透，但其阻挡的是UI组件之间的射线穿透。GraphicRaycaster的源码中有 <code>var foundGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);</code>只会判断Graphic对象，这是UI元素的父类。</p>
+<p>那么，手动的射线就会有穿透UI的问题，所以我们需要一个能判断UI元素被点击的需求，看代码封装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Whether touch down or mouse button down over UI GameObject.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static bool IsClickDownOverUI()</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonDown(0))</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Began)</span><br><span class="line">      #endif</span><br><span class="line">      &#123;</span><br><span class="line">          #if UNITY_EDITOR</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">          #else</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">          #endif</span><br><span class="line">          &#123;</span><br><span class="line">              return true;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return false;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Whether touch up or mouse button up over UI GameObject.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static bool IsClickUpOverUI()</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonUp(0))</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Ended)</span><br><span class="line">      #endif</span><br><span class="line">      &#123;</span><br><span class="line">          #if UNITY_EDITOR</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">          #else</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">          #endif</span><br><span class="line">          &#123;</span><br><span class="line">              return true;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return false;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里给出了click down和up的分别判断。</li>
+<li>封装了鼠标和触摸的判断。</li>
+<li>函数返回true表明UI元素被点中。</li>
+</ul>
+<p>原理是，根据屏幕的点击，手动发射一条射线，然后获取碰撞的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Raycast a ray from touch up or mouse button up and test whether hit transform,</span><br><span class="line">  &#x2F;&#x2F;&#x2F; if hit transform return it or return null.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; [isCheckHitUI] Whether check ray hit ui transform,</span><br><span class="line">  &#x2F;&#x2F;&#x2F; if hit ui just return null.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static Transform Raycast(bool isCheckHitUI &#x3D; true)</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonUp(0))</span><br><span class="line">      &#123;</span><br><span class="line">          if (isCheckHitUI)</span><br><span class="line">          &#123;</span><br><span class="line">              if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">              &#123;</span><br><span class="line">                  return null;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Ended)</span><br><span class="line">      &#123;</span><br><span class="line">          if (isCheckHitUI)</span><br><span class="line">          &#123;</span><br><span class="line">              if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">              &#123;</span><br><span class="line">                  return null;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.GetTouch(0).position);</span><br><span class="line">      #endif</span><br><span class="line"></span><br><span class="line">          RaycastHit hit;</span><br><span class="line"></span><br><span class="line">          if (Physics.Raycast(ray, out hit))</span><br><span class="line">          &#123;</span><br><span class="line">              &#x2F;&#x2F; or hit.collider.transform;</span><br><span class="line">              return hit.transform; </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return null;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>isCheckHitUI 表示UI是否会阻挡射线的选择，点中UI直接返回null。</li>
+<li>Camera.main 代表的是拥有Tag MainCamera的Camera。</li>
+<li>封装了鼠标和触摸的操作。</li>
+<li>射线点中了带有Collider的非UI元素，就会返回其Transform。</li>
+</ul>
+<p>我们知道EventSystem也是可以处理Physics元素的，那么我们就可以放弃手动Raycast，转而让EventSystem统一处理。参见下方的eventsystem 处理Physics</p>
+<p><strong>事件和handler的连接触发方式</strong></p>
+<ol>
+<li><p>对于某些ui组件，可以直接设置其对自己产生的事件的handler，如button的onpointerclick</p>
+</li>
+<li><p>对于任何ui组件，都可以使用eventtrigger这个component，这个trigger放置在产生事件的UI组件上，里面包含了一个事件的类型，以及这个类型关联的处理函数，处理函数可以使用两种函数参数，一种是使用int string简单类型，一种是使用BaseEventData类型，因为当event发生时，会跟随者把这个事件包装成一个PointerEventData类型的参数送进来，里面包含ui事件的详细信息，包括鼠标在哪，而对于前一种简单类型，在编辑器上可以填写当事件发生时传什么参数，这就好比qt的signal和slot连接。</p>
+</li>
+<li><p>强制让某个事件发生在某个handler上（也就是强制某个handler执行）：调用ExecuteEvents.Execute&lt;<strong>ICustomMessageTarget</strong>&gt;(target, null, (x,y)=&gt;x.Message1());</p>
+<p>这个调用将执行target身上所有继承 了ICustomMessageTarget接口的mono的Message1函数，个人认为这个和给target发送Message1 的sendmessage没什么区别，可能是我还没有立即好这个接口。</p>
+</li>
+</ol>
+<p><strong>自定义事件处理</strong></p>
+<p>建立一個 Script，繼承 Event Interfaces，這裡是IPointerDownHandler(點下事件)，<a href="http://docs.unity3d.com/Manual/SupportedEvents.html" target="_blank" rel="noopener">看更多 Event 請點我</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.EventSystems;</span><br><span class="line"> </span><br><span class="line">public class EventTest : MonoBehaviour, IPointerDownHandler</span><br><span class="line">&#123;</span><br><span class="line">    public void OnPointerDown(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        print(gameObject.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Message-System（改进的消息系统）"><a href="#Message-System（改进的消息系统）" class="headerlink" title="Message System（改进的消息系统）"></a>Message System（改进的消息系统）</h1><h3 id="传统方式进行-Message-通信"><a href="#传统方式进行-Message-通信" class="headerlink" title="传统方式进行 Message 通信"></a>传统方式进行 Message 通信</h3><p>传统消息通信，通常我们会使用 GameObject 类中的 <code>SendMessage</code>、<code>SendMessageUpwards</code> 和 <code>BroadcastMessage</code> 方法</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">SendMessage</th>
+<th align="center">SendMessageUpwards</th>
+<th align="center">BroadcastMessage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">自身节点</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">兄弟节点</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="center">父/祖先节点</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="center">子/孙节点</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+</tbody></table>
+<h3 id="Messaging-System"><a href="#Messaging-System" class="headerlink" title="Messaging System"></a>Messaging System</h3><p>在 UGUI 的 Event System 中，所有的事件通信都是用了 Messaging System 来实现，它也解决了传统方式进行 Message 通信中可能会遇到的一些问题。下面就来让我们好好看看这套 Messaging System。</p>
+<p>首先，要想让 Component 能够从 Messaging System 接收消息，Component 要实现 <code>IEventSystemHandler</code> 这个接口。<code>IPointerDownHandler</code>等都继承了<code>IEventSystemHandler</code> 接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface ICustomMessageTarget : IEventSystemHandler</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; functions that can be called via the messaging system</span><br><span class="line">    void Message1();</span><br><span class="line">    void Message2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现这个接口 , 把这个脚本挂在某个物体上，这里假设为物体AAA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class CustomMessageTarget : MonoBehaviour, ICustomMessageTarget</span><br><span class="line">&#123;</span><br><span class="line">    public void Message1()</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log (&quot;Message 1 received&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Message2()</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log (&quot;Message 2 received&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在任何脚本中使用ExecuteEvents静态类发送Message，来执行接口中定义的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecuteEvents.Execute&lt;ICustomMessageTarget&gt;(target, null, (x,y)&#x3D;&gt;x.Message1());</span><br></pre></td></tr></table></figure>
+
+<p>Excute泛型方法，有3个参数，第一个参数是发送message的gameobject对象，只有当对象上有<code>IEventSystemHandler</code>实现类的时候才可以，这个例子中自然就是AAA物体。</p>
+<p>ExecuteEvents静态类还有其他方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EventSystems.ExecuteEvents.CanHandleEvent    判断给定的gameobejct是否能处理这个事件</span><br><span class="line">EventSystems.ExecuteEvents.Execute     执行事件</span><br><span class="line">EventSystems.ExecuteEvents.ExecuteHierarchy  是递归寻找适合的gameobject，并执行事件 </span><br><span class="line">EventSystems.ExecuteEvents.GetEventHandler   </span><br><span class="line">EventSystems.ExecuteEvents.ValidateEventData</span><br></pre></td></tr></table></figure>
+
+<h1 id="eventsystem-处理Physics"><a href="#eventsystem-处理Physics" class="headerlink" title="eventsystem 处理Physics"></a>eventsystem 处理Physics</h1><p>首先，我们看一个官方文档的说明 <a href="https://link.zhihu.com/?target=https%3A//docs.unity3d.com/Manual/Raycasters.html">Raycasters</a>。</p>
+<blockquote>
+<p>If multiple Raycasters are used then they will all have casting happen against them and the results will be sorted based on distance to the elements.</p>
+</blockquote>
+<p>当多个Raycaster被使用的时候，结果会按照元素之间的距离排序，然后事件就会按照这个顺序被传递。</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a><strong>第一步</strong></h2><p><img src="../../assets/images/2019-08-11-ugui-eventmanager/v2-733f4cd159b935aeb26518e97b902a7d_hd.jpg" alt="img"></p>
+<p>在相机上添加Physics2DRaycaster，我这里只需要对Physics2D检测，如果是3D就用Physics3DRaycaster。Physics Raycaster 依赖一个相机，如果没有会自动添加。我挂载在相机上，射线检测就会依赖这个相机。</p>
+<p>这里我用在GameCamera上面，当然也可以放在UICamera上面，Physics Raycaster挂载在哪个相机上面，射线就依赖这个相机的Culling Mask。</p>
+<p>另外需要注意的是，Physics Raycaster所在的相机层级，也就是Depth，会影响到事件传递的顺序。比如，UI Camera层级高于Game Camera，就会永远先出发UI上的事件。同样，OnMouse事件会默认依赖Main Camera的层级。</p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a><strong>第二步</strong></h2><p>给需要碰撞检测的GameObject，添加Collider和EventSystem的事件处理回调接口。注意GameObject的Layer也要与Camera和Raycaster一致，才能正确被检测到。</p>
+<p><img src="../../assets/images/2019-08-11-ugui-eventmanager/v2-3c1713c6226906982501aa7c4dd8252d_hd.jpg" alt="img"></p>
+<p>事件接口实现脚本(图中的Test)需要Collider，事件才能正确回调，并且GameObject和相机的距离决定了Collider的层级，也就是事件阻挡关系。</p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a><strong>第三步</strong></h2><p>这样一来，EventSystem的SupportEvents的接口全部被应用到了Physics上面。也就不再需要自己手动去调用射线去检测Physics碰撞了。那么，还隐含着一个事情就是，EventSystem的IsPointerOverGameObject()就无法在判断对UI的点击了。因为现在点击到Physics也会让这个函数返回True。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-08-10-powershell-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2019-08-10-powershell-command/" class="post-title-link" itemprop="url">powershell 常用命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-10 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-10T08:00:00+08:00">2019-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li><p>Get-PSDrive  Windows PowerShell 驱动器是一个数据存储位置，你可以像访问 Windows PowerShell 中的文件系统驱动器那样访问它。</p>
+</li>
+<li><p>Get-Alias 和   ls Alias:(驱动器)     列出所有alias</p>
+</li>
+<li><p>ls Env:(驱动器)    列出所有的环境变量</p>
+</li>
+<li><p>ls Variable:(驱动器) 和 Get-Variable 列出所有的变量</p>
+</li>
+<li><p>ls Function:(驱动器)  列出所有的函数</p>
+</li>
+<li><p>get-command   查看命令信息 可以查看某个命令的path  get-command mysqldump</p>
+</li>
+<li><p>invoke-item  向windows桌面双击操作一样打开某个文件或者目录</p>
+</li>
+<li><p>$env:path -split “;”  以列表形式列出所有path</p>
+</li>
+<li><p>ls env:    列出env驱动器中的内容</p>
+</li>
+<li><pre><code class="powershell"> <span class="variable">$path</span> = [<span class="type">environment</span>]::GetEnvironmentvariable(<span class="string">"path"</span>,<span class="string">"user"</span>)
+ [<span class="type">environment</span>]::SetEnvironmentvariable(<span class="string">"Path"</span>, <span class="variable">$path</span>+<span class="string">";c:\powershellscript"</span>, <span class="string">"User"</span>)
+&lt;!--￼<span class="number">0</span>--&gt;
+</code></pre>
+</li>
+</ul>
+<p>执行一个ps文件:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NoError</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ps1File = <span class="string">@"C:\my script folder\script.ps1"</span>;</span><br><span class="line">    <span class="keyword">var</span> startInfo = <span class="keyword">new</span> ProcessStartInfo()</span><br><span class="line">    &#123;</span><br><span class="line">        FileName = <span class="string">"powershell.exe"</span>,</span><br><span class="line">        Arguments = <span class="string">$"-NoProfile -ExecutionPolicy unrestricted -file \"<span class="subst">&#123;ps1File&#125;</span>\""</span>,</span><br><span class="line">        UseShellExecute = <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">    Process.Start(startInfo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先编码执行一个复杂的命令:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Base64EncodedCommand</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> psCommmand = <span class="string">@"echo ""quoted value"" </span></span><br><span class="line"><span class="string">    echo ""Second Line""</span></span><br><span class="line"><span class="string">    pause"</span>;</span><br><span class="line">    <span class="keyword">var</span> psCommandBytes = System.Text.Encoding.Unicode.GetBytes(psCommmand);</span><br><span class="line">    <span class="keyword">var</span> psCommandBase64 = Convert.ToBase64String(psCommandBytes);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> startInfo = <span class="keyword">new</span> ProcessStartInfo()</span><br><span class="line">    &#123;</span><br><span class="line">        FileName = <span class="string">"powershell.exe"</span>,</span><br><span class="line">        Arguments = <span class="string">$"-NoProfile -ExecutionPolicy unrestricted -EncodedCommand <span class="subst">&#123;psCommandBase64&#125;</span>"</span>,</span><br><span class="line">        UseShellExecute = <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">    Process.Start(startInfo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用c-类调用powershell-命令"><a href="#使用c-类调用powershell-命令" class="headerlink" title="使用c#类调用powershell 命令"></a>使用c#类调用powershell 命令</h3><p><img src="../../assets/images/2019-08-10-powershell-command/image.png" alt="img"></p>
+<p>接著我們在 Program.cs 檔案引用兩個命名空間如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">using System.Management.Automation;</span><br><span class="line">using System.Management.Automation.Runspaces;</span><br></pre></td></tr></table></figure>
+
+<p>大功告成，現在你可以將 PowerShell 指令整合到你的 C# 應用程式中了！ </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">using (PowerShell powershell &#x3D; PowerShell.Create())</span><br><span class="line">&#123;</span><br><span class="line">    powershell.AddScript(&quot;Get-Service | Where-Object &#123; $_.Status -eq &#39;Stopped&#39; &#125;&quot;);</span><br><span class="line"></span><br><span class="line">    foreach (PSObject result in powershell.Invoke())</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(result.Members[&quot;Name&quot;].Value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回字符窜:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">using (PowerShell powershell &#x3D; PowerShell.Create())</span><br><span class="line">&#123;</span><br><span class="line">    powershell.AddScript(&quot;Get-Service | Out-String&quot;);</span><br><span class="line"></span><br><span class="line">    foreach (string str in powershell.Invoke&lt;string&gt;())</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>捕捉错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">using (PowerShell powershell &#x3D; PowerShell.Create())</span><br><span class="line">&#123;</span><br><span class="line">    powershell.AddScript(&quot;Get-Service99&quot;);</span><br><span class="line"></span><br><span class="line">    foreach (PSObject result in powershell.Invoke())</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(result.Members[&quot;Name&quot;].Value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(&quot;執行過程中發生錯誤\n&quot;);</span><br><span class="line">    PSDataCollection&lt;ErrorRecord&gt; errors &#x3D; powershell.Streams.Error;</span><br><span class="line">    if (errors !&#x3D; null &amp;&amp; errors.Count &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        foreach (ErrorRecord err in errors)</span><br><span class="line">        &#123;</span><br><span class="line">            System.Console.WriteLine(&quot;錯誤: &#123;0&#125;&quot;, err.ToString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-08-10-ugui-RectTransform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-08-10-ugui-RectTransform/" class="post-title-link" itemprop="url">一次精通 RectTransform</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-10 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-10T08:00:00+08:00">2019-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="在編輯器中快速設定-RectTransform"><a href="#在編輯器中快速設定-RectTransform" class="headerlink" title="在編輯器中快速設定 RectTransform"></a>在編輯器中快速設定 RectTransform</h2><p>快速控制器的基本操作我們就不在這裡贅述，基本上都可以在 Unity 網站裡找到很好的教學文件與影片。</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/4B112FCB-1D5E-41FC-A19D-AA5322C52414.png" alt="img"></p>
+<h2 id="RectTransform-的控制精髓：錨點們-Anchor-Points"><a href="#RectTransform-的控制精髓：錨點們-Anchor-Points" class="headerlink" title="RectTransform 的控制精髓：錨點們 Anchor Points"></a>RectTransform 的控制精髓：錨點們 Anchor Points</h2><p>在透過快速設定器修改 RectTransform 的過程中，你會發現右上區域會隨著不同的配置出現不同的屬性設定如下圖：</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/B30BC54C-DA7C-4882-9B3C-FA194FE9ACA5.png" alt="img"></p>
+<p>Pos X 與 Left、Pos Y 與 Top、Width 與 Right、Height 與 Bottom 這四對屬性個別不會同時出現，有 Pos X 就沒有 Left，有 Width 就沒有 Right，那麼他們出現的規則是什麼呢？</p>
+<p>簡單來說其實就是：</p>
+<p>「當兩個錨點的某一維度值相等時，該維度的尺寸則是固定的（跟 Parent 尺寸無關），反之該維度的尺寸則是相對於 Parent 的尺寸而變化。」</p>
+<p>其實全部都取決於控制 <em>RectTransform</em> 型態最重要的屬性「最大與最小錨點們（Min / Max Anchors）」，而快速設定器其實也只是在幫你快速的調整這兩個錨點的值，所以只要了解這兩個設定值關係與行為，其實你已經完全掌握了 <em>RectTransform</em> ，而依照上述邏輯，透過兩個錨點所產生出的配置型態總共有四種：</p>
+<p>A. 當兩錨點 x, y 維度的值都相等時。<br>B. 當兩錨點 x 維度的值不相等、y 維度值相等時。<br>C. 當兩錨點 x 維度的值相等、y 維度值不相等時。<br>D. 當兩錨點 x, y 維度的值都不相等時。</p>
+<h3 id="A-當兩錨點-x-y-維度的值都相等時："><a href="#A-當兩錨點-x-y-維度的值都相等時：" class="headerlink" title="A. 當兩錨點 x, y 維度的值都相等時："></a>A. 當兩錨點 x, y 維度的值都相等時：</h3><p>當兩錨點 x, y 值都相等時，代表此物件的寬高尺寸都是固定值，所以我們會透過 PosX、PosY、Width 以及 Height 來定義此物件的顯示方式，PosX 與 PosY 則分別表示錨點到物件 Pivot 點的位移，而此物件的實際顯示區域則會受到 Pivot 的 x, y 值設定所影響。</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/static-anchors.png" alt="img"><br><img src="../../assets/images/2019-08-10-ugui-RectTransform/ezgif-1-eea893f81f2e.gif" alt="img"></p>
+<h3 id="B-當兩錨點-x-維度的值不相等、y-維度值相等時："><a href="#B-當兩錨點-x-維度的值不相等、y-維度值相等時：" class="headerlink" title="B. 當兩錨點 x 維度的值不相等、y 維度值相等時："></a>B. 當兩錨點 x 維度的值不相等、y 維度值相等時：</h3><p>當兩錨點 x 維度的值不相等、y 維度值相等時，代表 x 維度的尺寸會受到 Parent 的尺寸影響，在 x 維度上則是使用間距（Padding）的概念來排版，所以會用到 Left、PosY、Right 以及 Height，實際的 Width 是由 Left 與 Right 來控制。</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_x1.png" alt="img"><br><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_x.gif" alt="img"></p>
+<h3 id="C-當兩錨點-x-維度的值相等、y-維度值不相等時："><a href="#C-當兩錨點-x-維度的值相等、y-維度值不相等時：" class="headerlink" title="C. 當兩錨點 x 維度的值相等、y 維度值不相等時："></a>C. 當兩錨點 x 維度的值相等、y 維度值不相等時：</h3><p>當兩錨點 x 維度的值相等、y 維度值不相等時，代表 y 維度的尺寸會受到 Parent 的尺寸影響，在 y 維度上則是使用間距（Padding）的概念來排版，所以會用到 PosX、Top、Width 以及 Bottom，實際的 Height 是由 Top 與 Bottom 來控制。</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_y1.png" alt="img"><br><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_y.gif" alt="img"></p>
+<h3 id="D-當兩錨點-x-y-維度的值都不相等時："><a href="#D-當兩錨點-x-y-維度的值都不相等時：" class="headerlink" title="D. 當兩錨點 x, y 維度的值都不相等時："></a>D. 當兩錨點 x, y 維度的值都不相等時：</h3><p>當兩錨點 x, y 維度的值都不相等時，代表物件的寬高尺寸都會受到 Parent 的影響，完全是使用四個方向的間距來定義此物件的顯示區域 Left、Top、Right 以及 Bottom。</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_xy.png" alt="img"><br><img src="../../assets/images/2019-08-10-ugui-RectTransform/anchor_xy.gif" alt="img"></p>
+<h1 id="一些术语解释"><a href="#一些术语解释" class="headerlink" title="一些术语解释"></a>一些术语解释</h1><h3 id="pivot"><a href="#pivot" class="headerlink" title="pivot"></a>pivot</h3><p>物體自身的支點，影響物體的旋轉、縮放、位置，改變 UI Pivot 必須先開啟控制面板的 Pivot 按鈕，如下圖</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/Pivot_01.png" alt="Pivot_01">，</p>
+<p>Pivot (0.5, 0.5)<br><img src="../../assets/images/2019-08-10-ugui-RectTransform/Pivot_02.gif" alt="Pivot_02"></p>
+<p>Pivot (0, 1)<br><img src="../../assets/images/2019-08-10-ugui-RectTransform/Pivot_03.gif" alt="Pivot_03"></p>
+<p>它是一个X,Y值范围是0到1的点，这个点的会在<strong>Anchor</strong>（锚点）计算位置的时候会使用到，下面用一张图来解释<strong>Pivot</strong>点的位置</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/84177-b27df7bbe9d3c829.webp" alt="img"></p>
+<p>pivot和text的填充</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/image-20200420000104602.png" alt="image-20200420000104602"></p>
+<p>当pivot为0.5和0.5时数字的填充时以中心点向上下方向扩展rect</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/image-20200420000313192.png" alt="image-20200420000313192"></p>
+<p>一般来讲,动态改变文本,为了使其按照从上到下,可以把pivot设置在左上角  0,1</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/image-20200420000549965.png" alt="image-20200420000549965"></p>
+<p>点击上方的pivot可以切换pivot的所在位置</p>
+<p>center :rect的中心点</p>
+<p>pivot:pivot的点所在位置</p>
+<p>这同样适用于layout,下图设置成0,1.在中间位置添加panel,他会向下扩充,加上verticallayoutgroup和contentsizefitter两个组件</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/image-20200420013535477.png" alt="image-20200420013535477"></p>
+<p>设置成0.5,0.5.他会向上下扩充</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/image-20200420013708207.png" alt="image-20200420013708207"></p>
+<h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><ul>
+<li><code>position</code>世界坐标是三维的全局坐标,一般作为基准坐标</li>
+<li><code>localPosition</code> 相对于父级物体的相对位置</li>
+<li><code>anchoredPosition</code> 相对位置，但是相对的是自身的Anchor</li>
+<li><code>anchoredPosition3D</code>  相对位置，但是相对的是自身的Anchor</li>
+</ul>
+<p>关于<code>position</code>和<code>localPosition</code>，它们的值根其所属的Canvas的渲染模式有关。</p>
+<ul>
+<li><p>在Screen Space——Overlay的模式下，由于Canvas的世界尺寸与其像素尺寸在数值上相等，因此其rectTransform的position与其在屏幕空间的坐标在数值上也相等。这种模式下，要获取某个RectTransform的屏幕坐标，直接使用position就可以。</p>
+</li>
+<li><p>在Screen Space——Camera的模式和World Space下，RectTransform的渲染与摄像机有关，在获取其屏幕坐标时，需要利用canvas.worldCamera，或者transform.TransformPoint等坐标转换函数进行坐标转换。</p>
+</li>
+</ul>
+<p>关于<code>anchoredPosition</code>和<code>anchoredPositoin3D</code>都可以认为是以像素为单位。</p>
+<ul>
+<li>当锚点全部重合时，<code>anchoredPosition</code>代表的就是自身Pivot到Anchor的向量。</li>
+</ul>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/20171218185814418.png" alt=""></p>
+<ul>
+<li>当Anchor不重合时,Pivot相对于四个锚点<strong>中点</strong>的坐标</li>
+</ul>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/20171218185822581.png" alt=""></p>
+<h3 id="offsetMin-和-offsetMax"><a href="#offsetMin-和-offsetMax" class="headerlink" title="offsetMin 和 offsetMax"></a>offsetMin 和 offsetMax</h3><p><code>offsetMax</code>是<strong>RectTransform右上角</strong>相对于<strong>右上Anchor</strong>的距离；<code>offsetMin</code>是<strong>RectTransform左下角</strong>相对于<strong>左下Anchor</strong>的距离。<em>這就是為什麼 offsetMax 的值跟編輯器中 Top、Right 值剛好正負相反的原因。</em></p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/84177-3bd3ac83352a431b.webp" alt="img"></p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/84177-6feb68ae67ceaae8.webp" alt="img"></p>
+<h3 id="rect"><a href="#rect" class="headerlink" title="rect"></a>rect</h3><p>如果想要获取一个RectTransform的矩形信息，应该使用rectTransform.rect属性。</p>
+<p>rect属性同样是一个计算出来的值，但是它表示的是该rectTransform对应的矩形的相关信息。</p>
+<p>rect 的 x 和 y 返回左下角相对于pivot的距离,w 和 h 返回本身的宽高.</p>
+<p>注意:<strong>Awake中Rectangle还没有初始化出来,所以不要在awake中获取rect</strong></p>
+<h3 id="anchorMin-和-anchorMax"><a href="#anchorMin-和-anchorMax" class="headerlink" title="anchorMin 和 anchorMax"></a>anchorMin 和 anchorMax</h3><p>这个是针对锚点的,锚点时相对于父容器定义的,所以这两个属性也是相对于父容器的.分别指锚点占父容器尺寸的百分比位置.</p>
+<h3 id="sizeDelta"><a href="#sizeDelta" class="headerlink" title="sizeDelta"></a>sizeDelta</h3><p>sizeDelta是个由引擎计算出来的值，这个值很容易被错误地使用。要正确地使用sizeDelta，就要先理解它是怎么算出来的。</p>
+<blockquote>
+<p>The size of this RectTransform relative to the distances between the anchors.<br>If the anchors are together, sizeDelta is the same as size. If the anchors are in each of the four corners of the parent, the sizeDelta is how much bigger or smaller the rectangle is compared to its parent.</p>
+</blockquote>
+<p><em>sizeDelta</em>是<code>offsetMax-offsetMin</code>的结果。在锚点全部重合的情况下，它的值就是面板上的<em>（Width，Height）</em>。在锚点完全不重合的情况下，它是相对于父矩形的尺寸。</p>
+<p>一个常见的错误是，当<em>RectTransform</em>的锚点并非全部重合时，使用<em>sizeDelta</em>作为这个<em>RectTransform</em>的尺寸。此时拿到的结果一般来说并非预期的结果。</p>
+<p>所以 <em>RectTransform</em> 宽和高真正的計算方法是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GUI.Label(new Rect(20, 20, 600, 40), &quot;Rect : &quot; + rect.rect);</span><br><span class="line">var width &#x3D;  (rect.anchorMax.x - rect.anchorMin.x) * parent.rect.width + rect.sizeDelta.x;</span><br><span class="line">var height &#x3D; (rect.anchorMax.y - rect.anchorMin.y) * parent.rect.height + rect.sizeDelta.y;</span><br><span class="line">GUI.Label(new Rect(20, 60, 600, 40), $&quot;width :&#123;width&#125; height:&#123;height&#125; &quot;);</span><br></pre></td></tr></table></figure>
+
+<p>意思就是 sizeDelta 個別維度的值是跟兩錨點個別維度的差值相關，所以只有當兩錨點某的維度的值相等的時候，sizeDelta 在此維度的值才會剛好等於最後顯示的 size 大小。</p>
+<h1 id="代码修改坐标及大小"><a href="#代码修改坐标及大小" class="headerlink" title="代码修改坐标及大小"></a>代码修改坐标及大小</h1><p><strong>1.改变RectTransform的top</strong> 注意offsetMax`是<strong>RectTransform右上角</strong>相对于<strong>右上Anchor</strong>的距离,所以top的值应该是一个负值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetComponent&lt;RectTransform&gt;().offsetMax &#x3D; new Vector2(GetComponent&lt;RectTransform&gt;().offsetMax.x, top);</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.改变RectTransform的bottom</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetComponent&lt;RectTransform&gt;().offsetMin &#x3D; new Vector2(GetComponent&lt;RectTransform&gt;().offsetMin.x, bottom);</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.改变RectTransform的width，height</strong> ,会根据上面的计算公式重新计算得出width和height,所以如果锚点不是在同一个点的情况下,你设置的值和实际的值是有很大区别的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetComponent&lt;RectTransform&gt;().sizeDelta &#x3D; new Vector2(width, height);</span><br></pre></td></tr></table></figure>
+
+<p>例如:</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/1566677675284.png" alt="1566677675284"></p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/1566678423941.png" alt="1566678423941"></p>
+<p>当使用脚本直接改变大小后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rect.sizeDelta &#x3D; new Vector2(750, 200);</span><br></pre></td></tr></table></figure>
+
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/1566677736663.png" alt="1566677736663"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var width &#x3D;  (rect.anchorMax.x - rect.anchorMin.x) * parent.rect.width + rect.sizeDelta.x;</span><br><span class="line">var height &#x3D; (rect.anchorMax.y - rect.anchorMin.y) * parent.rect.height + rect.sizeDelta.y;</span><br></pre></td></tr></table></figure>
+
+<p>他的宽和高经过了运算使其分别为1500,1534</p>
+<p><strong>4.改变RectTransform的pos</strong> 注意anchoredPosition是相对于锚点的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GetComponent&lt;RectTransform&gt;().anchoredPosition3D &#x3D; new Vector3(posx,posy,posz);</span><br><span class="line">GetComponent&lt;RectTransform&gt;().anchoredPosition &#x3D; new Vector2(posx,posy);</span><br></pre></td></tr></table></figure>
+
+<p><strong>5.使用SetSizeWithCurrentAnchors函数来进行设定，其中Horizontal和Vertical分别对应宽和高。此函数受当前锚点和中心点的影响。</strong>由于会受到<code>povit</code>的影响设置的高度是根据povit进行上下缩小的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var rt &#x3D; gameObject.GetComponent&lt;RectTransform&gt;();</span><br><span class="line">rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100);</span><br><span class="line">rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 30);</span><br></pre></td></tr></table></figure>
+<p>上面同样的示例:</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/1566678433363.png" alt="1566678433363"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);</span><br></pre></td></tr></table></figure>
+
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/1566678329701.png" alt="1566678329701"></p>
+<p>可以看到它围绕着<code>pivot</code>上下都缩减了180</p>
+<p><strong>6.使用SetInsetAndSizeFromParentEdge函数来进行设定。此函数不受锚点和中心的影响，其中第一个参数代表对齐方式，第二个参数为距离边界的距离，第三个参数为宽度。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var rt &#x3D; gameObject.GetComponent&lt;RectTransform&gt;();</span><br><span class="line">rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, 100);</span><br><span class="line">rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, 30);</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="recttransform的一些其他操做"><a href="#recttransform的一些其他操做" class="headerlink" title="recttransform的一些其他操做"></a>recttransform的一些其他操做</h1><h3 id="Blue-Print-Mode-藍圖模式-、-Raw-Edit-Mode-原始编辑模式"><a href="#Blue-Print-Mode-藍圖模式-、-Raw-Edit-Mode-原始编辑模式" class="headerlink" title="Blue Print Mode(藍圖模式) 、 Raw Edit Mode(原始编辑模式)"></a>Blue Print Mode(藍圖模式) 、 Raw Edit Mode(原始编辑模式)</h3><h2 id=""><a href="#" class="headerlink" title=""></a><img src="../../assets/images/2019-08-10-ugui-RectTransform/BluePrint_RawEdit_01.png" alt="BluePrint_RawEdit_01"></h2><h4 id="Blue-Print-Mode-藍圖模式"><a href="#Blue-Print-Mode-藍圖模式" class="headerlink" title="Blue Print Mode (藍圖模式)"></a>Blue Print Mode (藍圖模式)</h4><p>忽略了物體的 Local Rotation 和 Local Scale，方便以原來的旋轉與大小調整物體</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/BluePrintMode_m2-1024x711.png" alt="img"></p>
+<h4 id="Raw-Edit-Mode-原始编辑模式"><a href="#Raw-Edit-Mode-原始编辑模式" class="headerlink" title="Raw Edit Mode (原始编辑模式)"></a>Raw Edit Mode (原始编辑模式)</h4><p>在 Inspector 中調整 Pivot 和 Anchor 時，物體會維持目前的位置與大小(Inspector 中數值部分)，調整情形如下，請注意數值部分</p>
+<p>Inspector 中調整  Pivot</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/RawEditMode_02.gif" alt="RawEditMode_02"></p>
+<p>Inspector 中調整  Anchor</p>
+<p><img src="../../assets/images/2019-08-10-ugui-RectTransform/RawEditMode_01.gif" alt="RawEditMode_01"></p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a href="http://docs.unity3d.com/Manual/UIBasicLayout.html" target="_blank" rel="noopener">Unity – Manual: Basic Layout</a></li>
+<li><a href="http://tsubakit1.hateblo.jp/entry/2014/12/19/033946" target="_blank" rel="noopener">UnityのuGUIのレイアウト調整機能について解説してみる（RectTransform入門）</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-08-09-unity2d-shipei/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-08-09-unity2d-shipei/" class="post-title-link" itemprop="url">关于unity2d的适配问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-09 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-09T08:00:00+08:00">2019-08-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>先说明一些基本的概念：</p>
+<p><strong>1.屏幕的宽高比Aspect Ratio = 屏幕宽度/屏幕高度</strong></p>
+<p><strong>2.Unity2D中摄像机镜头的尺寸决定了我们实际看到游戏内容的多少，在编辑器中我们可以通过调整摄像机Camera的orthographicSize属性值来调整摄像机的大小。</strong></p>
+<p>如下图所示，当摄像机orthographicSize属性值等于当前屏幕高度单位的一半时，摄像机大小正好与屏幕大小相等。注意这里提到的是屏幕单位高度的一半，这个数值是经过像素到单位比即Pixels To Units换算的，Unity2D中这个比例的默认值是100，即100像素等于1单位。如果我们的游戏屏幕有640像素高，那么实际换算成单位高度则是6.4个单位，当我们摄像机的orthographicSize值是3.2时，摄像机大小刚好与屏幕大小相等。</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/041527387365011.png" alt="img"></p>
+<p>可以通过此选项调整每张图片的像素单位比</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/041505358774753.png" alt="img"></p>
+<h3 id="Unity编辑器中只能直接调整摄像机的高度，那摄像机的宽度是如何确定的呢？"><a href="#Unity编辑器中只能直接调整摄像机的高度，那摄像机的宽度是如何确定的呢？" class="headerlink" title="Unity编辑器中只能直接调整摄像机的高度，那摄像机的宽度是如何确定的呢？"></a>Unity编辑器中只能直接调整摄像机的高度，那摄像机的宽度是如何确定的呢？</h3><p>答案就是我们最前面提到的屏幕宽高比。Unity会根据当前屏幕实际的宽高比和摄像机的orthographicSize值来计算出摄像机的宽度值，即：</p>
+<p><strong>摄像机实际宽度 = 摄像机orthographicSize * 2 * 屏幕宽高比</strong></p>
+<p>也即是</p>
+<p><strong>摄像机实际宽度 = 摄像机高度 * 屏幕宽高比</strong></p>
+<p>我举个例子说明一下，iPhone4的屏幕像素为640*960，宽高比为2:3，假设Pixels To Units值为100，那么如果设摄像机高度size值为4.8，那么摄像机实际宽度按照公式算出6.4，刚好就是屏幕的单位宽度。</p>
+<h2 id="关于适配的问题和原因"><a href="#关于适配的问题和原因" class="headerlink" title="关于适配的问题和原因"></a>关于适配的问题和原因</h2><p>好了，讲了以上的东西我们就知道为何我们的游戏会在不同的屏幕分辨率的设备上有不同的显示了。</p>
+<p><strong>不同的屏幕分辨率，相同的摄像机orthographicSize值会产生不同的摄像机尺寸，不同的摄像机尺寸导致实际显示的游戏内容的不同。</strong></p>
+<p>接下来我再提出两个概念，为了方便后文的说明：</p>
+<ol>
+<li><p>游戏有效内容，指游戏中一定需要完整显示在屏幕上的内容；</p>
+</li>
+<li><p>游戏实际内容，指全部的游戏内容，包括有效内容和主要是为了适配多分辨率的或其他不重要的目的而增加的内容。</p>
+</li>
+</ol>
+<p>我们的开发一般都会选择在一个固定的设计分辨率上进行，比如常用的iOS竖屏游戏设计分辨率640*960，我们就以这个设计分辨率为例。通常情况下，设计分辨率尺寸就是我们游戏有效内容的尺寸。</p>
+<p>采用这个分辨率，我们将摄像机的orthographicSize值设为4.8。假设我们不做任何多分辨率的适配处理，使我们游戏的有效内容区域和实际内容区域尺寸相同，都为6.4<em>9.6(已经做过像素到单位的换算，下同)，让这个游戏运行在一款iPhone5设备上（即屏幕是640</em>1136）时，我们来看看会发生什么情况。</p>
+<p>为了更好的说明，我们先设变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">游戏有效内容尺寸为gameValidContentSize游戏实际内容尺寸为gameContentSize</span><br><span class="line"></span><br><span class="line">摄像机尺寸为cameraSize</span><br><span class="line"></span><br><span class="line">实际屏幕尺寸为screenSize</span><br><span class="line"></span><br><span class="line">屏幕宽高比为aspectRatio</span><br></pre></td></tr></table></figure>
+
+<p>接着开始计算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">orthographicSize &#x3D; 4.8</span><br><span class="line"></span><br><span class="line">aspectRatio &#x3D; 640&#x2F;1136 &#x3D; 9&#x2F;16</span><br><span class="line"></span><br><span class="line">cameraSize.height &#x3D; 摄像机orthographicSize * 2 &#x3D; 4.8 * 2 &#x3D; 9.6</span><br><span class="line"></span><br><span class="line">cameraSize.width &#x3D; cameraSize.height * aspectRatio &#x3D; 9.6 * 9 &#x2F;16 &#x3D; 5.4</span><br></pre></td></tr></table></figure>
+
+<p><strong>根据计算，我们得到实际摄像机的宽度为5.4，而游戏有效内容宽度是6.4，摄像机宽度小于游戏有效内容宽度，即cameraSize.width &lt; gameValidContentSize.width = gameContentSize.width，这时游戏内容被摄像机裁减！</strong></p>
+<p>以下以我做的一个小游戏为例子，我们可以更清楚的看到这个问题：</p>
+<p>第一张是在640*960的设备上运行时的效果，一切正常。</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/051341534864301.png" alt="img"></p>
+<p>第二张是在640*1136的设备上运行的效果，可以看到游戏内容被剪得很明显，右上角的按钮都快没有了。</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/051328044244518.png" alt="img"></p>
+<p>如何解决这个问题呢？最直接的想法是，如果我们的游戏在640*1136屏幕的设备上，摄像机宽度依然保持是6.4，那肯定就不会剪切了。为了做到这一点，我们必须在运行时来调整camera的orthographicSize值。方法很简单，还是套用上面讲到的公式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aspectRatio &#x3D; 9&#x2F;16</span><br><span class="line"></span><br><span class="line">为了使cameraSize.width &#x3D; 6.4，我们计算</span><br><span class="line"></span><br><span class="line">cameraSize.height &#x3D; cameraSize.width&#x2F;aspectRatio &#x3D; 6.4 * 16 &#x2F; 9 （因为除不尽，后面就不继续写了）</span><br><span class="line"></span><br><span class="line">camera的orthographicSize &#x3D; cameraSize.height &#x2F; 2 约&#x3D;5.69</span><br></pre></td></tr></table></figure>
+
+<p>我们再一次运行游戏，动态修改camera的orthographicSize值为5.69，可以看到：</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/051330140497950.png" alt="img"></p>
+<p>宽的方面是完全显示出来了，可是上下都出现了的“黑边”（这里是蓝边，呵呵）。这是因为摄像机的高度已经大于了游戏内容的高度，所以自然会出现没有内容的区域，即“黑边”。为了解决这个问题，我们就需要给游戏增加上下边，直接上和黑边同尺寸的图是一种方法，但是还有一种更简易的办法，直接将游戏背景放大一些，以盖住黑边！这个游戏比较简单，我们就用这个简易的方法，我们将游戏背景放大到1.3倍，如下图：</p>
+<p><img src="../../assets/images/2019-08-09-unity2d-shipei/051331276114809.png" alt="img"></p>
+<p>OK！现在我们的游戏看起来已经很正常了，已经完成了iPhone5的适配。</p>
+<p><strong>注意到这个时候我们游戏的有效内容区域已经不等于实际内容区域了，我们放大了背景图片，实际上等于为游戏增加了一层外边缘。如图，在白框内部的就是有效内容区域，在白框外部的就是无效内容区域。整体实际游戏内容区域已经大于了有效内容区域。</strong></p>
+<p> <img src="../../assets/images/2019-08-09-unity2d-shipei/041722343778754.png" alt="img"></p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>根据以上解决分辨率问题的过程，我们可以得出，<strong>实际的分辨率适配问题与三个尺寸相关，他们分别是：摄像机尺寸，游戏内容尺寸（包括有效内容尺寸和无效内容尺寸）和实际屏幕尺寸</strong>。为了能够显示我们需要的有效内容，并且不显示黑边，我们必须要保证：</p>
+<p><strong>摄像机的尺寸既必须要小于或等于游戏实际内容尺寸，又必须要大于或等于游戏有效内容尺寸。如下图，蓝色的线框表示摄像机的尺寸，我们即只要保证蓝色框在白框外，在图内就能保证游戏内容的显示正确。</strong></p>
+<p><strong><img src="../../assets/images/2019-08-09-unity2d-shipei/041745451278806.png" alt="img"></strong></p>
+<p>只要能够确保以上这一点，那么我们的游戏就能够应对几乎所有的屏幕分辨率。</p>
+<p>按照这种方案，说到底，<strong>解决屏幕分辨率适配的问题，其实就是解决如何让游戏摄像机尺寸限定在给定范围的问题。</strong></p>
+<p>总结起来，步骤就是：首先，需要确定游戏的有效内容区域和实际内容区域；然后，游戏启动时，根据实际的屏幕宽高比将你的摄像机尺寸调整到合适你游戏的大小即可。</p>
+<p>最近写了很多小游戏，用这个方案一劳永逸地解决了多分辨率适配特别是Android设备适配的问题。这种方法的好处一方面是只要理解了，操作起来很简单，另外一方面不同于缩放游戏内容的方案，这种方法保证了游戏内容的原汁原味。当然，缺点可能也是有的，暂时能想到的可能是对于一些需要依赖摄像机做效果或者操作的游戏，改变摄像机的大小可能会造成一些影响。目前这方面经验还比较少，希望以后可以不断地完善这个方案。</p>
+<p>最后上一下自己写的一段简单的调整orthographicSize值的脚本，用于保证camera的width值不会小于游戏有效内容宽度，有效内容尺寸为6.4*9.6。这个脚本只要附加在游戏的Camera上就可以生效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class GameCamera : MonoBehaviour &#123;</span><br><span class="line"></span><br><span class="line">    float devHeight &#x3D; 9.6f;</span><br><span class="line">    float devWidth &#x3D; 6.4f;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Use this for initialization</span><br><span class="line">    void Start () &#123;</span><br><span class="line">    </span><br><span class="line">        float screenHeight &#x3D; Screen.height;</span><br><span class="line"></span><br><span class="line">        Debug.Log (&quot;screenHeight &#x3D; &quot; + screenHeight);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;this.GetComponent&lt;Camera&gt;().orthographicSize &#x3D; screenHeight &#x2F; 200.0f;</span><br><span class="line"></span><br><span class="line">        float orthographicSize &#x3D; this.GetComponent&lt;Camera&gt;().orthographicSize;</span><br><span class="line"></span><br><span class="line">        float aspectRatio &#x3D; Screen.width * 1.0f &#x2F; Screen.height;</span><br><span class="line"></span><br><span class="line">        float cameraWidth &#x3D; orthographicSize * 2 * aspectRatio;</span><br><span class="line"></span><br><span class="line">        Debug.Log (&quot;cameraWidth &#x3D; &quot; + cameraWidth);</span><br><span class="line"></span><br><span class="line">        if (cameraWidth &lt; devWidth)</span><br><span class="line">        &#123;</span><br><span class="line">            orthographicSize &#x3D; devWidth &#x2F; (2 * aspectRatio);</span><br><span class="line">            Debug.Log (&quot;new orthographicSize &#x3D; &quot; + orthographicSize);</span><br><span class="line">            this.GetComponent&lt;Camera&gt;().orthographicSize &#x3D; orthographicSize;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update () &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-08-07-sourcetree-git-password/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2019-08-07-sourcetree-git-password/" class="post-title-link" itemprop="url">scourcetree  总是需要输入密码</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-07 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-07T08:00:00+08:00">2019-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Git密钥存储相关"><a href="#Git密钥存储相关" class="headerlink" title="Git密钥存储相关"></a>Git密钥存储相关</h2><p>幸运的是，Git 拥有一个凭证系统来处理这个事情。 下面有一些 Git 的选项：</p>
+<ul>
+<li>默认所有都不缓存。 每一次连接都会询问你的用户名和密码。</li>
+<li>“cache” 模式会将凭证存放在内存中一段时间。 密码永远不会被存储在磁盘中，并且在15分钟后从内存中清除。</li>
+<li>“store” 模式会将凭证用明文的形式存放在磁盘中，并且永不过期。 这意味着除非你修改了你在 Git 服务器上的密码，否则你永远不需要再次输入你的凭证信息。 这种方式的缺点是你的密码是用明文的方式存放在你的 home 目录下。</li>
+<li>如果你使用的是 Mac，Git 还有一种 “osxkeychain” 模式，它会将凭证缓存到你系统用户的钥匙串中。 这种方式将凭证存放在磁盘中，并且永不过期，但是是被加密的，这种加密方式与存放 HTTPS 凭证以及 Safari 的自动填写是相同的。</li>
+<li>如果你使用的是 Windows，你可以安装一个叫做 “winstore” 的辅助工具。 这和上面说的 “osxkeychain” 十分类似，但是是使用 Windows Credential Store 来控制敏感信息。 可以在 <a href="https://gitcredentialstore.codeplex.com/" target="_blank" rel="noopener">https://gitcredentialstore.codeplex.com</a> 下载。</li>
+</ul>
+<h3 id="store的使用"><a href="#store的使用" class="headerlink" title="store的使用"></a>store的使用</h3><p><code>git config --global credential.helper store</code></p>
+<p>“store” 模式可以接受一个 <code>--file &lt;path&gt;</code> 参数，可以自定义存放密码的文件路径（默认是 <code>~/.git-credentials</code> ）</p>
+<h3 id="微软特有的Git-Credential-Manager"><a href="#微软特有的Git-Credential-Manager" class="headerlink" title="微软特有的Git Credential Manager"></a>微软特有的Git Credential Manager</h3><p>WINDOS部分版本的GIT会提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git: &#39;credential-cache&#39; is not a git command. See &#39;get --help&#39;.</span><br></pre></td></tr></table></figure>
+
+<p>实际上是缺少微软的 Git Credential Manager</p>
+<p>安裝 Git Credential Manager for Windows即可解决该问题</p>
+<p>最新的下载地址为：</p>
+<p><a href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/latest" target="_blank" rel="noopener">https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/latest</a></p>
+<p>下载安装完后可以通过命令进行查看是否生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper manager</span><br></pre></td></tr></table></figure>
+
+<p>控制面板\用户帐户\凭据管理器可以查看</p>
+<h1 id="SourceTree删除GIT密码"><a href="#SourceTree删除GIT密码" class="headerlink" title="SourceTree删除GIT密码"></a>SourceTree删除GIT密码</h1><h2 id="store"><a href="#store" class="headerlink" title="store"></a>store</h2><p>删除~/.git-credentials</p>
+<h2 id="manager"><a href="#manager" class="headerlink" title="manager"></a>manager</h2><p>windows存储的初始密码账号不对，导致每次请求远程url都会报错，我们要到控制面板\用户帐户\凭据管理器中手动更改我们的credential凭证;如下，是我的凭证配置；只需要编辑下即可，当然你也可以删除你要请求的远程的凭证,我没试过，当你git pull，GIT会让你输入一次用户明和密码，以后每次请求，GIT会从windows凭证中查找；<img src="../../assets/images/2019-08-07-sourcetree-git-password/20190404111514753.png" alt="在这里插入图片描述"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>当GIT服务器修改密码后，sourcetree本地记住的密码，会导致提交代码失败。<br>本地删除当前用户目录下保存密码的文件，文件路径：<br>C:\Users\wuxiaoyuan\AppData\Local\Atlassian\SourceTree\passwd<br>清空文件内容即可</p>
+<h1 id="同网站多账号的问题"><a href="#同网站多账号的问题" class="headerlink" title="同网站多账号的问题"></a>同网站多账号的问题</h1><p>如果同一个网站有多个账号..查看-&gt;选项-&gt;验证</p>
+<ul>
+<li>编辑那个网站的账号,就会新建一个用户名@xxx.com的账号</li>
+<li>然后把那个公用的删除</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8" target="_blank" rel="noopener">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-06-24-shell-folders-are-displayed-with-the-standard-folder-icon-in-windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2019-06-24-shell-folders-are-displayed-with-the-standard-folder-icon-in-windows/" class="post-title-link" itemprop="url">windows特殊目录修复</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-24 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-24T08:00:00+08:00">2019-06-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Desktop-ini-Contents-for-Various-Shell-Folders"><a href="#Desktop-ini-Contents-for-Various-Shell-Folders" class="headerlink" title="Desktop.ini Contents for Various Shell Folders"></a>Desktop.ini Contents for Various Shell Folders</h2><h3 id="For-Windows-7"><a href="#For-Windows-7" class="headerlink" title="For Windows 7"></a>For Windows 7</h3><p><strong>Contacts</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%CommonProgramFiles%\system\wab32res.dll,-10100</span><br><span class="line">InfoTip&#x3D;@%CommonProgramFiles%\system\wab32res.dll,-10200</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-181</span><br></pre></td></tr></table></figure>
+
+<p><strong>Documents</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21770</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-112</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-235</span><br></pre></td></tr></table></figure>
+
+<p><strong>Desktop</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21769</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-183</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">GameExplorer.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10082</span><br><span class="line">Windows Media Player.lnk&#x3D;@%SystemRoot%\system32\unregmp2.exe,-4</span><br><span class="line">Chess.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10054</span><br><span class="line">FreeCell.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10055</span><br><span class="line">Hearts.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10056</span><br><span class="line">Internet Checkers.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10101</span><br><span class="line">Minesweeper.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10057</span><br><span class="line">Spider Solitaire.lnk&#x3D;@%SystemRoot%\system32\gameux.dll,-10061</span><br></pre></td></tr></table></figure>
+
+<p><strong>Downloads</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21798</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-184</span><br></pre></td></tr></table></figure>
+
+<p><strong>Favorites</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21796</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-115</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-173</span><br></pre></td></tr></table></figure>
+
+<p><strong>Links</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21810</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-185</span><br><span class="line">DefaultDropEffect&#x3D;4</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">RecentPlaces.lnk&#x3D;@shell32.dll,-37217</span><br><span class="line">Desktop.lnk&#x3D;@shell32.dll,-21769</span><br><span class="line">Downloads.lnk&#x3D;@shell32.dll,-21798</span><br></pre></td></tr></table></figure>
+
+<p><strong>Music</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21790</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12689</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-108</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-237</span><br></pre></td></tr></table></figure>
+
+<p><strong>Pictures</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21779</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12688</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-113</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-236</span><br></pre></td></tr></table></figure>
+
+<p><strong>Recent</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21797</span><br><span class="line">InfoTip&#x3D;@shell32,dll,-12692</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-117</span><br><span class="line">CLSID&#x3D;&#123;0C39A5CF-1A7A-40C8-BA74-8900E6DF5FCD&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Saved Games</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21814</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-186</span><br></pre></td></tr></table></figure>
+
+<p><strong>Searches</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-9031</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-18</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Indexed Locations.search-ms&#x3D;@searchfolder.dll,-32820</span><br><span class="line">Everywhere.search-ms&#x3D;@searchfolder.dll,-32822</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="For-Windows-Vista"><a href="#For-Windows-Vista" class="headerlink" title="For Windows Vista"></a>For Windows Vista</h3><p><strong>Documents</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21770</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-112</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-235</span><br></pre></td></tr></table></figure>
+
+<p><strong>Pictures</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21779</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12688</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-113</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-236</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Sample Pictures.lnk&#x3D;@%SystemRoot%\system32\shell32.dll,-21805</span><br></pre></td></tr></table></figure>
+
+<p><strong>Music</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21790</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12689</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-108</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-237</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Sample Music.lnk&#x3D;@%SystemRoot%\system32\shell32.dll,-21806</span><br></pre></td></tr></table></figure>
+
+<p><strong>Videos</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21791</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12690</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-189</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-238</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Sample Videos.lnk&#x3D;@%SystemRoot%\system32\shell32.dll,-21807</span><br></pre></td></tr></table></figure>
+
+<p><strong>Searches</strong>report this ad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-9031</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-18</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Indexed Locations.search-ms&#x3D;@shell32.dll,-32811</span><br><span class="line">Everywhere.search-ms&#x3D;@shell32.dll,-32814</span><br><span class="line">Shared By Me.search-ms&#x3D;@shell32.dll,-32802</span><br><span class="line">Recent Music.search-ms&#x3D;@shell32.dll,-32803</span><br><span class="line">Recent Documents.search-ms&#x3D;@shell32.dll,-32804</span><br><span class="line">Recent Pictures and Videos.search-ms&#x3D;@shell32.dll,-32806</span><br><span class="line">Recent E-mail.search-ms&#x3D;@shell32.dll,-32807</span><br><span class="line">Recently Changed.search-ms&#x3D;@shell32.dll,-32813</span><br></pre></td></tr></table></figure>
+
+<p><strong>Downloads</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21798</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-184</span><br></pre></td></tr></table></figure>
+
+<p><strong>Favorites</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21796</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-115</span><br><span class="line">IconFile&#x3D;%SystemRoot%\system32\shell32.dll</span><br><span class="line">IconIndex&#x3D;-173</span><br></pre></td></tr></table></figure>
+
+<p><strong>Contacts</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%CommonProgramFiles%\system\wab32res.dll,-10100</span><br><span class="line">InfoTip&#x3D;@%CommonProgramFiles%\system\wab32res.dll,-10200</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-181</span><br></pre></td></tr></table></figure>
+
+<p><strong>Desktop</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21769</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-183</span><br></pre></td></tr></table></figure>
+
+<p><strong>Links</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21810</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-185</span><br><span class="line">DefaultDropEffect&#x3D;4</span><br><span class="line">[LocalizedFileNames]</span><br><span class="line">Public.lnk&#x3D;@shell32.dll,-21816</span><br><span class="line">Searches.lnk&#x3D;@shell32.dll,-9031</span><br><span class="line">Recently Changed.lnk&#x3D;@shell32.dll,-32813</span><br><span class="line">Music.lnk&#x3D;@shell32.dll,-21790</span><br><span class="line">Pictures.lnk&#x3D;@shell32.dll,-21779</span><br><span class="line">Documents.lnk&#x3D;@shell32.dll,-21770</span><br></pre></td></tr></table></figure>
+
+<p><strong>Saved Games</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21814</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\imageres.dll,-186</span><br></pre></td></tr></table></figure>
+
+<p><strong>Public Desktop</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21799</span><br></pre></td></tr></table></figure>
+
+<p><strong>Public Documents</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21801</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\shell32.dll,-235</span><br></pre></td></tr></table></figure>
+
+<p><strong>Public Music</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21803</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12689</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\shell32.dll,-237</span><br></pre></td></tr></table></figure>
+
+<p><strong>Public Pictures</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21802</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12688</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\shell32.dll,-236</span><br></pre></td></tr></table></figure>
+
+<p><strong>Public Videos</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[.ShellClassInfo]</span><br><span class="line">LocalizedResourceName&#x3D;@%SystemRoot%\system32\shell32.dll,-21804</span><br><span class="line">InfoTip&#x3D;@%SystemRoot%\system32\shell32.dll,-12690</span><br><span class="line">IconResource&#x3D;%SystemRoot%\system32\shell32.dll,-238</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-06-23-googlplay-pulish/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-06-23-googlplay-pulish/" class="post-title-link" itemprop="url">googlePlay 发布问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-23 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-23T08:00:00+08:00">2019-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="问题-隐私声明"><a href="#问题-隐私声明" class="headerlink" title="问题 隐私声明"></a>问题 隐私声明</h1><p>使用这个站点<a href="https://app-privacy-policy-generator.firebaseapp.com/" target="_blank" rel="noopener">https://app-privacy-policy-generator.firebaseapp.com/</a> 根据app的名称，类型，平台等等，选择对应的选项，右边按钮还包含对应的第三方隐私服务链接，如果你用到的话，比如google play service, firebase等等，那么就勾选上。最后点击GENERATE，就会生成一个适合你自己app的privacy-policy页面了。<br>最后的最后，记得将这个url输入到google play后台的隐私设置区域，点击保存，重新发布app等候google play团队的审核。一两个小时就好了。</p>
+<p><a href="https://blog.usejournal.com/how-to-fix-advertising-id-policy-violation-in-google-play-store-6d9cf92d335d" target="_blank" rel="noopener">https://blog.usejournal.com/how-to-fix-advertising-id-policy-violation-in-google-play-store-6d9cf92d335d</a></p>
+<h1 id="问题-1002"><a href="#问题-1002" class="headerlink" title="问题 -1002"></a>问题 -1002</h1><p>Google Play应用需要授予”允许后台弹窗”的权限</p>
+<h1 id="问题-此商品无法在您设备所在的国家地区安装"><a href="#问题-此商品无法在您设备所在的国家地区安装" class="headerlink" title="问题  此商品无法在您设备所在的国家地区安装"></a>问题  此商品无法在您设备所在的国家地区安装</h1><ul>
+<li>删除家庭内容..</li>
+<li>使用vpn切换到指定国家</li>
+<li>googleplay–账号里切换地区</li>
+</ul>
+<h1 id="问题-无法购买您要的商品"><a href="#问题-无法购买您要的商品" class="headerlink" title="问题 无法购买您要的商品"></a>问题 无法购买您要的商品</h1><p>做Google Play 支付， 遇到“无法购买您要的商品”的问题，在网上搜了些答案，下面罗列了一些</p>
+<ol>
+<li><p>保证 versionCode 和版本号与你上传的apk的包的一样。</p>
+</li>
+<li><p>保证后台和你传入的购买商品的 id 一致。</p>
+</li>
+<li><p>确保你所使用的账号是在测试人员里。</p>
+</li>
+</ol>
+<p>在”APK”页面里，有一个“选择使用网址”，把这个网址给你的测试人员，让你的测试人员用他的google账号点进去，点那个“成为测试人员”（前提是你把他加进了测试人员列表），还需要把连接地址发送给测试人员，必须要测试人员点击同意参加测试才行！！</p>
+<h1 id="问题-无法使用该应用-此应用的测试版尚未发布，或者无法通过此帐号使用。"><a href="#问题-无法使用该应用-此应用的测试版尚未发布，或者无法通过此帐号使用。" class="headerlink" title="问题 无法使用该应用,此应用的测试版尚未发布，或者无法通过此帐号使用。"></a>问题 无法使用该应用,此应用的测试版尚未发布，或者无法通过此帐号使用。</h1><p><a href="https://play.google.com/apps/testing/com.zhepama.gyj" target="_blank" rel="noopener">https://play.google.com/apps/testing/com.zhepama.gyj</a>  发给测试人员激活..记住..登录的用户一定是测试人员</p>
+<h1 id="问题-此版本的应用未配置为通过googleplay-结算"><a href="#问题-此版本的应用未配置为通过googleplay-结算" class="headerlink" title="问题 此版本的应用未配置为通过googleplay 结算"></a>问题 此版本的应用未配置为通过googleplay 结算</h1><p>造成这个错误的原因有两个:</p>
+<ul>
+<li>第一个是打包的时候，versionCode的值比提交到google play后台的版本要高。 </li>
+<li>第二个就是：打包的时候，和google play后台上的包的签名不一致。</li>
+</ul>
+<h1 id="问题-关于如何测试"><a href="#问题-关于如何测试" class="headerlink" title="问题  关于如何测试"></a>问题  关于如何测试</h1><p>先使用release版本发布到googleplay.测试的时候可以使用debug版本,先测试下基本功能..查看哪里报错..</p>
+<p>apk可以使用谷歌提供的测试地址下载</p>
+<h3 id="以下是Google-IAB测试的要求清单。"><a href="#以下是Google-IAB测试的要求清单。" class="headerlink" title="以下是Google IAB测试的要求清单。"></a>以下是Google IAB测试的要求清单。</h3><h4 id="先决条件："><a href="#先决条件：" class="headerlink" title="先决条件："></a>先决条件：</h4><ul>
+<li>AndroidManifest必须包含“com.android.vending.BILLING”权限 。</li>
+<li>APK内置于发行模式 。</li>
+<li>APK已使用发行证书进行 签名 。</li>
+<li>至少一次将APK上传到Alpha / Beta版本的渠道（以前 - 作为草稿）到开发者控制台。 （需要一段时间〜2h-24h ）。</li>
+<li>IAB 产品已发布 ，其状态设置为活动 。</li>
+<li>测试帐户被添加到开发者控制台中。</li>
+</ul>
+<h4 id="测试要求："><a href="#测试要求：" class="headerlink" title="测试要求："></a>测试要求：</h4><ul>
+<li>测试APK 与上传到开发者控制台的版本号相同 。</li>
+<li>测试APK的签名与上传到dev.console的证书相同 。</li>
+<li>测试帐户 （不是开发人员） - 是设备上的主要帐户 。</li>
+<li>测试帐户作为测试者选择加入，并与有效的付款方式相关联 。 （ @Kyone ）</li>
+<li>PS： 使用发行证书进行调试  </li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="">https : //stackoverflow.com/a/15754187/1321401</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-06-20-windows-send-to-ftp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2019-06-20-windows-send-to-ftp/" class="post-title-link" itemprop="url">windows发送到手机Ftp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-20 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-20T08:00:00+08:00">2019-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="右键发送到菜单位置"><a href="#右键发送到菜单位置" class="headerlink" title="右键发送到菜单位置"></a>右键发送到菜单位置</h2><ul>
+<li><p>右键点击系统桌面左下角的【开始】，在开始菜单中点击【运行】，</p>
+</li>
+<li><p>在运行对话框中输入：<code>shell:sendto</code>命令,点击确定或者回车，打开SendTo（发送到）窗口；</p>
+</li>
+<li><p>或者直接打开 目录</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">invoke-item</span> <span class="string">"C:\Users\zhepama\AppData\Roaming\Microsoft\Windows\SendTo"</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<p><img src="../../assets/images/2019-06-20-windows-send-to-ftp/2019-06-21-18-29-28.png" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-06-20-unity-android-x64/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-06-20-unity-android-x64/" class="post-title-link" itemprop="url">Unity 导出 Android 64-bit 版本</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-20 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-20T08:00:00+08:00">2019-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="导出说明"><a href="#导出说明" class="headerlink" title="导出说明"></a>导出说明</h2><p>Unity supports x64 since 2017 LTS. To enable it you can go to File &gt; Build Settings &gt; Player Settings.</p>
+<p>There under “Other Settings” you have to change your Script Backend to IL2CPP, and you will have the ARM64 checkbox active. Check it.</p>
+<p><img src="../../assets/images/2019-06-20-unity-android-x64/2019-06-20-04-48-21.png" alt=""></p>
+<p>And then you can either select to generate Split APKs by Target Architecture</p>
+<p><img src="../../assets/images/2019-06-20-unity-android-x64/2019-06-20-04-48-48.png" alt=""></p>
+<p>or in your Build Settings dialog choose to Build App Bundle (Google Play)</p>
+<p><img src="../../assets/images/2019-06-20-unity-android-x64/2019-06-20-04-49-44.png" alt=""></p>
+<p>Hope it helps, you will need to have the Android NDK for this.</p>
+<p>如果选择Build ，Unity会生成AAB文件，该文件可以直接发布到Google Play。</p>
+<p>如果选择Build and Run，Unity会生成AAB文件，该文件会为关联设备生成临时APK文件，然后安装APK文件到设备并运行应用程序。</p>
+<p>如果选择Build 并希望手动安装应用程序到设备上，可以使用Google提供的bundletool utility ,你可在Unity安装目录中的<code>Editor/Data/PlaybackEngines/AndroidPlayer/Tools</code>目录下找到它。</p>
+<p>请注意，当构建应用程序包时，菜单<code>Edit &gt; Setting &gt; Player</code>下的<code>Split APKs by target architecture</code> 会被禁用，因为生成的应用程序包应包含所有支持目标的库。</p>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><p>在开发期间，为了减少使用构建和运行时的迭代次数，可以禁用应用程序包的生成功能，并使用常规的APK文件，因为从应用程序包生成APK需要额外时间，之后才会部署到设备上。</p>
+<p>应用程序包还可以从Android Studio生成，它使用从Unity导出的Gradle项目。为此，你需要使用Android Studio 3.2或更高版本，并选择<code>Build &gt; Build Bundle(s) / APK(s) &gt; Build Bundle(s)</code>。</p>
+<p>如果目标商店不支持Android App Bundles，你可以使用Player settings中的<code>Split APKs by target architecture</code>选项，从而根据终端用户设备的CPU架构提供APK文件，或使用bundletool，该工具可以构建支持运行在任何环境的“通用APK”文件</p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://connect.unity.com/p/unity-2018-3-betazhong-de-android-app-bundle-aab-zhi-chi" target="_blank" rel="noopener">https://connect.unity.com/p/unity-2018-3-betazhong-de-android-app-bundle-aab-zhi-chi</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-06-20-unity-il2cpp-debugger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-06-20-unity-il2cpp-debugger/" class="post-title-link" itemprop="url">Unity的il2cpp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-20 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-20T08:00:00+08:00">2019-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p>unity是运行在mono下的,il2cpp有自己的运行时,il2cpp不是运行在mono下的不是mono的aot</p>
+</li>
+<li><p>mono的gc和.net的gc是不同的,il2cpp运行时实现了自己的垃圾回收(Boehm-Demers-Weiser garbage collector)</p>
+</li>
+<li><p>编译和运行时两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理</p>
+<p>Note that the <strong>.rsp</strong> file needs to match the compiler being invoked. For example:</p>
+<ul>
+<li>when targeting the .NET 3.5 Equivalent (deprecated) scripting runtime version, <strong>mcs</strong> is used with <code>mcs.rsp</code>, and</li>
+<li>when targeting the .NET 4.x Eqivalent scripting runtime version compiler, <strong>csc</strong> is used with <code>csc.rsp</code>.</li>
+</ul>
+</li>
+</ol>
+<p>大约在一年以前，我们写了一篇博客讨论Unity中脚本将来会是个什么样子，在那篇博客中我们提到了崭新的IL2CPP后端，并许诺其会为Unity带来更高效和更适合于各个平台的虚拟机。在2015年的一月份，我们正式发布了第一个使用IL2CPP的平台：iOS 64-bit。而随着Unity 5的发布，又带给大家另一个使用IL2CPP的平台：WebGL。感谢我们社区中用户的大量宝贵的反馈，我们在接下来的时间里根据这些反馈得以更新IL2CPP，发布补丁版本，从而持续的改进IL2CPP的编译器和运行时库。</p>
+<p>我们没有停止改进IL2CPP的打算，但是在目前这个时间点上，我们觉得可以回过头来抽出点时间告诉大家一些IL2CPP的内部工作机制。在接下来的几个月的时间里，我们打算对以下话题（或者还有其他未列出的话题）进行讨论，来做一个IL2CPP深入讲解系列。目前准备讨论的话题有：</p>
+<p>1.基础 - 工具链和命令行参数（本篇博文）<br> 2.IL2CPP生成代码介绍<br> 3.IL2CPP生成代码调试小窍门<br> 4.方法调用介绍（一般方法调用和虚方法调用等）</p>
+<ol>
+<li>通用代码共享的实现<br> 6.P/invoke(Platform Invocation Service)对于类型（types）和方法（methods）的封装<br> 7.垃圾回收器的集成<br> 8.测试框架（Testing frameworks）及其使用</li>
+</ol>
+<p>为了能让这个系列的讨论成为可能，我们会涉及到一些将来肯定会进行改动的IL2CPP的实现细节。但这也没有关系，通过这些讨论，我们希望能给大家提供一些有用和有趣的信息。</p>
+<h2 id="什么是IL2CPP？"><a href="#什么是IL2CPP？" class="headerlink" title="什么是IL2CPP？"></a>什么是IL2CPP？</h2><p>从技术层面上来说，我们说的IL2CPP包含了两部分：一个进行 预先编译（译注：ahead-of-time，又叫AOT，以下一律使用AOT缩写）的编译器。</p>
+<h2 id="一个支持虚拟机的运行时库"><a href="#一个支持虚拟机的运行时库" class="headerlink" title="一个支持虚拟机的运行时库"></a>一个支持虚拟机的运行时库</h2><p>AOT编译器将由.NET 输出的中间语言(IL)代码生成为C++代码。运行时库则提供诸如垃圾回收，与平台无关的线程，IO以及内部调用（C++原生代码直接访问托管代码结构）这样的服务和抽象层。</p>
+<h2 id="AOT编译器"><a href="#AOT编译器" class="headerlink" title="AOT编译器"></a>AOT编译器</h2><p>IL2CPP AOT编译器实际的执行文件是il2cpp.exe。在Windows平台你可以在Unity安装路径的Editor\Data\il2cpp目录下找到。对于OSX平台，它位于Unity安装路径的Contents/Frameworks/il2cpp/build目录内。 il2cpp.exe这个工具是一个托管代码可执行文件，其完全由C#写成。在开发IL2CPP的过程中，我们同时使用.NET和Mono编译器对其进行编译。</p>
+<p>il2cpp 接受来自Unity自带的或者由Mono编译器产生的托管程序集，将这些程序集转换成C++代码。这些转换出的C++代码最终由部署目标平台上的C++编译器进行编译。</p>
+<p>你可以参照下图理解IL2CPP工具链的作用：</p>
+<p><img src="../../assets/images/2019-06-20-unity-il2cpp-debugger/il2cpp-toolchain-smaller.png" alt="il2cpp toolchain smaller"> </p>
+<h2 id="运行时库"><a href="#运行时库" class="headerlink" title="运行时库"></a>运行时库</h2><p>IL2CPP的另外一个部分就是对虚拟机提供支持的运行时库。我们基本上是用C++代码来实现整个运行时库的（好吧，其实里面还是有一些和平台相关的代码使用了程序集，这个只要你知我知便好，不要告诉别人 ）。我们把运行时库称之为libli2cpp，它是作为一个静态库被连接到最终的游戏可执行文件中。这么做的一个主要的好处是可以使得整个IL2CPP技术是简单并且是可移植的。</p>
+<p>你能通过查看随Unity一起发布的libil2cpp头文件来窥探其代码组织方式（Windows平台，头文件在Editor\Data\PlaybackEngines\webglsupport\BuildTools\Libraries\libil2cpp\include目录中。OSX平台，头文件在Contents/Frameworks/il2cpp/libil2cpp目录中）。举个例子，由il2cpp产生的C++代码和libil2cpp之间的接口API，存在于codegen/il2cpp-codegen.h这个文件中。</p>
+<p>运行时的另外一个重要的部分，就是垃圾收集器。在Unity 5中，我们使用libgc垃圾收集器。它是一个典型的贝姆垃圾收集器（Boehm-Demers-Weiser garbage collector）。（译注：相对使用保守垃圾回收策略）。然而我们的libil2cpp被设计成可以方便使用其他垃圾回收器。因此我们现在也在研究集成微软开源的垃圾回收器（Microsoft GC）。对于垃圾回收器这一点，我们会在后续的一篇中专门的讨论，这里就不多说了。</p>
+<h2 id="il2cpp是如何执行的？"><a href="#il2cpp是如何执行的？" class="headerlink" title="il2cpp是如何执行的？"></a>il2cpp是如何执行的？</h2><p>让我们从一个简单的例子入手。这里使用Unity的版本是5.0.1，在Windows环境并且建立一个全新的空项目。然后创建一个带MonoBehaviour的脚本文件，将其作为组件加入到Main Camera上。代码也是非常的简单，输出Hello World：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> :</span> MonoBehaviour &#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Start</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Debug.Log(<span class="string">"Hello, IL2CPP!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我切换到WebGL平台进行项目生成的时候，我们可以用Process Explorer来对il2cpp的命令行进行观察，得到以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe&quot; &quot;C:\Program Files\Unity\Editor\Data\il2cpp&#x2F;il2cpp.exe&quot; --copy-level&#x3D;None --enable-generic-sharing --enable-unity-event-support --output-format&#x3D;Compact --extra-types.file&#x3D;&quot;C:\Program Files\Unity\Editor\Data\il2cpp\il2cpp_default_extra_types.txt&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\il2cppOutput&quot;</span><br></pre></td></tr></table></figure>
+
+<p>嗯，这个真是老太太的裹脚布 - 又臭又长……，所以让我们把命令分拆一下，Unity运行的是这个可执行文件：</p>
+<figure class="highlight plain"><figcaption><span>Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe"```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">下一个参数是il2cpp.exe工具本身：</span><br><span class="line">&#96;&#96;&#96; &quot;C:\Program Files\Unity\Editor\Data\il2cpp&#x2F;il2cpp.exe&quot;</span><br></pre></td></tr></table></figure>
+
+<p>请注意剩下的参数其实都是传递给il2cpp.exe的而不是mono.exe。上面的例子里传递了5个参数给il2cpp.exe：<br> <code>–copy-level=None</code></p>
+<p>指明il2cpp.exe不对生成的C++文件进行copy操作<br><code>–enable-generic-sharing</code><br> 告诉IL2CPP如果可以，对通用方法进行共享。这个可以减少代码并降低最后二进制文件的尺寸</p>
+<p><code>–enable-unity-event-support</code><br> 确保和Unity events相关的，通过反射机制来运作的代码，能够正确生成。</p>
+<p><code>–output-format=Compact</code><br> 在生成C++代码时为里面的类型和方法使用更短的名字。这会使得C++代码难以阅读，因为原来在IL中的名字被更短的取代了。但好处是可以让C++编译器运行的更快。</p>
+<p><code>–extra-types.file=”C:\Program Files\Unity\Editor\Data\il2cpp\il2cpp_default_extra_types.txt”</code></p>
+<p>使用默认的（也是空的）额外类型文件。il2cpp.exe会将在这个文件中出现的基本类型或者数组类型看作是在运行时生成的而不是一开始出现在IL代码中来对待。</p>
+<p>需要注意的是这些参数可能会在以后的Unity版本中有所变化。我们现在还没有稳定到把il2cpp.exe的命令行参数整理固定下来的阶段。</p>
+<p>最后，我们有由两个文件组成的一个列表和一个目录在这个长长的命令行中：</p>
+<figure class="highlight plain"><figcaption><span>Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll”</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">“C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll”</span><br><span class="line"></span><br><span class="line">“C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\il2cppOutput”</span><br></pre></td></tr></table></figure>
+
+<p>il2cpp.exe工具可以接收一个由IL程序集组成的列表。在上面这个例子中，程序集包含了项目中的简单脚本程序集：Assembly-CSharp.dll，和GUI程序集：UnityEngine.UI.dll。大家可能会注意到这里面明显少了什么：UnityEngine.dll到哪去了？系统底层的mscorlib.dll也不见了踪影。实际上，il2cpp.exe会在内部自动引用这些程序集。你当然也可以把这些放入列表中，但他们不是必须的。你只需要提及那些根程序集（那些没有被其他任何程序集引用到的程序集），剩下的il2cpp.exe会根据引用关系自动加入。</p>
+<p>裹脚布的最后一块是一个目录，il2cpp.exe会将最终的C++代码生成到这里。如果你还保持着一颗好奇的心，可以看看这个目录中产生的文件。这些文件是我们下一个讨论的主题。在你审视这些代码前，可以考虑将WebGL构建设置中的“Development Player”选项勾上。这么做会移除–output-format=Compact命令行参数从而让C++代码中的类型和方法的名字更加可读。</p>
+<p>尝试在WebGL或者iOS构建设置中进行些改变。这样你会发现传递给il2cpp.exe的参数也会相应的发生变化。例如，将“Enable Exceptions” 设置成“Full” 会将–emit-null-checks，–enable-stacktrace，和 –enable-array-bounds-check这三个参数加入il2cpp.exe命令行。</p>
+<h2 id="IL2CPP没做的事情"><a href="#IL2CPP没做的事情" class="headerlink" title="IL2CPP没做的事情"></a>IL2CPP没做的事情</h2><p>我想指出IL2CPP有一向挑战我们没有接受,而且我们也高兴我们忽略了它。我们没有尝试重写整个C#标准库。当你使用IL2CPP后端构建Unity项目的时候，所有在mscorlib.dll，System.dll等中的C#标准库和原来使用Mono编译时候的一模一样。</p>
+<p>我们可以依赖健壮的且久经考验的C#标准库，所以当处理有关IL2CPP的bug的时候，我们可以很肯定的说问题出在AOT编译器或者运行时库这两个地方而不是在其他地方。</p>
+<h2 id="我们如何开发，测试，发布IL2CPP"><a href="#我们如何开发，测试，发布IL2CPP" class="headerlink" title="我们如何开发，测试，发布IL2CPP"></a>我们如何开发，测试，发布IL2CPP</h2><p>自从我们在一月份的4.6.1 p5版本中首次引入IL2CPP以来，我们已经连续发布了6个Unity版本和7个补丁（Unity版本号跨越4.6和5.0）。在这些发布中我们修正了超过100个bug。</p>
+<p>为了确保持续的改进得以实施，我们内部只保留一份最新的开发代码在主干分之（trunk branch）上，在发布各个版本之前，我们会将IL2CPP的改动挂到一个特定的分之下，然后进行测试，确保所有的bug已经正确的修正了。我们的QA和维护工作组为此付出了惊人的努力才得以保证发布版本的快速迭代。（译注：感觉是版本管理的标准的开发流程）</p>
+<p>提供高质量Bug的用户社区被证明是一个无价之宝。我们非常感谢用户的反馈来帮助我们改进IL2CPP，并且希望这类反馈越多越好。</p>
+<p>我们的IL2CPP研发组有很强烈的“测试优先”意识。我们时常使用“Test Driven Design”方法，在没有进行足够全面的测试的情况下，几乎不会进行代码的合并工作。这个策略用在IL2CPP项目上非常的棒。我们现在所面对的大部分bug并不是意想不到的行为产生的，而是由意想不到的特殊情况产生的。（例如在一个32位的索引数组中使用了64位的指针从而导致C++编译器失败）面对这种类型的bug我们可以快速的并且很自信的进行修正。</p>
+<p>有了社区的帮助，我们非常努力的让IL2CPP既快又稳定。顺便说一句，如果你对我刚才说的这些有兴趣，我们正在招人（嗯…..我只是这么一说）</p>
+<h2 id="好戏连台"><a href="#好戏连台" class="headerlink" title="好戏连台"></a>好戏连台</h2><p>关于IL2CPP我们还有很多可以说的。下一次我们会深入到il2cpp.exe代码生成的细节中。看看对于C++编译器来说，由il2cpp.exe生成的代码会是个什么样子。</p>
+<h1 id="iOS-IL2CPP打包注意事项"><a href="#iOS-IL2CPP打包注意事项" class="headerlink" title="iOS IL2CPP打包注意事项"></a>iOS IL2CPP打包注意事项</h1><p>鉴于IL2CPP的特殊性，实际在iOS的发布中可能会遇到一些问题，在这里给大家介绍几个iOS发布时可能会遇到的问题。</p>
+<p>IL2CPP和mono的最大区别就是不能在运行时动态生成代码和类型，所以这就要求必须在编译时就完全确定需要用到的类型。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li>il2cpp  没有使用的字段都不会被编译..</li>
+<li>json反序列化的时候get,set不能被使用,il2cpp 在运行时会剥离去除Get属性，你需要在工程中添加一个 link.xml告诉编译器不要优化掉Get属性</li>
+<li>不要用dynamic关键字</li>
+<li>注意泛型实例和泛型方法,可能会被裁剪..这个时候建立一个函数.手动调用下即可.<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">参见</a></li>
+</ul>
+<h2 id="类型裁剪"><a href="#类型裁剪" class="headerlink" title="类型裁剪"></a>类型裁剪</h2><p>IL2CPP在打包时会自动对Unity工程的DLL进行裁剪，将代码中没有引用到的类型裁剪掉，以达到减小发布后ipa包的尺寸的目的。然而在实际使用过程中，很多类型有可能会被意外剪裁掉，造成运行时抛出找不到某个类型的异常。特别是通过反射等方式在编译时无法得知的函数调用，在运行时都很有可能遇到问题。</p>
+<p>Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪裁掉的。具体做法就是在Unity工程的Assets目录中建立一个叫link.xml的XML文件，然后按照下面的格式指定你需要保留的类型：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">linker</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"UnityEngine"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"Assembly-CSharp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">namespace</span> <span class="attr">fullname</span>=<span class="string">"MyGame.Utils"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span> <span class="attr">fullname</span>=<span class="string">"MyGame.SomeClass"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">assembly</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">linker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>Could not produce class with ID 91 - iOS   <a href="https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/" target="_blank" rel="noopener">https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/</a>  <a href="https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305</a>  <a href="https://www.cnblogs.com/zhaoqingqing/p/6080075.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/6080075.html</a></li>
+<li>odin  新建一个场景把一些scriptobject拖到场景中扫描一下</li>
+<li>protobuf   <code>**Unable to resolve MapDecorator constructor**.</code>  同时注意不要用属性{get;set;}..如果Dictionary的key为int也会出这个问题..未找到解决办法 ,用class代替</li>
+</ol>
+<p>F:\GouYuJian\GYJClient\Library\com.unity.addressables\aa\Android\link.xml</p>
+<p><a href="http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/" target="_blank" rel="noopener">http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/</a></p>
+<ol start="4">
+<li>System.MissingMethodException: Default constructor not found for type ServerReconciliation…这个是没有被明显的引用添加到link.xml中ServerReconciliation<a href="https://docs.unity3d.com/Manual/ManagedCodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ManagedCodeStripping.html</a></li>
+</ol>
+<h2 id="泛型实例"><a href="#泛型实例" class="headerlink" title="泛型实例"></a>泛型实例</h2><p>每个泛型实例实际上都是一个独立的类型，<code>List&lt;A&gt;</code> 和 <code>List&lt;B&gt;</code>是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。</p>
+<p>在ILRuntime中解决这个问题有两种方式，一个是使用CLR绑定，把用到的泛型实例都进行CLR绑定。另外一个方式是在Unity主工程中，建立一个类，然后在里面定义用到的那些泛型实例的public变量。这两种方式都可以告诉IL2CPP保留这个类型的代码供运行中使用。</p>
+<p>因此建议大家在实际开发中，尽量使用热更DLL内部的类作为泛型参数，因为DLL内部的类型都是ILTypeInstance，只需处理一个就行了。此外如果泛型模版类就是在DLL里定义的的话，那就完全不需要进行任何处理。</p>
+<h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p>跟泛型实例一样，<code>foo.Bar&lt;TypeA&gt;</code> 和<code>foo.Bar&lt;TypeB&gt;</code>是两个完全不同的方法，需要在主工程中显式调用过，IL2CPP才能够完整保留，因此需要尽量避免在热更DLL中调用Unity主工程的泛型方法。如果在iOS上实际运行遇到报错，可以尝试在Unity的主工程中随便写一个static的方法，然后对这个泛型方法调用一下即可，这个方法无需被调用，只是用来告诉IL2CPP我们需要这个方法</p>
+<h2 id="IL2CPP限制"><a href="#IL2CPP限制" class="headerlink" title="IL2CPP限制"></a>IL2CPP限制</h2><p>将游戏导出到 iOS 等平台时，Unity 将使用其 IL2CPP 引擎将 IL“转换”为 C++ 代码，然后使用目标平台的本机编译器进行编译。 在此方案中，有几个不支持的 .NET 功能，例如反射的部分内容和使用 <code>dynamic</code> 关键字。 虽然可在自己的代码中使用这些功能，但使用第三方 DLL 和 SDK 时可能会遇到问题，这些 DLL 和 SDK 并非使用 Unity 和 IL2CPP 编写。 有关此主题的详细信息，请参阅 Unity 站点上的<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">脚本限制</a>文档。</p>
+<p>此外，如之前 Json.NET 示例中所述，Unity 将尝试在 IL2CPP 导出过程中裁剪掉未使用的代码。 虽然这通常不是问题，但对于使用反射的库，它可能会意外地删除在导出时无法确定是否被调用而在运行时可能被调用的属性或方法。 若要解决这些问题，请添加一个 link.xml 文件到项目中，该文件中包含的程序集和命名空间列表不会执行裁剪过程。 有关完整详细信息，请参阅<a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">有关字节码裁剪的 Unity 文档</a>。</p>
+<h2 id="编译速度优化"><a href="#编译速度优化" class="headerlink" title="编译速度优化"></a>编译速度优化</h2><ol>
+<li>增量编译</li>
+<li>关闭实时保护</li>
+<li>使用ssd</li>
+</ol>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019</a></li>
+<li><a href="https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html</a></li>
+<li><a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html</a></li>
+<li><a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ScriptingRestrictions.html</a></li>
+<li><a href="http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/" target="_blank" rel="noopener">http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/</a></li>
+<li><a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/PlatformDependentCompilation.html</a></li>
+<li><a href="https://www.jianshu.com/p/7cfcb7b0cfe7" target="_blank" rel="noopener">https://www.jianshu.com/p/7cfcb7b0cfe7</a></li>
+<li><a href="https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/" target="_blank" rel="noopener">https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zhepama</p>
+  <div class="site-description" itemprop="description">一个不专业的程序员,写着不专业的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhepama" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhepama" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhepama@gmail.com" title="E-Mail → mailto:zhepama@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.godgodgame.com/" title="http:&#x2F;&#x2F;www.godgodgame.com" rel="noopener" target="_blank">GODGODGAME</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.igiven.com/" title="https:&#x2F;&#x2F;www.igiven.com">IGIVEN</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhepama</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

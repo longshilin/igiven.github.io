@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一个不专业的程序员,写着不专业的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IGiven">
+<meta property="og:url" content="http://www.igiven.com/page/3/index.html">
+<meta property="og:site_name" content="IGiven">
+<meta property="og:description" content="一个不专业的程序员,写着不专业的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="zhepama">
+<meta property="article:tag" content="UNITY">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="游戏开发">
+<meta property="article:tag" content="NETCORE">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.igiven.com/page/3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>IGiven</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">IGiven</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不专业的程序员,写着不专业的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-18-BestPracticeUnderstandingPerformanceInUnity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-18-BestPracticeUnderstandingPerformanceInUnity/" class="post-title-link" itemprop="url">理解托管堆</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-18 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-18T08:00:00+08:00">2020-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>另一个Unity开发者面对的普遍问题是托管堆的意外扩展。在Unity中，托管堆的扩张比收缩更加容易。进一步说，Unity的垃圾回收策略倾向于碎片化内存，这可以防止收缩出来一个大的堆。</p>
+<hr>
+<h2 id="技术细节：托管堆怎样运行以及为什么它会扩张"><a href="#技术细节：托管堆怎样运行以及为什么它会扩张" class="headerlink" title="技术细节：托管堆怎样运行以及为什么它会扩张"></a>技术细节：托管堆怎样运行以及为什么它会扩张</h2><p>​    托管堆是内存中被项目脚本运行时（Mono或者IL2CPP）的内存管理器自动管理的部分。在托管代码中创造的所有对象必须被分配在托管堆上（请注意：严格的说，所有非空引用类型的对象和所有被装箱的值类型对象都必须被分配到托管堆上）。</p>
+<p><img src="../../assets/images/2020-02-18-BestPracticeUnderstandingPerformanceInUnity/UnderstandingPerformanceinUnity-AssetAuditingSection_image_0.png" alt="img"></p>
+<p>​    在上面的图表中，白色的方块表示分配到托管堆的内存量，它里面有颜色的方块表示托管堆内存空间中存储的数据值。当另外的值被需要时，将会从托管堆中分配更多空间。</p>
+<p>​    垃圾收集器周期运行（请注意：具体时间取决于不同的平台）。会清扫堆上的所有对象，检查那些不再被引用的对象并标记。然后删除没有被引用的对象，释放内存。</p>
+<p>​    至关重要的是，Unity的垃圾收集是，采用<a href="https://en.wikipedia.org/wiki/Boehm_garbage_collector" target="_blank" rel="noopener">Boehm GC算法</a>，是非世代和非压缩的。非世代意味着当执行一次收集的时候，GC必须清扫全部的托管堆，并且性能会随着堆的扩张而降低。非压缩意味着内存中的对象不会重新移动位置来使对象间的空隙关闭。</p>
+<p><img src="../../assets/images/2020-02-18-BestPracticeUnderstandingPerformanceInUnity/UnderstandingPerformanceinUnity-AssetAuditingSection_image_1.png" alt="img"></p>
+<p>​    上面的图显示了一个内存片段的例子。当一个对象被释放时，其内存也会被清空。但是被释放的空间不会变成一个大的可用内存池的一部分。被释放对象两边的对象仍然被使用。由于这个原因，被释放的内存变成了其他内存段中间的空隙（这个空隙在上图中由红圈标明）。这个新释放的空间只能用于存储与它完全相同或者更小大小的对象。 </p>
+<p>​    当分配一个对象时，请记住在内存中对象必须总是占用一段连续的空间。</p>
+<p>​    这导致了内存碎片的核心问题，虽然堆中的总可用空间是非常大的，但是可能一部分或者所有这些可用空间是被分配对象间的小空隙。在这种情况下，尽管可能会有足够的总空间来容纳一个确定大小的分配，但是托管堆找不到一块足够大的连续内存来适配这次分配。</p>
+<p><img src="../../assets/images/2020-02-18-BestPracticeUnderstandingPerformanceInUnity/UnderstandingPerformanceinUnity-AssetAuditingSection_image_2.png" alt="img"></p>
+<p>​    然而，如果一个大的对象被分配，并且没有足够的连续空间来容纳这个对象，如同上图所示，那么Unity的内存管理器将执行两个操作。</p>
+<p>​    首先，如果垃圾收集器还没有运行，那么它就会运行。尝试释放足够的空间来填充内存分配的需求。</p>
+<p>​    如果，GC运行完毕，仍然没有可以满足需求的连续内存空间，那么托管堆将会被扩大。托管堆扩大的具体大小由平台决定；然而，大多数Unity平台将托管堆扩大一倍。</p>
+<hr>
+<h2 id="托管堆的关键问题"><a href="#托管堆的关键问题" class="headerlink" title="托管堆的关键问题"></a>托管堆的关键问题</h2><p>​    托管堆的核心问题是其扩张是以两倍进行的：</p>
+<p>​    ·当托管堆扩张时，Unity并不总是释放分配到托管堆的内存页，它采取一个优化策略，保持扩张的托管堆，即使托管堆大部分是空的。这用来避免当有更大的内存分配发生时需要重新扩大托管堆。</p>
+<p>​    ·在大多数平台上，Unity最终会将托管堆上那部分空的内存页释放回操作系统。这个发生的间隔时间是不能保证的，并且也不能被依靠。</p>
+<p>​    ·用于托管堆的地址空间（栈）不再会被返还给操作系统。</p>
+<p>​    ·对于32位程序来说，如果托管堆扩张收缩多次，这会导致地址空间（栈）耗尽。如果一个程序可用内存的地址空间（栈）被耗尽，操作系统将会终止这个程序。</p>
+<p>​    ·对于64位程序来说，地址空间（栈）足够大，这对于运行时间不超过人类平均寿命的程序来说基本不会发生。</p>
+<hr>
+<h2 id="临时分配"><a href="#临时分配" class="headerlink" title="临时分配"></a>临时分配</h2><p>​    许多Unity项目都发现每帧有几十或几百kb的临时数据分配到托管堆处理。这通常对项目性能是非常有害的。考虑下面的计算：</p>
+<p>​    如果一个程序每帧分配1kb的临时内存，运行在每秒60帧的情况下，那么它每秒就会分配60kb的内存。在一分钟之内，这在内存中增加了3.6mb的垃圾。每秒执行一次垃圾回收器会降低性能，但是尝试在低内存设备上运行时每分钟分配3.6mb内存是有问题的。</p>
+<p>​    进一步说，考虑到加载操作。如果在一个繁重的资源加载过程中生成了大量的临时对象，并且这些对象被引用到该操作完成，那么垃圾回收器则不能释放这些临时对象并且托管堆需要扩张——即使托管堆中包含的许多这些对象马上就会被释放。</p>
+<p><img src="../../assets/images/2020-02-18-BestPracticeUnderstandingPerformanceInUnity/UnderstandingPerformanceinUnity-AssetAuditingSection_image_3.png" alt="img"></p>
+<p>​    保持对托管内存分配的追踪非常简单。在Unity的CPU Profiler中，概述写着“GC Alloc”那一列。这一行显示着在某一帧分配到托管堆的比特数。（请注意：这个数字与在制定帧分配的临时比特数不相同。分析器显示的事在特定帧被分配的比特数量，即使这些被分配内存的一些或全部在随后的帧中被复用。）将“Deep Profiling”选项打开，这就可以追踪这些内存分配是在哪些函数中发生的。</p>
+<p>​    Unity Profiler不会追踪那些没有发生在主线程的内存分配。因此，“GC Alloc”列就不能用来测量在用户自己创建的线程中的托管内存分配。可以把其他线程中的代码切换到主线程中执行来进行调试，或使用BeginThreadProfiling这个API来在Profiler的TimeLine选项卡中来显示样本。</p>
+<p>​    在目标设备上使用开发模式构建可以分析托管内存分配。</p>
+<p>​    请注意：一些脚本函数在Editor中运行会导致内存分配，但是当项目构建后就不会再产生内存分配。GetComponent就是最普遍的例子，这个函数在Editor中运行时总是会产生内存分配，但是在构建好的项目中就不会。</p>
+<p>​    总体来说，我们强烈的建议所有开发者当项目在交互状态时最小化托管堆内存分配。如果内存分配发生在没有交互操作的时候，比如说场景加载时，问题较少。</p>
+<p>​    Jetbrains Resharper这个Visual Studio插件可以帮助定位代码中的内存分配。</p>
+<p>​    使用Unity的深度分析模式来定位托管内存分配的特定原因。在深度分析模式，所有的函数的调用都被独立记录，在函数调用树中提供一个清晰界面来显示托管内存分配是在哪里发生的。请注意，深度分析模式不止在编辑器中，也可以使用命令行参数-deepprofiling在安卓和桌面上使用。在分析过程中深度分析器按钮保持灰色。</p>
+<hr>
+<h2 id="基础内存维护"><a href="#基础内存维护" class="headerlink" title="基础内存维护"></a>基础内存维护</h2><p>​    有一些相对简单的技术来使托管堆内存分配降低。</p>
+<hr>
+<h4 id="容器和数组重用"><a href="#容器和数组重用" class="headerlink" title="容器和数组重用"></a>容器和数组重用</h4><p>​    当使用C#的容器类或者数组时，如果可能考虑重用或者缓存分配的容器或者数组。容器类暴露了一个Clear函数，当清除容器的值时不会释放分配给容器的内存。</p>
+<blockquote>
+<p>void Update() {</p>
+<p>  List<float> nearestNeighbors = new List<float>();</p>
+<p>  findDistancesToNearestNeighbors(nearestNeighbors);</p>
+<p>  nearestNeighbors.Sort();</p>
+<p>  // … use the sorted list somehow …</p>
+<p>}</p>
+</blockquote>
+<p>​    当给一个复杂计算分配临时的“帮助性”容器时尤其好用。下面的代码是一个非常简单的例子：</p>
+<p>​    在这个例子中，nearestNeighbors列表每帧被分配一次，用于存储一些数据点。可以把这个列表非常简单的从这个函数中提出来放入函数所在的类中，这避免了每帧分配一个新的列表：</p>
+<blockquote>
+<p>List<float> m_NearestNeighbors = new List<float>();</p>
+<p>void Update() {</p>
+<p>  m_NearestNeighbors.Clear();</p>
+<p>  findDistancesToNearestNeighbors(NearestNeighbors);</p>
+<p>  m_NearestNeighbors.Sort();</p>
+<p>  // … use the sorted list somehow …</p>
+<p>}</p>
+</blockquote>
+<p>​    在这个版本中，每帧列表的内存会被保持和重用。只有当列表需要被扩大时内存才会被分配。</p>
+<hr>
+<h4 id="闭包和匿名函数"><a href="#闭包和匿名函数" class="headerlink" title="闭包和匿名函数"></a>闭包和匿名函数</h4><p>​    当使用闭包和匿名函数时，有两点需要考虑。</p>
+<p>​    首先，所有函数引用在C#中都是引用类型，因此分配到了托管堆。临时内存分配可以通过作为一个参数传递函数引用很简单的创建。这个内存分配不管是使用匿名函数或者是预先定义好的函数来传递都会发生。</p>
+<p>​    其次，转换一个匿名函数为闭包显著增加了需要传递闭包到函数接收的内存量。</p>
+<p>​    考虑下面的代码：</p>
+<blockquote>
+<p>List<float> listOfNumbers = createListOfRandomNumbers();</p>
+<p>listOfNumbers.Sort( (x, y) =&gt;</p>
+<p>(int)x.CompareTo((int)(y/2))</p>
+<p>);</p>
+</blockquote>
+<p>​    这段代码使用了一个简单的匿名函数来控制第一行创建的列表成员的排序方式。可是，如果一个程序员想要重用这段代码，可以考虑使用一个局部变量来代替常量2，像下面这样：</p>
+<blockquote>
+<p>List<float> listOfNumbers = createListOfRandomNumbers();</p>
+<p>int desiredDivisor = getDesiredDivisor();</p>
+<p>listOfNumbers.Sort( (x, y) =&gt;</p>
+<p>(int)x.CompareTo((int)(y/desiredDivisor))</p>
+<p>);</p>
+</blockquote>
+<p>​    现在匿名函数需要在此函数作用范围之外获取一个变量的状态，所以变成了一个闭包。desiredDivisor变量必须通过某种方式传进闭包中，以便被闭包中的实际代码所使用。</p>
+<p>​    为了实现这个需求，C#生成了一个匿名类，用来保存闭包需要的超过作用范围的对象。当闭包被传入Sort函数时，将生成一个此类的副本，并且这个类的副本通过整数desiredDivisor的值来初始化。</p>
+<p>​    由于执行闭包需要实例化一个生成它的类的拷贝，在C#中所有类都是引用类型，那么执行一个闭包需要在托管堆中分配一个对象。</p>
+<p>​    总体来说，如果可能最好避免在C#中使用闭包。在性能敏感的代码中应该尽量最小化使用匿名函数和函数引用，尤其是在基于每帧执行的代码中。</p>
+<hr>
+<h4 id="IL2CPP下的匿名函数"><a href="#IL2CPP下的匿名函数" class="headerlink" title="IL2CPP下的匿名函数"></a>IL2CPP下的匿名函数</h4><p>​    目前，检查通过IL2CPP生成的代码，显示简单的声明以及指定一个System.Function类型的变量会分配一个新的对象。无论这个变量是显式（在一个函数或类中声明）或是隐式（作为一个函数的参数声明）都会这样。</p>
+<p>​    所以，在IL2CPP脚本后端下所有使用匿名函数的情况都会分配托管堆内存。Mono脚本后端不是这种情况。</p>
+<p>​    进一步说，在IL2CPP中，由于函数参数声明方式的不同，会有显著不同的托管堆内存分配量级的不同。正如预期的那样，闭包在每次调用中分配最多的内存。</p>
+<p>​    不直观的说，在IL2CPP脚本后端下，当作为一个参数传递预定义的函数时，分配近似于闭包的内存量。匿名函数在托管堆上生成最少量的暂时垃圾，这是通过一个或多个量级的指令实现的。</p>
+<p>​    所以，如果一个项目想要在IL2CPP脚本后端上发布，有三的关键点需要注意：</p>
+<p>​    ·采取不需要传递函数作为参数的的编码风格</p>
+<p>​    ·当这种情况不可避免时，采用匿名函数而不是预定义函数</p>
+<p>​    ·避免闭包，不管用什么脚本后端</p>
+<hr>
+<h2 id="装箱"><a href="#装箱" class="headerlink" title="装箱"></a>装箱</h2><p>​    装箱是Unity项目中最普遍的意识不到的临时内存分配的原。它发生在当一个值类型被当做引用类型使用时；这通常发生在传递原始的值类型变量（比如int和float）到对象类型的函数中。</p>
+<p>​    在这个极度简单的例子中，为了要传递到object.Equals函数中，整数x被装箱，由于object的Equals函数要求传入的是一个object作为参数。</p>
+<blockquote>
+<p>int x = 1;</p>
+<p>object y = new object();</p>
+<p>y.Equals(x);</p>
+</blockquote>
+<p>​    C#的IDE和编译器通常不会对装箱发出警告，即使其导致了无意识的内存分配。这是因为C#语言是在小的临时内存分配会被世代的垃圾回收器和分配大小敏感的内存池有效率处理的假设下开发的。</p>
+<p>​    由于Unity的内存分配器使用不区分内存分配大小的内存池，并且Unity的垃圾回收器也不是世代的，因此其不能有效率的清除由装箱带来的小的，频率的临时内存分配。</p>
+<p>​    在Unity运行时使用C#编码时，应该尽量避免装箱。</p>
+<hr>
+<h4 id="识别装箱"><a href="#识别装箱" class="headerlink" title="识别装箱"></a>识别装箱</h4><p>​    基于正在使用的脚本后端，装箱在CPU跟踪数据中显示为一些函数的调用。它们通常采用下面的这些形式之一，<some class>是一些其他类或者结构体的名字，…是一些参数的数量：</p>
+<p>​    ·<some class>::Box(…)</p>
+<p>​    ·Box(…)</p>
+<p>​    ·<some class>_Box(…)</p>
+<p>​    它可以通过搜索反编译器或者IL查看器的输出来定位，例如ReSharper中内置的IL查看器或者dotPeek反编译器，IL指令是“box”。</p>
+<hr>
+<h4 id="字典和枚举"><a href="#字典和枚举" class="headerlink" title="字典和枚举"></a>字典和枚举</h4><p>​    一个普遍的造成装箱的问题是使用枚举类型来作为字典的键。声明一个枚举创建了一个新的值类型，在后台被作为像一个整数来对待，但是在编译时强制执行类型安全原则。</p>
+<p>​    默认情况下，调用Dictionary.add(key, value)的结果是调用Object.getHashCode(Object)。这个函数用于为字典的键获得合适的散列码，并且用于所有接受key的函数：Dictionary.tryGetValue, Dictionary.remove等等。</p>
+<p>​    Object.getHashCode函数是一个引用类型，但是枚举值始终是一个值类型。因此，对于枚举作为键的字典来说，每次函数调用都会至少一次对键进行装箱。</p>
+<p>​    下面的代码片段举出了一个简单的例子展示了装箱的问题：</p>
+<blockquote>
+<p>enum MyEnum { a, b, c };</p>
+<p>var myDictionary = new Dictionary&lt;MyEnum, object&gt;();</p>
+<p>myDictionary.Add(MyEnum.a, new object());</p>
+</blockquote>
+<p>​    要解决这个问题，有必要写一个自定义的类实现IEqualityComparer接口，并且传递这个类的实例到字典的比较器中（请注意：这个对象通常是无状态的，所里可以被不同的字典重用以节省内存）。</p>
+<p>​    下面的是一个对上面代片段实现IEqualityComparer的简单例子。</p>
+<blockquote>
+<p>public class MyEnumComparer : IEqualityComparer<MyEnum> {</p>
+<p>  public bool Equals(MyEnum x, MyEnum y) {</p>
+<p>​    return x == y;</p>
+<p>  }</p>
+<p>  public int GetHashCode(MyEnum x) {</p>
+<p>​    return (int)x;</p>
+<p>  }</p>
+<p>}</p>
+</blockquote>
+<p>​    可以将上面类的实例传递给字典的构造函数。</p>
+<hr>
+<h4 id="Foreach循环"><a href="#Foreach循环" class="headerlink" title="Foreach循环"></a>Foreach循环</h4><p>​    在Unity版本的Mono的C#编译器中，使用foreach循环会在每次循环结束时强制Unity去装箱一个值（请注意：在每次循环整个结束的时候这个值会被装箱一次。在这个循环中每次迭代不会装箱，所以不论循环两次还是两百次内存使用都是相同的）。这是因为通过Unity的C#编译器生成的IL构造了一个通用的值类型枚举器以迭代值类型的容器。</p>
+<p>​    这个枚举器实现的IDisposable接口，其肯定会在循环终止时被调用。然而，在值类型对象（比如结构体和枚举器）上调用接口函数需要把它们装箱。</p>
+<p>​    检查下面非常简单的代码例子：</p>
+<blockquote>
+<p>int accum = 0;</p>
+<p>foreach(int x in myList) {</p>
+<p>  accum += x;</p>
+<p>}</p>
+</blockquote>
+<p>​    上面的代码，当通过Unity的C#编译器运行时，产生下面的中间语言：</p>
+<blockquote>
+<p>.method private hidebysig instance void</p>
+<p>  ILForeach() cil managed</p>
+<p> {</p>
+<p>  .maxstack 8</p>
+<p>  .locals init (</p>
+<p>   [0] int32 num,</p>
+<p>   [1] int32 current,</p>
+<p>   [2] valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<int32> V_2</p>
+<p>  )</p>
+<p>  // [67 5 - 67 16]</p>
+<p>  IL_0000: ldc.i4.0  </p>
+<p>  IL_0001: stloc.0   // num</p>
+<p>  // [68 5 - 68 74]</p>
+<p>  IL_0002: ldarg.0   // this</p>
+<p>  IL_0003: ldfld    class [mscorlib]System.Collections.Generic.List`1<int32> test::myList</p>
+<p>  IL_0008: callvirt   instance valuetype [mscorlib]System.Collections.Generic.List<code>1/Enumerator&lt;!0/*int32*/&gt; class [mscorlib]System.Collections.Generic.List</code>1<int32>::GetEnumerator()</p>
+<p>  IL_000d: stloc.2   // V_2</p>
+<p>  .try</p>
+<p>  {</p>
+<p>   IL_000e: br      IL_001f</p>
+<p>  // [72 9 - 72 41]</p>
+<p>   IL_0013: ldloca.s   V_2</p>
+<p>   IL_0015: call     instance !0/<em>int32</em>/ valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<int32>::get_Current()</p>
+<p>   IL_001a: stloc.1   // current</p>
+<p>  // [73 9 - 73 23]</p>
+<p>   IL_001b: ldloc.0   // num</p>
+<p>   IL_001c: ldloc.1   // current</p>
+<p>   IL_001d: add     </p>
+<p>   IL_001e: stloc.0   // num</p>
+<p>  // [70 7 - 70 36]</p>
+<p>   IL_001f: ldloca.s   V_2</p>
+<p>   IL_0021: call     instance bool valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<int32>::MoveNext()</p>
+<p>   IL_0026: brtrue    IL_0013</p>
+<p>   IL_002b: leave    IL_003c</p>
+<p>  } // end of .try</p>
+<p>  finally</p>
+<p>  {</p>
+<p>   IL_0030: ldloc.2   // V_2</p>
+<p>   IL_0031: box     valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<int32></p>
+<p>   IL_0036: callvirt   instance void [mscorlib]System.IDisposable::Dispose()</p>
+<p>   IL_003b: endfinally </p>
+<p>  } // end of finally</p>
+<p>  IL_003c: ret     </p>
+<p> } // end of method test::ILForeach</p>
+<p>} // end of class test</p>
+</blockquote>
+<p>​    最有关系的代码是靠近最后的<strong>finally { … }</strong>语句块。callvirt指令在执行这个函数前在内存中发现IDisposable.Dispose方法的定位，并且要求这个枚举器被装箱。</p>
+<p>​    总体来说，在Unity中应该避免使用foreach循环。不全是因为装箱，还有是通过枚举器实现的容器迭代的函数调用消耗比常规的for或者while循环的迭代要慢的多。</p>
+<p>​    请注意在Unity5.5中C#编译器有了重大升级，增强了Unity生成IL的能力。特别是，装箱操作已经从foreach循环中消除。然而，由于函数调用的开销，与基于数组的等价代码相比CPU性能差距依旧存在。</p>
+<hr>
+<h4 id="有数组值的Unity-API-译者已查，在Unity官方文档中，会明确表明这些API有临时内存分配"><a href="#有数组值的Unity-API-译者已查，在Unity官方文档中，会明确表明这些API有临时内存分配" class="headerlink" title="有数组值的Unity API(译者已查，在Unity官方文档中，会明确表明这些API有临时内存分配)"></a>有数组值的Unity API(<em>译者已查，在Unity官方文档中，会明确表明这些API有临时内存分配</em>)</h4><p>​    一个更有害且难于发现的是由于重复使用Unity返回数组的API造成的虚拟的数组内存分配。所有返回数组的Unity的API都会在每次它们被访问时返回一个该数组新的拷贝。在没有必要的情况下经常访问有数组值的Unity的API效果非常不理想。</p>
+<p>​    举个例子，下面的代码在vertices数组的每次迭代中虚拟的创造了四份拷贝。内存分配在每次.vertices属性被访问时发生。</p>
+<blockquote>
+<p>for(int i = 0; i &lt; mesh.vertices.Length; i++)</p>
+<p>{</p>
+<p>  float x, y, z;</p>
+<p>  x = mesh.vertices[i].x;</p>
+<p>  y = mesh.vertices[i].y;</p>
+<p>  z = mesh.vertices[i].z;</p>
+<p>  // …</p>
+<p>  DoSomething(x, y, z); </p>
+<p>}</p>
+</blockquote>
+<p>​    这可以通过普通的重构来使其只有一次数组内存分配，不论循环迭代多少次。这是通过在进入循环前存储vertices数组来实现的。</p>
+<blockquote>
+<p>var vertices = mesh.vertices;</p>
+<p>for(int i = 0; i &lt; vertices.Length; i++)</p>
+<p>{</p>
+<p>  float x, y, z;</p>
+<p>  x = vertices[i].x;</p>
+<p>  y = vertices[i].y;</p>
+<p>  z = vertices[i].z;</p>
+<p>  // …</p>
+<p>  DoSomething(x, y, z); </p>
+<p>}</p>
+</blockquote>
+<p>​    虽然CPU的消耗在访问一个属性一次时并不是非常高，在持续的循环中重复的访问它们会导致性能热点。进一步来讲，没必要的重复访问会导致托管堆的扩张。</p>
+<p>​    这个问题再移动设备上非常普遍，因为Input.touches这个API的行为与上述类似。这在包含下面的类似代码的项目中也非常普遍，内存分配发生在每次访问.touches属性时。</p>
+<blockquote>
+<p>for ( int i = 0; i &lt; Input.touches.Length; i++ )</p>
+<p>{</p>
+<p>  Touch touch = Input.touches[i];</p>
+<p>  // …</p>
+<p>}</p>
+</blockquote>
+<p>​    然而，现在有很多Unity的API有不会造成内存分配的新版本。当使用这些时，应该是更有利的。</p>
+<blockquote>
+<p>int touchCount = Input.touchCount;</p>
+<p>for ( int i = 0; i &lt; touchCount; i++ )</p>
+<p>{</p>
+<p>  Touch touch = Input.GetTouch(i);</p>
+<p>  // …</p>
+<p>}</p>
+</blockquote>
+<p>​    转换上面的例子到Touch API 无内存分配的版本是非常简单的：</p>
+<p>​    请注意：这个属性的访问(Input.touchCount)仍旧要放在循环条件的外面，这是为了节省CPU在执行属性get方法时的消耗。</p>
+<hr>
+<h4 id="空数组重用"><a href="#空数组重用" class="headerlink" title="空数组重用"></a>空数组重用</h4><p>​    一些团队在一个数组返回值的函数需要返回一个空值时，倾向于用返回一个空数组来代替null。这种编码模式在许多托管语言中非常常见，尤其是C#和Java。</p>
+<p>​    总体来说，当一个函数返回一个长度为0的数组时，返回一个预先分配好的长度为0的数组的单例实例比重复创造空数组被认为更有效率。（请注意：当然，一个例外情况要考虑那就是当返回的数组需要改变长度时）</p>
+<ul>
+<li><a href="https://docs.unity3d.com/Manual/BestPracticeUnderstandingPerformanceInUnity4-1.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/BestPracticeUnderstandingPerformanceInUnity4-1.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-17-character-states/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-17-character-states/" class="post-title-link" itemprop="url">角色状态设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-17 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-17T08:00:00+08:00">2020-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://www.cnblogs.com/Renyi-Fan/p/9569090.html" target="_blank" rel="noopener">https://www.cnblogs.com/Renyi-Fan/p/9569090.html</a></p>
+<p><a href="https://www.gameres.com/797311.html" target="_blank" rel="noopener">https://www.gameres.com/797311.html</a></p>
+<p><img src="../../assets/images/2020-02-17-character-states/20161103213426625" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Attribute</span><br><span class="line">        &#123;</span><br><span class="line">            public int Hp &#123; get; set; &#125;</span><br><span class="line">            public int Mp &#123; get; set; &#125;</span><br><span class="line">            public int HpTotal &#123; get; set; &#125;</span><br><span class="line">            public int MpTotal &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">            private Attribute m_Parent;</span><br><span class="line">            private string m_Name;</span><br><span class="line">            public Attribute(int hp, int mp)</span><br><span class="line">            &#123;</span><br><span class="line">                this.Hp &#x3D; hp;</span><br><span class="line">                this.Mp &#x3D; mp;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public Attribute(int hp, int mp, string name) : this(hp, mp)</span><br><span class="line">            &#123;</span><br><span class="line">                this.m_Name &#x3D; name;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public abstract void Calc();</span><br><span class="line">            public abstract int ChildCount();</span><br><span class="line">            protected void SetParent(Attribute child)</span><br><span class="line">            &#123;</span><br><span class="line">                child.m_Parent &#x3D; this;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public Attribute GetParent()</span><br><span class="line">            &#123;</span><br><span class="line">                return this.m_Parent;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public void Show()</span><br><span class="line">            &#123;</span><br><span class="line">                Calc();</span><br><span class="line">                Console.WriteLine(string.Format(&quot;&#123;0&#125; 属性为： HP &#123;1&#125; MP &#123;2&#125;&quot;,this.m_Name, this.HpTotal, this.MpTotal));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class AttributeComponent:Attribute</span><br><span class="line">        &#123;</span><br><span class="line">            private List&lt;Attribute&gt; m_AttributeList &#x3D; new List&lt;Attribute&gt;();</span><br><span class="line"></span><br><span class="line">            public AttributeComponent(int hp, int mp) : base(hp, mp)</span><br><span class="line">            &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public AttributeComponent(int hp, int mp, string name) : base(hp, mp, name) &#123; &#125;</span><br><span class="line"></span><br><span class="line">            public override void Calc()</span><br><span class="line">            &#123;</span><br><span class="line">                this.HpTotal &#x3D; this.Hp;</span><br><span class="line">                this.MpTotal &#x3D; this.Mp;</span><br><span class="line"></span><br><span class="line">                foreach (Attribute item in m_AttributeList)</span><br><span class="line">                &#123;</span><br><span class="line">                    &#x2F;&#x2F;递归计算属性和</span><br><span class="line">                    if (item.ChildCount() &gt; 0)</span><br><span class="line">                        item.Calc();</span><br><span class="line"></span><br><span class="line">                    this.HpTotal +&#x3D; item.HpTotal;</span><br><span class="line">                    this.MpTotal +&#x3D; item.MpTotal;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public override int ChildCount()</span><br><span class="line">            &#123;</span><br><span class="line">                return m_AttributeList.Count;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public void AddAttribute(Attribute attribute)</span><br><span class="line">            &#123;</span><br><span class="line">                SetParent(attribute);</span><br><span class="line">                this.m_AttributeList.Add(attribute);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public void RemoveAttribute(Attribute attribute)</span><br><span class="line">            &#123;</span><br><span class="line">                m_AttributeList.Remove(attribute);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void TestMethod1()</span><br><span class="line">        &#123;</span><br><span class="line">            AttributeComponent basic &#x3D; new AttributeComponent(50, 100, &quot;Ali&quot;);</span><br><span class="line">            AttributeComponent lvUp &#x3D; new AttributeComponent(50, 100, &quot;升级增加&quot;);</span><br><span class="line">            AttributeComponent weapon &#x3D; new AttributeComponent(10, 20, &quot;无级弓&quot;);</span><br><span class="line">            AttributeComponent weaponEnchanting &#x3D; new AttributeComponent(5, 5, &quot;附魔增加&quot;);</span><br><span class="line"></span><br><span class="line">            basic.Show();</span><br><span class="line">            Console.WriteLine(&quot;升级啦&quot;);</span><br><span class="line">            Console.WriteLine(&quot;---------------------------------------------------&quot;);</span><br><span class="line">            lvUp.Show();</span><br><span class="line">            basic.AddAttribute(lvUp);</span><br><span class="line">            basic.Show();</span><br><span class="line">            Console.WriteLine();</span><br><span class="line">            Console.WriteLine(&quot;装备了武器&quot;);</span><br><span class="line">            Console.WriteLine(&quot;---------------------------------------------------&quot;);</span><br><span class="line">            weapon.Show();</span><br><span class="line">            basic.AddAttribute(weapon);</span><br><span class="line">            basic.Show();</span><br><span class="line">            Console.WriteLine();</span><br><span class="line">            Console.WriteLine(&quot;武器附魔&quot;);</span><br><span class="line">            Console.WriteLine(&quot;---------------------------------------------------&quot;);</span><br><span class="line">            weaponEnchanting.Show();</span><br><span class="line">            weapon.AddAttribute(weaponEnchanting);</span><br><span class="line">            weapon.Show();</span><br><span class="line">            basic.Show();</span><br><span class="line">            Console.WriteLine();</span><br><span class="line">            Console.WriteLine(&quot;卸载装备&quot;);</span><br><span class="line">            Console.WriteLine(&quot;---------------------------------------------------&quot;);</span><br><span class="line">            basic.RemoveAttribute(weapon);</span><br><span class="line">            basic.Show();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.csdn.net/alistair_chow/article/details/53029909" target="_blank" rel="noopener">https://blog.csdn.net/alistair_chow/article/details/53029909</a></p>
+<p><a href="https://blog.csdn.net/alistair_chow/article/details/53026375" target="_blank" rel="noopener">https://blog.csdn.net/alistair_chow/article/details/53026375</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-16-buff-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-16-buff-system/" class="post-title-link" itemprop="url">游戏buff系统设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-16 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-16T08:00:00+08:00">2020-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>内部运算<br>1、是否包含技能效果？（提高/降低 攻击 命中 闪避 移动速度 群体伤害 替换技能ID 等 ）<br>2、是否包含阶段效果？（BUFF分为多个阶段，不同的阶段有不同的效果，比如影之哀伤）<br>3、是否包含计时器？（持续时长计算、叠加时长计算 总之所有关于持续性时间的问题 都丢这里）<br>4、是否包含计数器？（用来计算阶段、剩余生效次数、比如影之哀伤 LOL电刀）<br>5、是否具备分类规则？（魔法效果 诅咒效果 中毒效果 用于进行归类 方便程序进行的 驱散筛选判断）<br>6、是否可以被驱散？ （魔法效果只能用祛除魔法解除 中毒效果只能用解药祛除）<br>7、是否具备优先级？（附加优先级，低等级BUFF会被高等级BUFF替换，低等级BUFF无法附加给高等级怪）<br>8、是否保留母体信息？（比如传染性的DEBUFF，感染者传播一次，母体会获得额外巴拉巴拉。。。多个项）<br>9、是否共享同步规则？（比如多个角色共享一个BUFF状态，一个人的BUFF被祛除则其他人也被祛除）<br>10、以上功能可以进行再补充，没有需求则可以逐个剔除。</p>
+<p>外部表现<br>1、是否显示BUFF图标？（传奇里道士的BUFF是不显示图标的）<br>2、是否不同阶段表现不同的图标？<br>3、是否显示计时器？<br>4、是否显示计数器？<br>5、是否显示BUFF文字说明？（对BUFF类型、效果的描述）<br>6、是否改变角色外形？（DNF里的冰冻、WOW里的变形）<br>7、以上表现功能可以进行再补充，同上。</p>
+<p>首先我想说的是，这是一套机制，并不是单独的一个系统，所谓机制就是一种从逻辑思想到代码实现的小窍门的组合，只有当你把它运用到一个实际项目中去了，它才能帮助你建立一个系统。我不敢说它是最好的，但这套东西帮我完成了一个又一个项目的制作，我觉得现在可以简单的拿出来和大家分享下思维。事实上这也并不是什么很玄乎的东西，我的Buff的机制更像是Flash的Dispatch机制。更简单的说，你可以把它理解为一种回调机制，在必要的时候进行逻辑回调。我想这一句话应该是可以概括整个机制的工作原理了。</p>
+<p>　　举个简单的例子来说明，作为一个设计师，在设计系统的同时应当思考好这个游戏的系统中的各个回调点，而他们也正是Buff系统发挥能量的地方，Buff回调点有哪些（当然我可能会把它歪到WoW，毕竟这最早的设计灵感来自WOW）？我简单列一些：</p>
+<p><strong>1，BuffOccur</strong></p>
+<p>　　我认为这是最核心的回调点之一，应该说你把这套机制运用在任何游戏中他都必须由这个时间点，就是当任何情况Buff被添加到一个角色身上的时候（可能来自技能、可能来自道具、可能来自GM命令，等等等等），往往他最杰出的作用就是改变角色的属性、或者是被控制状态。之所以说这是机制是思维方式，因为它并不关心你的游戏有哪些状态或者属性，但是这里有一点比较容易搞混的就是初级策划往往会认为昏迷就是一个Buff(debuff)，可是事实上昏迷是一种组合状态，他在LoL里面的形态是剥夺移动能力、剥夺攻击能力、剥夺商店使用能力的组合（我不知道是不是真的，但是我在做起凡三国争霸2的时候是这么做的，这套机制最早运用的游戏就是那个，虽然我离开起凡后这套系统的代码被删除了）。因此在BuffOccur这个回调点，有着很多的事情会需要做，那么同样的，BuffRemoved回调点也就有了同样的职责。</p>
+<p><strong>2，BuffOnTick</strong></p>
+<p>　　也就是通常我们最常见的，每3秒造成伤害、治疗；或者我们可以做每3秒制造一个AOE，甚至每3秒为自己添加一个护盾等等，他的核心在于没一定时间触发一次，但请你注意不是所有的游戏都适用这个回调点。</p>
+<p><strong>3，BuffRemoved</strong></p>
+<p>　　在移除Buff的时候，重新计算属性等肯定是需要在这个时间点工作一次的，那么事实上还有很多的效果也可以在这个时间点被调用，典型的是痛苦无常和生命绽放（都来自WOW），痛苦无常是当驱散的时候对驱散者造成伤害并且沉默，因此我们需要传入导致buff终结的人（可能是null）和BuffRemove的时候剩余时间，由此判断是否真的完成了，那么剩余时间越多造成伤害越高也就成了可能的设计；而生命绽放则更加简单，在Removed时候给持有者进行治疗就可以了。</p>
+<p><strong>4，BuffBeHurt</strong></p>
+<p>　　在受到攻击的时候触发，大多盾类技能由此而生，这个回调点应当Return一个Int或者Float，用于传递给下一环，已获得新的伤害，而当所有的执行完毕之后，造成的最终伤害就会是这个数字，那么把受到的伤害变成治疗是多么简单的事情？可是否应该有，还得看游戏的Patterns。</p>
+<p><strong>5，BuffOnHit</strong></p>
+<p>　　在攻击的时候产生，虽说字面上是OnHit，你仍然可以把isHit像isCrit一样传给回调函数，战士的压制（老版本）在攻击被闪躲时可以发动，更早的猎人在闪避攻击后可以提高招架？其实都是这个时间点来做的。</p>
+<p><strong>6，BuffBeforeKilled</strong></p>
+<p>　　很多时候BuffBeHurt并不能完成一些设计，比如说必定能杀死目标的伤害被完全吸收（贼爷爷的假死），这时候我们要确定这个角色原本应该死了，因此就需要设定出这样一个回调点。</p>
+<p><strong>7，BuffAfterKilled</strong></p>
+<p>　　当杀死一个角色的时候，恢复自身X%的HP，这时候你就需要这个回调点，精确的在角色死亡后发生。</p>
+<p>　　机制始终是机制，或者说是思维方式，他真正的运行还是取决于游戏本身，回调点我只是随便举个例子而已，事实上根据游戏不同，完全可以增加或者删除回调点，比如一个MT卡牌游戏他就完全不需要onTick这样的回调点，但他可以有BeforeMove（角色行动前）等回调点，这取决于游戏本身机制。同样的每一个视觉特效都可以在每一个回调点去播放，你可以设计好这样的规则不是吗？</p>
+<p>　　接下来，我们就在这个机制的基础上分析一下LoL的一些技能，我印象最深的那些，我已经很久不玩LoL了：</p>
+<p>　　1，蛮王的6秒真男人，一个Buff，在BeforeKilled时候调用，Return1作为最后设定的HP，并被写在回调代码的最后。</p>
+<p>　　2，盲僧、瑞文的连续技能，事实上这也是你肉眼看不到的Buff（机制正是如此奇妙，未必被直接运用，正如我所说，他是一种思路），当有Buff的时候技能A变成技能B，移除后恢复，OnSkillCast的回调点（往往技能施展中会需要回调点，因此回调点还是根据游戏具体分析出来的）。</p>
+<p>　　3，火男的昏迷，火男的法术会为目标添加一个Buff，而法术在OnHit的时候会检查如果存在这个Buff则执行XX效果导致昏迷，否则普通效果。</p>
+<p>　　4，安妮的昏迷，你如果有仔细看了2并思考了，这不是问题。</p>
+<p>　　5，大嘴的自爆，在角色死亡的时候产生免疫性Buff，Buff结束时产生AOE，如果你这么思考，这会简单很多。</p>
+<p>　　这套机制在实际工作中，我们需要如何去分工呢？事实上已经很清晰了：</p>
+<p>　　策划：需要设计出所有的回调点，事实上策划如果完全不了解程序的效率等问题是无法设计好的，最好还能大概了解所谓回调机制，因为除了回调点意外，你还需要设计出回调时候传的参数，以及返回给程序的参数及其工作顺序，除此之外一些基础的表象也需要去制作，如buff的名称，那么在做表的时候会有2种风格，在起凡的时候我可以不用太关心，因为每个人都会用Lua写回调函数，但之后的项目中，我是用了我常推荐的Tag机制，比如策划填写一个Buff效果些daze_60之类的我就可以把它分析为60%几率昏迷目标等。在设计这些东西的时候为了更有效地避免夸夸其谈，策划对于实现的了解还是非常重要的，而事实上我们这里已经是策划动手写逻辑代码了，这问题就相对好办些。策划除此之外还应该归纳出特效播放点、数据同步时间点等等和游戏核心机制相结合的东西。这世界上也有很多好的创意，但你必需知道机制士兵不能帮你实现的，更重要的是你要知道自己想做什么和怎么去做，因此设计buff的时候切勿滥用机制，机制用的不好反而弄巧成拙，而合理的拆分Buff的效果也是一个策划的价值所在。</p>
+<p>　　程序：程序的工作则是优化好回调点和策划可能滥用到家的循环，这是非常头疼的事情，因此很可能需要更好的机制替他们实现一些该死的逻辑优化，可是这并不是最重要的，最主要的工作还是完成一些底层接口功能，比如在某个绑点上播放某个特效之类的，这些是策划都是即使会写逻辑代码也写不好的东西，也正是程序员强势所在（因此我并不认为游戏程序员非得精通游戏，但必须了解一二，才能大概思考一些优化、渲染的逻辑）。</p>
+<p>　　美术：视觉特效肯定少不了你的，搞不好还得弄动作，音乐跑的了音效跑不了，做吧，策划会整理出大量的需求列表的，如果上面说做那就做了。</p>
+<p>　　在你了解了Buff的工作机制之后，你才有资格进一步的谈创意，不然都是胡扯蛋，你都不知道怎么去做，你怎么去创造呢？那么假如让我把吕布加入到LoL中，我会给他设计什么样的被动技能呢？就让我们一起YY下（确切的说知道实现方式的YY才是有价值的）：</p>
+<p>　　被动：人中吕布，任何普通攻击（我想LoL的普通攻击应该也是有标记的，起凡当时是skillId==28近战、30远程，事实上我不太赞成这样的skillId特殊标记法）的时候会为吕布添加1层“人中吕布”（另外一个buff）<br>“人中吕布”到15层、25层、35层、45层、50层时更换视觉特效(BuffOccur BuffRemoved)。人中吕的特性是15层开始普通攻击有几率造成双倍伤害，25层开始受到伤害有几率减少20%，35层开始释放技能获得导致目标昏迷2秒，45层开始释放技能恢复自身25%生命，50层时技能对20%生命以下目标一击必杀，死亡是损失一半层数(beKilled)。这么牛逼的效果？是啊，中国人当然应该牛逼了。慢来，才YY开始，这算设计好了？早呢，为了这些效果，你需要在“人中吕布”Occur Remove中去根据当前层数添加删除Buff：</p>
+<p>　　人中吕布_双倍伤害，普通攻击OnHit投随机数决定是否伤害x2。</p>
+<p>　　人中吕布_几率免伤，BeHurt时候投随机数决定是否降低一定的伤害。</p>
+<p>　　人中吕布_强力攻击，Onhit判断不是普通攻击则给目标一个2秒的Buff1层。</p>
+<p>　　强力攻击_昏迷，Occur携带者昏迷属性为true，Remove就不需要设置false了，因为他可能还有别的buff让他昏迷，但是Remove和Occur的时候都要重新计算一次属性状态就对了。说到这里，这个Buff互相堆叠又是很讨厌的逻辑，2个SS可以给同一个目标释放腐蚀术，产生2个，但是自己却只能对1个目标上1个，等等等等。</p>
+<p>　　人中吕布_技能恢复，OnCast的时候（事实上LoL应该只有OnHit，这也可以），判断不是普通攻击则回复生命。</p>
+<p>　　人中吕布_斩杀，OnHit判断目标生命比，决定是否造成999999伤害。</p>
+<p>其实如你楼下一层说的，这个机制的最大优势在于，它可以实现很多难以预料的功能，如果策划足够给力的话。<br>实际的经验是，一个项目中产生很多沟通问题的本质是，策划并不能归纳出自己想要什么，而程序员更不可能提早知道你想做什么，预判是一道鸿沟，无法跨越，因为我们都不是先知，而年轻的策划很多神奇的想法更是无法预判的，但如果放弃这些想法中的一些精化会非常可惜。因此在项目开发中尽可能去做一些能够更有“包容性”的设计，是非常重要的事情，这解决了后期的很多问题。<br>你可以发现我提倡的很多机制或者想法都具有“包容性”或者说“预判性”，包括Tag机制本身，很多年轻的策划或者程序并不能理解为什么明明我们可以用id数字分段做的事情非要想的如此复杂，但事实是当你需要把你的分段规则详细的说给后来的人知道的时候，你甚至需要花费几周时间，还未必能说清楚，更糟糕的是，也许你自己都忘了当初的约定。<br>Buff机制也是如此，它的优势在于程序员、包括策划自己并不需要一开始就知道我要具体做什么，但是我们可以先把框架搭起来或者说可以开始动手制作项目了，而后期灵感突发的时候，并不是非得“放到下一个项目”的。<br>而技能机制，在我看来反而只是一个辅助的体系，因为它只是一套简单的流程，作为一个入行的新人都应该轻松的完成他的开发，但是很多不太好的做法却是把技能的效果复杂化了，以至于程序员被误导，后期很难对技能维护。因此技能的效果，事实上就是Hp_Dmg（这么多年了我都用这个函数来造成伤害，因为名字很有趣），CreateBuffObj，CreateAoEObj，就是这么简单，一个技能的效果可以同时调用多条这样的功能，但只限于这样的功能。至于花哨的东西，就让Buff系统去完成。<br>因此这里还说了一个重点，对于策划来说，研发最大的技巧就是“拆”，如何把你的想法拆成最基础的元素，这样大家在实现的时候就不会有很多不必要的麻烦，在之后的debug中也会方便很多——比如我说的昏迷插法。一个优秀的程序员（至少我不是）他/她一定是把心思放在读书上，至少在学习计算机编程的时候他/她们非常棒，这也导致了他们不太可能像我们策划一样了解游戏，因此不应该把一些“难以理解”的东西拿来去塞给程序员做（事实上难以理解本身是因为它有太多的“专业名词”和超乎自然的地方，这也是游戏魅力所在），你也许没见过把“沉默”做成了“禁言”功能的程序员，他认为法师释放了一个沉默法术后，对方玩家就不能发送聊天内容了，因为被“沉默”了。<br>降低研发成本，从设计师角度来说主要还是沟通成本，现在已经成为了很多公司必须面对的课题了，明明一个简单到10小时能完成的逻辑，在很多公司居然能花费好几个人用好几十天去做，并且没能完成（因为策划总是在添加和改变想法，而程序员却陪太子读书了）。<br>“猴子”这个称呼并不适合一个200多斤的人<img src="../../assets/images/2020-02-16-buff-system/lol.gif" alt="img">，龙与地下城——欧美人眼中最强的生物和它的巢穴，都是字母D开头中间用and连接，它骨子里是一套分析世界的数学模型，骰子实现了世界上很多所谓运气的东西；猴与花果山，它应该是中国人的DND，猴象征着欧美人眼中的中国人，也是孙悟空的表现，花果山则是孙悟空的住所，Monkey and Mountain，前后2个M，就是巧妙的地方，15年前我想做一套中国人的DnD，但至今没法实现，很多原因导致我们在娱乐方面缺少类似骰子这样的基础文化。</p>
+<p>相关链接</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/150812545" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/150812545</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-15-skill-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-15-skill-system/" class="post-title-link" itemprop="url">技能系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-15 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-15T08:00:00+08:00">2020-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="../../assets/images/2020-02-15-skill-system/20180602102244475.png" alt="img"></p>
+<p>从架构上说,主动技能都可以拆分为释放条件检测-&gt;释放-&gt;目标选择-&gt;产生效果<br>但是里面很多细节,比如子弹初始位置设置,做成什么样子组合出更多的设计形式,同时可以兼容更多的有效需求<br>比如一个回合制卡牌游戏,要啥飞行子弹,区域只要相对和绝对位置2大类,然后直接填坐标就好了</p>
+<p><strong>示例1:</strong><br>玩家释放技能1-&gt;释放子弹1对自身加免疫buff,释放子弹2在1秒后对身前范围最近1个友方击中-&gt;命中后对自身释放子弹-&gt;命令自身对目标释放技能2<br>释放技能1后选择对身前最近一个友方追加释放技能2</p>
+<p><strong>示例2:</strong><br>被动技能-&gt;获得buff-&gt;buff触发器每2秒在自身位置释放单体子弹1清除buff1,aoe子弹击中敌人-&gt;每命中一个敌人对自身叠加1层buff1<br>实际效果:周围敌人越多自身获得越多层buff1</p>
+<p><strong>示例3:</strong><br>玩家释放技能1-&gt;释放子弹1对自身周围友方和敌方击中-&gt;对命中的目标释放3个子弹:子弹1筛选敌人产生伤害,子弹2筛选友方30%血以上造成治疗,子弹3筛选敌人血量大于80%命中后产生子弹4对自身添加buff<br>实际效果:对周围友方残血造成治疗,对敌人造成伤害,如果击中的敌人血量较高,自身获得增益</p>
+<p><strong>示例4</strong><br>玩家有被动技能获得buff1-&gt;buff触发器效果为暴击击中时若双方距离&gt;300则对目标发射子弹1和子弹2-&gt;子弹1对自身添加buff,子弹2筛选有buff2的敌人<br>技能效果:暴击击中距离自身较远的敌人使自身获得增益,触发时若敌人有buff2,则造成额外效果</p>
+<p><strong>示例5</strong><br>玩家释放主动技能-&gt;发射子弹使自身获得6层buff1<br>buff1附带3个触发器<br>触发器1-&gt;释放技能清除所有层数buff1<br>触发器2-&gt;受到攻击失去1层<br>触发器3-&gt;buff1消失时自身获得buff2<br>buff2-&gt;触发器每1秒对自身附近发射子弹筛选1个敌人-&gt;令目标对自身发射子弹添加增益<br>技能效果:主动隐身,受到攻击失去1层,释放技能后解除隐身,隐身结束后一段时间内受到伤害转移给附近一个敌人</p>
+<p>基础内容有这么几个部分：<br>1、Actor，这个是角色本身，它不属于技能系统，但是它要给技能系统开放足够的接口，比如播放动画、播放声音、控制位移、造成伤害、添加buff等等<br>2、Skill，这个就是技能本身，它在合适的时机调用脚本中的相应函数，脚本中可以在OnCreate  OnHit  OnDeath  OnHeroDeath  OnSoldierDeath等事件中写相应代码。由于是脚本，所以代码非常灵活，而由于限定了只处理技能相关功能，所以代码也不会很复杂，有经验的策划绝对搞的定。<br>3、Buff，这个是技能效果的核心。它可以是有时限的，也可以是被动无时限的。在它对应的脚本中，定义了这个Buff会影响哪些角色属性（如血量、暴击、攻击力等等）或者角色状态（如眩晕、隐身、沉默等等），同样，buff脚本也支持事件机制，在脚本的相应事件处理其逻辑功能，可以实现非常丰富的效果。<br>4、Modifier，这个是一个技能修改器。技能修改器可以修改技能的流程和效果（比如技能伤害增加、火球击中人会爆炸等等），具体可以参考风暴英雄中的技能天赋系统。技能修改器并没有脚本与之对应，一个技能如果支持某个修改器，需要在脚本中处理相应功能。</p>
+<p>技能的基类是RoleSkill，然后分近战和远程两个大类，记得不要根据职业来分，而是根据功能来抽象，近战的技能是通过武器来产生伤害，而远程技能是通过发射物来伤害。近战技能可以继续分为：近距离接触攻击单人，近距离范围内接触攻击多人等；远程技能可以分为：单发射物攻击单人，远距离范围内非接触攻击多人等。</p>
+<p><img src="https://github.com/dongweiPeng/SkillSystem/raw/master/Assets/%E6%8A%80%E8%83%BD%E6%B5%81%E7%A8%8B.png" alt="img"></p>
+<p>广义的的说，和战斗结算相关的内容都算技能系统，包括技能信息管理、技能调用接口、技能目标查找、技能表现、技能结算、技能创生体（buff/法术场/弹道）管理，此外还涉及的模块包括：AI模块（技能调用者）、动作模块、寻路/移动模块以及人物属性和伤害数值结算等。</p>
+<p>先说下技能模块每个部分的职责和原理：</p>
+<ul>
+<li>技能信息管理：管理unit所拥有的技能以及技能的等级、cd等。在我们游戏中，这里还需要负责管理符文，符文会对技能信息进行修改。</li>
+<li>技能调用接口：AI或者UI操作触发技能，触发技能时可能选择了一个目标（AI），也可能并没有目标。</li>
+<li>技能流程管理：一个技能可能由多个子技能以移动的执行模式组合而成，而每一个最终执行的技能执行过程也存在一个流程，一般包括：前摇过程-结算点-后摇过程。技能在前摇结束时进入技能真正的结算流程，结算流程可能创建子弹，也可能触发buf或者创建法术场。</li>
+<li>技能目标查找：若技能触发时已经设置了技能目标unit(如怪物AI释放技能)，则直接将其作为目标unit，否则需要根据一定的策略选择一个目标。此外，技能释放的时候还需要释放方向和释放位置等信息，也通过这个模块获取。</li>
+<li>技能表现：技能释放过程中，需要创建相应的特效以及执行相应的动作。</li>
+<li>技能创生体（buf/弹道/法术场）管理：buf挂在unit身上，可能影响unit的一些行为和状态；法术场一般由场景管理，影响场景中某范围内的unit；弹道就是技能创建的一个子弹，这个子弹可能以不同的路线移动（直线／抛物线／直接命中等）</li>
+</ul>
+<h2 id="0技能表"><a href="#0技能表" class="headerlink" title="0技能表"></a>0技能表</h2><p>首先说下实现技能的基本思路。实现技能的基本思路就是通过策划填写表格，来配制成某些技能，在执行某个技能的时候，分别去根据这些表格中的内容，确定技能如何表现。基本的逻辑是：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> skillTable.<span class="keyword">get</span>(<span class="string">"技能动作"</span>):</span><br><span class="line">     paly 动作</span><br><span class="line"><span class="keyword">if</span> skillTable.<span class="keyword">get</span>(<span class="string">"特效"</span>):</span><br><span class="line">     播放特效</span><br><span class="line"><span class="keyword">if</span> skillTable.<span class="keyword">get</span>(<span class="string">"法术场"</span>):</span><br><span class="line">    创建法术场</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-技能信息管理"><a href="#1-技能信息管理" class="headerlink" title="1 技能信息管理"></a>1 技能信息管理</h2><p>unit创建时，此模块管理unit可使用哪些技能，比如游戏中玩家可以选择使用哪些技能。</p>
+<p>游戏中技能的升级、技能加点、技能池管理都在这个模块。</p>
+<p>此模块还需要管理技能等级／符文／装备等外部模块对技能参数的修改。</p>
+<h2 id="2-技能调用接口"><a href="#2-技能调用接口" class="headerlink" title="2 技能调用接口"></a>2 技能调用接口</h2><p>提供技能调用的接口供AI或玩家操作调用，调用时可以提供一个目标unit，也可以不提供让技能自己查找。</p>
+<p>提供三个接口：</p>
+<ul>
+<li>技能开始skill_enter：开始执行技能，若技能不循环进行，则技能可以自动结束。</li>
+<li>技能结束skill_exit：有的技能不能自己结束，比如某些循环技能，对于循环技能玩家可以按住按钮一直释放。当玩家松开按钮，调用技能结束接口，告诉当前技能使其结束，此时技能到达后摇点时，技能不再继续执行。</li>
+<li>技能停止skill_stop：当技能被强制打断时，如被攻击、晕眩、蓝不足等，技能会被强制停止。</li>
+</ul>
+<p>此外，当前一个技能正在执行时新的技能调用启动，此时新的技能调用信息会被保存。一般来说，并不会把所有新的技能调用信息保存下来，那样就成了一个技能执行的序列。我们游戏仅保存一个新的技能调用信息。</p>
+<p>总的来说，技能模块提供尽量少的接口供AI/UI等上层逻辑使用，这样可以有效的与AI和UI进行解耦。</p>
+<h2 id="3-技能流程管理"><a href="#3-技能流程管理" class="headerlink" title="3 技能流程管理"></a>3 技能流程管理</h2><p>技能流程这里分两点讨论：</p>
+<ol>
+<li>一个技能可能由多个子技能以一定的模式组合起来。<br> 一个技能常常由多个子技能以一定的模式组合而成，比如三段击、比如冲锋斩（先冲锋、后斩）等，甚至还存在根据不同的环境选择执行不同的子技能。分析策划需求发现，技能可以分成一个树形结构，这个树形结构非常类似行为树，同样可以将节点分为控制节点和执行节点，甚至可以包括condition节点。为此，我们项目引入一个技能树概念来描述这种数据结构。</li>
+<li>一个具体的技能（技能树执行节点）也有一个固定的执行流程。这个流程一般为：前摇过程、前摇过程结束=技能结算时间点、后摇时间点。</li>
+</ol>
+<h3 id="3-1-技能树"><a href="#3-1-技能树" class="headerlink" title="3.1 技能树"></a>3.1 技能树</h3><p>技能树参考传统行为树的设计，使用树形结构控制技能的执行流程。</p>
+<p>技能树和行为树在结构上比较类似，但是在运行逻辑上有很大的不同。</p>
+<p>首先，技能树的重点并不是根据上下文选择一个合适的节点执行，而是以一定的策略将技能树从头到尾遍历执行一遍。</p>
+<p>其次，技能树没有tick的概念，而是基于回调的，比如一个顺序节点，顺序节点中一个子节点执行完毕后，马上通知顺序节点，顺序节点执行下一个子节点，直至顺序节点的最后一个子节点执行完毕，顺序节点就会通知父节点（如果有）它已经执行完毕。</p>
+<p>此外，为了完成技能的一些需求，控制节点往往存储更多的控制信息来控制子节点的执行流程。具体的信息根据策划需求设置，比如顺序结点包括原子属性和循环属性。如果一个顺序节点具有原子属性，则这个顺树节点在执行的过程中并不会被end，只有全部子节点执行结束才可以end。</p>
+<p>以我们游戏中战士普攻三段击为例：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/36361-5ec18bbce4b863ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/544/format/webp" alt="img"></p>
+<p>Paste_Image.png</p>
+<p>三段击本身是一个顺序节点，当技能开始时，此节点顺序执行三个子节点。对于第一个子节点，它依然是一个顺序节点，首先冲锋至目标单位身前，然后对目标单位进行挥砍。但是冲锋节点还包括了一个condition，若和目标的距离很近，则跳过冲锋节点，直接挥砍。</p>
+<p>普攻是一个循环技能，这个技能只要玩家点着按钮不放开，技能就会一直执行，因此根节点（普攻）是一个具有循环属性的顺序节点。而对于子技能1（控制节点），他是一个具有原子属性的顺序技能，即当单位正在冲锋时，玩家松开按钮，单位也会执行完挥砍后才会推出技能。</p>
+<hr>
+<p><strong>！关于技能树的使用和思考</strong></p>
+<p>技能树开始的设计思路是，有些技能的执行流程和行为树类似，比如以一定的顺序执行一系列子技能，比如根据不同的上下文确定技能的执行流程。简单的说，技能树的引入有以下好处：1.使技能模块可以获得部分AI的能力，从而将和技能强相关的AI逻辑放在技能模块使技能模块和AI模块降低耦合，2.可以清晰的描述技能流程，3.使用树增加拓展性，策划可以设计出各种各样复杂的技能。</p>
+<p>关于好处1，举个例子：屠夫boss的勾子技能可以将玩家拉过来，若成功的拉过来，boss会执行一个攻击子技能，否则不执行。通过这样可以将勾人和攻击作为两个子技能构成技能树，攻击子技能有一个condition过程，即判断上一个子技能是否成功。</p>
+<p>技能树在使用后慢慢发现一些问题，首先，技能树的同步要求每个树节点都进行同步，增加同步负担，其次，技能本身并不会有太复杂的控制结构。</p>
+<p>为此，后来我们对技能树进行了优化：<br> 1.简化同步信息，不再同步所有节点的enter/exit信息（具体参考文章《技能模块的同步》）。<br> 2.取消并行节点，通过拓展表头实现一个技能同时执行多件事情。</p>
+<p>最终的技能树基本上是只有顺序／随机两种控制类型节点，节点拥有较轻度的condition功能。</p>
+<hr>
+<h3 id="3-2-执行节点的技能流程"><a href="#3-2-执行节点的技能流程" class="headerlink" title="3.2 执行节点的技能流程"></a>3.2 执行节点的技能流程</h3><p>一般来说，技能的执行流程包括：</p>
+<ul>
+<li>前摇时间：技能开始，但是技能真正的结算流程还没开始。技能开始以后，机能相关的特效和动作就开始播放。</li>
+<li>前摇时间结束：技能前摇结束时技能开始真正的释放以及结算，等技能前摇结束以后，技能真正的释放并结算。释放包括创建相应的弹道／法术场和buff。</li>
+<li>技能后摇点：技能播放到后摇点时间时，技能真正的结束。这时，技能对应的特效以及人物动作可能还会继续播放，但是技能流程已经正式结束了。也就是说，下一个技能可以执行。</li>
+</ul>
+<h2 id="4-技能目标查找"><a href="#4-技能目标查找" class="headerlink" title="4 技能目标查找"></a>4 技能目标查找</h2><p>技能释放时，目标可能已经由AI传给了技能模块，也有可能没有一个目标，如玩家控制单位。</p>
+<p>技能在释放法术场、弹道的时候，重要的是技能的方向而不是技能目标一般来说，技能获得一个目标对象以后，技能的方向就是释法者到目标的方向。</p>
+<p>此外，技能方向可能需要一些配置，如前摇锁定（前摇过程中目标移动，技能方向不变），UI可控制（技能释放过程中，玩家可以通过控制UI控制技能的释放方向）。</p>
+<h2 id="5技能表现"><a href="#5技能表现" class="headerlink" title="5技能表现"></a>5技能表现</h2><p>技能的表现包括动作、特效、shader、音效等。其中，特效比较复杂，需要配置的内容也比较多。比如，有些特效挂在模型上，有的特效挂在场景里。对于法术场的特效，分别可以分为法术场开始、结算、结束特效，分别在法术场开始时、结算时、结束时显示。对于buff也类似。</p>
+<h2 id="6-弹道、法术场和buff等技能创生体"><a href="#6-弹道、法术场和buff等技能创生体" class="headerlink" title="6 弹道、法术场和buff等技能创生体"></a>6 弹道、法术场和buff等技能创生体</h2><p>狭义的来说，技能只是负责技能的执行流程（技能树管理以及技能流程管理），而技能真正的结算主要是由其创生体结算的。当技能前摇结束开始生效时，技能创建相应的弹道和法术场，法术场弹道击中敌人时又有可能产生相应的buff。</p>
+<p>一般来说，法术场是一个场景的某块检测区域，每隔一段时间法术场检测此区域的敌人，并对其攻击结算。<br> 弹道是一类子弹移动路径的抽象，创建一个弹道就表示一个子弹特效沿这个弹道移动并检测路径上的敌人。<br> buff就是挂在单位身上的一个具有持续时间的状态，状态对单位产生一些正面或者负面的影响，并且在此段时间内，每隔一段时间进行一次伤害结算 。</p>
+<p>对于技能、法术场、buff之间的功能界定并不是很固定，比如技能能否直接对单位造成伤害，法术场能否对单位造成伤害，甚至技能只能创建法术场，法术场只能检测目标不能造成伤害，只能挂buff，而所有的伤害都是通过buff来结算。当然，这样并不一定好，一般来说，技能和法术场都可以对单位造成伤害。</p>
+<p>总之，创生体功能的界定需要根据策划需求、效率考虑等因素调整。</p>
+<h2 id="6-1-Buff状态"><a href="#6-1-Buff状态" class="headerlink" title="6.1 Buff状态"></a>6.1 Buff状态</h2><p>Buff就是挂在单位身上持续一定时间的有益或者有害的状态，这里状态＝buff。</p>
+<p>Buff模块有个需要注意的是Buff之间的相互关系，如排斥（A状态在，B状态挂不上去），清除（A状态挂上去同时导致B状态消失）等。</p>
+<p>为了实现以上功能，最简单的方式是在状态A中直接填写状态关系状态字段，如状态A排斥状态B/C/D/E…，A状态清除状态X/Y/Z…。</p>
+<p>以上的实现方式有个问题，等游戏做到后期，我们有成千上万个buff状态，那么一个魔法免疫状态，策划需要填表的排斥状态可能成千上万。</p>
+<p>为了解决这个问题，可以使用分类的思想解决。定义某类状态和另一类状态之间的规则。<br> 基于以上思想，引入一个叫buff原子状态的概念，原子状态表示一类状态，如减速、禁魔、魔免、悬空、晕眩、变羊等等等。</p>
+<p>在给单位挂一个新的buff的之前，查询此buff持有的原子状态和单位身上已经有的原子状态之间的关系，根据单位身上已有的原子状态判定新的原子状态应该使用何种行为处理。</p>
+<p>此处的何种行为，代表的就是原子状态之间的规则，如排斥等。这些规则可以让策划填一个名字叫“原子状态关系”的表，此表是一个n*n的二维数组，n为游戏中所有的原子状态的数量。</p>
+<p>原子状态的数量远远小于buff的数量，所以可以很容易的定义这些规则。</p>
+<h3 id="6-2-法术场"><a href="#6-2-法术场" class="headerlink" title="6.2 法术场"></a>6.2 法术场</h3><p>法术场描述对一块区域的影响，这块区域可以每隔一段时间进行一次检测，检测这块区域内的单位并且对单位进行结算。</p>
+<p>法术场需要注意一个问题，就是一个法术场每次结算可能使用不同的参数进行结算，比如一个技能，第一次结算对每个单位进行晕眩，第二次结算对单位进行伤害。</p>
+<p>解决这种问题比较直接的方式是技能直接创建两个法术场，每个法术场结算一次，第二个法术场创建具有延迟时间。但是这种方式有个问题，有可能策划需求做一个结算十次而且每次结算的参数都不同的法术场。那么，一个技能以一定的时间间隔创建是个法术场，同时法术场的管理具有一定的成本，从而导致效率的降低。</p>
+<p>为解决这个问题，我们优化了法术场结算的实现机制，增加了一种新的法术场：序列法术场。这类法术场策划可以配置法术场每次结算之间的时间间隔以及每次结算所使用的法术场参数。</p>
+<p>这里所说的技能模块包括：技能流程、法术场、弹道和buff。</p>
+<p>首先介绍authority和proxy的概念，这两个概念是基于单位unit的基础上进行的区分。<br> authority表示单位的主控端，即此单位是由客户端和还是服务端控制。对于玩家avatar，玩家本地的客户端就是主控端。而对于怪物，他们的行为由服务端控制，主控端就是服务端。<br> proxy表示代理端，表示被主控端控制。如对于怪物来说，所有的客户端都是proxy；对于玩家A来说，服务端和其他玩家的客户端都是proxy。</p>
+<h2 id="0-技能同步的原则"><a href="#0-技能同步的原则" class="headerlink" title="0 技能同步的原则"></a>0 技能同步的原则</h2><p>1.客户端先行<br> 对于玩家控制的单位来说，玩家点击按钮释放一个技能，客户端首先响应，单位播放动作以及相应的技能特效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">据我了解，有的已上线游戏并没有做客户端先行，而是所有的技能执行请求都发给服务端，然后由服务端发起。</span><br><span class="line">这种模式技能流程控制会比较简单，但是在网络环境差的情况下，体验可能差一些。但是，目测也是可以接受的。</span><br></pre></td></tr></table></figure>
+
+<p>2.技能流程以authority为发起端<br> 玩家单位技能发起是由她的客户端，怪物的技能发起是由AI也就是服务端。<br> 3.技能结算在服务端发起。<br> 技能真正的结算，比如法术场检测、buff结算、伤害结算等，统一在服务端处理。</p>
+<h2 id="1-技能执行流程的同步"><a href="#1-技能执行流程的同步" class="headerlink" title="1 技能执行流程的同步"></a>1 技能执行流程的同步</h2><p>这里所说的技能执行流程指的是技能树的一个执行节点的流程。</p>
+<p>技能流程负责动作、特效以及技能结算，其中技能结算包括：释放法术场、弹道或buff。</p>
+<p>一个技能执行节点的执行流程中，需要同步的有两个时间点：</p>
+<ul>
+<li>技能开始：技能开始播放动作</li>
+<li>技能结算：前摇结束，即能进入结算逻辑。这类同步消息往往并不是由技能本身去同步，而是技能生成了法术场、弹道等，他们去做相应的同步。</li>
+</ul>
+<p>以玩家点击技能按钮开始释放技能为例介绍技能同步流程，如图所示：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/36361-392299771fc34192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/492/format/webp" alt="img"></p>
+<p>Paste_Image.png</p>
+<p>1.主控端点击技能按钮，技能开始播放动作，主控端告诉服务端技能开始。<br> 2.服务端广播给所有的客户端(多玩家场景)，告知其他所有的客户端此玩家开始执行技能。其他客户端收到指令后可是播放技能表现。<br> 3.服务端延迟一段时间后，服务端开始进行技能结算，并且将结算结果通知客户端。</p>
+<blockquote>
+<p>延迟时间=技能前摇时间-上行-下行，下行一半不能确定，所以默认为上行=下行</p>
+</blockquote>
+<blockquote>
+<p>另一种中庸的计算方式是：延迟时间=技能前摇时间-上行，防止要求技能前摇时间过长</p>
+</blockquote>
+<h3 id="使用此同步流程的表现为："><a href="#使用此同步流程的表现为：" class="headerlink" title="使用此同步流程的表现为："></a>使用此同步流程的表现为：</h3><p>1.要求技能前摇时间&gt;2*网络延迟，若前摇时间短，则延迟时间=0，效果可能差一些<br> 2.authority客户端表现完美。<br> 3.proxy client表现一般，即玩家A看玩家B的效果为：玩家B刚开始执行技能动作，没到前摇时间就进行了技能结算。但是因为玩家一般也不会过分关注其他玩家的动作，所以是可以接受的。</p>
+<h2 id="2-技能树的同步"><a href="#2-技能树的同步" class="headerlink" title="2 技能树的同步"></a>2 技能树的同步</h2><p>我上篇文章<a href="https://www.jianshu.com/p/551f02f95727" target="_blank" rel="noopener">技能系统</a>已经介绍，我们游戏使用的是技能树来管理技能流程。那么就面临一个问题，技能树如何同步。</p>
+<p>最简单最暴力的方式，是客户端和服务端同时管理技能树，并且将其状态同步。这样，客户端和服务端的技能树状态统一、完备。</p>
+<p>后来发现，对于proxy端，并不需要完备的技能树信息，最节省的方式是proxy根本不接受技能树同步信息，只是接受播放动作、技能结算等信息。但这样需要告诉其他proxy播放什么动作、特效等。</p>
+<p>在我们系统中，技能同步包括三类同步消息:</p>
+<ul>
+<li>技能根节点enter (root_enter): 表示一个大技能的进入</li>
+<li>技能叶子节点enter(action_enter): 表示一个技能树的执行节点的进入。</li>
+<li>根节点exit(root_exit) ：表示大技能结束</li>
+</ul>
+<p>根节点保存一个完整技能的信息，需要和技能模块外部交互，因此需要知道技能的开始和结束。<br> 叶子节点的执行代表着技能真正的执行逻辑，也需要同步。<br> 而对于其他节点，作为流程控制节点，只需要在主端确保技能流程无误即可</p>
+<blockquote>
+<p>后来这里进行了进一步的优化，对于纯根节点，主控端（玩家控制的客户端）将信息同步给服务端，服务端不再同步给其他客户端。有的技能树只有一个节点，那么按照叶子节点的策略，主控端同步给服务端，服务端广播给所有的其他客户端。</p>
+</blockquote>
+<h2 id="3-技能结算的同步"><a href="#3-技能结算的同步" class="headerlink" title="3 技能结算的同步"></a>3 技能结算的同步</h2><p>技能结算包括创建法术场、buff、弹道、技能直接伤害等。</p>
+<h4 id="法术场、弹道的同步"><a href="#法术场、弹道的同步" class="headerlink" title="法术场、弹道的同步"></a>法术场、弹道的同步</h4><p>法术场、弹道的同步比较类似，他们都作为一个entity（网络同步单元）在服务端创建，创建以后使用entity管理机制服务端通知客户端他们的创建和销毁。</p>
+<p>以法术场为例，法术场的执行和同步流程：</p>
+<ol>
+<li>服务端发起创建一个法术场，并且通知客户端</li>
+<li>法术场每隔一段时间结算一次，注意，法术场结算并不需要同步，每隔一段时间服务端执行检测逻辑，客户端播放结算特效等。两个逻辑互不依赖，也不要求时间一致。</li>
+<li>当法术场结算时检测到攻击目标时，服务端计算攻击伤害等信息，并将攻击信息发给客户端。</li>
+<li>客户端收到伤害信息，客户端播放相应的表现，如法术场受击特效等。此处还包括属于通用模块的跳字等。</li>
+<li>当服务端的法术场时间到了进行destroy时，使用entity的管理机制通知所有客户端destroy法术场。</li>
+</ol>
+<p>弹道的同步类似，唯一的区别就是法术场在某一位置使用攻击盒检测目标，而弹道是一个移动的子弹，客户端表现是一个特效在飞，而服务端每隔一段时间根据飞行速度等使用胶囊攻击盒去检测目标碰撞。</p>
+<p>由以上可以发现，法术场作为一个entity他的管理成本是比较高的，所以若策划想出一些需求需要使用多个法术场实现，一般通过拓展法术场功能使用一个法术场来实现。</p>
+<blockquote>
+<p>比如，策划要做一个冰火两重天法术场，即法术场在每次结算时使用不同的参数，第一次结算使用火焰，第二次结算是冰霜。若这种需求较少，可以使用两个法术场，但是如果要冰火雷毒水电风魔奥术神圣***N重天，则代价太大。一般可以让法术场支持每次使用不同的结算参数来结算即可。</p>
+</blockquote>
+<h4 id="buff同步"><a href="#buff同步" class="headerlink" title="buff同步"></a>buff同步</h4><p>buff是附加在unit身上的东西（没有unit就没有buff，但是没有unit可能有法术场），所以不需要使用entity来同步。</p>
+<ol>
+<li>服务端确定buff是否可以挂在unit上面。</li>
+<li>客户端和服务端都维护一个buff管理器，挂buff的消息通知所有客户端，客户端负责表现，服务端负责结算即可。</li>
+</ol>
+<h2 id="4-伤害、属性的同步"><a href="#4-伤害、属性的同步" class="headerlink" title="4 伤害、属性的同步"></a>4 伤害、属性的同步</h2><p>主要介绍下伤害的同步，顺便附带介绍下属性同步。</p>
+<p>对于伤害结算来说，技能、buff、法术场和弹道都可能造成伤害，当服务端发现造成伤害时，服务端首先根据技能信息计算伤害值，计算以后将信息通过技能模块发送给所有客户端，所有客户端接到信息后首先播放技能伤害相关的表现，如受击特效等，然后播放跳字等通用伤害客户端表现。</p>
+<p>buff可能修改单位属性，如攻击力、攻击速度等。单位的属性由基础成长属性+装备属性+buff属性构成，前两个属性为面板属性，属于玩家信息。而buff属性只在战斗中有效，在面板中并没有表现。<br> 因此装备属性的同步需要通知逻辑服务器（真正的服务器），而buff并不需要通知逻辑服务器。</p>
+<h1 id="技能，说穿了只是一个流程，而不该是一个实体"><a href="#技能，说穿了只是一个流程，而不该是一个实体" class="headerlink" title="技能，说穿了只是一个流程，而不该是一个实体"></a><strong>技能，说穿了只是一个流程，而不该是一个实体</strong></h1><p>1、表的作用实际不是定义流程，而是提供流程中需要的数据。因此不管流程需要数据的是前端还是后端，他们都应该从一个表中调用。<br>2、并不是因为把技能作为实体才导致它的混乱，真正导致混乱是的技能实体的范围扩大化了（从这个意义上说，把技能做为一个流程也没什么错，技能的承载内容应该仅仅是这个流程本身），把后续效果剥离出来会好很多。</p>
+<p>我个人的经验，不评价好坏，大概是这样的：技能的表象数据必须要有，技能效果相应的数据应该仅限于这个技能释放条件和它的直接效果（这个与表象共享技能id，所以最好也放在一起）；直接效果之外的触发效果，单独建立BUFF表，为此建立一套单独的流程，供技能调用（也就是技能效果应该是触发了某个buff）</p>
+<h2 id="就skill和buff的边界问题，"><a href="#就skill和buff的边界问题，" class="headerlink" title="就skill和buff的边界问题，"></a>就skill和buff的边界问题，</h2><p>恰好新的项目里里面我进行了一个比较新的尝试，就是抹除这个边界。 在这次的项目中，因为技能需求足够复杂，所以采用了以前一直只想没实践的想法，就是取消技能在逻辑中的的概念，或者说在基础逻辑中没有技能的设计，技能只在数据层和讨论的概念中出现。 具体的描述也很简单，所谓的技能我们都理解为 施法者一组行为和数据的组合，它包含了技能的icon，类型，动作等一系列和战斗逻辑有直接关系但没有本质关系的概念与数据的总和，用来在游戏概念中定义一个技能的所有特征。 但是在战斗中，真正发挥作用的是buff，在新的设计中，所有的参与战斗逻辑的实体都是buff。 比如 如果要实现一个火球，那么实现方式是技能数据告诉我会播放什么样的施法动画，同时丢出一个弹道，而这个弹道上附着一个buff，叫做燃烧，该buff附带特效火焰和200点的碰撞伤害（在弹道命中敌人时候）。 而这个一整个流程，在概念里，被定义为 施法者释放了一个技能，映射到现实逻辑，就是某人拿起一个石头，点燃，然后把石头丢出去砸到了某人。 至此，核心的技能结算逻辑里，彻底干掉了skill这个类，技能变成了只在概念讨论里才出现的词汇。战斗结算中，不再存在skill的概念。</p>
+<p><strong>表与脚本混合.</strong></p>
+<p>又有两种分支,</p>
+<p><strong>分支一:主表副脚本,</strong>脚本作为字段绑定于表里.表的某个字段就是技能的脚本路径.技能的主流程,框架逻辑有表的字段来决定.</p>
+<p><strong>分支二:主脚本副表</strong>,主逻辑,流程都是有脚本实现.技能的主流程由脚本实现.脚本读表获取数据,进行技能的操作.</p>
+<p>优点:增加奇怪技能,很方便,直接写脚本就可以了.</p>
+<p>缺点:批量处理工作量大,既要改表,又要改技能.每个技能对应独立的脚本,技能越多,脚本越多.批量处理的时候,工作量大.</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><a href="https://zhuanlan.zhihu.com/p/147681650" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/147681650</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-13-csharp-run/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-13-csharp-run/" class="post-title-link" itemprop="url">c#编译和运行启动原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-13 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-13T08:00:00+08:00">2020-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>用C#编写的源代码被编译为一种符合CLI规范的中间语言（IL）。IL代码与资源（例如位图和字符串）一起作为一种称为程序集的可执行文件存储在磁盘上，通常具有的扩展名为.exe（应用程序）或.dll（库）。程序集包含清单，它提供有关程序集的类型、版本、区域性和安全要求等信息。</p>
+<p>执行C#程序时，程序集将加载到CLR中，它可能会根据清单中的信息执行不同的操作。然后，如果符合安全要求，CLR就会执行实时（JIT）编译以将IL代码转换为本机机器指令。CLR还提供与自动垃圾回收、异常处理和资源管理有关的其他服务。由CLR执行的代码有时会称为“托管代码”。</p>
+<p>[<img src="../../assets/images/2020-02-13-csharp-run/094920_15170513.gif" alt="什么是C#语言？作用有哪些？">]</p>
+<p><img src="../../assets/images/2020-02-13-csharp-run/v2-757e0e6e8813e7441cd758121e564729_1440w.jpg" alt="img"></p>
+<h2 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h2><p><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/compiler-options/" target="_blank" rel="noopener">CSC.exe</a>是C＃编译器，可以编译您的C＃代码并生成可执行（.exe）文件，动态链接库（.dll）或代码模块（.netmodule）。</p>
+<p><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild" target="_blank" rel="noopener">MSBuild</a>是Microsoft Build Engine，可用于从Visual Studio生成<a href="https://docs.microsoft.com/zh-cn/visualstudio/ide/solutions-and-projects-in-visual-studio" target="_blank" rel="noopener">项目和解决方案</a> 。 此外，即使我编写了一些.cs文件和一个自定义项目文件（.xxproj）来构建它们，我们也可以使用msbuild.exe并使用<code>msbuild xxx.xxproj</code>类的命令来构建它们。 请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/walkthrough-creating-an-msbuild-project-file-from-scratch" target="_blank" rel="noopener">本文档</a> 。</p>
+<p><strong>它们之间的关系：</strong></p>
+<ol>
+<li>如果我只有几个.cs文件，并且想要编译它们以输出.exe及其它内容，那么csc.exe就足够了。 <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe" target="_blank" rel="noopener">在命令行中</a> （ <code>by cmd.exe or other things</code> ） 使用它来编译代码。</li>
+<li>如果创建项目文件（.xxproj）以更好地控制资源，.cs文件和其他文件，则可以<a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference" target="_blank" rel="noopener">在命令行中使用msbuild</a>来构建它们以输出.exe或其他内容。 我们应该知道的一点是，msbuild.exe不仅可以构建C＃代码，而且还可以构建<code>VB.net, C++, F#</code> …当我使用msbuild使用<code>msbuild xx.csproj</code>类的命令来构建C＃代码时，它将<code>call csc.exe to compile C# code and pass parameters read from the .csproj file to it</code> 。</li>
+<li>尽管msbuild是Visual Studio中的构建系统，但它并不依赖于Visual Studio。</li>
+</ol>
+<p>您可能想知道msbuild传递给特定构建的csc的信息。 在这种情况下，只需使用msbuild的详细程度开关即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msbuild MyProject.csproj &#x2F;target:rebuild &#x2F;verbosity:diag</span><br></pre></td></tr></table></figure>
+
+<p>请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/obtaining-build-logs-with-msbuild?view=vs-2015&redirectedfrom=MSDN" target="_blank" rel="noopener">使用MSBuild获取构建日志</a> 。</p>
+<h3 id="mono系列"><a href="#mono系列" class="headerlink" title="mono系列"></a>mono系列</h3><p>Mono C＃编译器被认为是C＃1.0，C＃2.0，C＃3.0，C＃4.0，C＃5.0和C＃6.0（ECMA）的完整功能，并且部分支持C＃7。<a href="https://www.mono-project.com/docs/about-mono/languages/csharp/" target="_blank" rel="noopener">https://www.mono-project.com/docs/about-mono/languages/csharp/</a></p>
+<p>从历史上看，存在相同编译器的各种版本。</p>
+<ul>
+<li><p>gmcs：编译器以2.0 mscorlib为目标。引用2.0概要文件库（在.NET 2.0和.NET 3.5中定义的API）并公开完整的C＃3.0语言。</p>
+</li>
+<li><p>smcs：以2.1 mscorlib为目标的编译器，以构建Moonlight应用程序。 引用2.1概要文件库（为Silverlight定义的API）并公开完整的C＃3.0语言。这是用于创建Silverlight / Moonlight应用程序的编译器。</p>
+</li>
+<li><p>dmcs：编译器针对4.0 mscorlib。引用4.0概要文件库（.NET 4.0中定义的API）并支持C＃4.0。</p>
+</li>
+</ul>
+<h2 id="编译为-MSIL"><a href="#编译为-MSIL" class="headerlink" title="编译为 MSIL"></a>编译为 MSIL</h2><p>编译为托管代码时，编译器将源代码转换为 Microsoft 中间语言 (MSIL)，这是一组独立于 CPU 且可以有效地转换为本机代码的说明。 MSIL 包括有关加载、存储、初始化和调用对象方法的说明，以及有关算术和逻辑运算、控制流、直接内存访问、异常处理和其他操作的说明。 代码可以运行之前，必须将 MSIL 转换为特定于 CPU 的代码，通常通过 <a href="https://docs.microsoft.com/zh-cn/dotnet/standard/managed-execution-process?redirectedfrom=MSDN#compiling_msil_to_native_code" target="_blank" rel="noopener">实时 (JIT) 编译器</a>实现。 由于公共语言运行时为其支持的每个计算机基础结构提供一个或多个 JIT 编译器，同一组的 MSIL 可以在任何受支持的基础结构上进行 JIT 编译和运行。</p>
+<p>当编译器生成 MSIL 时，它还生成元数据。 元数据描述代码中的类型，包括每种类型的定义、每种类型的成员的签名、代码引用的成员以及运行时在执行时间使用的其他数据。 MSIL 和元数据包含在一个可移植的可执行 (PE) 文件中，该文件基于且扩展已发布的 Microsoft PE 和历来用于可执行内容的通用对象文件格式 (COFF)。 容纳 MSIL 或本机代码以及元数据的这种文件格式使操作系统能够识别公共语言运行时映像。 文件中元数据的存在以及 MSIL 使代码能够描述自身，这意味着将不需要类型库或接口定义语言 (IDL)。 运行时在执行期间会根据需要从文件中查找并提取元数据。</p>
+<blockquote>
+<p><strong>什么是非托管代码(unmanaged code)？</strong>　　</p>
+<p>　　<strong>非托管代码，直接编译成目标计算机码，在</strong><a href="http://baike.baidu.com/view/159628.htm" target="_blank" rel="noopener"><strong>公共语言运行库</strong></a><strong>环境的外部，由操作系统直接执行的代码，代码必须自己提供垃圾回收，类型检查，安全支持等服务。如需要内存管理等服务，必须显示调用操作系统的接口，通常调用Windows SDK所提供的API来实现内存管理。</strong></p>
+<p> 当项目选择名字以MFC，ATL，Win32开头的项目类型，那么这个项目所产生的就是非托管程序。</p>
+<p> 非托管代码就是在Visual Studio .NET 2002发布之前所创建的代码。例如Visual Basic 6, Visual C++ 6, 最糟糕的是，连那些依然残存在你的硬盘中、拥有超过15年历史的陈旧C编译器所产生的代码都是非托管代码。托管代码直接编译成目标计算机的机械码，这些代码只能运行在编译出它们的计算机上，或者是其它相同处理器或者几乎一样处理器的计算机上。非托管代码不能享受一些运行库所提供的服务，例如安全和内存管理等。如果非托管代码需要进行内存管理等服务，就必须显式地调用操作系统的接口，通常来说，它们会调用Windows SDK所提供的API来实现。就最近的情况来看，非托管程序会通过COM接口来获取操作系统服务。</p>
+<p> 跟Visual Studio平台的其他编程语言不一样，Visual C++可以创建非托管程序。当你创建一个项目，并且选择名字以M FC，ATL或者Win32开头的项目类型，那么这个项目所产生的就是非托管程序。</p>
+</blockquote>
+<h2 id="将-MSIL-编译为本机代码"><a href="#将-MSIL-编译为本机代码" class="headerlink" title="将 MSIL 编译为本机代码"></a>将 MSIL 编译为本机代码</h2><p>运行 Microsoft 中间语言 (MSIL) 前，必须根据CLR公共语言运行时将其编译为目标计算机基础结构的本机代码。 .NET Framework 提供两种方法来执行此转换：</p>
+<ul>
+<li>.NET Framework 实时 (JIT) 编译器。</li>
+<li>.NET Framework <a href="https://docs.microsoft.com/zh-cn/dotnet/framework/tools/ngen-exe-native-image-generator" target="_blank" rel="noopener">Ngen.exe（本机映像生成器）</a>。</li>
+</ul>
+<h3 id="由-JIT-编译器编译"><a href="#由-JIT-编译器编译" class="headerlink" title="由 JIT 编译器编译"></a>由 JIT 编译器编译</h3><p>在加载和执行程序集的内容时，JIT 编译在应用程序运行时按需将 MSIL 转换为本机代码。 由于公共语言运行时为每个受支持的 CPU 基础结构提供 JIT 编译器，开发人员可以构建一组 MSIL 程序集，这些程序集可以进行 JIT 编译并可在具有不同计算机基础结构的不同计算机上运行。 但是，如果你的托管代码调用特定于平台的本机 API 或特定于平台的类库，它将仅在该操作系统上运行。</p>
+<p>JIT 编译将执行期间可能永远不会调用的某些代码的可能性考虑在内。 它根据需要在执行期间转换 MSIL，而不是使用时间和内存来将 PE 文件中所有 MSIL 转换为本机代码，并在内存中存储生成的本机代码，以便该进程上下文中的后续调用可以对其进行访问。 加载类型并将其初始化时，加载程序创建并将存根附加到类型中的每个方法。 第一次调用某个方法时，存根将控件传递给 JIT 编译器，后者将该方法的 MSIL 转换为本机代码，并将存根修改为直接指向生成的本机代码。 因此，对 JIT 编译的方法的后续调用会直接转到本机代码。</p>
+<h3 id="使用-NGen-exe-的安装时代码生成"><a href="#使用-NGen-exe-的安装时代码生成" class="headerlink" title="使用 NGen.exe 的安装时代码生成"></a>使用 NGen.exe 的安装时代码生成</h3><p>由于在调用该程序集中定义的各个方法时，JIT 编译器将程序集的 MSIL 转换为本机代码，因此它在运行时中对性能产生负面影响。 在大多数情况下，这种性能降低的程度是可以接受的。 更为重要的是，由 JIT 编译器生成的代码会绑定到触发编译的进程上。 它无法在多个进程之间进行共享。 若要允许生成的代码跨应用程序的多个调用或跨共享一组程序集的多个进程进行共享，则公共语言运行时支持预编译模式。 这种预编译模式使用 <a href="https://docs.microsoft.com/zh-cn/dotnet/framework/tools/ngen-exe-native-image-generator" target="_blank" rel="noopener">Ngen.exe（本机映像生成器）</a>将 MSIL 程序集转换为本机代码，非常类似 JIT 编译器执行的操作。 但是，Ngen.exe 的操作在三个方面不同于 JIT 编译器的操作：</p>
+<ul>
+<li>它在运行应用程序之前而非运行该应用程序时，将 MSIL 转换为本机代码。</li>
+<li>它一次编译整个程序集，而不是一次编译一种方法。</li>
+<li>它将本机映像缓存中生成的代码作为磁盘上的文件保存。</li>
+</ul>
+<blockquote>
+<p>基本上每个人都知道的是，所有.Net语言都将被编译成为一个叫做IL汇编的中间语言。但是计算机是如何执行这个中间代码的，却是很多人不知道，甚至理解错误了的。JIT是.NET程序运行的重要部件之一，全称是即时编译器。很多人都以为JIT其实就是跟Java VM差不多的东西，是一个Interpreter，在运行时读取IL汇编代码，然后模拟成x86代码（也就是俗称的虚拟机）。但是事实上，.NET使用的是更为高级的技术。 .Net程序被加载入内存以后，当某段IL代码被第一次运行的时候，JIT编译器就会将这段IL代码，全部编译成本地代码，然后再执行。这也就是为什么.NET程序第一次运行都启动很慢的原因！ 随.NET库，微软还附带了一个工具，可以事先将.NET程序所有的IL代码都编译成本地代码并保存在缓存区中，这样一来，这个程序就跟c++编译的一模一样了，没有任何区别，运行时也可以脱离JIT了（这里不要混淆了，这里不是说可以脱离.NET库，而是说不需要在进行即时编译这个过程了）。所以，请不要将.NET和Java混为一谈，两个的运行效率根本不是一个等级的！</p>
+<p> JIT的优化指的是可以针对本地CPU，在编译时进行优化。传统程序在编译时，为了保证兼容性，通常使用最通用的指令集（比如古老的386指令集）来编译。而JIT知道CPU的具体类型，可以充分利用这些附加指令集进行编译，这样的性能提升是很可观的。</p>
+</blockquote>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>PE（Portable Execute）文件是Windows下可执行文件的总称，常见的有DLL，EXE，OCX，SYS等，事实上，一个文件是否是PE文件与其扩展名无关，PE文件可以是任何扩展名。那Windows是怎么区分可执行文件和非可执行文件的呢？我们调用LoadLibrary传递了一个文件名，系统是如何判断这个文件是一个合法的动态库呢？这就涉及到PE文件结构了</p>
+<p>C#生成的exe既然是window下可执行文件，那也就是标准的PE文件，和普通win32的exe文件格式一样。我们来看下exe文件的格式：</p>
+<blockquote>
+<p>dll文件本质上和exe一样，只是少了入口函数。</p>
+</blockquote>
+<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313213206835-2135598609.png" alt="img"></p>
+<p>MS-DOC MZ Header和MS-DOS Stub是为了兼容DOS系统存在的，目的是使这个exe在DOS下执行时弹出一个提示”This program cannot be run in DOS mode”。</p>
+<p>PE Header包含了这个文件的一些信息，如：文件创建日期，文件类型，Section的数量，Optional Header的大小等等。详细可以参考Winnt.h里的结构_IMAGE_FILE_HEADER。</p>
+<p>PE Optional Header则包含了文件的版本号以及重要的基地址和AddressOfEntryPoint（RVA-Relative Virtual Address)，这是程序执行的入口地址，双击exe后就从这里开始执行。对C#程序来说，这里指向的是.net的核心库MsCorEE.dll的_CorExeMain()函数。当然这是针对XP系统的，XP以后的系统，OS Loader已经可以判断出这个PE是否包含CLR头来决定是否运行MsCorEE.dll的_CorExeMain()函数。</p>
+<p>Section有很多，包括代码节，数据节等，C#程序会把CLR头，元数据，IL放在这里面。</p>
+<blockquote>
+<p>CLR是什么呢，全称Common Language Runtime，公共语言运行时，CLR主要是管理程序集，托管堆内存，异常处理和线程同步等等。</p>
+</blockquote>
+<p>CLR头具体可以参考CorHdr.h中的IMAGE_COR20_HEADER结构，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">typedef struct IMAGE_COR20_HEADER</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; CLR版本信息</span><br><span class="line">        ULONG cb;</span><br><span class="line">        USHORT MajorRuntimeVersion;</span><br><span class="line">        USHORT MinorRuntimeVersion;</span><br><span class="line"></span><br><span class="line">        IMAGE_DATA_DIRECTORY MetaData; &#x2F;&#x2F;元数据</span><br><span class="line">        ULONG Flags;</span><br><span class="line">        ULONG EntryPointToken;  &#x2F;&#x2F;入口函数Main的标识</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        IMAGE_DATA_DIRECTORY Resources;  &#x2F;&#x2F;资源</span><br><span class="line">        IMAGE_DATA_DIRECTORY StrongNameSignature;  &#x2F;&#x2F;强名称标识</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Regular fixup and binding information</span><br><span class="line">        IMAGE_DATA_DIRECTORY CodeManagerTable;</span><br><span class="line">        IMAGE_DATA_DIRECTORY VTableFixups;</span><br><span class="line">        IMAGE_DATA_DIRECTORY ExportAddressTableJumps;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Precompiled image info (internal use only - set to zero)</span><br><span class="line">        IMAGE_DATA_DIRECTORY ManagedNativeHeader;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    IMAGE_COR20_HEADER;</span><br></pre></td></tr></table></figure>
+
+<p>元数据很重要，验证代码类型安全，GC的对象引用跟踪还有我们常用的反射都需要用到元数据。</p>
+<p>元数据主要由定义表，引用表，清单表组成。</p>
+<p>定义表包括应用所有的类型，方法，字段，属性，参数，事件的定义,代码里任何的定义项都可以在这个表里找到，反射就是靠这个表只要一个名字就能得到属性或函数。运行时的类型安全检查也离不开它。</p>
+<p>引用表包括程序集，类型和成员的引用，我们知道GC在回收内存时先默认认为所有对象都是垃圾，然后通过线程栈上的根（cpu寄存器，局部变量，参数，静态变量）找引用的对象，能找到的说明还在使用就去掉垃圾标记，这个表可以让GC在回收内存时方便从根找到所有引用。</p>
+<p>清单表主要是程序集，文件，资源的定义。</p>
+<p>现在来看看双击后是怎样运行的：</p>
+<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313222148397-1732805152.png" alt="img"></p>
+<p>双击文件后OS Loader加载PE文件并解析，在PE Optional Header里找到基地址和RVA，通过这两个确定了程序的入口地址，这个地址指向MsCorEE.dll的_CorExeMain()，执行它。_CorExeMain()开始执行，选择加载合适版本的CLR，CLR开始运行，CLR运行时会分配一个连续的地址空间用作托管堆，并用一个指针NextObjPtr指到开始位置，下次分配内存时就从指针指的位置开始。</p>
+<p>CLR运行后从CLR头里找到应用程序入口标识，也就是Main()方法的MethodDefToken，通过这个标识在元数据表MethodDef里找到Main方法的偏移位置，这样就可以找到Main()的IL代码。</p>
+<p>CLR检查Main方法里面是否有没加载的类型，没有的话就加载进来并在托管堆上建一个类型对象，类型对象包含静态字段，方法，基类的引用。然后给类型的方法表里每个方法一个存根，存根是用于标识是否被JIT编译过。</p>
+<blockquote>
+<p>JIT: just-in-time Compiler，即时编译器。</p>
+</blockquote>
+<p>JIT编译之前CLR会对Main方法的代码进行验证，确保类型安全且元数据正确，一切没问题后先检查类型方法表里这个方法的存根，不为空的话表示已经编译过就不需要再次编译，没有的话JIT把这段IL代码编译成本地代码保存到内存中并方法表的存根做上标记，然后JIT返回编译前的位置并把原来CLR指向JIT的地址修改为指向本地代码的地址，这样函数的本地代码开始执行。程序执行到哪里就编译到哪里，没有执行到的就不会加载和编译，同样的代码再次执行的话就直接在内存里拿了，这也是为什么第一次运行C#时比较慢而后面就快的原因。这样就开始陆续执行所有的代码，程序也就跑起来了。</p>
+<p>在内存上，运行线程会把函数的参数和局部变量压入线程栈上，栈上的空间默认是1M，方法的参数和局部变量都会压到函数的栈帧上，方法里的对象在托管堆NextObjPtr指向的位置分配内存并把内存地址存到栈上的局部变量里。CLR会给托管堆上的每个对象包括对象类型都添加两个字段，一个对象类型指针，一个同步块索引。</p>
+<blockquote>
+<p>说起栈帧，大家在调试代码时应该都喜欢用CallStack吧，这可以通过看调用栈很方便来定位出问题的具体原因，这个CallStack也就是方法的栈帧的具体显示，一级一级的。</p>
+</blockquote>
+<p>对象类型指针从字面上就很容易知道跟类型有关。CLR刚开始运行时就分配了一个Type的对象类型，他的对象类型指针指向自己，后面创建的对象类型的对象类型指针指针就指向这个Type，而new出来的对象的对象类型指针就指向它的类型，这样所有对象都能找到自己的类型使CLR在运行时能确保类型安全。</p>
+<p>同步块索引的格式是前6个标志位加后面26位内容（32位系统），作用则有好几个。</p>
+<p>\1. 调用对象的gethashcode()后标志位改变一位，后26位会存储对象的hashcode，保证对象生命周期内hashcode的唯一；</p>
+<p>\2. lock时用到，CLR会维护一个同步块数组，每项由一个指向同步块的指针和对象指针组成，lock时同样改变标识位，然后去同步块数组找一个闲置项，后26则变成这项在数组中的索引，有人要问了，刚才hashcode不是用了这26位吗，现在变了，hashcode岂不是丢了。确实，hashcode在lock之后不能直接存到索引了，不过同步块中专门准备了一个字段用来存hashcode，所以可以转移到同步块中，这样设计是为了节省内存，因为大部分情况下是不用lock的，也就不需要增加多余的同步块。</p>
+<p>另外为什么是索引而不是地址呢，因为同步块数组的大小不是固定的，随着对象的增多而变大，在内存上的位置可能会发生变化，所以用索引就不用管数组在哪个位置了。</p>
+<p>当线程进入lock后检查同步块的m_motion，发现没有标识则进入lock区域并把标识改变，如果已经有同一个线程进去则把计数器加1，如果已经有其他线程则等待。</p>
+<p>\3. 垃圾回收时的标识，GC触发时首先认为所有的对象都是垃圾，由局部变量，寄存器，静态变量这些根向上找，凡是包含的对象都认为还有引用，在同步块索引上修改一位标识，当所有对象都遍历过后没有标识的对象就会被清掉，然后再是整理内存、修改引用地址等。</p>
+<p>看个简单的例子，只用于演示，不考虑合理性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line">namespace Test</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            int height &#x3D; 170;</span><br><span class="line">            int weight &#x3D; 60;</span><br><span class="line">            People.Find();</span><br><span class="line">            People developer &#x3D; new Developer()(height, weight);</span><br><span class="line">            bool isHealthyWeight &#x3D; developer.IsHealthyWeight();</span><br><span class="line">            bool isRich &#x3D; developer.IsRich();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class People</span><br><span class="line">    &#123;</span><br><span class="line">        int _height;</span><br><span class="line">        int _weight;</span><br><span class="line"></span><br><span class="line">        public People(int height, int weight)</span><br><span class="line">        &#123;</span><br><span class="line">            _height &#x3D; height;</span><br><span class="line">            _weight &#x3D; weight;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public virtual bool IsRich();</span><br><span class="line"></span><br><span class="line">        public bool IsHealthyWeight()</span><br><span class="line">        &#123;</span><br><span class="line">            var healthyWeight &#x3D; (Height - 80) * 0.7;</span><br><span class="line">            return Weight &lt;&#x3D; healthyWeight * 1.1 &amp;&amp; Weight &gt;&#x3D; healthyWeight * 0.9;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public static string Find(string id) &#123; return &quot;&quot;; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Developer : People</span><br><span class="line">    &#123;</span><br><span class="line">        public Developer(int height, int weight) : base(height, weight)</span><br><span class="line">        &#123; &#125;</span><br><span class="line"></span><br><span class="line">        public override bool IsRich()</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313222410850-1585024295.png" alt="img"></p>
+<p><em>*图片不清楚可以放大看</em></p>
+<p>首先判断类型是否都加载，用到了int，bool，string，这些是在mscorlib.dll程序集的system命名空间下，所以先加载mscorlib.dll程序集，再把int，bool，string加到类型对象里。另外还有我们自己定义的Developer和People，也把类型对象创建好，另外也别忘了基类object，也要加载进来。（实际上还有double啊，这里就没画了）另外继承类的类型对象里面都有个字段指向基类，所以才能往上执行到基类方法表里的方法。</p>
+<p>局部变量都在线程栈上，Find()方法是静态方法，直接去People类型对象的方法表里去找，找到后看是否有存根标识，没有的话做JIT编译，有的话直接运行。</p>
+<p>developer的实例化虽然是用People定义的，但实例还是Developer，所以developer的类型对象指针指向Developer，对象里除了类型对象指针还有实例字段，包括基类的。内存分配在托管堆上，并把地址给到线程栈上的变量中。</p>
+<p>虚函数也一样，在运行时已经确定是Developer，所以会调用Developer方法表里的IsRich方法，一样先JIT，再运行。</p>
+<p>以上就是一个简单的C#程序的运行过程和在内存上的表现，本篇主要内容来自CLR via C#这本书</p>
+<ul>
+<li><a href="https://www.cnblogs.com/brookshi/p/5273281.html" target="_blank" rel="noopener">https://www.cnblogs.com/brookshi/p/5273281.html</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/standard/managed-execution-process?redirectedfrom=MSDN#compiling_to_msil" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/standard/managed-execution-process?redirectedfrom=MSDN#compiling_to_msil</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/standard/clr" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/standard/clr</a></li>
+<li><a href="https://www.cnblogs.com/qtiger/p/11176575.html" target="_blank" rel="noopener">https://www.cnblogs.com/qtiger/p/11176575.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-12-netcore-mono-netframework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-12-netcore-mono-netframework/" class="post-title-link" itemprop="url">扒一扒.net、.net framework、mono和Unity</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-12 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-12T08:00:00+08:00">2020-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1.什么是CLR？</p>
+<p>CLR（Common Language Runtime）即公共语言运行时，是一个由多种编程语言使用的“运行时”，我的理解是就是运行环境，类似于jvm虚拟机的东西，只不过CLR并不关心你用的语言是什么，无论你用的是C#，或者C++等，当通过编译器编译后，都会转换为CLR可以识别的中间语言IL</p>
+<p>2.CLR的工作方式</p>
+<p>CLR是不和模块工作的，它和程序集工作，如下</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/v2-5efca0f8c5f31440e6d17c766a6cc6b6_1440w.jpg" alt="img"></p>
+<p>当加载了公共语言运行时时，电脑必须安装了.NET Framework,同时CLR会检测目标平台，如32位Windows，或64位windows，然后决定创建对应的进程；</p>
+<p>如图1-2，托管程序集同时包含元数据和IL，当编译器把源代码转换为中间语言IL后，为了执行方法，CLR会把方法的IL转换为本机（native）CPU指令，即JIT（just in time“即时”）编译</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/v2-e12d13ed3e967c0b7463fb2764034d87_1440w.jpg" alt="img"></p>
+<p>在方法执行前，CLR会检测代码引用的所有类型，然后分配一个内部数据结构来管理引用访问，在这个数据结构中每个方法会有一个对应的记录项，每个记录项都包含地址，根据地址找到函数的实现，CLR将每个记录项都设置成（指向）一个内部的未编档函数，即JITCompiler当方法首次调用WriteLine时，JITCompiler会被调用，将方法的IL代码编译为本机的CPU指令。当方法第一次被调用时，JIT编译器会验证IL代码，当第二次时，由于第一次已经完成了验证和编译，所以第二次会直接执行。</p>
+<p>1.Mono</p>
+<p>mono即基于.NET Framework 的开源实现，基于C#的ECMA标准，包含C#编译器和CLR。mono使C#拥有了跨平台的能力。</p>
+<p>2.为什么Mono能跨平台？</p>
+<p>因为它使用了CIL（Common Intermediate Language）的通用中间语言，也叫MSIL的指令集，CIL可以在任何支持CLI（Common Language Infrastructure）“通用语言基础结构”的环境下运行，由于CIL能运行在所有支持CLI的环境中，比如.net运行时或者mono运行时，也就是说和具体的平台或者CPU无关。</p>
+<p>.net从一个抽象上来说其实是一个理念，即使得多种语言编写的程序能够通过一个通用的runtime运行在不同的操作系统以及硬件平台上。但光有理念不行，还需要实现，我们这里把对于.net里面的某个实现叫做.net platform（比如.net framework就是一个在windows上实现的.net platform，mono则是一个跨平台的.net platform）。一个.net platform想要达成.net的目标，就需要一些组件，比如上图中CLR通用语言运行时，比如FCL基础类库，比如各种语言的编译器，编译器编译出来的东西想要能在CLR中运行，那也需要遵循一定的标准，这就是CLI和CIL，CIL规定了编译输出的规则，而CLI规定了编译器输入语言的规则，只有符合这种标准的语言才能编译成CIL语言运行在CLR中。</p>
+<p>好了现在有了CIL和CLR，程序员可以用符合CLI的语言比如C#编写程序了，然后将其编译成CIL，最后在CLR中运行。但是问题来了，程序员开发程序的时候需要用到一些功能以及数据结构，不可能所有的功能细节都自己实现，不然开发成本也太高了，所以就需要提供一些基础类库，方便程序员进行开发，那么需要提供哪些基础类库呢？这也需要一个标准，而.Net Standard就是用于这个目的，它规定了某个.net platform需要提供哪些API给开发者。这样的话加入一个开发者在.net platform A（比如.net framework）上开发了一个项目，然后想迁移到.net platform B（比如Mono）上，那么只要两个platform实现了同一个.net standard那么源代码就无需修改可以直接编译运行。</p>
+<p>不过还有一个问题，假如我有一台机器，装了.net platform A（比如.net framework）和.net platform B（比如Mono），那么我在A上编译出来的一个.net程序放到B上可以运行么？理论上应该没问题，毕竟CIL是统一的，虽然一个是A的CLR一个是B的CLR，但是它们都是用来处理CIL程序，就像java代码编译出来既可以运行在JVM上也可以运行在delvik上一样。然而实际上不一定，因为CIL本身也不是一成不变的，它也有自己的版本，看下面这个文档：</p>
+<p><a href="https://msdn.microsoft.com/en-us/library/bb822049.aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/bb822049.aspx</a></p>
+<p>里面的表格详细说明了.net framework和CLR版本之间的关系，从.net framework 2.0到3.5使用的是CLR 2.0，.net framework 4.0以后使用的是CLR 4.0，中间没有CLR 3.0版本。这也就意味着CIL语言本身也在发生变化，面向CLR 4.0编译出来的程序自然是不能运行在CLR 2.0上的。</p>
+<p>说那到底什么是.net framework呢？个人理解从抽象角度说.net framework是对.net标准（这个标准具体包括CLI，CIL，.net standard等）在windows平台上的一套实现，具体上说.net framework包含一整套解决方案，包含许多字组件，比如编译器、CLR、FCL等等，其中每个组件都有自己的版本，比如编译器有自己的版本用于适应不同版本的语言，比如.net framework 3.5的编译器只支持到C# 3.0，最新已经到C# 7.0了；每个版本的.net framework提供的FCL也在不断丰富，比如System.LINQ到.net framework 3.5才有；CLR的版本也会不同，之前已经说过了。因此.net framework的版本其实就是其组件版本的一个集合，高版本的.net framework中的每个子组件都进行了一定的版本更新。</p>
+<p>其实正常来说.net framework只是对.net标准的一套实现而已，其他的对于.net标准的实现完全可以将各种不同版本的组件组合起来用，比如我一套.net platform提供了.net framework 4.0的FCL和面向C# 6.0的编译器，但用的是CLR 2.0的运行时，这并没有什么问题，只要编译器和运行时匹配就行了（mono就是这么干的）。但是由于.net是微软提出来的而且.net framework是微软开发的，那别的.net platform实现自然就已.net framework为标杆，每个版本的.net framework都提供了一些新的features，支持.net framework x.x就是说这个.net platform实现了x.x版本.net framework的特性，比如下面是mono主页上的文档：</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144055880.png" alt="img"> <img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144129490.png" alt="img"></p>
+<p>可以看到上面说的是.net 4.6 4.5，这里表示的其实是.net framework，这个图片的意思就是最新版本的mono已经实现了.net framework 4.6中支持C# 6的特性，以及此外还可以发现只有.net 3.5和2.0是mono完全实现了其所有特性。准确的说其实是mono实现了.net framework的大部分feature，并且还提供了一些mono自己的class library。Mono和.net framework大致有一个对应关系，如这篇文章所说：<a href="http://www.cnblogs.com/zhaoqingqing/archive/2016/08/12/5762867.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhaoqingqing/archive/2016/08/12/5762867.html</a></p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144146834.png" alt="img"></p>
+<p>这个表似乎不完全正确，mono 2.0实现了System.LinQ组件，这个组件在.net 3.5中提供，所以mono 2.0对应的应该是.net 2.0/3.5，即两者之和。不过还是可以当做一个参考。所以说加入一个程序集是用.net framework 3.5构建的，引用了一些dll如system.core以及system.linq，那么要想把其导入mono项目中，就必须保证mono的版本高于2.0，不然会找不到相应的引用。</p>
+<p>还有一点需要注意，网上很多讲.net版本的时候讲.net framework version和CLR version混为一谈，有些时候说的.net 2.0指的其实是CLR 2.0。另外有些人把System.Environment.Version误以为是.ne framework版本，其实不是，msdn上说的很明确，这个值指的是CLR的版本：</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144202709.png" alt="img"></p>
+<p>另外还有一点值得注意，在vs中构建一个.net framework 3.5的项目时是，引用的System.dll是在系统的.net v2.0目录下的，也就是说.net framework不是独立的，而是依赖于.net framework 2.0.不过.net 4.0以后的版本好像就不是这样了，每次新版本都是独立的。</p>
+<p>最后谈一下Unity，Unity为了跨平台使用了Mono，其使用的Mono版本可以通过代码或者命令行方式获得，unity forum上已经有牛人说明了：</p>
+<p><a href="http://answers.unity3d.com/questions/259448/how-to-determine-mono-version-of-unity-.html" target="_blank" rel="noopener">http://answers.unity3d.com/questions/259448/how-to-determine-mono-version-of-unity-.html</a></p>
+<p>我自己的测试结果是mono 2.0</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144215834.png" alt="img"></p>
+<p>查了一下mono官网，mono 2.0是08年的老古董（Unity居然还在用，貌似是版权问题，没有深究），而用vs打开一下Unity中的脚本，查看一下项目构建文件.csproj：</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144232772.png" alt="img"></p>
+<p>可以看到Unity用的是.net 3.5，所以难道Unity的脚本是用.net framework 3.5构建的？显然不是。</p>
+<p>我们知道vs有一个东西叫VSTU，它最大的作用就是可以用vs的断点调试功能调试Unity Editor。Unity中的脚本在vs中打开的时候会构建一个VSTU项目。VSTU项目虽然跟普通VS项目看上去很像，但其实VSTU项目本质上并不是真正的vs项目，如果你右键项目-&gt;属性是没有反应的（VSTU 2.1以前有反应，之后就禁用了），而且右键项目中的引用也不会有添加引用选项，其实VSTU是把vs当做了一个功能强大的编辑器。</p>
+<p>但VSTU不只是利用了VS进行语法检查这么简单，它的另一个作用就是断点调试。在没有断点调试的情况下，Unity使用自己的编译器进行编译，生成Assembly-CSharp.dll（在/Library/目录中），点击Play按钮的时候用的是这个dll，而用VS进行断点调试的时候则会用VS的编译器编译出Assembly-CSharp.dll以及pdb文件，在\Temp\UnityVS_obj\Debug\目录中，此时点击Play用的就是这个dll。当然build出exe的时候用的还是自己的编译器。</p>
+<p>VSTU对项目进行了限制，不能直接在VS中添加新的dll，但可以拷贝到Unity项目的Asset目录下，这样Unity会重新构建VSTU项目，把拷进去的dll显示在引用列表里面。</p>
+<p>VSTU构建的项目是基于.net framework 3.5的。因为Unity用的是mono 2.0啊，mono 2.0实现的feature包括.net framework 2.0和3.5，而UnityEngine.dll引用了System.Core.dll，而这个dll在.net framework 3.5才有，如果是是基于.net framework 2.0构建，那么第一有些mono 2.0支持的feature在vs里面就会找不到，另外也无法断点调试，因为编译通不过。</p>
+<p>其实也可以在Unity的安装目录中寻找一些端倪，在windows下为：</p>
+<p>C:\Program Files\Unity\Editor\Data\Mono\lib\mono\2.0</p>
+<p>这个目录2.0目测就是mono的版本，目录中有很多dll，比如System.*.dll，这说明unity自带了mono项目，提供了mono 2.0中实现的基础类库。虽然Unity的脚本可以在像VS以及MonoDeveloper中打开，但是在build的时候用的还是Unity自带的Mono中的编译器，而Mono 2.0仅支持到C# 3.0，所以有些最新的语法在Unity里面是无法编译通过的（Unity 5.3.5 p8提供了一个新的编译器mono 4.4用于测试，但是似乎没有下文了）。</p>
+<p>总结一下就是，Unity使用的是mono 2.0，支持C# 3.0，提供与.net framework 3.5/2.0 API兼容的类库（mono 2.0实现了.net framework 2.0 + 3.5的feature，但是没有实现.net framework 3.0的WPF的feature，所以官网的说法是<strong>.Net 2.0/3.5 framework profile</strong>），使用了与CLR 2.0兼容的mono runtime，因此用vs构建Unity的dll需要.net framework 3.5以下，不然runtime不兼容；如果要用到UnityEngine等Unity的功能必须用.net framework 3.5这个版本，不然vs项目找不到System.Core.dll，无法通过编译，如果只是一些工具类，不需要引用UnityEngine.dll，那么用.net framework 2.0构建是可以的。vs只是一个第三方构建工具，想要构建出Unity能用的dll就不能使用Unity（Mono 2.0）不支持的feature。</p>
+<p>最后有一点之前一直在困扰我，但今天稍微有点想通了，就是Unity的Player Setting里面有个API compability Level：</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144252210.png" alt="img"></p>
+<p>这个只有两个选项：.Net 2.0和.Net 2.0 Subnet，这个说实话让人很不解，从字面上讲是指API兼容，那兼容到.net 2.0难道是指兼容.net framework 2.0的FCL API？但Unity可以用到.net framework 3.5的一些库啊。网上找了一通以后发现了如下网址：</p>
+<p><a href="https://docs.unity3d.com/412/Documentation/ScriptReference/MonoCompatibility.html" target="_blank" rel="noopener">https://docs.unity3d.com/412/Documentation/ScriptReference/MonoCompatibility.html</a></p>
+<p>以及这个Question：</p>
+<p><a href="https://forum.unity3d.com/threads/unity-supports-c-3-5-or-2-0.111440/" target="_blank" rel="noopener">https://forum.unity3d.com/threads/unity-supports-c-3-5-or-2-0.111440/</a></p>
+<p>其中有一句话很关键：</p>
+<p><strong>The 2.0 there is likely a good reflection of what you have at least</strong></p>
+<p>所以梳理一下就是.Net 2.0和.Net 2.0 Subnet是指编写的C#代码能够引用的函数集合的不同，如果选择了subset那么dll就不会被导入到项目中来。比如同一个项目用.Net 2.0和.Net 2.0 Subnet构建出来的目录如下，可以很明显看到两者的差别。</p>
+<p><img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144306179.png" alt="img">  <img src="../../assets/images/2020-02-12-netcore-mono-netframework/20170423144321069.png" alt="img"></p>
+<p>当新建一个Unity项目时，只会有一些核心的dll会被导入到项目中，其他的dll需要从外部拷贝到项目的Asset文件夹下，VSTU项目中是不能直接添加引用的，个人感觉VSTU对项目的限制有点多，像是把开发者当成傻子，因为你在用Unity那么这些功能就给你禁用掉，不过目测可以通过修改.sln或者.csproj文件来实现一些特殊需要。那.net framework 3.5呢？其实Unity支持的是.net framework 2.0 + 3.5，跳过了3.0，因为3.0是WPF的，Unity不需要，.net 2.0指的是你至少可以用哪些feature。</p>
+<p>Unity最近因为加入了.Net基金会，出了几个用最新mono的测试版：</p>
+<p><a href="https://forum.unity3d.com/threads/upgraded-mono-net-in-editor-on-5-5-0b4.433541/" target="_blank" rel="noopener">https://forum.unity3d.com/threads/upgraded-mono-net-in-editor-on-5-5-0b4.433541/</a></p>
+<p>Unity 5.5.0 b4里面API compability Level增加了一个4.6选项，其实是把原来的mono 2.0换成mono 4.6进行测试，mono 4.6支持C# 6.0，并且开发者可以使用.net 4.6的API写程序，然而也不知道什么时候能有稳定版。而且mono都快要被淘汰了，以后目测都是IL2CPP了。</p>
+<ul>
+<li><a href="https://www.cnblogs.com/w-wfy/p/7450167.html" target="_blank" rel="noopener">https://www.cnblogs.com/w-wfy/p/7450167.html</a></li>
+<li><a href="https://blog.csdn.net/wzjssssssssss/article/details/80196314" target="_blank" rel="noopener">https://blog.csdn.net/wzjssssssssss/article/details/80196314</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-11-gc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-11-gc/" class="post-title-link" itemprop="url">C#引用类型对象在循环引用时会不会内存泄漏</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-11 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-11T08:00:00+08:00">2020-02-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对于垃圾收集（GC）, 我们需要考虑三件事情：哪些内存需要回收？如何判断是垃圾对象？垃圾回收算法有哪些？</p>
+<h2 id="一、GC的工作区域"><a href="#一、GC的工作区域" class="headerlink" title="一、GC的工作区域"></a>一、GC的工作区域</h2><p><strong>1、不是GC的工作区域</strong></p>
+<p>  (1)程序计数器、虚拟机栈和本地方法栈三个区域是线程私有的，随线程生而生，随线程灭而灭；</p>
+<p>  (2)栈中的栈帧随着方法的进入和退出而进行入栈和出栈操作，每个栈帧中分配多少内存基本上是在类结构确定下来时就已知的，因此这几个区域的内存分配和回收都具有确定性。</p>
+<p>在这几个区域不需要过多考虑回收的问题，因为方法结束或线程结束时，内存自然就跟随着回收了。</p>
+<p><strong>2、GC的工作区域（哪些内存需要GC回收？）</strong></p>
+<p>(1)垃圾回收重点关注的是堆和方法区部分的内存。</p>
+<p>​    因为一个接口中的多个实现类需要的内存可能不一样，一个方法的多个分支需要的内存也可能不一样，我们只有在程序处于运行期间才能知道会创建哪些对象，这部分内存的分</p>
+<p>配和回收都是动态的，所以垃圾回收器所关注的主要是这部分的内存。</p>
+<h2 id="二、垃圾对象的判定"><a href="#二、垃圾对象的判定" class="headerlink" title="二、垃圾对象的判定"></a>二、垃圾对象的判定</h2><p>Java堆中存放着几乎所有的对象实例，垃圾收集器对堆中的对象进行回收前，要先确定这些对象是否还有用，哪些还活着。对象死去的时候才需要回收。</p>
+<h4 id="1、引用计数法"><a href="#1、引用计数法" class="headerlink" title="1、引用计数法"></a>1、引用计数法</h4><p>   引用计数法的逻辑是：在堆中存储对象时，在对象头处维护一个counter计数器，如果一个对象增加了一个引用与之相连，则将counter++。</p>
+<p>如果一个引用关系失效则counter–。如果一个对象的counter变为0，则说明该对象已经被废弃，不处于存活状态。</p>
+<p>优点</p>
+<p>  1)可即刻回收垃圾，每个对象都知道自己的被引用数，当counter为0时，对象就会把自己作为空闲空间连接到空闲链表，也就是在对象变成垃圾的同时就会被回收.</p>
+<p>  2）最大暂停时间短，每次通过指向mutator生成垃圾时，这部分垃圾都会被回收，大幅削减了mutator的最大暂停时间。</p>
+<p>缺点</p>
+<p>  1)引用和去引用伴随加法和减法，影响性能</p>
+<p>  2)很难处理循环引用</p>
+<h4 id="2、可达性分析算法"><a href="#2、可达性分析算法" class="headerlink" title="2、可达性分析算法"></a>2、可达性分析算法</h4><p>   这种算法的基本思路是通过一系列名为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链相连时，就证明此对象是不可用的。</p>
+<p>Java语言是通过可达性分析算法来判断对象是否存活的。</p>
+<p><img src="../../assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png" alt="img"></p>
+<p> C#与Java中，<strong>GC采用的是GC Root 的链路可达性分析算法解决的GC标记问题</strong>。原理就是一个对象只要有GC Root引用，就不会释放</p>
+<p><strong>.NET中可以当作GC Root的对象有如下几种：</strong></p>
+<p>1、全局变量</p>
+<p>2、静态变量</p>
+<p>3、栈上的所有局部变量(JIT)</p>
+<p>4、栈上传入的参数变量</p>
+<p>5、寄存器中的变量</p>
+<p><strong>在Java中，可以当做GC Root的对象有以下几种：</strong></p>
+<p>1、虚拟机（JVM）栈中的引用的对象</p>
+<p>2、方法区中的类静态属性引用的对象</p>
+<p>3、方法区中的常量引用的对象（主要指声明为final的常量值）</p>
+<p>4、本地方法栈中JNI的引用的对象</p>
+<h2 id="三、垃圾回收算法"><a href="#三、垃圾回收算法" class="headerlink" title="三、垃圾回收算法"></a>三、垃圾回收算法</h2><h4 id="1、标记-清除算法"><a href="#1、标记-清除算法" class="headerlink" title="1、标记-清除算法"></a>1、标记-清除算法</h4><p>简单来说有两个步骤：标记、清除。</p>
+<p> (1). 标记阶段：找到所有可访问的对象，做个标记</p>
+<p> (2). 清除阶段：遍历堆，把未被标记的对象回收<br><img src="../../assets/images/2020-02-11-gc/1090617-20180621213112064-1445464345.png" alt="img"></p>
+<p> 缺 点</p>
+<p>  (1)因为涉及大量的内存遍历工作，所以执行性能较低，这也会导致“stop the world”时间较长，java程序吞吐量降低；</p>
+<p>  (2)对象被清除之后，被清除的对象留下内存的空缺位置会造成内存不连续，空间浪费。</p>
+<h4 id="2、标记整理-压缩-算法"><a href="#2、标记整理-压缩-算法" class="headerlink" title="2、标记整理(压缩)算法"></a><strong>2、标记整理(压缩)算法</strong></h4><p>标记-整理算法适合用于存活对象较多的场合，如老年代。它在标记-清除算法的基础上做了一些优化。</p>
+<p>   (1)、标记阶段：它的第一个阶段与标记/清除算法是一模一样的。</p>
+<p>   (2)、整理阶段：移动所有存活的对象，且按照内存地址次序依次排列，然后将末端内存地址以后的内存全部回收。<br><img src="../../assets/images/2020-02-11-gc/1090617-20180621213518377-283931527.png" alt="img"></p>
+<p>​    上图中可以看到，标记的存活对象将会被整理，按照内存地址依次排列，而未被标记的内存会被清理掉。如此一来，当我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可，这比维护一个空闲</p>
+<p>列表显然少了许多开销。</p>
+<p>优点</p>
+<p>   标记/整理算法不仅可以弥补标记/清除算法当中，内存区域分散的缺点，也消除了复制算法当中，内存减半的高额代价。</p>
+<p>缺点</p>
+<p>   标记/整理算法唯一的缺点就是效率也不高。不仅要标记所有存活对象，还要整理所有存活对象的引用地址。从效率上来说，标记/整理算法要低于复制算法。 </p>
+<h4 id="3、复制算法"><a href="#3、复制算法" class="headerlink" title="3、复制算法"></a>3、复制算法</h4><p>   复制算法简单来说就是把内存一分为二，但只使用其中一份，在垃圾回收时，将正在使用的那份内存中存活的对象复制到另一份空白的内存中，最后将正在使用的内存空间的对象清除，完成垃圾回收。<br><img src="../../assets/images/2020-02-11-gc/1090617-20180621213541943-2048983954.png" alt="img"></p>
+<p>优点<br>    复制算法使得每次都只对整个半区进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。<br>缺点<br>    复制算法的代价是将内存缩小为原来的一半，这个太要命了。</p>
+<p>注意（重要）</p>
+<p>​    现在的虚拟机使用复制算法来进行新生代的内存回收。因为在新生代中绝大多数的对象都是“朝生夕亡”，所以不需要将整个内存分为两个部分，而是分为三个部分，一块为Eden（伊面区）和两块较小的</p>
+<p>Survivor（幸存区）空间(默认比例-&gt;8:1:1)。每次使用Eden和其中的一块Survivor，垃圾回收时候将上述两块中存活的对象复制到另外一块Survivor上，同时清理上述Eden和Survivor。所以每次新生代就可以使用90%</p>
+<p>的内存。只有10%的内存是浪费的。(不能保证每次新生代都少于10%的对象存活，当在垃圾回收复制时候如果一块Survivor不够时候，需要老年代来分担，大对象直接进入老年代) </p>
+<p>总的来讲：复制算法不适用于存活对象较多的场合，如老年代（复制算法适合做新生代的GC）</p>
+<h4 id="4、三种算法总结"><a href="#4、三种算法总结" class="headerlink" title="4、三种算法总结"></a>4、三种算法总结</h4><p>相同点</p>
+<p>   (1)三个算法都基于根搜索算法去判断一个对象是否应该被回收，而支撑根搜索算法可以正常工作的理论依据，就是语法中变量作用域的相关内容。</p>
+<p>   (2)在GC线程开启时，或者说GC过程开始时，它们都要暂停应用程序（stop the world）。</p>
+<p>区别</p>
+<p>三种算法比较：</p>
+<p>​    效率：复制算法&gt;标记-整理算法&gt;标记-清除算法；</p>
+<p>​    内存整齐度：复制算法=标记-整理算法&gt;标记-清除算法</p>
+<p>​    内存利用率：标记-整理算法=标记-清除算法&gt;复制算法</p>
+<h4 id="5、分代收集算法"><a href="#5、分代收集算法" class="headerlink" title="5、分代收集算法"></a>5、分代收集算法</h4><p>   首先这不是一种新算法，它是一种思想。现在使用的Java虚拟机并不是只是使用一种内存回收机制，而是分代收集的算法。就是将内存根据对象存活的周期划分为几块。一般是把堆分为新生代、和老年代。短命对</p>
+<p>象存放在新生代中，长命对象放在老年代中。<br><img src="../../assets/images/2020-02-11-gc/1090617-20180621214050767-1145517463.png" alt="img"></p>
+<p>  这个图是我拷贝来的，但要记住java8以后，已经没有永久区了，之前永久区存放的东西基本上放到了元空间中。</p>
+<p>对于不同的代，采用不同的收集算法：</p>
+<p>​    新生代：由于存活的对象相对比较少，因此可以采用复制算法该算法效率比较快。</p>
+<p>​    老年代：由于存活的对象比较多哈，可以采用标记-清除算法或是标记-整理算法。</p>
+<h2 id="各平台GC算法"><a href="#各平台GC算法" class="headerlink" title="各平台GC算法"></a>各平台GC算法</h2><p>关于Mono和unity ，集成的是开源项目BOEHM ，BOEHM算法采用标记清除法,il2cpp也是实现了boehm算法</p>
+<h1 id="关于c-和java中的循环引用"><a href="#关于c-和java中的循环引用" class="headerlink" title="关于c#和java中的循环引用"></a>关于c#和java中的循环引用</h1><p>循环引用指的是A引用了B，而B又引用了A。在写代码的时候，都难免会这样写：地图引用了战斗单位，战斗单位又引用了地图。。</p>
+<p> 如图：（来源于国外大神的解释）</p>
+<p><img src="../../assets/images/2020-02-11-mem/5b1933eb47c2a.png" alt="小议C#引用类型对象在循环引用时会不会内存泄漏"></p>
+<p>当A没有再被其他类引用，则A，B，C都应该被垃圾回收。如果判断该对象是否需要被回收的依据是基于引用计数的，那上面代码就会是这样：B被C和A引了，引用计数为2，C被B引了，引用计数为1，这样内存就泄露了。</p>
+<p>所以C#的GC并没有用引用计数。GC有一些“根”，对象都挂在上面。从“根”往其子结点进行遍历，就可以标注出哪些对象是被使用的。A对象没有被其他引用，A作为B，C的入口，所以A,B,C都变成了被回收的对象。</p>
+<p>只要是涉及到的对象不能从GC Roots<a href="https://droidyue.com/blog/2014/10/12/understanding-weakreference-in-java/" target="_blank" rel="noopener">强引用</a>可到达，垃圾回收器都会进行清理来释放内存。</p>
+<p>综上，C#在做循环引用的时候是不会出现垃圾回收问题的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-10-Icloneable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-10-Icloneable/" class="post-title-link" itemprop="url">C# 深浅复制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-10 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-10T08:00:00+08:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关于深浅复制大家可参考MSDN：<a href="https://msdn.microsoft.com/zh-cn/library/system.object.memberwiseclone.aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/zh-cn/library/system.object.memberwiseclone.aspx</a> </p>
+<p>所谓深浅复制可解读为：</p>
+<p>浅复制：C#语言种的MemberwiseClone方法仅仅是再内存种创建一个新对象，然后将原有对象的所有字段直接复制过去，无论是值类型还是引用类型，是值类型的就复制值类型，是应用类型的就复制引用本身（而不会复制所引用的对象），因此，是浅拷贝。</p>
+<p>需要注意的是:  在利用MemberwiseClone()创建新对象的时候，不会像利用new的时候一样，也就是不会先执行字段的创建和构造方法条用的过程。</p>
+<p>深复制：如果字段是值类型的，则对字段执行逐位复制，如果字段是引用类型的，则把引用类型的对象指向<strong>一个全新的对象！</strong></p>
+<h2 id="ICloneable接口"><a href="#ICloneable接口" class="headerlink" title="ICloneable接口"></a>ICloneable接口</h2><p>ICloneable接口包含一个Clone方法，可以用来创建当前对象的拷贝。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface ICloneable </span><br><span class="line">&#123; </span><br><span class="line">    object Clone(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>ICloneable的问题是Clone方法并不会显式地指定是执行浅拷贝或深拷贝，因此调用者将无法确定实际情况。因此，有一些关于把ICloneable从.NET框架中淘汰的讨论。MSDN文档似乎暗示Clone方法是进行的深拷贝，但是文档没有明确的说明：</p>
+<p>ICloneable接口包含一个成员方法，Clone，意在支持超过MemberWiseClone所提供的功能… MemberWiseClone进行的是浅拷贝…</p>
+<p>类型安全的克隆</p>
+<p>ICloneable的另一个缺点是Clone方法返回的是一个对象，因此每次调用Clone都要进行一次强制类型转换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Person joe &#x3D; new Person(); </span><br><span class="line">joe.Name &#x3D; &quot;Joe Smith&quot;; </span><br><span class="line">Person joeClone &#x3D; (Person)joe.Clone();</span><br></pre></td></tr></table></figure>
+
+
+<p>一种可以避免进行强制类型转换的方式是提供你自己的类型安全的Clone方法。注意，你依然要提供ICloneable.Clone方法的以满足iCloneable接口的要求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Person : ICloneable </span><br><span class="line">&#123; </span><br><span class="line">    public string Name; </span><br><span class="line">    object ICloneable.Clone() </span><br><span class="line">    &#123; </span><br><span class="line">        return this.Clone(); </span><br><span class="line">    &#125; </span><br><span class="line">    public Person Clone() </span><br><span class="line">    &#123; </span><br><span class="line">        return (Person)this.MemberwiseClone(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>手工克隆</li>
+</ol>
+<p>一个能够保证对象完全按照你所想的那样进行克隆的方式是手工克隆对象的每一个域（field）。这种方式的缺点是麻烦而且容易出错：如果你在类中增 加了一个域，你很可能会忘记更新Clone方法。还要在克隆引用对象指向原始对象的时候，注意避免无限循环引用。下面是一个进行深拷贝的简单例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class Person : ICloneable </span><br><span class="line">&#123; </span><br><span class="line">    public string Name; </span><br><span class="line">    public Person Spouse; </span><br><span class="line">    public object Clone() </span><br><span class="line">    &#123; </span><br><span class="line">        Person p &#x3D; new Person(); </span><br><span class="line">        p.Name &#x3D; this.Name; </span><br><span class="line">        if (this.Spouse !&#x3D; null) </span><br><span class="line">            p.Spouse &#x3D; (Person)this.Spouse.Clone(); </span><br><span class="line">        return p; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用MemberWiseClone方法</li>
+</ol>
+<p>MemberWiseClone是Object类的受保护方法，能够通过创建一个新对象，并把所有当前对象中的非静态域复制到新对象中，从而创建一 个浅拷贝。对于值类型的域，进行的是按位拷贝。对于引用类型的域，引用会被赋值而引用的对象则不会。因此，原始对象及其克隆都会引用同一个对象。注意，这 种方法对派生类都是有效的，也就是说，你只需在基类中定义一次Clone方法。下面是一个简单的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Person : ICloneable </span><br><span class="line">&#123; </span><br><span class="line">    public string Name; </span><br><span class="line">    public Person Spouse; </span><br><span class="line">    public object Clone() </span><br><span class="line">    &#123; </span><br><span class="line">        return this.MemberwiseClone(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>用反射进行克隆</li>
+</ol>
+<p>用反射进行克隆是使用Activator.CreateInstance方法来创建一个相同类型的新对象，然后用反射对所有域进行浅拷贝。这种方法 的优点是它是全自动的，不需要在对象中添加或删除成员的时候修改克隆方法。另外它也能被写成提供深拷贝的方法。缺点是使用了反射，因此会比较慢，而且在部 分受信任的环境中是不可用的。示例代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private static TOut TransReflection&lt;TIn, TOut&gt;(TIn tIn)</span><br><span class="line">        &#123;</span><br><span class="line">            TOut tOut &#x3D; Activator.CreateInstance&lt;TOut&gt;();</span><br><span class="line">            var tInType &#x3D; tIn.GetType();</span><br><span class="line">            foreach (var itemOut in tOut.GetType().GetProperties())</span><br><span class="line">            &#123;</span><br><span class="line">                var itemIn &#x3D; tInType.GetProperty(itemOut.Name); ;</span><br><span class="line">                if (itemIn !&#x3D; null)</span><br><span class="line">                &#123;</span><br><span class="line">                    itemOut.SetValue(tOut, itemIn.GetValue(tIn));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return tOut;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>调用一百万次耗时：2464毫秒</strong></p>
+<ol start="4">
+<li>使用序列化进行克隆</li>
+</ol>
+<p>克隆一个对象的最简单的方法是将它序列化并立刻反序列化为一个新对象。和反射方法一样，序列化方法是自动的，无需在对对象成员进行增删的时候做出修 改。缺点是序列化比其他方法慢，甚至比用反射还慢，所有引用的对象都必须是可序列化的（Serializable）。另外，取决于你所使用的序列化的类型 （XML，SOAP，二进制）的不同，私有成员可能不能像期望的那样被克隆。示例代码在这里，这里和这里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StudentSecond ss&#x3D; JsonConvert.DeserializeObject&lt;StudentSecond&gt;(JsonConvert.SerializeObject(s));</span><br></pre></td></tr></table></figure>
+
+<p><strong>调用一百万次耗时：</strong>2984毫秒</p>
+<p><a href="http://wiki.unity3d.com/index.php/ObjectCopier" target="_blank" rel="noopener">http://wiki.unity3d.com/index.php/ObjectCopier</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections;</span><br><span class="line">using System.Runtime.Serialization;</span><br><span class="line">using System.Runtime.Serialization.Formatters.Binary;</span><br><span class="line">using System.IO;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Reference Article http:&#x2F;&#x2F;www.codeproject.com&#x2F;KB&#x2F;tips&#x2F;SerializedObjectCloner.aspx</span><br><span class="line">&#x2F;&#x2F;&#x2F; </span><br><span class="line">&#x2F;&#x2F;&#x2F; Provides a method for performing a deep copy of an object.</span><br><span class="line">&#x2F;&#x2F;&#x2F; Binary Serialization is used to perform the copy.</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public static class ObjectCopier</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Perform a deep Copy of the object.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;typeparam name&#x3D;&quot;T&quot;&gt;The type of object being copied.&lt;&#x2F;typeparam&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;source&quot;&gt;The object instance to copy.&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;The copied object.&lt;&#x2F;returns&gt;</span><br><span class="line">    public static T Clone&lt;T&gt;(this T source)</span><br><span class="line">    &#123;</span><br><span class="line">        if (!typeof(T).IsSerializable)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new ArgumentException(&quot;The type must be serializable.&quot;, &quot;source&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F; Don&#39;t serialize a null object, simply return the default for that object</span><br><span class="line">        if (Object.ReferenceEquals(source, null))</span><br><span class="line">        &#123;</span><br><span class="line">            return default(T);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        IFormatter formatter &#x3D; new BinaryFormatter();</span><br><span class="line">        Stream stream &#x3D; new MemoryStream();</span><br><span class="line">        using (stream)</span><br><span class="line">        &#123;</span><br><span class="line">            formatter.Serialize(stream, source);</span><br><span class="line">            stream.Seek(0, SeekOrigin.Begin);</span><br><span class="line">            return (T)formatter.Deserialize(stream);</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li>使用IL进行克隆</li>
+</ol>
+<p>一种罕见的解决方案是使用IL（中间语言）来进行对象克隆。这种方式创建一个动态方法（DynamicMethod），获取中间语言生成器 （ILGenerator），向方法中注入代码，把它编译成一个委托，然后执行这个委托。委托会被缓存，因此中间语言只在初次克隆的时候才会生成，后续的 克隆都不会重新生成一遍。尽管这种方法比使用反射快，但是这种方法难以理解和维护。示例代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">　 public static class TransExpV2&lt;TIn, TOut&gt;</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    private static readonly Func&lt;TIn, TOut&gt; cache &#x3D; GetFunc();</span><br><span class="line">    private static Func&lt;TIn, TOut&gt; GetFunc()</span><br><span class="line">    &#123;</span><br><span class="line">        ParameterExpression parameterExpression &#x3D; Expression.Parameter(typeof(TIn), &quot;p&quot;);</span><br><span class="line">        List&lt;MemberBinding&gt; memberBindingList &#x3D; new List&lt;MemberBinding&gt;();</span><br><span class="line"></span><br><span class="line">        foreach (var item in typeof(TOut).GetProperties())</span><br><span class="line">        &#123;</span><br><span class="line">　　　　　　　　　if (!item.CanWrite)</span><br><span class="line">　　　　　　　　　　    continue;</span><br><span class="line"></span><br><span class="line">            MemberExpression property &#x3D; Expression.Property(parameterExpression, typeof(TIn).GetProperty(item.Name));</span><br><span class="line">            MemberBinding memberBinding &#x3D; Expression.Bind(item, property);</span><br><span class="line">            memberBindingList.Add(memberBinding);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        MemberInitExpression memberInitExpression &#x3D; Expression.MemberInit(Expression.New(typeof(TOut)), memberBindingList.ToArray());</span><br><span class="line">        Expression&lt;Func&lt;TIn, TOut&gt;&gt; lambda &#x3D; Expression.Lambda&lt;Func&lt;TIn, TOut&gt;&gt;(memberInitExpression, new ParameterExpression[] &#123; parameterExpression &#125;);</span><br><span class="line"></span><br><span class="line">        return lambda.Compile();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static TOut Trans(TIn tIn)</span><br><span class="line">    &#123;</span><br><span class="line">        return cache(tIn);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用：<strong>StudentSecond ss= TransExpV2.Trans(s);</strong></p>
+<p><strong>调用一百万次耗时：107毫秒\</strong></p>
+<ol start="6">
+<li>使用扩展方法进行克隆</li>
+</ol>
+<p>Havard Stranden用扩展方法（extention method）创建了一个自定义的克隆框架。这个框架能够创建对象及其引用的对象的深拷贝，不管对象结构有多复杂。缺点是，这是一个不提供源代码的自定义 框架（更新：现在已经包括源代码了，参见本文评论），并且它不能在不使用无参数构造器的时候，拷贝由私有方法创建的对象。另一个问题，也是所有自动化的深 克隆方法共有的问题是，深拷贝通常需要灵活地处理不能进行简单自动化特殊情况（例如未受管理的资源）。</p>
+<h3 id="一个测试类"><a href="#一个测试类" class="headerlink" title="一个测试类"></a>一个测试类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">using Microsoft.VisualStudio.TestTools.UnitTesting;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System;</span><br><span class="line">namespace dotnet_samples_test</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    public class Person : ICloneable </span><br><span class="line">    &#123;</span><br><span class="line">        public IdInfo IdInfo;</span><br><span class="line">        public int Age &#123; get; set; &#125;</span><br><span class="line">        public string Name &#123; get; set; &#125;</span><br><span class="line">        public string Address &#123; get; set; &#125;</span><br><span class="line">        public List&lt;string&gt; Phones &#123; get; set; &#125; &#x3D; new List&lt;string&gt;();</span><br><span class="line">        public object Clone()</span><br><span class="line">        &#123;</span><br><span class="line">            return this.MemberwiseClone();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Person ShallowCopy()</span><br><span class="line">        &#123;</span><br><span class="line">            return (Person)this.Clone();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Person DeepCopy()</span><br><span class="line">        &#123;</span><br><span class="line">            var result &#x3D;  (Person)this.Clone();</span><br><span class="line">            result.IdInfo &#x3D; result.IdInfo.DeepCopy();</span><br><span class="line">            result.Phones &#x3D; result.Phones.ToList();</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public class IdInfo</span><br><span class="line">    &#123;</span><br><span class="line">        public int IdNumber;</span><br><span class="line">        public IdInfo(int IdNumber)</span><br><span class="line">        &#123;</span><br><span class="line">            this.IdNumber &#x3D; IdNumber;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public object Clone()</span><br><span class="line">        &#123;</span><br><span class="line">            return this.MemberwiseClone();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public IdInfo ShallowCopy()</span><br><span class="line">        &#123;</span><br><span class="line">            return (IdInfo)this.Clone();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public IdInfo DeepCopy()</span><br><span class="line">        &#123;</span><br><span class="line">            var result &#x3D;  (IdInfo)this.Clone();</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    [TestClass]</span><br><span class="line">    public class CloneTest1</span><br><span class="line">    &#123;</span><br><span class="line">        [TestMethod]</span><br><span class="line">        public void TestMethod1()</span><br><span class="line">        &#123;</span><br><span class="line">            var person1 &#x3D; new Person</span><br><span class="line">            &#123;</span><br><span class="line">                Name &#x3D; &quot;長澤雅美&quot;,</span><br><span class="line">                Age &#x3D; 30,</span><br><span class="line">                Address &#x3D; &quot;日本静岡縣磐田市&quot;,</span><br><span class="line">                Phones &#x3D; new List&lt;string&gt; &#123; &quot;9&quot;, &quot;1&quot;, &quot;1&quot; &#125;,</span><br><span class="line">                IdInfo &#x3D; new IdInfo(1)</span><br><span class="line">            &#125;;</span><br><span class="line">            var person2 &#x3D; person1.ShallowCopy();</span><br><span class="line">            person2.IdInfo.IdNumber &#x3D; 2;</span><br><span class="line">            person2.Phones.RemoveAt(0);</span><br><span class="line">            person2.Name&#x3D;&quot;冈本伊朗&quot;;</span><br><span class="line">            Console.WriteLine(&quot;person1的名字:&quot;+person1.Name);</span><br><span class="line">            Console.WriteLine(&quot;person1第一个数字是:&quot;+person1.Phones[0]);</span><br><span class="line">            Console.WriteLine(&quot;person1id是:&quot;+person1.IdInfo.IdNumber);</span><br><span class="line"></span><br><span class="line">                      Console.WriteLine(&quot;person2的名字:&quot;+person2.Name);</span><br><span class="line">            Console.WriteLine(&quot;person2第一个数字是:&quot;+person2.Phones[0]);</span><br><span class="line">            Console.WriteLine(&quot;person2id是:&quot;+person2.IdInfo.IdNumber);</span><br><span class="line">            Assert.AreEqual(person1.IdInfo.IdNumber,person2.IdInfo.IdNumber);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [TestMethod]</span><br><span class="line">        public void TestMethod2()</span><br><span class="line">        &#123;</span><br><span class="line">            var person1 &#x3D; new Person</span><br><span class="line">            &#123;</span><br><span class="line">                Name &#x3D; &quot;長澤雅美&quot;,</span><br><span class="line">                Age &#x3D; 30,</span><br><span class="line">                Address &#x3D; &quot;日本静岡縣磐田市&quot;,</span><br><span class="line">                Phones &#x3D; new List&lt;string&gt; &#123; &quot;9&quot;, &quot;1&quot;, &quot;1&quot; &#125;,</span><br><span class="line">                IdInfo &#x3D; new IdInfo(1)</span><br><span class="line">            &#125;;</span><br><span class="line">            var person2 &#x3D; person1.DeepCopy();</span><br><span class="line">            person2.IdInfo.IdNumber &#x3D; 2;</span><br><span class="line">            person2.Phones.RemoveAt(0);</span><br><span class="line">            </span><br><span class="line">            Console.WriteLine(&quot;person1的名字:&quot;+person1.Name);</span><br><span class="line">            Console.WriteLine(&quot;person1第一个数字是:&quot;+person1.Phones[0]);</span><br><span class="line">            Console.WriteLine(&quot;person1id是:&quot;+person1.IdInfo.IdNumber);</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(&quot;person2的名字:&quot;+person2.Name);</span><br><span class="line">            Console.WriteLine(&quot;person2第一个数字是:&quot;+person2.Phones[0]);</span><br><span class="line">            Console.WriteLine(&quot;person2id是:&quot;+person2.IdInfo.IdNumber);</span><br><span class="line"></span><br><span class="line">            Assert.AreEqual(person1.IdInfo.IdNumber,person2.IdInfo.IdNumber);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-09-room-elo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-09-room-elo/" class="post-title-link" itemprop="url">游戏的匹配机制ELO</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-09 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-09T08:00:00+08:00">2020-02-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://www.jianshu.com/p/edc5d341956a" target="_blank" rel="noopener">https://www.jianshu.com/p/edc5d341956a</a></p>
+<p><a href="https://blog.csdn.net/weixin_30876945/article/details/98079738?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task" target="_blank" rel="noopener">https://blog.csdn.net/weixin_30876945/article/details/98079738?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
+<p><a href="https://blog.csdn.net/yekoufeng/article/details/80573857?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task" target="_blank" rel="noopener">https://blog.csdn.net/yekoufeng/article/details/80573857?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-07-aoi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-07-aoi/" class="post-title-link" itemprop="url">地图的aoi</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-07 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T08:00:00+08:00">2020-02-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 01:17:06" itemprop="dateModified" datetime="2020-07-16T01:17:06+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="为什么要进行视野管理？"><a href="#为什么要进行视野管理？" class="headerlink" title="为什么要进行视野管理？"></a>为什么要进行视野管理？</h2><p>1.如果不进行视野管理，流量上来看，假设平均每秒5个移动包（80字节），1个技能包（160字节），单人每秒多少？500kb。</p>
+<p>2.客户端表现来看，客户端受屏幕大小影响，离得远的玩家看不见，没有必要发给客户端。客户端性能所限，玩家多，放各种 技能，当然会看。</p>
+<p>3.从性能上考虑，服务端不用遍历全场景对象…也会大大减少性能消耗。</p>
+<h1 id="格子"><a href="#格子" class="headerlink" title="格子"></a>格子</h1><h2 id="Land"><a href="#Land" class="headerlink" title="Land"></a>Land</h2><p>IncServer将每个场景看做是由n个land（块）组成，每个land就是一个大小固定的正方形，默认512 * 512。比如一个scene的尺寸为1200 * 700：</p>
+<p><img src="../../assets/images/2020-02-07-aoi/IncServer-Scene-RealScene.png" alt="img"></p>
+<p>则需要6个land来表示:</p>
+<p><img src="../../assets/images/2020-02-07-aoi/IncServer-Scene.png" alt="img"></p>
+<h2 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h2><p>Land进一步被划分为若干个Patch（格子）。以patch为单位，land的边长是2的整数次幂。</p>
+<p><img src="../../assets/images/2020-02-07-aoi/IncServer-Scene-Patch.png" alt="img"></p>
+<h2 id="分块管理"><a href="#分块管理" class="headerlink" title="分块管理"></a>分块管理</h2><p>World对游戏对象的管理以patch为单位，<strong>每个patch都对应有一个对象链表</strong>。</p>
+<p>整个world中所有的对象链表的链表头可依次存储于一个一维数组中，这样根据对象的世界坐标，即可方便的计算出其所属的patch以及对应的对象链表。</p>
+<p><img src="../../assets/images/2020-02-07-aoi/IncServer-Scene-ObjectLink.png" alt="img"></p>
+<p>假设对象的坐标为(x, z)，patch的边长为patch_size，land的边长为land_size，整个场景在x方向上有land_x个land，则对象所属的对象链表的索引计算方式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &#x3D; (z &#x2F; patch_size) * (land_x * (land_size &#x2F; patch_size)) + (x &#x2F; patch_size);</span><br></pre></td></tr></table></figure>
+
+<h3 id="IncServer的AOI"><a href="#IncServer的AOI" class="headerlink" title="IncServer的AOI"></a>IncServer的AOI</h3><p>与常见的九宫格不同，IncServer支持NEAR、MIDDLE、FAR、FULL四种视野范围：</p>
+<p><img src="../../assets/images/2020-02-07-aoi/IncServer-Scene-ViewRange.png" alt="img"></p>
+<ul>
+<li>NEAR：当前对象所位于的patch</li>
+<li>MIDDLE：与NEAR相邻的patch</li>
+<li>FAR：与MID相邻的patch（NEAR除外）</li>
+<li>FULL：NEAR + MIDDILE + FAR</li>
+</ul>
+<p>不过在实际开发中，所有对象的视野都是FULL，即每个对象都能看到以自己所在patch为中心前后左右各两个patch（总计25个patch）内的其他对象。之后的讨论均假设<strong>所有游戏对象的视野范围均为FULL</strong>。</p>
+<p>如果对象B进入对象A的视野范围，则根据A对象类型，可能会触发不同的逻辑，比如：</p>
+<ul>
+<li>对象A是玩家：将B对象<strong>序列化</strong>到对象A的客户端。</li>
+<li>对象B是怪物：执行对象进入怪物视野的逻辑，比如激活AI等。</li>
+</ul>
+<p>后文将以上情况称之为在对象A的视野中加载对象B，简称为<strong>视野加载</strong>。</p>
+<h3 id="九宫格"><a href="#九宫格" class="headerlink" title="九宫格"></a>九宫格</h3><p>让我们首先绘制一个2D的地图</p>
+<p><img src="../../assets/images/2020-02-07-aoi/3276b001c9ca66df2fd93650fc75bc3d.jpeg" alt=" 3.1 网络法实现AOI算法  - 图1">我们给这个地图定义一些数值：</p>
+<p><strong>场景相关数值计算</strong></p>
+<ul>
+<li>场景大小： 250*250 ， w(x轴宽度) = 250，l(y轴长度) = 250</li>
+<li>x轴格子数量：nx = 5</li>
+<li>y轴格子数量：ny = 5</li>
+<li>格子宽度: dx = w / nx = 250 / 5 = 50</li>
+<li>格子长度: dy = l / ny = 250 / 5 = 50</li>
+<li>格子的x轴坐标：idx</li>
+<li>格子的y轴坐标：idy</li>
+<li>格子编号：id = idy *nx + idx (利用格子坐标得到格子编号)</li>
+<li>格子坐标：idx = id % nx , idy = id / nx (利用格子id得到格子坐标)</li>
+<li>格子的x轴坐标: idx = id % nx (利用格子id得到x轴坐标编号)</li>
+<li>格子的y轴坐标: idy = id / nx (利用格子id得到y轴坐标编号)</li>
+</ul>
+<p>以上几个数值，请参考图，简单过一下，就可以理解的，初中的几何计算而已。</p>
+<p>九宫格也是打格子的方式之一，把地图划分为很多小格子，每个格子记录格子内的玩家，每个玩家的aoi范围是以自己为中心范围内的九个格子，九个格子的大小略大于屏幕大小，同样的有三个主要的操作：enter,move,leave</p>
+<p>enter:根据玩家坐标，加入到所属的格子中，通过计算以这个格子的为中心的九个格子，这九个格子内的玩家就要被通知有新玩家初始化，同时这个新玩家初始化九个格子内的所有玩家。</p>
+<p>move:根据移动前位置的格子，计算出移动前的oldaoi集合，根据当前位置的格子，计算出当前的curaoi集合，如果oldaoi, curaoi为同一个格子，则通知格子内的所有玩家该玩家在移动。如果oldaoi,curaoi不是同一个格子，即发生了跨格子的操作，那么要将该玩家从旧格子移除，同时加入新格子。同时分别遍历oldaoi,curaoi,计算出需要通知玩家消失的格子集合，通知玩家出生的格子集合，以及通知玩家移动的格子集合。</p>
+<p>leave:玩家离开地图，将玩家从对应的格子里面删除，同时通知aoi集合有玩家离开。</p>
+<p> 服务器大格子的大小，以3*3的格子要总比客户端显示范围要大一点为原则。比客户端大一点，是为了预留资源加载的时间。<br>　　如下图所示，绿色表示手机客户端的显示区域，当角色A在格子6中时，他可以看到1,2,3,5,6,7,9,10,11这9个格子里的内容，那么当他的状态发生变化时，就需要同步给在这9个格子里的所有玩家；同样，当这9个格子里的有玩家或者怪物的状态改变时，也需要都同步给角色A。</p>
+<p><img src="../../assets/images/2020-02-07-aoi/1430365886_455802.jpg" alt="img"></p>
+<p>　　当角色A移动到角色B所在的格子(7)，则他将不再看到1,5,9这三个格子里的内容，同时他将新看到4,8,12这三个格子里的地图内容（玩家和怪物）。所以这个过程中，服务器要下发消息，删除角色A所在的客户端里的1,5,9这三个格子里的地图内容，同时下发消息新增4,8,12这三个格子里的地图内容（类型一）。<br>　　推荐大格子具体的大小，按客户端iPhone4S的960<em>640分辨来制定，取屏幕长宽的1/2大一些，可以定为640</em>360。 </p>
+<ul>
+<li><a href="https://github.com/artasccope/GameFW.AOI" target="_blank" rel="noopener">https://github.com/artasccope/GameFW.AOI</a> </li>
+<li><a href="https://www.bookstack.cn/read/zinx/78aa012966213643.md" target="_blank" rel="noopener">https://www.bookstack.cn/read/zinx/78aa012966213643.md</a></li>
+</ul>
+<h3 id="灯塔法"><a href="#灯塔法" class="headerlink" title="灯塔法"></a>灯塔法</h3><p>所谓灯塔法，即将大地图划分成有限的小格子，在每个小格子中间放一个灯塔，这个灯塔管理两个队列：一个是本格子内所有的对象集合，另一个是对本灯塔感兴趣的对象集合（简称观察者）。</p>
+<p>而地图上的每个对象，维护一个视野队列：该队列为其视野范围内的所有对象，即自身感兴趣的所有对象。</p>
+<p>一个对象在地图上面运动：分为三个操作：enter，move，leave.</p>
+<p>enter:当对象进入地图的时候，根据对象的当前位置和对象的感知距离，可以获取到该对象能观察到的所有灯塔，遍历这些灯塔，将该对象添加为其观察者。同时将这些对象添加到自己的视野队列中。</p>
+<p>move:当对象开始移动的时候，对象从一个点到另一个店，那么视野范围必然发生变化。此刻需要将对象从老的灯塔的观察者列表移除，同时将对象添加进新的灯塔的观察者列表。此外，还需要跟新玩家的视野队列，因为视野范围变化，视野内的对象也相应变化。</p>
+<p>leave:当对象离开的时候，将自身从附近灯塔的观察者队列中移除。</p>
+<p>通过灯塔法，每当物体发生变化，我们能马上根据其当前位置，定位到他的所在的灯塔，同时找到它视野范围内相关联的物体。这样避免了遍历地图上所有玩家进行处理的方式。</p>
+<p>当然灯塔的格子大小划分要因地制宜，格子越小，消耗内存越大，同时计算量变大。</p>
+<ul>
+<li><p><a href="https://github.com/Bestpoker/AOI" target="_blank" rel="noopener">https://github.com/Bestpoker/AOI</a> </p>
+</li>
+<li><p><a href="https://github.com/NetEase/pomelo-aoi" target="_blank" rel="noopener">https://github.com/NetEase/pomelo-aoi</a></p>
+</li>
+<li><p><a href="https://github.com/ahuangege/tower-aoi" target="_blank" rel="noopener">https://github.com/ahuangege/tower-aoi</a></p>
+</li>
+</ul>
+<p>前几天把pomelo中的tower aoi的js实现看了一遍，总结如下：</p>
+<ol>
+<li><p>js代码写得不是很好，发现了几个小问题；</p>
+</li>
+<li><p>“对象(包括观察者)出现”“对象(包括观察者)消失”“对象(包括观察者)位置变化”“观察者位置变化”的回调通知(前三者通知对应灯塔区域的观察者，第四个通知观察者本身)没有可测试的样例，采用的话需要自己实现和测试；</p>
+</li>
+<li><p>只考虑了起点和终点，移动路径上的玩家被忽视了，路径短的话也可能不是问题(长路径切分成多个短路径做位置更新)；</p>
+</li>
+<li><p>观察者可能收到超出自己视野范围的消息；</p>
+</li>
+<li><p>优点是可处理视野不同的观察者，相对于普通扫格子的实现在代码层面耦合度降低、效率提升不明显(把扫格子实现的地格看做一个灯塔区域，在地格上记录观察者就可以模拟这种灯塔模型，削去了遍历周边地格所有对象的逻辑)</p>
+</li>
+<li><p>这里做的是四边形灯塔区域，云风提的那种六边形灯塔区域减少查询灯塔个数是特指视野半径&lt;=六边形边长的一半这种情况</p>
+<ol start="7">
+<li>tower aoi其实就是处理地图视野的一个设计，类似于订阅-发布，我订阅某一块区域表示对这一块区域感兴趣，那么有对象在这一块区域出现消失移动你就通知我</li>
+</ol>
+</li>
+</ol>
+<h1 id="十字链表法"><a href="#十字链表法" class="headerlink" title="十字链表法"></a>十字链表法</h1><p>这里以2d游戏为例，3d游戏顺势扩展即可。</p>
+<p>所谓十字链表法，即维护两天链表，一条根据地图上所有物体的x坐标从小到大依次插入链表，一条根据地图上所有物体的y坐标从小到大依次插入链表，可以想象成一个十字架。这样便把地图上的所有对象按序分配到了x,y链表上。</p>
+<p>这里的链表为双向链表，双向链表的好处是，获取到链表中的一个节点，便可以向前和向后遍历。这样，当我们拿到一个对象时，要获取该对象的视野范围就变得非常简单。避免了从头到尾遍历所有对象。</p>
+<p>首先根据x坐标，在x链表上找到该节点，然后从该节点向前和向后遍历，根据x方向的视野范围找出需要识别的对象。</p>
+<p>然后根据y坐标，在y链表上找到该节点，然后从该节点向前和向后遍历，根据y方向的视野范围找出需要识别的对象。</p>
+<p>拿到x,y链表上需要关注的对象，然后取他们的交集，这便是玩家视野范围内的对象。</p>
+<p>对于对象在地图上的enter,move,leave 。根据前面的思路就变得非常简单</p>
+<ul>
+<li><a href="https://github.com/zhepama/AOI" target="_blank" rel="noopener">https://github.com/zhepama/AOI</a> </li>
+</ul>
+<h4 id="十字链表基本原理"><a href="#十字链表基本原理" class="headerlink" title="十字链表基本原理"></a><strong>十字链表基本原理</strong></h4><p>根据二维地图，将其分成x轴和y轴两个链表。如果是三维地图，则还需要维护多一个z轴的链表。将对象的坐标值按照从小到大相应的排列在相应的坐标轴上面。</p>
+<ul>
+<li>添加到AOI（ADD）: 根据新增对象的X,Y坐标,依次遍历X,Y轴坐标链表,这里有两个目的,一个是获得这个新增对象的坐标在X,Y轴坐标的位置,另一方面获得该通知哪些结点.通知的范围,每个对象可以自己定制自己的通知范围。必须X,Y坐标同时都在通知范围内才可以进入通知集合，我们要按照从小到大进行插入。例如X轴坐标为:</li>
+</ul>
+<p><code>a-&gt;b-&gt;c-&gt;d-&gt;e-&gt;f-&gt;g-&gt;h</code></p>
+<p>假设新增一个对象z,它最终所在的位置是c和d之间,需要重新在链表的头部开始遍历寻找z的位置，比如z的X轴位置是5：</p>
+<p><code>a(0)-&gt;b(1)-&gt;c(2)-&gt;d(3)-&gt;e(4)-z(5)-&gt;f(6)-&gt;g(7)-&gt;h(8)</code></p>
+<p>但是这样会发现一个问题，如果需要管理的坐标少还可以。但如果有很多个坐标比如1W个坐标，那这个链表会很长，如果每次都需要从头部开始查找效率就很低。针对这样的插入方法目前大家常用的有快速排序、分治、按区域划分格子等方式。</p>
+<h4 id="目前常用的排序算法"><a href="#目前常用的排序算法" class="headerlink" title="目前常用的排序算法"></a><strong>目前常用的排序算法</strong></h4><ul>
+<li>快速排序（Quicksort）是对<a href="https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/4602306">冒泡排序</a>的一种改进。</li>
+</ul>
+<p>快速排序由C. A. R. Hoare在1962年提出。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以<a href="https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E9%80%92%E5%BD%92/1740695">递归</a>进行，以此达到整个数据变成有序<a href="https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%BA%8F%E5%88%97/1302588">序列</a>。</p>
+<ul>
+<li>分治算法</li>
+</ul>
+<p>分治算法的基本思想是将一个规模为N的问题分解为K个规模较小的子问题，这些子问题相互独立且与原问题性质相同。求出子问题的解，就可得到原问题的解。即一种分目标完成程序算法，简单问题可用二分法完成。</p>
+<ul>
+<li>按区域划分格子</li>
+</ul>
+<p>该方法是把区域划分成多个格子，比如X坐标1到X坐标4为一个格子我们（暂时称之为A格子），坐标5到X坐标9为一个格子（暂时称之为B格子）。这样做的好处是，当你插入的坐标是2的时候，我们只需要遍历A格子里面的数据找到自己位置就可以了。</p>
+<p>综合以上三种方法，大家一眼就看出来了。是的，按区域划分格子的方式是目前最佳的方式。从时间复杂度等等所有方便都是这个最佳，但是这个方法也有一个很大的问题，用这样的方式插入是很快了，但查找范围内的坐标就变的很困难了。大家可以仔细考虑一下或者自己写一个DEMO。你马上会发现，当我知道我的位置的情况下，我该如何查找周围玩家呢，是的。这样的话十字链就没有什么用了。</p>
+<p>当然会有人说我在每个格子之间用链表进行连接就可以了，那么问题又来了。该如何连接，肯定有很复杂的代码才可以完成这样逻辑。就算是你能完成这个链表的连接，但这些逻辑会提升了时间复杂度。</p>
+<h4 id="快慢针"><a href="#快慢针" class="headerlink" title="快慢针"></a>快慢针</h4><p>所谓快慢针就是，总有一个指针快于一个指针。</p>
+<p>实现方式是，插入的时候把链表分成多份、比如链表长度为10，快的指针每次移动4个，然后对比当前节点如果位置小于的话，把慢指针指向快指针的位置，快指针继续向后面4个格子移动，直到找到大于的节点为止，这时候慢指针开始向前移动一个一个的对比位置就可以了。如果一直没有找到大于的节点，那就表示要插入的位置是当前链表最后的位置。</p>
+<p>相信大家已经看明白了，是的。这样的情况下效率就很高了，唯一的问题就是这个时间复杂度不稳定。使用这个方式，查找周围玩家直接前后查找移动就可以了。效率也非常高。</p>
+<p>快慢针实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">if (First &#x3D;&#x3D; null)</span><br><span class="line">&#123;</span><br><span class="line">      node.Link.YNode &#x3D; AddFirst(AoiPool.Instance.Fetch&lt;LinkedListNode&lt;AoiNode&gt;&gt;(node).Value);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">       var slowCursor &#x3D; First;</span><br><span class="line"></span><br><span class="line">       var skip &#x3D; Convert.ToInt32(Math.Ceiling(Convert.ToDouble(Count) &#x2F;</span><br><span class="line">                     Convert.ToDouble(_skipCount)));</span><br><span class="line"></span><br><span class="line">       if (Last.Value.Position.Y &gt; node.Position.Y)</span><br><span class="line">       &#123;</span><br><span class="line">            for (var i &#x3D; 0; i &lt; _skipCount; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                 &#x2F;&#x2F; 移动快指针</span><br><span class="line"></span><br><span class="line">                 var fastCursor &#x3D; FastCursor(i * skip, skip);</span><br><span class="line"></span><br><span class="line">                 &#x2F;&#x2F; 如果快指针的值小于插入的值，把快指针赋给慢指针，当做当前指针。</span><br><span class="line"></span><br><span class="line">                 if (fastCursor.Value.Position.Y &lt;&#x3D; node.Position.Y)</span><br><span class="line">                 &#123;</span><br><span class="line">                       slowCursor &#x3D; fastCursor;</span><br><span class="line"></span><br><span class="line">                            continue;</span><br><span class="line">                 &#125;</span><br><span class="line"></span><br><span class="line">                 &#x2F;&#x2F; 慢指针移动到快指针位置</span><br><span class="line"></span><br><span class="line">                 while (slowCursor !&#x3D; fastCursor)</span><br><span class="line">                 &#123;</span><br><span class="line">                      if (slowCursor &#x3D;&#x3D; null) break;</span><br><span class="line"></span><br><span class="line">                      if (slowCursor.Value.Position.Y &gt;&#x3D; node.Position.Y)</span><br><span class="line">                      &#123;</span><br><span class="line">                           node.Link.YNode &#x3D; AddBefore(slowCursor,</span><br><span class="line">                                    AoiPool.Instance.Fetch&lt;LinkedListNode&lt;AoiNode&gt;&gt;(node).Value);</span><br><span class="line"></span><br><span class="line">                           return;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                       slowCursor &#x3D; slowCursor.Next;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">if (node.Link.YNode &#x3D;&#x3D; null)</span><br><span class="line">&#123;</span><br><span class="line">       node.Link.YNode &#x3D; AddLast(AoiPool.Instance.Fetch&lt;LinkedListNode&lt;AoiNode&gt;&gt;(node).Value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h4><ul>
+<li>Move（当角色移动后通知AOI）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">#region 移动X轴</span><br><span class="line"></span><br><span class="line">            if (Math.Abs(node.Position.X - x) &gt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                if (x &gt; node.Position.X)</span><br><span class="line">                &#123;</span><br><span class="line">                    var cur &#x3D; node.Link.XNode.Next;</span><br><span class="line"></span><br><span class="line">                    while (cur !&#x3D; null)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (x &lt; cur.Value.Position.X)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _xLinks.Remove(node.Link.XNode);</span><br><span class="line"></span><br><span class="line">                            node.Position.X &#x3D; x;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.XNode &#x3D; _xLinks.AddBefore(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else if (cur.Next &#x3D;&#x3D; null)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _xLinks.Remove(node.Link.XNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.X &#x3D; x;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.XNode &#x3D; _xLinks.AddAfter(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        cur &#x3D; cur.Next;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    var cur &#x3D; node.Link.XNode.Previous;</span><br><span class="line"></span><br><span class="line">                    while (cur !&#x3D; null)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (x &gt; cur.Value.Position.X)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _xLinks.Remove(node.Link.XNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.X &#x3D; x;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.XNode &#x3D; _xLinks.AddBefore(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else if (cur.Previous &#x3D;&#x3D; null)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _xLinks.Remove(node.Link.XNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.X &#x3D; x;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.XNode &#x3D; _xLinks.AddAfter(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        cur &#x3D; cur.Previous;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            #endregion</span><br><span class="line"></span><br><span class="line">            #region 移动Y轴</span><br><span class="line"></span><br><span class="line">            if (Math.Abs(node.Position.Y - y) &gt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                if (y &gt; node.Position.Y)</span><br><span class="line">                &#123;</span><br><span class="line">                    var cur &#x3D; node.Link.YNode.Next;</span><br><span class="line"></span><br><span class="line">                    while (cur !&#x3D; null)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (y &lt; cur.Value.Position.Y)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _yLinks.Remove(node.Link.YNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.Y &#x3D; y;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.YNode &#x3D; _yLinks.AddBefore(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else if (cur.Next &#x3D;&#x3D; null)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _yLinks.Remove(node.Link.YNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.Y &#x3D; y;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.YNode &#x3D; _yLinks.AddAfter(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        cur &#x3D; cur.Next;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    var cur &#x3D; node.Link.YNode.Previous;</span><br><span class="line"></span><br><span class="line">                    while (cur !&#x3D; null)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (y &gt; cur.Value.Position.Y)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _yLinks.Remove(node.Link.YNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.Y &#x3D; y;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.YNode &#x3D; _yLinks.AddBefore(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else if (cur.Previous &#x3D;&#x3D; null)</span><br><span class="line">                        &#123;</span><br><span class="line">                            _yLinks.Remove(node.Link.YNode);</span><br><span class="line">                            </span><br><span class="line">                            node.Position.Y &#x3D; y;</span><br><span class="line">                            </span><br><span class="line">                            node.Link.YNode &#x3D; _yLinks.AddAfter(cur, node);</span><br><span class="line"></span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        cur &#x3D; cur.Previous;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">            #end-region</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查找周围（按照指定的范围查找自己周围玩家）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">for (var i &#x3D; 0; i &lt; 2; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                var cur &#x3D; i &#x3D;&#x3D; 0 ? node.Link.XNode.Next : node.Link.XNode.Previous;</span><br><span class="line"></span><br><span class="line">                while (cur !&#x3D; null)</span><br><span class="line">                &#123;</span><br><span class="line">                    if (Math.Abs(Math.Abs(cur.Value.Position.X) - Math.Abs(node.Position.X)) &gt; area.X)</span><br><span class="line">                    &#123;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else if (Math.Abs(Math.Abs(cur.Value.Position.Y) - Math.Abs(node.Position.Y)) &lt;&#x3D; area.Y)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (Distance(node.Position, cur.Value.Position) &lt;&#x3D; area.X)</span><br><span class="line">                        &#123;</span><br><span class="line">                            if (!node.AoiInfo.MovesSet.Contains(cur.Value.Id)) node.AoiInfo.MovesSet.Add(cur.Value.Id);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    cur &#x3D; i &#x3D;&#x3D; 0 ? cur.Next : cur.Previous;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            for (var i &#x3D; 0; i &lt; 2; i++)</span><br><span class="line">            &#123;</span><br><span class="line">               var cur &#x3D; i &#x3D;&#x3D; 0 ? node.Link.YNode.Next : node.Link.YNode.Previous;</span><br><span class="line"></span><br><span class="line">                while (cur !&#x3D; null)</span><br><span class="line">                &#123;</span><br><span class="line">                    if (Math.Abs(Math.Abs(cur.Value.Position.Y) - Math.Abs(node.Position.Y)) &gt; area.Y)</span><br><span class="line">                    &#123;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else if (Math.Abs(Math.Abs(cur.Value.Position.X) - Math.Abs(node.Position.X)) &lt;&#x3D; area.X)</span><br><span class="line">                    &#123;</span><br><span class="line">                        if (Distance(node.Position, cur.Value.Position) &lt;&#x3D; area.Y)</span><br><span class="line">                        &#123;</span><br><span class="line">                            if (!node.AoiInfo.MovesSet.Contains(cur.Value.Id)) node.AoiInfo.MovesSet.Add(cur.Value.Id);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    cur &#x3D; i &#x3D;&#x3D; 0 ? cur.Next :cur.Previous;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><ul>
+<li>九宫格<ul>
+<li>优点: cpu消耗小</li>
+<li>缺点: 内存开销大,内存消耗不仅和实体数有关,还和场景大小成正比</li>
+</ul>
+</li>
+<li>十字链表<ul>
+<li>优点: 内存开销小,内存消耗仅和实体数有关,和场景大小无关</li>
+<li>缺点: cpu消耗高,每次移动都需要计算视野差,当实体在小区域堆积严重时效率更差</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zhepama</p>
+  <div class="site-description" itemprop="description">一个不专业的程序员,写着不专业的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhepama" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhepama" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhepama@gmail.com" title="E-Mail → mailto:zhepama@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.godgodgame.com/" title="http:&#x2F;&#x2F;www.godgodgame.com" rel="noopener" target="_blank">GODGODGAME</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.igiven.com/" title="https:&#x2F;&#x2F;www.igiven.com">IGIVEN</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhepama</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
