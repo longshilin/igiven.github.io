@@ -1,5 +1,5 @@
 ---
-title:  "关于addressable那些事"
+title : "关于addressable那些事"
 ---
 
 在本文中将详细的描述Addressable对于内存的管理，如果正确的卸载资源
