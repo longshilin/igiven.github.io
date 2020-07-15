@@ -13,7 +13,7 @@ Unity的AssetStore下载package的时候经常抽风，而且开了代理工具�
     
     例如公司的代理IP是：127.0.0.1 端口：1080 
     变量名：HTTPS_PROXY
-    变量值：https://127.0.0.1:1080
+    变量值：http://127.0.0.1:1080    这里也是http..因为ss没开https
     
     变量名：HTTP_PROXY
     变量值：http://127.0.0.1:1080
