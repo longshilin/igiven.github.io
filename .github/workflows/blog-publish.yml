@@ -20,10 +20,8 @@ jobs:
     - name: 迁出main
       uses: actions/checkout@v2
       with: 
-        ref: ${{ github.head_ref }}
         path: main
-        submodules: 'recursive'
-        fetch-depth: 22
+        fetch-depth: 0
 
     - name: Diff文件
       run: |
