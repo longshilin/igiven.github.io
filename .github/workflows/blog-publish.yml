@@ -23,12 +23,6 @@ jobs:
         path: main
         fetch-depth: 0
 
-    - name: Diff文件
-      run: |
-        cd $GITHUB_WORKSPACE/main
-        git diff --name-only '@{10.hour.ago}'
-        git diff --name-only HEAD~10 HEAD
-
     - name: 安装 .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -36,13 +30,13 @@ jobs:
     
     - name: 下载发布工具
       run : |
-        wget -c https://github.com/zhepama/ABPHass/releases/download/v1.1.3/blog-publishtool.tar.gz
+        wget -c https://github.com/zhepama/ABPHass/releases/download/v1.1.4/blog-publishtool.tar.gz
         tar -zxvf blog-publishtool.tar.gz
         ls -al
 
     - name: 发布
       run : |
-        dotnet ./blogpublishtool/DotHass.Blog.PublishTool.dll -f $GITHUB_WORKSPACE/main -m 1 --uri "http://www.godgodgame.com" --pwd ${{ secrets.BLOG_PWD }} --id Www_App 
+        dotnet ./blogpublishtool/DotHass.Blog.PublishTool.dll -f $GITHUB_WORKSPACE/main -m 1 --uri "http://www.godgodgame.com" --pwd ${{ secrets.BLOG_PWD }} --id Www_App --count 10
   
 
       
