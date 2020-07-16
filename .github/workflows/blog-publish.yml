@@ -16,13 +16,13 @@ jobs:
 
     steps:
 
-    #因为要对比需要更新的文件所以fetch-depth为15
+    #因为要对比需要更新的文件所以fetch-depth为0
     - name: 迁出main
       uses: actions/checkout@v2
       with: 
         path: main
         submodules: 'recursive'
-        fetch-depth: 15
+        fetch-depth: 0
 
     - name: 安装 .NET Core
       uses: actions/setup-dotnet@v1
