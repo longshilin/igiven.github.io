@@ -73,10 +73,6 @@ lower_case_table_names = 1 //mysql会先把表名转为小写，再执行操作�
 
 
 
-
-
-
-
 # windows下绝对路径启动问题
 
 注册成services后.他的启动目录是C:\Windows\System32..所以需要手动设置下contentRoot
