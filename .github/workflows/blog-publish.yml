@@ -22,12 +22,12 @@ jobs:
       with: 
         path: main
         submodules: 'recursive'
-        fetch-depth: 30
+        fetch-depth: 22
 
     - name: Diff文件
       run: |
         cd $GITHUB_WORKSPACE/main
-        git diff --name-only '@{2.day.ago}'
+        git diff --name-only '@{10.hour.ago}'
         git diff --name-only HEAD^ HEAD
 
     - name: 安装 .NET Core
