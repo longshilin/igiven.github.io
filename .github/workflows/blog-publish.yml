@@ -37,7 +37,7 @@ jobs:
 
     - name: 发布
       run : |
-        dotnet ./blogpublishtool/DotHass.Blog.PublishTool.dll -f $GITHUB_WORKSPACE/main  --uri "http://www.godgodgame.com" --pwd ${{ secrets.BLOG_PWD }} --id Www_App 
+        dotnet ./blogpublishtool/DotHass.Blog.PublishTool.dll -f $GITHUB_WORKSPACE/main -m 1 --uri "http://www.godgodgame.com" --pwd ${{ secrets.BLOG_PWD }} --id Www_App 
   
 
       
