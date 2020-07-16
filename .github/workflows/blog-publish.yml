@@ -24,6 +24,12 @@ jobs:
         submodules: 'recursive'
         fetch-depth: 0
 
+    - name: 迁出HEAD
+      run: |
+        cd $GITHUB_WORKSPACE/main
+        git checkout origin/master
+        git diff --name-only  '@{2.day.ago}' HEAD
+
     - name: 安装 .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -35,11 +41,7 @@ jobs:
         tar -zxvf blog-publishtool.tar.gz
         ls -al
 
-    - name: 检查文件
-      run: |
-        cd $GITHUB_WORKSPACE/main
-        git checkout HEAD^
-        git diff --name-only  '@{8.hour.ago}' HEAD
+
 
     - name: 发布
       run : |
