@@ -20,6 +20,7 @@ jobs:
     - name: 迁出main
       uses: actions/checkout@v2
       with: 
+        ref: ${{ github.head_ref }}
         path: main
         submodules: 'recursive'
         fetch-depth: 22
@@ -28,7 +29,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/main
         git diff --name-only '@{10.hour.ago}'
-        git diff --name-only HEAD^ HEAD
+        git diff --name-only HEAD~10 HEAD
 
     - name: 安装 .NET Core
       uses: actions/setup-dotnet@v1
