@@ -22,7 +22,7 @@ jobs:
       with: 
         path: main
         submodules: 'recursive'
-        fetch-depth: 0
+        fetch-depth: 1000
 
     - name: Diff文件
       run: |
