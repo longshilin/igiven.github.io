@@ -106,7 +106,8 @@ GitHub Pages 的静态资源支持下面 3 个来源：
 执行下面命令，将 `_book` 目录推送到 GitHub 仓库的 `gh-pages` 分支。
 
 ```shell
-$ git subtree push --prefix=_book origin gh-pages
+$ git checkout --orphan gh-pages
+$ code .nojekyll
 ```
 
 或者在生成静态网页时，将保存的目录指定为 `./docs`

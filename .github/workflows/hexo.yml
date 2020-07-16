@@ -32,7 +32,7 @@ jobs:
     
     - name: 安装hexo
       run : |
-        npm install -g hexo
+        npm install -g hexo-cli
   
     - name: 生成博客
       run : |
