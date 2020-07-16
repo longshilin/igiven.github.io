@@ -2,18 +2,6 @@
 title : "使用hexo建立博客并部署到github"
 ---
 
-# GitHub 创建仓库
-
-新建一个名为`你的用户名.github.io` 的仓库，比如说，如果你的 GitHub 用户名是 `dta0502`，那么你就新建 `dta0502.github.io` 的仓库，将来你的网站访问地址就是 [https://dta0502.github.io](https://dta0502.github.io/)。
-
-由此可见，每一个 GitHub 账户最多只能创建一个这样可以直接使用域名访问的仓库。
-
-几个注意的地方：
-
-- 注册的邮箱一定要验证，否则不会成功
-- 仓库名字必须是：`username.github.io`，其中 username 是你的用户名
-- 仓库创建成功不会立即生效，需要过一段时间
-
 # 使用hexo
 
 ```
