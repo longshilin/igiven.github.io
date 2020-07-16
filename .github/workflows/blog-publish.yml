@@ -24,11 +24,10 @@ jobs:
         submodules: 'recursive'
         fetch-depth: 0
 
-    - name: 迁出HEAD
+    - name: Diff文件
       run: |
         cd $GITHUB_WORKSPACE/main
-        git checkout origin/master
-        git diff --name-only  '@{2.day.ago}' HEAD
+        git diff --name-only '@{2.day.ago}'
 
     - name: 安装 .NET Core
       uses: actions/setup-dotnet@v1
@@ -40,8 +39,6 @@ jobs:
         wget -c https://github.com/zhepama/ABPHass/releases/download/v1.1.3/blog-publishtool.tar.gz
         tar -zxvf blog-publishtool.tar.gz
         ls -al
-
-
 
     - name: 发布
       run : |
