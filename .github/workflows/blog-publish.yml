@@ -38,7 +38,8 @@ jobs:
     - name: 检查文件
       run: |
         cd $GITHUB_WORKSPACE/main
-        git diff --name-only  '@{10.hour.ago}' HEAD
+        git checkout HEAD^
+        git diff --name-only  '@{8.hour.ago}' HEAD
 
     - name: 发布
       run : |
