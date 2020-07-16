@@ -125,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">82</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -170,6 +170,146 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-08-12-ugui-eventsystem-sourcecode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-08-12-ugui-eventsystem-sourcecode/" class="post-title-link" itemprop="url">ugui的eventsystem源码解读</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-12 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-12T08:00:00+08:00">2019-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="为什么想看看事件系统的实现"><a href="#为什么想看看事件系统的实现" class="headerlink" title="为什么想看看事件系统的实现"></a><strong>为什么想看看事件系统的实现</strong></h2><p>很简单，策划又提奇奇怪怪的需求了！比如这些事件要穿透啦，那些事件要做特殊处理啦！之类的……</p>
+<p>依旧先贴出源码地址：</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//bitbucket.org/Unity-Technologies/ui">Unity-Technologies / UI - Bitbucketbitbucket.org</a></p>
+<h2 id="入手点"><a href="#入手点" class="headerlink" title="入手点"></a><strong>入手点</strong></h2><p>好那么我们从何处入手呢？当然是我们的EventTrigger了！我们都知道，我们可以通过实现以下接口来实现事件捕捉：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-fed09bee3103f18eb1ee5938dbfdc812_hd.jpg" alt="img">大家都爱用的EventTrigger</p>
+<p>具体怎么做我想大家已经明白了，也就是实现上线的接口中的函数，例如我要监听点击事件我就实现一下IPointerClickHandler然后挂在物体上就好了。这个技巧在很早的时候我在雨松的文章第一次看到，那时候也是4.6时期UGUI刚出来的时候发现的。由于和当初的NGUI很像所以被大家广泛使用，但是也会发现如果全部实现了接口但是不实现的话可能会影响上层例如ScrollView的监听，下面我们看下去也可以知道到底是为啥。</p>
+<h2 id="顺藤摸瓜"><a href="#顺藤摸瓜" class="headerlink" title="顺藤摸瓜"></a><strong>顺藤摸瓜</strong></h2><p>既然我们已经找到了这个宝贝，那我们就可以通过查找引用大法，顺藤摸瓜看看到底是什么地方在调用我们实现的接口。</p>
+<p>最后理出来所有事件的入口其实都是放在<strong>EventSystem</strong>当中，而具体处理则是放在了<strong>InputModule</strong>里面。在刚刚Enable的时候会更新输入模块列表，也就是我们可以看到的StandaloneInputModule以及TouchInputModule：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-8df2e07d1b1c5d050ce04c0afd436b16_hd.jpg" alt="img">初始化InputModule</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-054935593d03e1601cdf74d9e29839b0_hd.jpg" alt="img">Unity自己提供的各种InputModule</p>
+<p>在EventSystem的Update当中就会分别调用这些InputModule</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-8f1c906ba904af7ef5d374a45992a9e7_hd.jpg" alt="img">EventSystem主循环</p>
+<p>首先Tick所有的输入模块，然后选出一个当前在使用的输入模块中的Process进行处理。</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-0e03e0e59611f1fac21575bb3cc56b8f_hd.jpg" alt="img">EventSystem处理函数</p>
+<p>最前面是判断是否处于聚焦状态，其实也就只是应用程序的聚焦状态。其中中间是针对Navigation也就是类似于通过键盘上下左右或者手柄进行UI位置切换的操作。最下面两句才是针对所有的Touch以及Mouse的操作的处理。</p>
+<h2 id="触摸事件处理"><a href="#触摸事件处理" class="headerlink" title="触摸事件处理"></a><strong>触摸事件处理</strong></h2><p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-88eee10ae51d59b799637945e8117fce_hd.jpg" alt="img">处理输入事件</p>
+<p>首先看看，首先获取Pointer数据，然后对该数据进行处理。</p>
+<h2 id="首先处理点击事件-ProcessTouchPress"><a href="#首先处理点击事件-ProcessTouchPress" class="headerlink" title="首先处理点击事件 ProcessTouchPress"></a><strong>首先处理点击事件 ProcessTouchPress</strong></h2><p>首先判断是为按下事件还是释放事件</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-9947ebbae68433f48ef3a929a8b2001c_hd.jpg" alt="img">处理点击事件</p>
+<h2 id="按下的情形"><a href="#按下的情形" class="headerlink" title="按下的情形"></a>按下的情形</h2><p>首先找到Raycast找到的对象如果为按下事件，如果按下的对象并不是之前Hover的对象，则触发进入事件。然后就处理PointerDown事件，如果找不到该事件的话就触发PointerClick事件。如果多次点击的话还会增加PointerEventData的clickTime，双击间隔是固定为0.3秒钟。同时保存下拖拽初始状态，如果有相对应的处理方法IInitializePotentialDragHandler的话就一起触发。</p>
+<h2 id="放开的情形"><a href="#放开的情形" class="headerlink" title="放开的情形"></a>放开的情形</h2><p>首先触发PointUp事件。之后寻找PointClick事件，并且触发。如果不存在的话那就查看是否存在Drag事件并且执行，最后再执行PointerExit事件。</p>
+<h2 id="之后处理Move以及Drag事件"><a href="#之后处理Move以及Drag事件" class="headerlink" title="之后处理Move以及Drag事件"></a><strong>之后处理Move以及Drag事件</strong></h2><p>主要还是触发Enter、Exit以及BeginDrag还有Drag等逻辑，比较业务向也就不再写了。</p>
+<h2 id="点击事件处理"><a href="#点击事件处理" class="headerlink" title="点击事件处理"></a><strong>点击事件处理</strong></h2><p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-e45c89369a8c438b54d3b8169863a8d6_hd.jpg" alt="img"></p>
+<p>写得比Touch更加紧凑，左键中建以及右键的处理都是分开的。而且实现方式与Touch也太像了，所以也就不再赘述了。</p>
+<h2 id="射线检测"><a href="#射线检测" class="headerlink" title="射线检测"></a><strong>射线检测</strong></h2><p>射线检测绝对是其中非常重要的一个东西，在NGUI中我们都知道事件触发靠射线检测，同样在UGUI中射线检测也是同样的存在。</p>
+<p>我们在上面的Touch事件处理的地方会看到这么一段代码：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-c17f0ef64287112427f0a1f74ed2b323_hd.jpg" alt="img"></p>
+<p>通过射线raycast来检测我们的射线数据中包含哪些东西。并且取其中的第一个并且进行事件触发。这个数据我们可以具体看RaycastResult这个类：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-942bda4b880dac3f71dfe3c00285c067_hd.jpg" alt="img">射线检测的结果</p>
+<p>而具体cast的步骤则在下面这个函数中，其实是依次调用所有的Raycaster中的射线检测。</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-116715b89672f76517469347d2d35ae1_hd.jpg" alt="img"></p>
+<p>我们会去Raycaster Manager中寻找所有的Raycaster。所有Raycast在Enable的时候就会自动注册到Raycaster Manager中</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-61ed280285611f5e56d858e174fb8846_hd.jpg" alt="img"></p>
+<p>现在就明白Graphic Raycaster是用来做什么的了吧。当然除了Graphic Raycaster以外还有各种各样的Raycaster:</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-6307b8a8e615d5c840203f91244d0e74_hd.jpg" alt="img">Unity内部提供的各类Raycaster</p>
+<p>我们这里就只着重看一下Graphic Raycaster</p>
+<h2 id="Graphic-Raycaster"><a href="#Graphic-Raycaster" class="headerlink" title="Graphic Raycaster"></a><strong>Graphic Raycaster</strong></h2><p>核心方法就是经过重写的Raycaster，这个函数帮助我们检测画布上被射线触发的地方并且返回结果。</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-e1049a6eef487dc07f5163b2f5df3a51_hd.jpg" alt="img"></p>
+<p>其实就是普通的射线检测，无非需要针对多屏幕、以及不同的Block模式进行判断，最终调用的是另外一个Raycast。</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-d37195700a8277f762d5da5382e23fd5_hd.jpg" alt="img">找到被射线穿过的Graphic</p>
+<p>获得射线所穿过的Graphic，将这些结果逐一加入到Result当中。在放入到Result之前会将这些Graphic根据深度进行排序。当然最终结果的筛选规则会有更多，例如是否在摄像机后面、是否大于最大射线距离等等。最终得到的就是我们最终射线结果。</p>
+<h2 id="如何执行事件"><a href="#如何执行事件" class="headerlink" title="如何执行事件"></a><strong>如何执行事件</strong></h2><h2 id="直接调用事件-ExecuteEvents-Execute"><a href="#直接调用事件-ExecuteEvents-Execute" class="headerlink" title="直接调用事件 ExecuteEvents.Execute"></a><strong>直接调用事件 ExecuteEvents.Execute</strong></h2><p>核心方法为ExecuteEvents.Execute，如果需要触发事件就调用该方法吧！我们需要向其中传3个参数：</p>
+<ul>
+<li>一个是传递的GameObject，也就是挂载事件的对象。</li>
+<li>第二个参数则是PointEventData，这个参数最终会传给事件处理函数，通常是UGUI自己对输入进行处理并且输出的。</li>
+<li>最后一个参数就是一个传入的delegate，用于接收各种EventData，最后经由一个验证函数来获得具体的EventData。</li>
+</ul>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-de00fc2cb10360aede52694d0cb5710c_hd.jpg" alt="img"></p>
+<p>接下来我们就看一下具体是如何针对一个GameObject进行事件调用的：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-d6090585e8a6f6c36c638d487b363ec1_hd.jpg" alt="img"></p>
+<p>首先调用GetEventList然后获得具体有哪些Handler，然后逐一进行调用。如果handler的数量大于0则返回true。</p>
+<p>我们看一下获取EventList的规则：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-2d6a993c83da534a4c0ec78939d144b4_hd.jpg" alt="img"></p>
+<p>其实也只是判断了一下是否为IEventSystemHandler这么简单。</p>
+<h2 id="向上查找"><a href="#向上查找" class="headerlink" title="向上查找"></a><strong>向上查找</strong></h2><p>在很多地方例如Click事件触发的时候往往不是在该射线检测到的GameObject上，而是会向上查找Handler:</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-e50bb99557b9d0a2b43b77f5a92abda2_hd.jpg" alt="img"></p>
+<p>其中核心方法就是<strong>GetEventHandler</strong>，我们看看其中的实现：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-ffd1913afa8218040803d0dd1889f696_hd.jpg" alt="img"></p>
+<p>获得UGUI会从射线检测到的GameObject开始，不断向上查找，直到根为止，如果找到则返回，如果找不到可以处理的相应事件则直接返回Null。</p>
+<h2 id="事件链"><a href="#事件链" class="headerlink" title="事件链"></a><strong>事件链</strong></h2><p>除了获取EventHandler这种情形之外，还有触发GameObject树结构中所有挂载事件的物体。这个时候就有了我们上面看到的<strong>ExecuteHierarchy</strong>，它的作用就是调用Hierarchy中所有挂载事件的GameObject。</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-0c8983d7cf4d5e22c296ca5af93ac859_hd.jpg" alt="img"></p>
+<p>我们看到，该函数首先获取事件链，然后逐个进行触发，比较重要的就是获取事件链的过程：</p>
+<p><img src="../../assets/images/2019-08-12-ugui-eventsystem-sourcecode/v2-3c2ddef8ca9458a8235db5cb8278bcb3_hd.jpg" alt="img"></p>
+<p>从下往上进行遍历，将所有拥有事件的对象通通都调用一遍就是这个事件链的本质。</p>
+<h2 id="事件触发机制总结"><a href="#事件触发机制总结" class="headerlink" title="事件触发机制总结"></a><strong>事件触发机制总结</strong></h2><p>不同的组件触发事件的方法都不一样，比如我们上面 看到的OnPointDown是用事件链，而PointClick则是使用的向上查找。我们要防止类似于PointClick这类事件，因为如果下层已经实现了该回调则上层回调则再也无法被调用到，因为已经被下层拦截，所以也不要一口气把所有的事件全给重载了，要用的时候再加呗。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>总的来说UGUI的事件系统并不复杂，各个部分还是较为清晰的，如果我们的UI编写当中遇到了问题，或者我们要自己魔改一个组件出来都可以通过看源码来进行解决。</p>
+<p>了解了其中原理之后就算是事件穿透之类的也完全可以通过源码实现来倒推解决方案，不用到处搜索解决方案了！</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-08-11-ugui-eventmanager/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -201,7 +341,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -437,7 +577,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -552,7 +692,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -746,7 +886,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -874,7 +1014,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -979,7 +1119,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1132,7 +1272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1249,7 +1389,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1334,7 +1474,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-07-16 21:34:34" itemprop="dateModified" datetime="2020-07-16T21:34:34+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1374,181 +1514,6 @@
 <p>如果目标商店不支持Android App Bundles，你可以使用Player settings中的<code>Split APKs by target architecture</code>选项，从而根据终端用户设备的CPU架构提供APK文件，或使用bundletool，该工具可以构建支持运行在任何环境的“通用APK”文件</p>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
 <li><a href="https://connect.unity.com/p/unity-2018-3-betazhong-de-android-app-bundle-aab-zhi-chi" target="_blank" rel="noopener">https://connect.unity.com/p/unity-2018-3-betazhong-de-android-app-bundle-aab-zhi-chi</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-06-20-unity-il2cpp-debugger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着不专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/unity-2019-06-20-unity-il2cpp-debugger/" class="post-title-link" itemprop="url">Unity的il2cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-20 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-20T08:00:00+08:00">2019-06-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 13:52:24" itemprop="dateModified" datetime="2020-07-16T13:52:24+08:00">2020-07-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>unity是运行在mono下的,il2cpp有自己的运行时,il2cpp不是运行在mono下的不是mono的aot</p>
-</li>
-<li><p>mono的gc和.net的gc是不同的,il2cpp运行时实现了自己的垃圾回收(Boehm-Demers-Weiser garbage collector)</p>
-</li>
-<li><p>编译和运行时两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理</p>
-<p>Note that the <strong>.rsp</strong> file needs to match the compiler being invoked. For example:</p>
-<ul>
-<li>when targeting the .NET 3.5 Equivalent (deprecated) scripting runtime version, <strong>mcs</strong> is used with <code>mcs.rsp</code>, and</li>
-<li>when targeting the .NET 4.x Eqivalent scripting runtime version compiler, <strong>csc</strong> is used with <code>csc.rsp</code>.</li>
-</ul>
-</li>
-</ol>
-<p>大约在一年以前，我们写了一篇博客讨论Unity中脚本将来会是个什么样子，在那篇博客中我们提到了崭新的IL2CPP后端，并许诺其会为Unity带来更高效和更适合于各个平台的虚拟机。在2015年的一月份，我们正式发布了第一个使用IL2CPP的平台：iOS 64-bit。而随着Unity 5的发布，又带给大家另一个使用IL2CPP的平台：WebGL。感谢我们社区中用户的大量宝贵的反馈，我们在接下来的时间里根据这些反馈得以更新IL2CPP，发布补丁版本，从而持续的改进IL2CPP的编译器和运行时库。</p>
-<p>我们没有停止改进IL2CPP的打算，但是在目前这个时间点上，我们觉得可以回过头来抽出点时间告诉大家一些IL2CPP的内部工作机制。在接下来的几个月的时间里，我们打算对以下话题（或者还有其他未列出的话题）进行讨论，来做一个IL2CPP深入讲解系列。目前准备讨论的话题有：</p>
-<p>1.基础 - 工具链和命令行参数（本篇博文）<br> 2.IL2CPP生成代码介绍<br> 3.IL2CPP生成代码调试小窍门<br> 4.方法调用介绍（一般方法调用和虚方法调用等）</p>
-<ol>
-<li>通用代码共享的实现<br> 6.P/invoke(Platform Invocation Service)对于类型（types）和方法（methods）的封装<br> 7.垃圾回收器的集成<br> 8.测试框架（Testing frameworks）及其使用</li>
-</ol>
-<p>为了能让这个系列的讨论成为可能，我们会涉及到一些将来肯定会进行改动的IL2CPP的实现细节。但这也没有关系，通过这些讨论，我们希望能给大家提供一些有用和有趣的信息。</p>
-<h2 id="什么是IL2CPP？"><a href="#什么是IL2CPP？" class="headerlink" title="什么是IL2CPP？"></a>什么是IL2CPP？</h2><p>从技术层面上来说，我们说的IL2CPP包含了两部分：一个进行 预先编译（译注：ahead-of-time，又叫AOT，以下一律使用AOT缩写）的编译器。</p>
-<h2 id="一个支持虚拟机的运行时库"><a href="#一个支持虚拟机的运行时库" class="headerlink" title="一个支持虚拟机的运行时库"></a>一个支持虚拟机的运行时库</h2><p>AOT编译器将由.NET 输出的中间语言(IL)代码生成为C++代码。运行时库则提供诸如垃圾回收，与平台无关的线程，IO以及内部调用（C++原生代码直接访问托管代码结构）这样的服务和抽象层。</p>
-<h2 id="AOT编译器"><a href="#AOT编译器" class="headerlink" title="AOT编译器"></a>AOT编译器</h2><p>IL2CPP AOT编译器实际的执行文件是il2cpp.exe。在Windows平台你可以在Unity安装路径的Editor\Data\il2cpp目录下找到。对于OSX平台，它位于Unity安装路径的Contents/Frameworks/il2cpp/build目录内。 il2cpp.exe这个工具是一个托管代码可执行文件，其完全由C#写成。在开发IL2CPP的过程中，我们同时使用.NET和Mono编译器对其进行编译。</p>
-<p>il2cpp 接受来自Unity自带的或者由Mono编译器产生的托管程序集，将这些程序集转换成C++代码。这些转换出的C++代码最终由部署目标平台上的C++编译器进行编译。</p>
-<p>你可以参照下图理解IL2CPP工具链的作用：</p>
-<p><img src="../../assets/images/2019-06-20-unity-il2cpp-debugger/il2cpp-toolchain-smaller.png" alt="il2cpp toolchain smaller"> </p>
-<h2 id="运行时库"><a href="#运行时库" class="headerlink" title="运行时库"></a>运行时库</h2><p>IL2CPP的另外一个部分就是对虚拟机提供支持的运行时库。我们基本上是用C++代码来实现整个运行时库的（好吧，其实里面还是有一些和平台相关的代码使用了程序集，这个只要你知我知便好，不要告诉别人 ）。我们把运行时库称之为libli2cpp，它是作为一个静态库被连接到最终的游戏可执行文件中。这么做的一个主要的好处是可以使得整个IL2CPP技术是简单并且是可移植的。</p>
-<p>你能通过查看随Unity一起发布的libil2cpp头文件来窥探其代码组织方式（Windows平台，头文件在Editor\Data\PlaybackEngines\webglsupport\BuildTools\Libraries\libil2cpp\include目录中。OSX平台，头文件在Contents/Frameworks/il2cpp/libil2cpp目录中）。举个例子，由il2cpp产生的C++代码和libil2cpp之间的接口API，存在于codegen/il2cpp-codegen.h这个文件中。</p>
-<p>运行时的另外一个重要的部分，就是垃圾收集器。在Unity 5中，我们使用libgc垃圾收集器。它是一个典型的贝姆垃圾收集器（Boehm-Demers-Weiser garbage collector）。（译注：相对使用保守垃圾回收策略）。然而我们的libil2cpp被设计成可以方便使用其他垃圾回收器。因此我们现在也在研究集成微软开源的垃圾回收器（Microsoft GC）。对于垃圾回收器这一点，我们会在后续的一篇中专门的讨论，这里就不多说了。</p>
-<h2 id="il2cpp是如何执行的？"><a href="#il2cpp是如何执行的？" class="headerlink" title="il2cpp是如何执行的？"></a>il2cpp是如何执行的？</h2><p>让我们从一个简单的例子入手。这里使用Unity的版本是5.0.1，在Windows环境并且建立一个全新的空项目。然后创建一个带MonoBehaviour的脚本文件，将其作为组件加入到Main Camera上。代码也是非常的简单，输出Hello World：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> :</span> MonoBehaviour &#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Start</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Debug.Log(<span class="string">"Hello, IL2CPP!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当我切换到WebGL平台进行项目生成的时候，我们可以用Process Explorer来对il2cpp的命令行进行观察，得到以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe&quot; &quot;C:\Program Files\Unity\Editor\Data\il2cpp&#x2F;il2cpp.exe&quot; --copy-level&#x3D;None --enable-generic-sharing --enable-unity-event-support --output-format&#x3D;Compact --extra-types.file&#x3D;&quot;C:\Program Files\Unity\Editor\Data\il2cpp\il2cpp_default_extra_types.txt&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll&quot; &quot;C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\il2cppOutput&quot;</span><br></pre></td></tr></table></figure>
-
-<p>嗯，这个真是老太太的裹脚布 - 又臭又长……，所以让我们把命令分拆一下，Unity运行的是这个可执行文件：</p>
-<figure class="highlight plain"><figcaption><span>Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe"```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">下一个参数是il2cpp.exe工具本身：</span><br><span class="line">&#96;&#96;&#96; &quot;C:\Program Files\Unity\Editor\Data\il2cpp&#x2F;il2cpp.exe&quot;</span><br></pre></td></tr></table></figure>
-
-<p>请注意剩下的参数其实都是传递给il2cpp.exe的而不是mono.exe。上面的例子里传递了5个参数给il2cpp.exe：<br> <code>–copy-level=None</code></p>
-<p>指明il2cpp.exe不对生成的C++文件进行copy操作<br><code>–enable-generic-sharing</code><br> 告诉IL2CPP如果可以，对通用方法进行共享。这个可以减少代码并降低最后二进制文件的尺寸</p>
-<p><code>–enable-unity-event-support</code><br> 确保和Unity events相关的，通过反射机制来运作的代码，能够正确生成。</p>
-<p><code>–output-format=Compact</code><br> 在生成C++代码时为里面的类型和方法使用更短的名字。这会使得C++代码难以阅读，因为原来在IL中的名字被更短的取代了。但好处是可以让C++编译器运行的更快。</p>
-<p><code>–extra-types.file=”C:\Program Files\Unity\Editor\Data\il2cpp\il2cpp_default_extra_types.txt”</code></p>
-<p>使用默认的（也是空的）额外类型文件。il2cpp.exe会将在这个文件中出现的基本类型或者数组类型看作是在运行时生成的而不是一开始出现在IL代码中来对待。</p>
-<p>需要注意的是这些参数可能会在以后的Unity版本中有所变化。我们现在还没有稳定到把il2cpp.exe的命令行参数整理固定下来的阶段。</p>
-<p>最后，我们有由两个文件组成的一个列表和一个目录在这个长长的命令行中：</p>
-<figure class="highlight plain"><figcaption><span>Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll”</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">“C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll”</span><br><span class="line"></span><br><span class="line">“C:\Users\Josh Peterson\Documents\IL2CPP Blog Example\Temp\StagingArea\Data\il2cppOutput”</span><br></pre></td></tr></table></figure>
-
-<p>il2cpp.exe工具可以接收一个由IL程序集组成的列表。在上面这个例子中，程序集包含了项目中的简单脚本程序集：Assembly-CSharp.dll，和GUI程序集：UnityEngine.UI.dll。大家可能会注意到这里面明显少了什么：UnityEngine.dll到哪去了？系统底层的mscorlib.dll也不见了踪影。实际上，il2cpp.exe会在内部自动引用这些程序集。你当然也可以把这些放入列表中，但他们不是必须的。你只需要提及那些根程序集（那些没有被其他任何程序集引用到的程序集），剩下的il2cpp.exe会根据引用关系自动加入。</p>
-<p>裹脚布的最后一块是一个目录，il2cpp.exe会将最终的C++代码生成到这里。如果你还保持着一颗好奇的心，可以看看这个目录中产生的文件。这些文件是我们下一个讨论的主题。在你审视这些代码前，可以考虑将WebGL构建设置中的“Development Player”选项勾上。这么做会移除–output-format=Compact命令行参数从而让C++代码中的类型和方法的名字更加可读。</p>
-<p>尝试在WebGL或者iOS构建设置中进行些改变。这样你会发现传递给il2cpp.exe的参数也会相应的发生变化。例如，将“Enable Exceptions” 设置成“Full” 会将–emit-null-checks，–enable-stacktrace，和 –enable-array-bounds-check这三个参数加入il2cpp.exe命令行。</p>
-<h2 id="IL2CPP没做的事情"><a href="#IL2CPP没做的事情" class="headerlink" title="IL2CPP没做的事情"></a>IL2CPP没做的事情</h2><p>我想指出IL2CPP有一向挑战我们没有接受,而且我们也高兴我们忽略了它。我们没有尝试重写整个C#标准库。当你使用IL2CPP后端构建Unity项目的时候，所有在mscorlib.dll，System.dll等中的C#标准库和原来使用Mono编译时候的一模一样。</p>
-<p>我们可以依赖健壮的且久经考验的C#标准库，所以当处理有关IL2CPP的bug的时候，我们可以很肯定的说问题出在AOT编译器或者运行时库这两个地方而不是在其他地方。</p>
-<h2 id="我们如何开发，测试，发布IL2CPP"><a href="#我们如何开发，测试，发布IL2CPP" class="headerlink" title="我们如何开发，测试，发布IL2CPP"></a>我们如何开发，测试，发布IL2CPP</h2><p>自从我们在一月份的4.6.1 p5版本中首次引入IL2CPP以来，我们已经连续发布了6个Unity版本和7个补丁（Unity版本号跨越4.6和5.0）。在这些发布中我们修正了超过100个bug。</p>
-<p>为了确保持续的改进得以实施，我们内部只保留一份最新的开发代码在主干分之（trunk branch）上，在发布各个版本之前，我们会将IL2CPP的改动挂到一个特定的分之下，然后进行测试，确保所有的bug已经正确的修正了。我们的QA和维护工作组为此付出了惊人的努力才得以保证发布版本的快速迭代。（译注：感觉是版本管理的标准的开发流程）</p>
-<p>提供高质量Bug的用户社区被证明是一个无价之宝。我们非常感谢用户的反馈来帮助我们改进IL2CPP，并且希望这类反馈越多越好。</p>
-<p>我们的IL2CPP研发组有很强烈的“测试优先”意识。我们时常使用“Test Driven Design”方法，在没有进行足够全面的测试的情况下，几乎不会进行代码的合并工作。这个策略用在IL2CPP项目上非常的棒。我们现在所面对的大部分bug并不是意想不到的行为产生的，而是由意想不到的特殊情况产生的。（例如在一个32位的索引数组中使用了64位的指针从而导致C++编译器失败）面对这种类型的bug我们可以快速的并且很自信的进行修正。</p>
-<p>有了社区的帮助，我们非常努力的让IL2CPP既快又稳定。顺便说一句，如果你对我刚才说的这些有兴趣，我们正在招人（嗯…..我只是这么一说）</p>
-<h2 id="好戏连台"><a href="#好戏连台" class="headerlink" title="好戏连台"></a>好戏连台</h2><p>关于IL2CPP我们还有很多可以说的。下一次我们会深入到il2cpp.exe代码生成的细节中。看看对于C++编译器来说，由il2cpp.exe生成的代码会是个什么样子。</p>
-<h1 id="iOS-IL2CPP打包注意事项"><a href="#iOS-IL2CPP打包注意事项" class="headerlink" title="iOS IL2CPP打包注意事项"></a>iOS IL2CPP打包注意事项</h1><p>鉴于IL2CPP的特殊性，实际在iOS的发布中可能会遇到一些问题，在这里给大家介绍几个iOS发布时可能会遇到的问题。</p>
-<p>IL2CPP和mono的最大区别就是不能在运行时动态生成代码和类型，所以这就要求必须在编译时就完全确定需要用到的类型。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
-<li>il2cpp  没有使用的字段都不会被编译..</li>
-<li>json反序列化的时候get,set不能被使用,il2cpp 在运行时会剥离去除Get属性，你需要在工程中添加一个 link.xml告诉编译器不要优化掉Get属性</li>
-<li>不要用dynamic关键字</li>
-<li>注意泛型实例和泛型方法,可能会被裁剪..这个时候建立一个函数.手动调用下即可.<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">参见</a></li>
-</ul>
-<h2 id="类型裁剪"><a href="#类型裁剪" class="headerlink" title="类型裁剪"></a>类型裁剪</h2><p>IL2CPP在打包时会自动对Unity工程的DLL进行裁剪，将代码中没有引用到的类型裁剪掉，以达到减小发布后ipa包的尺寸的目的。然而在实际使用过程中，很多类型有可能会被意外剪裁掉，造成运行时抛出找不到某个类型的异常。特别是通过反射等方式在编译时无法得知的函数调用，在运行时都很有可能遇到问题。</p>
-<p>Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪裁掉的。具体做法就是在Unity工程的Assets目录中建立一个叫link.xml的XML文件，然后按照下面的格式指定你需要保留的类型：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">linker</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"UnityEngine"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"Assembly-CSharp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">namespace</span> <span class="attr">fullname</span>=<span class="string">"MyGame.Utils"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span> <span class="attr">fullname</span>=<span class="string">"MyGame.SomeClass"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">assembly</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">linker</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>Could not produce class with ID 91 - iOS   <a href="https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/" target="_blank" rel="noopener">https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/</a>  <a href="https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305</a>  <a href="https://www.cnblogs.com/zhaoqingqing/p/6080075.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/6080075.html</a></li>
-<li>odin  新建一个场景把一些scriptobject拖到场景中扫描一下</li>
-<li>protobuf   <code>**Unable to resolve MapDecorator constructor**.</code>  同时注意不要用属性{get;set;}..如果Dictionary的key为int也会出这个问题..未找到解决办法 ,用class代替</li>
-</ol>
-<p>F:\GouYuJian\GYJClient\Library\com.unity.addressables\aa\Android\link.xml</p>
-<p><a href="http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/" target="_blank" rel="noopener">http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/</a></p>
-<ol start="4">
-<li>System.MissingMethodException: Default constructor not found for type ServerReconciliation…这个是没有被明显的引用添加到link.xml中ServerReconciliation<a href="https://docs.unity3d.com/Manual/ManagedCodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ManagedCodeStripping.html</a></li>
-</ol>
-<h2 id="泛型实例"><a href="#泛型实例" class="headerlink" title="泛型实例"></a>泛型实例</h2><p>每个泛型实例实际上都是一个独立的类型，<code>List&lt;A&gt;</code> 和 <code>List&lt;B&gt;</code>是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。</p>
-<p>在ILRuntime中解决这个问题有两种方式，一个是使用CLR绑定，把用到的泛型实例都进行CLR绑定。另外一个方式是在Unity主工程中，建立一个类，然后在里面定义用到的那些泛型实例的public变量。这两种方式都可以告诉IL2CPP保留这个类型的代码供运行中使用。</p>
-<p>因此建议大家在实际开发中，尽量使用热更DLL内部的类作为泛型参数，因为DLL内部的类型都是ILTypeInstance，只需处理一个就行了。此外如果泛型模版类就是在DLL里定义的的话，那就完全不需要进行任何处理。</p>
-<h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p>跟泛型实例一样，<code>foo.Bar&lt;TypeA&gt;</code> 和<code>foo.Bar&lt;TypeB&gt;</code>是两个完全不同的方法，需要在主工程中显式调用过，IL2CPP才能够完整保留，因此需要尽量避免在热更DLL中调用Unity主工程的泛型方法。如果在iOS上实际运行遇到报错，可以尝试在Unity的主工程中随便写一个static的方法，然后对这个泛型方法调用一下即可，这个方法无需被调用，只是用来告诉IL2CPP我们需要这个方法</p>
-<h2 id="IL2CPP限制"><a href="#IL2CPP限制" class="headerlink" title="IL2CPP限制"></a>IL2CPP限制</h2><p>将游戏导出到 iOS 等平台时，Unity 将使用其 IL2CPP 引擎将 IL“转换”为 C++ 代码，然后使用目标平台的本机编译器进行编译。 在此方案中，有几个不支持的 .NET 功能，例如反射的部分内容和使用 <code>dynamic</code> 关键字。 虽然可在自己的代码中使用这些功能，但使用第三方 DLL 和 SDK 时可能会遇到问题，这些 DLL 和 SDK 并非使用 Unity 和 IL2CPP 编写。 有关此主题的详细信息，请参阅 Unity 站点上的<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">脚本限制</a>文档。</p>
-<p>此外，如之前 Json.NET 示例中所述，Unity 将尝试在 IL2CPP 导出过程中裁剪掉未使用的代码。 虽然这通常不是问题，但对于使用反射的库，它可能会意外地删除在导出时无法确定是否被调用而在运行时可能被调用的属性或方法。 若要解决这些问题，请添加一个 link.xml 文件到项目中，该文件中包含的程序集和命名空间列表不会执行裁剪过程。 有关完整详细信息，请参阅<a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">有关字节码裁剪的 Unity 文档</a>。</p>
-<h2 id="编译速度优化"><a href="#编译速度优化" class="headerlink" title="编译速度优化"></a>编译速度优化</h2><ol>
-<li>增量编译</li>
-<li>关闭实时保护</li>
-<li>使用ssd</li>
-</ol>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
-<li><a href="https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019</a></li>
-<li><a href="https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html</a></li>
-<li><a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html</a></li>
-<li><a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ScriptingRestrictions.html</a></li>
-<li><a href="http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/" target="_blank" rel="noopener">http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/</a></li>
-<li><a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/PlatformDependentCompilation.html</a></li>
-<li><a href="https://www.jianshu.com/p/7cfcb7b0cfe7" target="_blank" rel="noopener">https://www.jianshu.com/p/7cfcb7b0cfe7</a></li>
-<li><a href="https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/" target="_blank" rel="noopener">https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/</a></li>
 </ul>
 
       
@@ -1634,7 +1599,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
