@@ -20,7 +20,7 @@ git submodule add https://github.com/ppoffice/hexo-theme-icarus.git themes/icaru
 #添加插件https://github.com/sisyphsu/hexo-enhancer#readme
 #如果不能生成,则删除db.json  ..或者hexo clean
 yarn add hexo-enhancer
-
+yarn add hexo-excerpt
 #本地服务器
 hexo s  
 ```
