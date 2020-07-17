@@ -18,7 +18,7 @@ git submodule add https://github.com/theme-next/hexo-theme-next themes/next
 git submodule add https://github.com/ppoffice/hexo-theme-icarus.git themes/icarus
 
 #添加插件https://github.com/sisyphsu/hexo-enhancer#readme
-#如果不能生成,则删除db.json
+#如果不能生成,则删除db.json  ..或者hexo clean
 yarn add hexo-enhancer
 
 #本地服务器

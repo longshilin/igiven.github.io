@@ -95,7 +95,7 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: next
 theme_config:
-  scheme: Pisces
+  scheme: Gemini
   menu:
     home: / || fa fa-home
     about: /about/ || fa fa-user
@@ -113,9 +113,11 @@ theme_config:
   links:
     GODGODGAME: http://www.godgodgame.com
     IGIVEN: https://www.igiven.com
+  excerpt_description: true # 使用 front-matter 的 description 字段作为简介显示在博客列表页（当字段为空时显示完整博客），关闭
   auto_excerpt:
-    enable: true
-    length: 300
+    enable: true # 自动摘录，开启，暂时没发现bug
+    length: 150
+  scroll_to_more: true
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
