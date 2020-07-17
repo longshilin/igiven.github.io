@@ -113,7 +113,9 @@ theme_config:
   links:
     GODGODGAME: http://www.godgodgame.com
     IGIVEN: https://www.igiven.com
-
+  auto_excerpt:
+    enable: true
+    length: 300
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
