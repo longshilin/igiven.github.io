@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,30 +225,14 @@
 
       
           <h1 id="使用普通用户登陆"><a href="#使用普通用户登陆" class="headerlink" title="使用普通用户登陆"></a>使用普通用户登陆</h1><h3 id="生成私钥"><a href="#生成私钥" class="headerlink" title="生成私钥"></a>生成私钥</h3><p><img src="../../assets/images/2020-01-02-google-clound-local-login/image-20200112043711450.png" alt="image-20200112043711450"></p>
-<p>生成后可以把 Key comment 改为你想要的名称, 这样下面你在连接的时候可以使用比较熟悉的Username 作为登录名, 然后使用 Ctrl + C 把上面显示的那串 ssh-rsa.. 开头的公钥复制下来. 待会要用到这个.</p>
-<p><img src="../../assets/images/2020-01-02-google-clound-local-login/image-20200112043833424.png" alt="image-20200112043833424"></p>
-<p>然后保存好你的私钥和公钥到本地目录中..私钥是<code>本地</code>用的,公钥是<code>远程服务器</code>用的</p>
-<h1 id="添加公钥到谷歌云的实例中"><a href="#添加公钥到谷歌云的实例中" class="headerlink" title="添加公钥到谷歌云的实例中"></a>添加公钥到谷歌云的实例中</h1><p><img src="../../assets/images/2020-01-02-google-clound-local-login/image-20200112044032323.png" alt="image-20200112044032323"></p>
-<p>点击实例的名称进入实例的详情后. 进入页面后点击上方的修改, 然后拉到下方找到如下图的地方点击添加一项, 把刚刚复制的公钥粘贴进去, 记得, 正确的公钥是在结尾会有一个空格加上你的 Username , 例如: “…== qian” </p>
-<h1 id="使用SSH工具连接到实例"><a href="#使用SSH工具连接到实例" class="headerlink" title="使用SSH工具连接到实例"></a>使用SSH工具连接到实例</h1><p><img src="../../assets/images/2020-01-02-google-clound-local-login/image-20200112044256601.png" alt="image-20200112044256601"></p>
-<h1 id="使用-root-账户登陆和修改root密码"><a href="#使用-root-账户登陆和修改root密码" class="headerlink" title="使用 root 账户登陆和修改root密码"></a>使用 root 账户登陆和修改root密码</h1><h3 id="先选择从浏览器打开ssh连接服务器"><a href="#先选择从浏览器打开ssh连接服务器" class="headerlink" title="先选择从浏览器打开ssh连接服务器"></a>先选择从浏览器打开ssh连接服务器</h3><p><a href="https://ycb.hk/usr/uploads/2018/03/2557178057.png" target="_blank" rel="noopener"><img src="../../assets/images/2020-01-02-google-clound-local-login/2557178057.png" alt="img"></a><br>连接登录成功后，输入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo -i  #切换到root</span><br><span class="line">passwd   #修改密码</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/2932129962.png" target="_blank" rel="noopener"><img src="../../assets/images/2020-01-02-google-clound-local-login/2932129962.png" alt="img"></a><br>然后会要求输入新密码，然后再重复一次密码，输入密码的时候不会显示出来，所以直接输入密码，然后回车，再然后重复输入密码回车。</p>
-<p>修改root密码完成</p>
-<h3 id="接着修改SSH配置文件-etc-ssh-sshd-config"><a href="#接着修改SSH配置文件-etc-ssh-sshd-config" class="headerlink" title="接着修改SSH配置文件/etc/ssh/sshd_config"></a>接着修改SSH配置文件/etc/ssh/sshd_config</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config #编辑文件</span><br></pre></td></tr></table></figure>
-
-<p>然后再输</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i   #进入编辑模式</span><br></pre></td></tr></table></figure>
-
-<p>找到以下内容并修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin yes &#x2F;&#x2F;默认为no，需要开启root用户访问改为yes</span><br><span class="line">PasswordAuthentication yes &#x2F;&#x2F;默认为no，改为yes开启密码登陆</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/3324977715.png" target="_blank" rel="noopener"><img src="../../assets/images/2020-01-02-google-clound-local-login/3324977715.png" alt="img"></a><br>修改完成后，再下按 esc 键，然后再输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq   #保存并退出</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/1145294211.png" target="_blank" rel="noopener"><img src="../../assets/images/2020-01-02-google-clound-local-login/1145294211.png" alt="img"></a><br>最后重启下服务器即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot    #重启服务器</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-01-02-google-clound-local-login/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -298,7 +282,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -321,103 +305,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Entitas執行流程"><a href="#Entitas執行流程" class="headerlink" title="Entitas執行流程"></a>Entitas執行流程</h1><p><img src="../../assets/images/2020-01-01-unity-entitas/1362861-20190531225036556-1995562595%5B1%5D.png" alt=""></p>
+          <h1 id="Entitas執行流程"><a href="#Entitas執行流程" class="headerlink" title="Entitas執行流程"></a>Entitas執行流程</h1><p><img src="../../assets/images/2020-01-01-unity-entitas/1362861-20190531225036556-1995562595%5B1%5D.png" alt></p>
 <p>​      也就是说整个ECS系统的内部数据维护(Group、Collector、EntityIndex)复杂度主要放在Entity的修改上了。<br>​      在给一个Entity添加一个Component时，不仅仅是对Entity进行了修改，还会通过事件将这个添加传递给Context，Context遍历所有Group，找到满足这次修改条件的Group，对所有受到影响的Group进行修改。然后再通过Group将这次修改事件分发到Collector或其他监听该Group的模块中去。<br>  这种方式带来的好处十分明显，那就是获取一种类型的Entity（也就是一个Group），只有第一次会遍历所有的Entity生成这个Group，之后再获取该类型Entity的复杂度就只有O(1)。<br>  但是也有一定的隐患，当Group和Collector比较少时，这不是一个高消耗操作，但是Group、Collector很多，且在每一帧对Entity进行频繁修改的时候。这可能会成为一个高消耗操作。</p>
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><p>  1. 在销毁一个Entity时，会移除Entity身上所有的Component，然后再进行回收。在移除Component时可能会通过Group把这个移除事件发送到监听Remove行为的Collector中，Collector会持有这个被销毁的Entity。所以在filter、或execute时不能直接依赖Collector的收集条件，还需要对Entity的Component做独立的判断。<br>  其实任何时候filter都需要对Entity的Component做判断，因为Collector收集的Entity很可能在其他地方被改变。</p>
-<p>  2. Entity不应该被ECS系统外的模块持有，因为系统外对Entity的持有不会被自动引用计数（可以自己添加）。可能会导致一个Entity被销毁然后又从池子中重新取出来， 外部模块对这个Entity的引用没有改变，但已经可能不是自己持有的那个Entity了。<br>  需要避免在外界持有Entity或通过持有uuid间接从context中持有这个Entity。</p>
-<p>  3. 在replaceComponent时，发送了Remove、Add、Update三个事件，而不是只发送了Update事件。</p>
-<p>  4. 在代码生成时，对单Componet的Matcher进行了缓存，如游戏中常用的Postion和Name等Component，但是对组合Component的Matcher没有进行缓存。所在在两个不同的ReactiveSystem中使用Matcher相同的Collector时，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;1,2代表Postion和Name的Index</span><br><span class="line">&#x2F;&#x2F;在使用代码生成时会生成类似Matcher.Position、Matcher.Name的静态函数，方便开发者使用</span><br><span class="line">context.CreateCollector(Matcher.AllOf(1,2));</span><br></pre></td></tr></table></figure>
-
-<p>这样会生成两个Matcher相同的Group实例。<br>如果在意这一点的话可以自己对Matcher进行缓存。</p>
-<ol start="5">
-<li>在Entitas-CSharp中，我们不会真的删除或者添加一个Component。生成出来的代码会先向用户请求新的值，触发移除component的事件，设置一个新的值给这个component，然后触发一次增加component的事件。用这个方法，我们就避免了内存的分配以及模拟了一个在使用<code>不可修改</code>（immutable）component的感觉。</li>
-</ol>
-<h1 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h1><p>在Context中可以对Entity进行快速过滤，它能不断的更新以保持当前的组中的Entity是最新的。假设Context有上千个Entities，但只有两个Entities拥有PositionComponent，那只要向Context询问特定的组就能立刻获取到所有符合的Entity。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gameContext.GetGroup(GameMatcher.Position).GetEntities();</span><br></pre></td></tr></table></figure>
-
-<p>Group和Group所过滤到的entities会被缓存下来，所以即使多次调用GetGroup方法，也是非常高效的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gameContext.GetEntities(GameMatcher.Movable)</span><br></pre></td></tr></table></figure>
-
-<p>内部也是通过Groups的方式来实现。Groups 拥有以下事件OnEntityAdded, OnEntityRemoved 和 OnEntityUpdated来直接响应Entity的变化。</p>
-<h1 id="Collector"><a href="#Collector" class="headerlink" title="Collector"></a>Collector</h1><p>Collector是Group的一个观察者类,Collector提供了一种简单的方法来处理Group中Entity变化的反应。假设你需要收集和处理所有entities，他们的PositionComponent被添加或替换：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var group &#x3D; gameContext.GetGroup(GameMatcher.Position);</span><br><span class="line">var collector &#x3D; group.CreateCollector(GroupEvent.Added);</span><br></pre></td></tr></table></figure>
-
-<p>之后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foreach (var e in collector.collectedEntities) &#123;</span><br><span class="line">    &#x2F;&#x2F; do something with all the entities</span><br><span class="line">    &#x2F;&#x2F; that have been collected to this point of time</span><br><span class="line">&#125;</span><br><span class="line">collector.ClearCollectedEntities();</span><br></pre></td></tr></table></figure>
-
-<p>我们还可以注销这个Collector</p>
-<p>collector.Deactivate();</p>
-<h1 id="ReactiveSystem"><a href="#ReactiveSystem" class="headerlink" title="ReactiveSystem"></a>ReactiveSystem</h1><ul>
-<li>响应式的系统就像执行式系统一样，会每隔一段时间或是在每一个<code>Update</code>中被触发</li>
-<li>响应式系统的<code>Execute(List entities)</code> 方法只会在收集器距离上一次<code>Execute</code>收集到新的Entity才会被执行。</li>
-<li>gettrigger使用Collector根据event建立一个group的entity列表</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected override ICollector&lt;GameEntity&gt; GetTrigger(IContext&lt;GameEntity&gt; context) &#123;</span><br><span class="line">	return context.CreateCollector(GameMatcher.Destroyed);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected override bool Filter(GameEntity entity) &#123;</span><br><span class="line">	return entity.isDestroyed;</span><br><span class="line">&#125;</span><br><span class="line">       </span><br><span class="line">public void Execute() &#123;</span><br><span class="line">    if (_collector.count !&#x3D; 0) &#123;</span><br><span class="line">        foreach (var e in _collector.collectedEntities) &#123;</span><br><span class="line">            if (Filter(e)) &#123;</span><br><span class="line">                e.Retain(this);</span><br><span class="line">                _buffer.Add(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _collector.ClearCollectedEntities();</span><br><span class="line"></span><br><span class="line">        if (_buffer.Count !&#x3D; 0) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Execute(_buffer);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                for (int i &#x3D; 0; i &lt; _buffer.Count; i++) &#123;</span><br><span class="line">                    _buffer[i].Release(this);</span><br><span class="line">                &#125;</span><br><span class="line">                _buffer.Clear();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上代码:</p>
-<p>我们在<code>GetTrigger</code>方法中返回了一个监测了<code>Destroyed</code>Entity的Collector。在<code>context.CreateCollector(GameMatcher.Destroyed)</code> 中，我们不需要指定当一个Entity何时应当被收集的事件，因为默认就是会收集在<code>Added</code>情况下被通知到的Entity。所以当我们增加一个<code>Destroyed</code>组件到一个Entity上时，这个Entity会<code>添加</code>到<code>Destroyed</code>的group里面，并因此被对应的collector收集到对应的reactive system里面。</p>
-<p>如下面的代码,AddDebugMessage就会被DebugMessageSystem收集了…</p>
-<p>执行RemoveDebugMessage()但是DebugMessageSystem仍然收集着呢,但是该实体已经没有了组件DebugMessage.所以需要过滤下Filter(GameEntity entity)否则收集的数据会报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">using Entitas;</span><br><span class="line"></span><br><span class="line">public class HelloWorldSystem : IInitializeSystem</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; always handy to keep a reference to the context </span><br><span class="line">    &#x2F;&#x2F; we&#39;re going to be interacting with it</span><br><span class="line">    readonly GameContext _context;</span><br><span class="line"></span><br><span class="line">    public HelloWorldSystem(Contexts contexts)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; get the context from the constructor</span><br><span class="line">        _context &#x3D; contexts.game;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Initialize()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; create an entity and give it a DebugMessageComponent with</span><br><span class="line">        &#x2F;&#x2F; the text &quot;Hello World!&quot; as its data</span><br><span class="line"></span><br><span class="line">        var e &#x3D; _context.CreateEntity();</span><br><span class="line">        e.AddDebugMessage(&quot;Hello World!&quot;);</span><br><span class="line">        e.RemoveDebugMessage(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections.Generic;</span><br><span class="line">using Entitas;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class DebugMessageSystem : ReactiveSystem&lt;GameEntity&gt;</span><br><span class="line">&#123;</span><br><span class="line">    public DebugMessageSystem(Contexts contexts) : base(contexts.game)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected override ICollector&lt;GameEntity&gt; GetTrigger(IContext&lt;GameEntity&gt; context)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; we only care about entities with DebugMessageComponent </span><br><span class="line">        return context.CreateCollector(GameMatcher.DebugMessage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected override bool Filter(GameEntity entity)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; good practice to perform a final check in case </span><br><span class="line">        &#x2F;&#x2F; the entity has been altered in a different system.</span><br><span class="line">        return entity.hasDebugMessage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected override void Execute(List&lt;GameEntity&gt; entities)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; this is the list of entities that meet our conditions</span><br><span class="line">        foreach (var e in entities)</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F; we can safely access their DebugMessage component</span><br><span class="line">            &#x2F;&#x2F; then grab the string data and print it</span><br><span class="line">            Debug.Log(e.debugMessage.message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><h3 id="关于replace都干了什么"><a href="#关于replace都干了什么" class="headerlink" title="关于replace都干了什么"></a>关于replace都干了什么</h3><p>Group具有事件 <code>OnEntityAdded</code>, <code>OnEntityRemoved</code> and <code>OnEntityUpdated</code> 可以直接对组的更改做出反应。</p>
-<p>看源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public void UpdateEntity(TEntity entity, int index, IComponent previousComponent, IComponent newComponent) &#123;</span><br><span class="line">           if (_entities.Contains(entity)) &#123;</span><br><span class="line">               if (OnEntityRemoved !&#x3D; null) &#123;</span><br><span class="line">                   OnEntityRemoved(this, entity, index, previousComponent);</span><br><span class="line">               &#125;</span><br><span class="line">               if (OnEntityAdded !&#x3D; null) &#123;</span><br><span class="line">                   OnEntityAdded(this, entity, index, newComponent);</span><br><span class="line">               &#125;</span><br><span class="line">               if (OnEntityUpdated !&#x3D; null) &#123;</span><br><span class="line">                   OnEntityUpdated(</span><br><span class="line">                       this, entity, index, previousComponent, newComponent</span><br><span class="line">                   );</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-<p>在Entitas-CSharp中，我们不会真的删除或者添加一个Component。生成出来的代码会先向用户请求新的值，触发移除component的事件，设置一个新的值给这个component，然后触发一次增加component的事件。用这个方法，我们就避免了内存的分配以及模拟了一个在使用<code>不可修改</code>（immutable）component的感觉。</p>
-<h3 id="group和collect-还有event应该在什么地方添加"><a href="#group和collect-还有event应该在什么地方添加" class="headerlink" title="group和collect,还有event应该在什么地方添加."></a>group和collect,还有event应该在什么地方添加.</h3><ul>
-<li>在系统中的构造函数中</li>
-<li>在entitan的system初始化Initialize前</li>
-</ul>
-<p>因为初始化系统大多会有add,remove等动作.为了保持你的group,还有collect,还有event能够监听到.</p>
-<p>所以最好在Initialize前</p>
-<h1 id="Jenny"><a href="#Jenny" class="headerlink" title="Jenny"></a>Jenny</h1><p>jenny使用了roslyn, DataProviders需要更改下,否则会报错..</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">Jenny.SearchPaths &#x3D; Assets\Plugins\DesperateDevs\Editor\Plugins, \</span><br><span class="line">                    Assets\Plugins\Entitas\Editor\Plugins, \</span><br><span class="line">                    Jenny\Plugins\Entitas.Roslyn</span><br><span class="line"></span><br><span class="line">Jenny.Plugins &#x3D; DesperateDevs.CodeGeneration.Plugins, \</span><br><span class="line">                DesperateDevs.CodeGeneration.Unity.Plugins, \</span><br><span class="line">                Entitas.CodeGeneration.Plugins, \</span><br><span class="line">                Entitas.Roslyn.CodeGeneration.Plugins, \</span><br><span class="line">                Entitas.VisualDebugging.CodeGeneration.Plugins</span><br><span class="line"></span><br><span class="line">Jenny.PreProcessors &#x3D; DesperateDevs.CodeGeneration.Plugins.ValidateProjectPathPreProcessor, \</span><br><span class="line">                      DesperateDevs.CodeGeneration.Plugins.TargetFrameworkProfilePreProcessor</span><br><span class="line"></span><br><span class="line">Jenny.DataProviders &#x3D; Entitas.CodeGeneration.Plugins.ContextDataProvider, \</span><br><span class="line">                      Entitas.Roslyn.CodeGeneration.Plugins.CleanupDataProvider, \</span><br><span class="line">                      Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider, \</span><br><span class="line">                      Entitas.Roslyn.CodeGeneration.Plugins.EntityIndexDataProvider</span><br><span class="line"></span><br><span class="line">Jenny.CodeGenerators &#x3D; Entitas.CodeGeneration.Plugins.ComponentContextApiGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ComponentEntityApiGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ComponentEntityApiInterfaceGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ComponentGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ComponentLookupGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ComponentMatcherApiGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ContextAttributeGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ContextGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ContextMatcherGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.ContextsGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EntityGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EntityIndexGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EventEntityApiGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EventListenerComponentGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EventListenertInterfaceGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EventSystemGenerator, \</span><br><span class="line">                       Entitas.CodeGeneration.Plugins.EventSystemsGenerator, \</span><br><span class="line">                       Entitas.Roslyn.CodeGeneration.Plugins.CleanupSystemGenerator, \</span><br><span class="line">                       Entitas.Roslyn.CodeGeneration.Plugins.CleanupSystemsGenerator, \</span><br><span class="line">                       Entitas.VisualDebugging.CodeGeneration.Plugins.ContextObserverGenerator, \</span><br><span class="line">                       Entitas.VisualDebugging.CodeGeneration.Plugins.FeatureClassGenerator</span><br><span class="line"></span><br><span class="line">Jenny.PostProcessors &#x3D; DesperateDevs.CodeGeneration.Plugins.AddFileHeaderPostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.CleanTargetDirectoryPostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.MergeFilesPostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.NewLinePostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.UpdateCSProjPostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.WriteToDiskPostProcessor, \</span><br><span class="line">                       DesperateDevs.CodeGeneration.Plugins.ConsoleWriteLinePostProcessor</span><br><span class="line"></span><br><span class="line">Jenny.Server.Port &#x3D; 3333</span><br><span class="line">Jenny.Client.Host &#x3D; localhost</span><br><span class="line">DesperateDevs.CodeGeneration.Plugins.ProjectPath &#x3D; Assembly-CSharp.csproj</span><br><span class="line">Entitas.CodeGeneration.Plugins.Assemblies &#x3D; Library&#x2F;ScriptAssemblies&#x2F;Assembly-CSharp.dll</span><br><span class="line">Entitas.CodeGeneration.Plugins.Contexts &#x3D; Game, \</span><br><span class="line">                                          Unit, \</span><br><span class="line">                                          Combat, \</span><br><span class="line">                                          Config, \</span><br><span class="line">                                          Input</span><br><span class="line"></span><br><span class="line">Entitas.CodeGeneration.Plugins.IgnoreNamespaces &#x3D; true</span><br><span class="line">DesperateDevs.CodeGeneration.Plugins.TargetDirectory &#x3D; Assets&#x2F;Scripts&#x2F;World</span><br></pre></td></tr></table></figure>
-
-<p>一般来说.先运行Jenny-Auto-Import.bat.再运行Jenny-Server.bat就可以了</p>
-<p>查看所有命令:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\Jenny\Jenny.exe help</span><br></pre></td></tr></table></figure>
-
-
-
-<p>以VStudio为例，创建一个外部工具：</p>
-<p><img src="../../assets/images/2020-01-01-unity-entitas/v2-d49876b0ae0100844a372dfb16508b27_hd.jpg" alt="img"></p>
-<p>再之后，想要生成代码只需要保持运行<code>Jenny Server</code> 然后在VS中运行<code>工具/Jenny</code> 就可以了，这个方法可以让你专注于VS而无需切换回Unity。</p>
-<p><code>jenny.exe client gen</code>需要服务器才能使用</p>
-<p><code>jenny gen</code> 不开服务器直接可以使用</p>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
-<li><a href="https://www.jianshu.com/c/e8e4c3f4280c" target="_blank" rel="noopener">https://www.jianshu.com/c/e8e4c3f4280c</a></li>
-<li><a href="https://github.com/OneYoungMean/Entitas-CSharp-OYM/wiki" target="_blank" rel="noopener">https://github.com/OneYoungMean/Entitas-CSharp-OYM/wiki</a></li>
-<li><a href="https://github.com/sschmid/Entitas-CSharp" target="_blank" rel="noopener">https://github.com/sschmid/Entitas-CSharp</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-01-01-unity-entitas/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -467,7 +364,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -494,21 +391,14 @@
 
 <p>上面的abc都是一个值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Fact]</span><br><span class="line">    public void TestDatetimeoffset3()</span><br><span class="line">    &#123;</span><br><span class="line">        var a &#x3D; DateTime.Now;</span><br><span class="line">        var b &#x3D; a.ToLocalTime();</span><br><span class="line">        var c &#x3D; a.ToUniversalTime();</span><br><span class="line"></span><br><span class="line">        Assert.Equal(b, c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的值是不等的</p>
-<p>datetimeoffset使用efcore存储到datetime字段都是0时区的…取出来后如果显示再web可以toLocalTime</p>
-<p>如果是游戏中使用,除非是发送给用户显示..否则不需要toLocalTime..</p>
-<p>1，DateTime</p>
-<p>表示时间上的一刻，通常以日期和当天时间来表示。</p>
-<p>2， DateTimeOffset</p>
-<p>表示一个时间点，通常以相对于协调世界时（UTC）的日期和时间来表示</p>
-<p> <a href="https://docs.microsoft.com/en-us/dotnet/standard/datetime/performing-arithmetic-operations" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/standard/datetime/performing-arithmetic-operations</a> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">using System;</span><br><span class="line"></span><br><span class="line">public enum TimeComparison</span><br><span class="line">&#123;</span><br><span class="line">   EarlierThan &#x3D; -1,</span><br><span class="line">   TheSameAs &#x3D; 0,</span><br><span class="line">   LaterThan &#x3D; 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DateManipulation</span><br><span class="line">&#123;</span><br><span class="line">   public static void Main()</span><br><span class="line">   &#123;</span><br><span class="line">      DateTime localTime &#x3D; DateTime.Now;</span><br><span class="line">      DateTime utcTime &#x3D; DateTime.UtcNow;</span><br><span class="line">      </span><br><span class="line">      Console.WriteLine(&quot;Difference between &#123;0&#125; and &#123;1&#125; time: &#123;2&#125;:&#123;3&#125; hours&quot;, </span><br><span class="line">                        localTime.Kind.ToString(), </span><br><span class="line">                        utcTime.Kind.ToString(), </span><br><span class="line">                        (localTime - utcTime).Hours, </span><br><span class="line">                        (localTime - utcTime).Minutes);</span><br><span class="line">      Console.WriteLine(&quot;The &#123;0&#125; time is &#123;1&#125; the &#123;2&#125; time.&quot;, </span><br><span class="line">                        localTime.Kind.ToString(), </span><br><span class="line">                        Enum.GetName(typeof(TimeComparison), localTime.CompareTo(utcTime)), </span><br><span class="line">                        utcTime.Kind.ToString());  </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; If run in the U.S. Pacific Standard Time zone, the example displays </span><br><span class="line">&#x2F;&#x2F; the following output to the console:</span><br><span class="line">&#x2F;&#x2F;    Difference between Local and Utc time: -7:0 hours</span><br><span class="line">&#x2F;&#x2F;    The Local time is EarlierThan the Utc time.      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class DateTimeOffsetManipulation</span><br><span class="line">&#123;</span><br><span class="line">   public static void Main()</span><br><span class="line">   &#123;</span><br><span class="line">      DateTimeOffset localTime &#x3D; DateTimeOffset.Now;</span><br><span class="line">      DateTimeOffset utcTime &#x3D; DateTimeOffset.UtcNow;</span><br><span class="line">      </span><br><span class="line">      Console.WriteLine(&quot;Difference between local time and UTC: &#123;0&#125;:&#123;1:D2&#125; hours&quot;, </span><br><span class="line">                        (localTime - utcTime).Hours, </span><br><span class="line">                        (localTime - utcTime).Minutes);</span><br><span class="line">      Console.WriteLine(&quot;The local time is &#123;0&#125; UTC.&quot;, </span><br><span class="line">                        Enum.GetName(typeof(TimeComparison), localTime.CompareTo(utcTime)));  </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; Regardless of the local time zone, the example displays </span><br><span class="line">&#x2F;&#x2F; the following output to the console:</span><br><span class="line">&#x2F;&#x2F;    Difference between local time and UTC: 0:00 hours.</span><br><span class="line">&#x2F;&#x2F;    The local time is TheSameAs UTC.</span><br></pre></td></tr></table></figure>
-
-<p> 从实例中可以看出，DateTimeOffset是取相对于UTC的日期和时间来表示的，所以DateTimeOffset.Now和DateTimeOffset.UtcNow的值是一样的。而DateTime不同，是以日期和当前时间来显示的。 </p>
-<p>就是说..如果你用DateTime进行加减运算要么只用DateTime.Now..要么只用DateTime.UtcNow..混用会出现不可预期的错误</p>
-<p>而DateTimeOffset的无论是用now还是utcnow加减都一样,因为他代表的是一个时间点…如果是为了客户端显示使用可以转换成本地时间再tostring</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-12-01-datetimeoffset/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -558,7 +448,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -584,17 +474,14 @@
           <p>Unity的AssetStore下载package的时候经常抽风，而且开了代理工具的全局代理依然无效。</p>
 <p>检索网络后得知，这是因为它下载的时候不检测IE代理设置，而是取环境变量中HTTPS_proxy和HTTP_proxy的值，所以添加这两个变量并指定其为你的代理服务地址就可以了。</p>
 <p>具体步骤：</p>
-<pre><code>打开 系统属性-&gt;高级-&gt;环境变量
-新建 HTTPS_PROXY 和 HTTP_PROXY 系统变量，设置其为你的代理服务地址
-
-例如公司的代理IP是：127.0.0.1 端口：1080 
-变量名：HTTPS_PROXY
-变量值：http://127.0.0.1:1080    这里也是http..因为ss没开https
-
-变量名：HTTP_PROXY
-变量值：http://127.0.0.1:1080</code></pre><p><img src="../../assets/images/2019-11-15-unity-proxy/20190515220955161%5B1%5D.png" alt=""></p>
-<p>需要注意的是设置完成后可能需要重启Unity才会生效。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-11-15-unity-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -644,7 +531,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -669,103 +556,14 @@
       
           <p>In this post I describe how to run Quartz.NET jobs using an <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-2.2" target="_blank" rel="noopener">ASP.NET Core hosted service</a>. I show how to create a simple <code>IJob</code>, a custom <code>IJobFactory</code>, and a <code>QuartzHostedService</code> that runs jobs while your application is running. I’ll also touch on some of the issues to aware of, namely of using scoped services inside singleton classes.</p>
 <h2 id="Introduction-what-is-Quartz-NET"><a href="#Introduction-what-is-Quartz-NET" class="headerlink" title="Introduction - what is Quartz.NET?"></a>Introduction - what is Quartz.NET?<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#introduction-what-is-quartz-net-" target="_blank" rel="noopener"><img src="../../assets/images/2019-11-05-quartz/icons-link.svg" alt="img"></a></h2><p>As per <a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">their website</a>:</p>
-<blockquote>
-<p>Quartz.NET is a full-featured, open source job scheduling system that can be used from smallest apps to large scale enterprise systems.</p>
-</blockquote>
-<p>It’s an old staple of many ASP.NET developers, used as a way of running background tasks on a timer, in a reliable, clustered, way. Using Quartz.NET with ASP.NET Core is pretty similar - Quartz.NET supports .NET Standard 2.0, so you can easily use it in your applications.</p>
-<p>Quartz.NET has two main concepts:</p>
-<ul>
-<li>A <strong>job</strong>. This is the background tasks that you want to run on some sort of schedule.</li>
-<li>A <strong>scheduler</strong>. This is responsible for running jobs based on triggers, on a time-based schedule.</li>
-</ul>
-<p>ASP.NET Core has good support for running “background tasks” via way of <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services" target="_blank" rel="noopener">hosted services</a>. Hosted services are started when your ASP.NET Core app starts, and run in the background for the lifetime of the application. By creating a Quartz.NET hosted service, you can use a standard ASP.NET Core application for running your tasks in the background.</p>
-<blockquote>
-<p>This sort of non-HTTP scenario is also possible with the “generic host”, <a href="https://andrewlock.net/the-asp-net-core-generic-host-namespace-clashes-and-extension-methods/" target="_blank" rel="noopener">but for various reasons</a> I generally don’t use those at the moment. This should hopefully improve in ASP.NET Core 3.0 with the extra investment going into these non-HTTP scenarios.</p>
-</blockquote>
-<p>While it’s possible to create <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-2.2#timed-background-tasks" target="_blank" rel="noopener">a “timed” background service</a>, (that runs a tasks every 10 minutes, for example), Quartz.NET provides a far more robust solution. You can ensure tasks only run at specific times of the day (e.g. 2:30am), or only on specific days, or any combination by using a <a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html" target="_blank" rel="noopener">Cron trigger</a>. It also allows you to run multiple instances of your application in a clustered fashion, so that only a single instance can run a given task at any one time.</p>
-<p>In this post I’ll show the basics of creating a Quartz.NET job and scheduling it to run on a timer in a hosted service.</p>
-<h2 id="Installing-Quartz-NET"><a href="#Installing-Quartz-NET" class="headerlink" title="Installing Quartz.NET"></a>Installing Quartz.NET<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#installing-quartz-net" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>Quartz.NET is a .NET Standard 2.0 NuGet package, so it should be easy to install in your application. For this test I created an ASP.NET Core project and chose the Empty template. You can install the Quartz.NET package using <code>dotnet add package Quartz</code>. If you view the <em>.csproj</em> for the project, it should look something like this:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk.Web"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.2<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AspNetCoreHostingModel</span>&gt;</span>InProcess<span class="tag">&lt;/<span class="name">AspNetCoreHostingModel</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Microsoft.AspNetCore.App"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Quartz"</span> <span class="attr">Version</span>=<span class="string">"3.0.7"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Creating-an-IJob"><a href="#Creating-an-IJob" class="headerlink" title="Creating an IJob"></a>Creating an IJob<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#creating-an-ijob" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>For the actual background work we are scheduling, we’re just going to use a “hello world” implementation that writes to an <code>ILogger&lt;&gt;</code> (and hence to the console). You should implement the Quartz interface <code>IJob</code> which contains a single asynchronous <code>Execute()</code> method. Note that we’re using dependency injection here to inject the logger into the constructor.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Logging;</span><br><span class="line"><span class="keyword">using</span> Quartz;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line">[<span class="meta">DisallowConcurrentExecution</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HelloWorldJob</span> : <span class="title">IJob</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> ILogger&lt;HelloWorldJob&gt; _logger;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldJob</span>(<span class="params">ILogger&lt;HelloWorldJob&gt; logger</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _logger = logger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Task <span class="title">Execute</span>(<span class="params">IJobExecutionContext context</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _logger.LogInformation(<span class="string">"Hello world!"</span>);</span><br><span class="line">        <span class="keyword">return</span> Task.CompletedTask;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>I also decorated the job with the <code>[DisallowConcurrentExecution]</code> attribute. This attribute <a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/more-about-jobs.html#job-state-and-concurrency" target="_blank" rel="noopener">prevents Quartz.NET from trying to run the same job concurrently</a>.</p>
-<h2 id="Creating-an-IJobFactory"><a href="#Creating-an-IJobFactory" class="headerlink" title="Creating an IJobFactory"></a>Creating an IJobFactory<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#creating-an-ijobfactory" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>Next, we need to tell Quartz how it should create instances of <code>IJob</code>. By default, Quartz will try and “new-up” instances of the job using <code>Activator.CreateInstance</code>, effectively calling <code>new HelloWorldJob()</code>. Unfortunately, as we’re using constructor injection, that won’t work. Instead, we can provide a custom <code>IJobFactory</code> that hooks into the ASP.NET Core dependency injection container (<code>IServiceProvider</code>):</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.Extensions.DependencyInjection;</span><br><span class="line"><span class="keyword">using</span> Quartz;</span><br><span class="line"><span class="keyword">using</span> Quartz.Spi;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SingletonJobFactory</span> : <span class="title">IJobFactory</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IServiceProvider _serviceProvider;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SingletonJobFactory</span>(<span class="params">IServiceProvider serviceProvider</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _serviceProvider = serviceProvider;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IJob <span class="title">NewJob</span>(<span class="params">TriggerFiredBundle bundle, IScheduler scheduler</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> _serviceProvider.GetRequiredService(bundle.JobDetail.JobType) <span class="keyword">as</span> IJob;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ReturnJob</span>(<span class="params">IJob job</span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>This factory takes an <code>IServiceProvider</code> in the constructor, and implements the <code>IJobFactory</code> interface. The important method is the <code>NewJob()</code> method, in which the factory has to return the <code>IJob</code> requested by the Quartz scheduler. In this implementation we delegate directly to the <code>IServiceProvider</code>, and let the DI container find the required instance. The cast to <code>IJob</code> at the end is required because the non-generic version of <code>GetRequiredService</code> returns an <code>object</code>.</p>
-<p>The <code>ReturnJob</code> method is where the scheduler tries to return (i.e. destroy) a job that was created by the factory. Unfortunately, there’s no mechanism for doing so with the built-in <code>IServiceProvider</code>. We can’t create a new <code>IScopeService</code> that fits into the required Quartz API, so we’re stuck only being able to create singleton jobs.</p>
-<blockquote>
-<p>This is important. With the above implementation, it is only safe to create <code>IJob</code> implementations that are <strong>Singletons</strong> (or transient).</p>
-</blockquote>
-<h2 id="Configuring-the-Job"><a href="#Configuring-the-Job" class="headerlink" title="Configuring the Job"></a>Configuring the Job<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#configuring-the-job" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>I’m only showing a single <code>IJob</code> implementation here, but we want the Quartz hosted service to be a generic implementation that works for any number of jobs. To help with that, we create a simple DTO called <code>JobSchedule</code> that we’ll use to define the timer schedule for a given job type:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">JobSchedule</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JobSchedule</span>(<span class="params">Type jobType, <span class="keyword">string</span> cronExpression</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        JobType = jobType;</span><br><span class="line">        CronExpression = cronExpression;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Type JobType &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> CronExpression &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The <code>JobType</code> is the .NET type of the job (<code>HelloWorldJob</code> for our example), and <code>CronExpression</code> is a <a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html" target="_blank" rel="noopener">Quartz.NET Cron expression</a>. Cron expressions allow complex timer scheduling so you can set rules like “fire every half hour between the hours of 8 am and 10 am, on the 5th and 20th of every month”. Just be sure to <a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html" target="_blank" rel="noopener">check the documentation</a> for examples as not all Cron expressions used by different systems are interchangeable.</p>
-<p>We’ll add the job to DI and configure its schedule in <code>Startup.ConfigureServices()</code>:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Builder;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Hosting;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.DependencyInjection;</span><br><span class="line"><span class="keyword">using</span> Quartz;</span><br><span class="line"><span class="keyword">using</span> Quartz.Impl;</span><br><span class="line"><span class="keyword">using</span> Quartz.Spi;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Add Quartz services</span></span><br><span class="line">    services.AddSingleton&lt;IJobFactory, SingletonJobFactory&gt;();</span><br><span class="line">    services.AddSingleton&lt;ISchedulerFactory, StdSchedulerFactory&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add our job</span></span><br><span class="line">    services.AddSingleton&lt;HelloWorldJob&gt;();</span><br><span class="line">    services.AddSingleton(<span class="keyword">new</span> JobSchedule(</span><br><span class="line">        jobType: <span class="keyword">typeof</span>(HelloWorldJob),</span><br><span class="line">        cronExpression: <span class="string">"0/5 * * * * ?"</span>)); <span class="comment">// run every 5 seconds</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>This code adds four things as singletons to the DI container:</p>
-<ul>
-<li>The <code>SingletonJobFactory</code> shown earlier, used for creating the job instances.</li>
-<li>An implementation of <code>ISchedulerFactory</code>, the built-in <code>StdSchedulerFactory</code>, which handles scheduling and managing jobs</li>
-<li>The <code>HelloWorldJob</code> job itself</li>
-<li>An instance of <code>JobSchedule</code> for the <code>HelloWorldJob</code> with a Cron expression to run every 5 seconds.</li>
-</ul>
-<p>There’s only one piece missing now that brings them all together, the <code>QuartzHostedService</code>.</p>
-<h2 id="Creating-the-QuartzHostedService"><a href="#Creating-the-QuartzHostedService" class="headerlink" title="Creating the QuartzHostedService"></a>Creating the QuartzHostedService<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#creating-the-quartzhostedservice" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>The <code>QuartzHostedService</code> is an implementation of <code>IHostedService</code> that sets up the Quartz scheduler, and starts it running in the background. Due to the design of Quartz, we can implement <code>IHostedService</code> directly, instead of the <a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/background-tasks-with-ihostedservice" target="_blank" rel="noopener">more common approach of deriving from the base <code>BackgroundService</code> class</a>. The full code for the service is listed below, and I’ll discuss it afterwards.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Threading;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Hosting;</span><br><span class="line"><span class="keyword">using</span> Quartz;</span><br><span class="line"><span class="keyword">using</span> Quartz.Spi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">QuartzHostedService</span> : <span class="title">IHostedService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> ISchedulerFactory _schedulerFactory;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IJobFactory _jobFactory;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IEnumerable&lt;JobSchedule&gt; _jobSchedules;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">QuartzHostedService</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        ISchedulerFactory schedulerFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">        IJobFactory jobFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">        IEnumerable&lt;JobSchedule&gt; jobSchedules</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _schedulerFactory = schedulerFactory;</span><br><span class="line">        _jobSchedules = jobSchedules;</span><br><span class="line">        _jobFactory = jobFactory;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> IScheduler Scheduler &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">StartAsync</span>(<span class="params">CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Scheduler = <span class="keyword">await</span> _schedulerFactory.GetScheduler(cancellationToken);</span><br><span class="line">        Scheduler.JobFactory = _jobFactory;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> jobSchedule <span class="keyword">in</span> _jobSchedules)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> job = CreateJob(jobSchedule);</span><br><span class="line">            <span class="keyword">var</span> trigger = CreateTrigger(jobSchedule);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">await</span> Scheduler.ScheduleJob(job, trigger, cancellationToken);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Scheduler.Start(cancellationToken);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">StopAsync</span>(<span class="params">CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">await</span> Scheduler?.Shutdown(cancellationToken);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IJobDetail <span class="title">CreateJob</span>(<span class="params">JobSchedule schedule</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">var</span> jobType = schedule.JobType;</span><br><span class="line">        <span class="keyword">return</span> JobBuilder</span><br><span class="line">            .Create(jobType)</span><br><span class="line">            .WithIdentity(jobType.FullName)</span><br><span class="line">            .WithDescription(jobType.Name)</span><br><span class="line">            .Build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ITrigger <span class="title">CreateTrigger</span>(<span class="params">JobSchedule schedule</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> TriggerBuilder</span><br><span class="line">            .Create()</span><br><span class="line">            .WithIdentity(<span class="string">$"<span class="subst">&#123;schedule.JobType.FullName&#125;</span>.trigger"</span>)</span><br><span class="line">            .WithCronSchedule(schedule.CronExpression)</span><br><span class="line">            .WithDescription(schedule.CronExpression)</span><br><span class="line">            .Build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The <code>QuartzHostedService</code> has three dependencies: the <code>ISchedulerFactory</code> and <code>IJobFactory</code> we configured in <code>Startup</code>, and an <code>IEnumerable</code>. We only added a single <code>JobSchedule</code> to the DI container (for the <code>HelloWorldJob</code>), but if you register more job schedules with the DI container they’ll all be injected here.</p>
-<p><code>StartAsync</code> is called when the application starts up and is where we configure Quartz. We start by creating an instance of <code>IScheduler</code>, assigning it to a property for use later, and setting the <code>JobFactory</code> for the scheduler to the injected instance:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">StartAsync</span>(<span class="params">CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Scheduler = <span class="keyword">await</span> _schedulerFactory.GetScheduler(cancellationToken);</span><br><span class="line">    Scheduler.JobFactory = _jobFactory;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Next, we loop through the injected job schedules, and create a Quartz <code>IJobDetail</code> and <code>ITrigger</code> for each one using the <code>CreateJob</code> and <code>CreateTrigger</code> helper methods at the end of the class. If you don’t like how this part works, or need more control over the configuration, you can easily customise it by extending the <code>JobSchedule</code> DTO as you see fit.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">StartAsync</span>(<span class="params">CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> jobSchedule <span class="keyword">in</span> _jobSchedules)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> job = CreateJob(jobSchedule);</span><br><span class="line">        <span class="keyword">var</span> trigger = CreateTrigger(jobSchedule);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Scheduler.ScheduleJob(job, trigger, cancellationToken);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IJobDetail <span class="title">CreateJob</span>(<span class="params">JobSchedule schedule</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> jobType = schedule.JobType;</span><br><span class="line">    <span class="keyword">return</span> JobBuilder</span><br><span class="line">        .Create(jobType)</span><br><span class="line">        .WithIdentity(jobType.FullName)</span><br><span class="line">        .WithDescription(jobType.Name)</span><br><span class="line">        .Build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ITrigger <span class="title">CreateTrigger</span>(<span class="params">JobSchedule schedule</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> TriggerBuilder</span><br><span class="line">        .Create()</span><br><span class="line">        .WithIdentity(<span class="string">$"<span class="subst">&#123;schedule.JobType.FullName&#125;</span>.trigger"</span>)</span><br><span class="line">        .WithCronSchedule(schedule.CronExpression)</span><br><span class="line">        .WithDescription(schedule.CronExpression)</span><br><span class="line">        .Build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Finally, once all the jobs are scheduled, you call <code>Scheduler.Start()</code> to actually start the Quartz.NET scheduler processing in the background. When the app shuts down, the framework will call <code>StopAsync()</code>, at which point you can call <code>Scheduler.Stop()</code> to safely shut down the scheduler process.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">StopAsync</span>(<span class="params">CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">await</span> Scheduler?.Shutdown(cancellationToken);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>You can register the hosted service using the <code>AddHostedService()</code> extension method in <code>Startup.ConfigureServices</code>:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    services.AddHostedService&lt;QuartzHostedService&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>If you run the application, you should see the background task running every 5 seconds and writing to the Console (or wherever you have logging configured)</p>
-<p><img src="../../assets/images/2019-11-05-quartz/quartz_service.png" alt="Background service writing Hello World to console repeatedly"></p>
-<h2 id="Using-scoped-services-in-jobs"><a href="#Using-scoped-services-in-jobs" class="headerlink" title="Using scoped services in jobs"></a>Using scoped services in jobs<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#using-scoped-services-in-jobs" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>There’s one big problem with the implementation as described in this post: you can only create Singleton or Transient jobs. That means you can’t use any dependencies that are registered as Scoped services. For example, you can’t inject an EF Core <code>DatabaseContext</code> into your <code>IJob</code> implementation, as you’ll have a <a href="http://blog.ploeh.dk/2014/06/02/captive-dependency/" target="_blank" rel="noopener">captive dependency</a> problem.</p>
-<p>Working around this isn’t a big issue: you can inject an <code>IServiceProvider</code> and create your own scope, <a href="https://andrewlock.net/the-dangers-and-gotchas-of-using-scoped-services-when-configuring-options-in-asp-net-core/#3-creating-a-new-scope-in-iconfigureoptions" target="_blank" rel="noopener">similar to the solution for a similar problem in a previous post</a>. For example, if you need to use a scoped service in your <code>HelloWorldJob</code>, you could use something like the following:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HelloWorldJob</span> : <span class="title">IJob</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Inject the DI provider</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IServiceProvider _provider;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldJob</span>(<span class="params"> IServiceProvider provider</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _provider = provider;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Task <span class="title">Execute</span>(<span class="params">IJobExecutionContext context</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// Create a new scope</span></span><br><span class="line">        <span class="keyword">using</span>(<span class="keyword">var</span> scope = _provider.CreateScope())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Resolve the Scoped service</span></span><br><span class="line">            <span class="keyword">var</span> service = scope.ServiceProvider.GetService&lt;IScopedService&gt;();</span><br><span class="line">            _logger.LogInformation(<span class="string">"Hello world!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Task.CompletedTask;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>This ensures a new scope is created every time the job runs, so you can retrieve (and dispose) scoped services inside the <code>IJob</code>. Unfortunately things do get a little messy. In the next post I’ll show a variation on this approach that is a little cleaner.</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#summary" target="_blank" rel="noopener"><img src="https://andrewlock.net/assets/img/icons-link.svg" alt="img"></a></h2><p>In this post I introduced Quartz.NET and showed how you could use it to schedule background jobs to run in ASP.NET Core using <code>IHostedService</code>. The example shown in this post is best for singleton or transient jobs, which isn’t ideal, as consuming scoped services is clumsy. In the next post, I’ll show a variation on this approach that makes using scoped services easier.</p>
-<ul>
-<li><a href="https://github.com/andrewlock/blog-examples/tree/master/QuartzHostedService" target="_blank" rel="noopener">Example source code for this post</a></li>
-<li><a href="https://github.com/HangfireIO/Cronos" target="_blank" rel="noopener">https://github.com/HangfireIO/Cronos</a> </li>
-<li><a href="https://github.com/HangfireIO/Hangfire" target="_blank" rel="noopener">https://github.com/HangfireIO/Hangfire</a> </li>
-<li><a href="https://github.com/quartznet/quartznet" target="_blank" rel="noopener">https://github.com/quartznet/quartznet</a> </li>
-</ul>
-<h3 id="Hangfire-与quartz-net对比"><a href="#Hangfire-与quartz-net对比" class="headerlink" title="Hangfire 与quartz.net对比"></a>Hangfire 与quartz.net对比</h3><p>在项目没有引入Hangfire之前，一直使用的是Quartz.net。个人认为Quartz.net在定时任务处理方面优势如下：</p>
-<ul>
-<li>支持秒级单位的定时任务处理，但是Hangfire只能支持分钟及以上的定时任务处理</li>
-</ul>
-<p>原因在于Hangfire用的是开源的<a href="https://github.com/atifaziz/NCrontab" target="_blank" rel="noopener">NCrontab</a>组件，跟linux上的crontab指令相似。</p>
-<ul>
-<li>更加复杂的触发器，日历以及任务调度处理</li>
-<li>可配置的定时任务</li>
-</ul>
-<p>但是为什么要换Hangfire? 很大的原因在于项目需要一个后台可监控的应用，不用每次都要从服务器拉取日志查看，在没有ELK的时候相当不方便。Hangfire控制面板不仅提供监控，也可以手动的触发执行定时任务。如果在定时任务处理方面没有很高的要求，比如一定要5s定时执行，Hangfire值得拥有。抛开这些，Hangfire优势太明显了：</p>
-<ul>
-<li>持久化保存任务、队列、统计信息</li>
-<li>重试机制</li>
-<li>多语言支持</li>
-<li>支持任务取消</li>
-<li>支持按指定<code>Job Queue</code>处理任务</li>
-<li>服务器端工作线程可控，即job执行并发数控制</li>
-<li>分布式部署，支持高可用</li>
-<li>良好的扩展性，如支持IOC、Hangfire Dashboard授权控制、Asp.net Core、持久化存储等</li>
-</ul>
-<p>说了这么多的优点，我们可以有个案例，例如秒杀场景：用户下单-&gt;订单生成-&gt;扣减库存，Hangfire对于这种分布式的应用处理也是适用的，最后会给出实现。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-11-05-quartz/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -815,7 +613,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -841,15 +639,14 @@
           <p><a href="https://www.cnblogs.com/sevenyuan/p/6678317.html" target="_blank" rel="noopener">https://www.cnblogs.com/sevenyuan/p/6678317.html</a></p>
 <p><a href="https://www.lt-tree.com/2019/09/21/联网战斗同步实现/" target="_blank" rel="noopener">https://www.lt-tree.com/2019/09/21/%E8%81%94%E7%BD%91%E6%88%98%E6%96%97%E5%90%8C%E6%AD%A5%E5%AE%9E%E7%8E%B0/</a></p>
 <p><a href="https://blog.csdn.net/best789248/article/details/78434114" target="_blank" rel="noopener">https://blog.csdn.net/best789248/article/details/78434114</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/49482294" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/49482294</a></p>
-<p><a href="https://gameinstitute.qq.com/course/detail/10098" target="_blank" rel="noopener">https://gameinstitute.qq.com/course/detail/10098</a></p>
-<p><a href="https://gameinstitute.qq.com/course/detail/10099" target="_blank" rel="noopener">https://gameinstitute.qq.com/course/detail/10099</a></p>
-<p><a href="https://gameinstitute.qq.com/course/detail/10112" target="_blank" rel="noopener">https://gameinstitute.qq.com/course/detail/10112</a></p>
-<p><a href="https://gameinstitute.qq.com/course/detail/10100" target="_blank" rel="noopener">https://gameinstitute.qq.com/course/detail/10100</a></p>
-<p><a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn/Scripting:zh-cn/Abilities_Data_Driven:zh-cn" target="_blank" rel="noopener">https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn/Scripting:zh-cn/Abilities_Data_Driven:zh-cn</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/38326478" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38326478</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/38605352" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38605352</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-11-02-state-sync-skill/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -899,7 +696,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -933,88 +730,14 @@
 </li>
 </ol>
 <p>我们来看看具体的执行流程:</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png" alt="img"></p>
-<p>上图中我们可以明显看到，这种囚徒模式的帧同步，在第二帧的时候，因为玩家1有延迟，而导致第二帧的同步时间发生延迟，从而导致所有玩家都在等待，出现卡顿现象</p>
-<h2 id="Bucket-Synchronization-乐观锁"><a href="#Bucket-Synchronization-乐观锁" class="headerlink" title="Bucket Synchronization(乐观锁)"></a>Bucket Synchronization(乐观锁)</h2><p>囚徒模式的帧同步，有一个致命的缺陷就是，若联网的玩家有一个网速慢了，势必会影响其他玩家的体验，因为服务器要等待所有输入达到之后再同步到所有的c端。另外如果中途有人掉线了，游戏就会无法继续或者掉线玩家无法重连，因为在严格的帧同步的情况下，中途加入游戏是从技术上来讲是非常困难的。因为你重新进来之后，你的初始状态和大家不一致，而且你的状态信息都是丢失状态的，比如，你的等级，随机种子，角色的属性信息等。 比如玩过早期的冰封王座都知道，一旦掉线基本这局就废了，需要重开，至于为何没有卡顿的现象，因为那时都是解决方案都是采用局域网的方式，所以基本是没有延迟问题的。</p>
-<p>后期为了解决这个问题，如今包括王者荣耀，服务器会保存玩家当场游戏的游戏指令以及状态信息，在玩家断线重连的时候，能够恢复到断线前的状态。不过这个还是无法解决帧同步的问题，因为严格的帧同步，是要等到所有玩家都输入之后，再去通知广播client更新，如果A服务器一直没有输入同步过来，大家是要等着的，那么如何解决这个问题？</p>
-<p>采用“定时不等待”的乐观方式在每次Interval时钟发生时固定将操作广播给所有用户，不依赖具体每个玩家是否有操作更新。如此帧率的时钟在由服务器控制，当客户端有操作的时候及时的发送服务器，然后服务端每秒钟20-50次向所有客户端发送更新消息。如下图:</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/113303_rNd5_1859679.png" alt="img"></p>
-<p>上图中，我们看到服务器不会再等到搜集完所有用户输入再进行下一帧，而是按照固定频率来同步玩家的输入信息到每一个c端，如果有玩家网络延迟，服务器的帧步进是不会等待的，比如上图中，在第二帧的时候，玩家A的网速慢，那么他这个时候，会被网速快的玩家给秒了（其他游戏也差不多）。但是网速慢的玩家不会卡到快的玩家，只会感觉自己操作延迟而已。</p>
-<p>Bucket Synchronization 是 Lock-Step 的改良算法. 算法流程可以参考下图:</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/bucket.png" alt="img"></p>
-<p>Bucket Synchronization 算法应用于网状网络, 网络中有一个 master 节点(也是 client).</p>
-<p>master 在启动之初, 会对所有 client 做网络对时, 计算网络包的超时时间.</p>
-<p>master 会设置一个 bucket 时间, 在每个 bucket 时间节点, master 执行收集到的所有 step 指令, 并将更新推送到所有的 client 上. (上图的例子是一个简化流程, 只有俩 client, 没有 master 推送)</p>
-<p>master 对收集到的 step 包做超时校验机制, 如果收到的 step 指令包的时间戳, 延迟超过了预设的阈值, 就当作超时包丢弃.</p>
-<p>与 Lock-Step 相比, Bucket Synchronization 改进的是: 设置了 bucket 的概念, 执行每一帧的时间是固定的 bucket 时间节点, 而不必等到收到所有的 client step 指令, 从而网络不再受最差的 client 限制.</p>
-<h2 id="TimeWrap-Synchronization"><a href="#TimeWrap-Synchronization" class="headerlink" title="TimeWrap Synchronization"></a><strong>TimeWrap Synchronization</strong></h2><p> 它是一个基于某些状态支持回滚(rollback)的同步算法。有点类似HL的做法。<br> 简言之，就是对每个操作指令的执行后保存一个状态快照(snapshot)，<br>各个peer按照自己的预测先行显示，但在发生一致性冲突的情况下，<br>回滚到上一个状态，并重新将指令序列在基于回滚后的快照的基础上再<br>执行一次，以获得正确的当前状态。 </p>
-<h2 id="Trailing-State-Synchronization"><a href="#Trailing-State-Synchronization" class="headerlink" title="Trailing State Synchronization"></a><strong>Trailing State Synchronization</strong></h2><p>对TimeWrap Synchronization的一种改进。TimeWrap方案中建立snapshot是<br>以指令数量(1或少量几个指令)间隔为单位；而TSS方案则以某种延迟值(100ms)<br>间隔为单位对游戏做snapshot(比如100ms前做一个，200ms前做一个…)。<br>当发生一致性冲突时，寻找最远需要开始计算的snapshot，并将该snapshot到<br>现在为止的时间内的指令重新执行，得到正确的最新状态。</p>
-<h2 id="State-Hash"><a href="#State-Hash" class="headerlink" title="State Hash"></a>State Hash</h2><p> 在实现中客户端需要计算一些关键信息的hash值，提供给服务器以便发现游戏中的同步问题，例如玩家的位置信息，各个客户端计算结果是否一致等等。</p>
-<p>客户端执行完每个逻辑帧后，会根据游戏的状态计算出一个Hash值，用其标定一个具体的游戏状态。不同客户端通过对比这个值，即可判断客户端之间是否保持同步，平常也可用于不同步Debug。</p>
-<p>游戏外挂的种类有很多，这里所谈的外挂仅指会更改游戏逻辑执行或数值的外挂，应该也是题主最关心的类型。对于帧同步防外挂，因为游戏逻辑执行在本地，假如某个客户端使用了外挂的话，那么必然会导致其计算出的State Hash与其他客户端不一致。</p>
-<p>1、 客户端自验证（PVP 3人及以上）</p>
-<p>PVP3人及以上的战斗中，客户端上报服务器各自计算的State Hash，服务器可以通过对比State Hash判断具体哪一个客户端发生了不同步。当然，不同步也可能是客户端BUG，不同步也不一定就结算不一致。根绝不同的需求，你也可以在发现不同步后马上中断游戏。这个方法的缺点主要在于3人以下或者单机模式的话就没法使用了。</p>
-<p>2、客户端分布式验证</p>
-<p>假如客户端的核心逻辑写得足够干净和独立的话，服务器可以将某一场战斗的数据下发给一个空闲客户端，令其新起一个线程慢慢地计算验证，再将结果上报至服务器。能做到这一点的话，任何战斗模式都可以进行验证了。</p>
-<p>3、服务器验证</p>
-<p>与客户端分布式验证相同，客户端逻辑如果足够干净和独立，那么服务器也可以自己验算战斗结果。</p>
-<p>4、服务器统计与运营策略</p>
-<p>非单机模式下，服务器都根据客户端的State Hash对战斗的同步情况进行记录。将经常发生不同步的客户端标记出来，然后进一步处理。运营可以为玩家每日不同步可结算的次数设定一个阈值，超过则当日之后的战斗结算均无效。</p>
-<p>1和4是任何帧同步游戏都可以做的，2与3对游戏的框架要求比较高。我们的游戏因为是从单机版改造过来的，所以也只做了1和4。</p>
-<ul>
-<li><strong>游戏逻辑的回滚</strong></li>
-</ul>
-<p>回滚逻辑，就是我们解决问题的方案。可以这样理解，客户端的时间，领先服务器，客户端不需要服务器确认帧返回才执行指令，而是玩家输入，立刻执行（其他玩家的输入，按照其最近一个输入做预测，或者其他更优化的预测方案），然后将指令发送给服务器，服务器收到后给客户端确认，客户端收到确认后，如果服务确认的操作，和之前执行的一样（自己和其他玩家预测的操作），将不做任何改变，如果不一样（预测错误），就会将游戏整体逻辑回滚到最后一次服务器确认的正确帧，然后再追上当前客户端的帧。</p>
-<p>此处逻辑较为复杂，我尝试举个例子说明下。</p>
-<p>当前客户端（A，B）执行到100帧，服务器执行到97帧。在100帧的时候，A执行了移动，B执行了攻击，A和B都通知服务器：我已经执行到100帧，我的操作是移动（A），攻击（B）。服务器在自己的98帧或99帧收到了A，B的消息，存在对应帧的操作数据中，等服务器执行到100帧的时候（或提前），将这个数据广播给AB。</p>
-<p>然后A和B立刻开始执行100帧，A执行移动，预测B不执行操作。而B执行攻击，预测A执行攻击（可能A的99帧也是攻击），A和B各自预测对方的操作。</p>
-<p>在A和B执行完100帧后，他们会各自保存100帧的状态快照，以及100帧各自的操作（包括预测的操作），以备万一预测错误，做逻辑回滚。</p>
-<p>执行几帧后，A，B来到了103帧，服务器到了100帧，他开始广播数据给AB，在一定延迟后，AB收到了服务器确认的100帧的数据，这时候，AB可能已经执行到104了。A和B各自去核对服务器的数据和自己预测的数据是否相同。例如A核对后，100帧的操作，和自己预测的一样，A不做任何处理，继续往前。而B核对后，发现在100帧，B对A的预测，和服务器确认的A的操作，是不一样的（B预测的是攻击，而实际A的操作是移动），B就回滚到上一个确认一样的帧，即99帧，然后根据确认的100帧操作去执行100帧，然后快速执行101<del>103的帧逻辑，之后继续执行104帧，其中（101</del>104）还是预测的逻辑帧。</p>
-<p>因为客户端对当前操作的立刻执行，这个操作手感，是完全和pve（不联网状态）是一样的，不存在任何delay。所以，能做到绝佳的操作手感。当预测不一样的时候，做逻辑回滚，快速追回当前操作。</p>
-<p>这样，对于网络好的玩家，和网络不好的玩家，都不会互相影响，不会像lockstep一样，网络好的玩家，会被网络不好的玩家lock住。也不会被网络延迟lock住，客户端可以一直往前预测。</p>
-<p>对于网络好的玩家（A），可以动态调整（根据动态的latency），让客户端领先服务器少一些，尽量减少预测量，就会尽量减少回滚，例如网络好的，可能客户端只领先2~3帧。</p>
-<p>对于网络不好的玩家（B），动态调整，领先服务器多一些，根据latency调整，例如领先5帧。</p>
-<p>那么，A可能预测错的情况，只有2~3帧，而网络不好的B，可能预测错误的帧有5帧。通过优化的预测技术，和消息通知的优化，可以进一步减少A和B的预测错误率。对于A而言，战斗是顺畅的，手感很好，少数情况的回滚，优化好了，并不会带来卡顿和延迟感。</p>
-<p>重点优化的是B，即网络不好的玩家，他的操作体验。因为客户端不等待服务器确认，就执行操作，所以B的操作手感，和A是一致的，区别只在于，B因为延迟，预测了比较多的帧，可能导致预测错，回滚会多一些。比如按照B的预测，应该在100帧击中A，但是因为预测错误A的操作，回滚重新执行后，B可能在100帧不会击中A。这对于B来说，通过插值和一些平滑方式，B的感受是不会有太大区别的，因为B看自己，操作自己都是及时反馈的，他感觉自己是平滑的。</p>
-<p>这种方式，保证了网络不好的B的操作手感，和A一致。回滚导致的一些轻微的抖动，都是B看A的抖动，通过优化（插值，平滑等），进一步减少这些后，B的感受是很好的。我们测试在200~300毫秒随机延迟的情况下，B的操作手感良好。</p>
-<p>这里，客户端提前服务器的方式，并且在延迟增大的情况下，客户端将加速，和<a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s/cOGn8-rHWLIxdDz-R3pXDg">守望先锋的处理方式</a>是一样的。当然，他们肯定比我做得好很多。</p>
-<p>希望我已经大致讲清楚了这个逻辑，大家参看几篇链接的文章，能体会更深。</p>
-<p>这里，我要强调的一点是，我们这里的预测执行，是真实逻辑的预测，和很多介绍帧同步文章提到的预测是不同的。有些文章介绍的预测执行，只是view层面的预测，例如前摇动作和位移，但是逻辑是不会提前执行的，还是要等服务器的返回。这两种预测执行（View的预测执行，和真实逻辑的预测执行）是完全不是一个概念的，这里需要仔细地区分。</p>
-<p>这里有很多的可以优化的点，我就不一一介绍了，以后可能零散地再谈。</p>
-<ul>
-<li><strong>游戏逻辑的快照（snapshot）</strong></li>
-</ul>
-<p>我们的逻辑之所以能回滚，都是基于对每一帧状态可以处理快照，存储下每一帧的状态，并可以回滚到任何一帧的状态。在<a href="https://link.zhihu.com/?target=http%3A//mauve.mizuumi.net/2012/07/05/understanding-fighting-game-networking/">Understanding Fighting Game Networking</a> 文章和<a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s/cOGn8-rHWLIxdDz-R3pXDg">守望先锋网络</a> 文章中，都一笔带过了快照的说明。他们说的快照，可能略有不同，但是思路，都是能保存下每一帧的状态。如果去处理快照（Understanding那篇文章做的是模拟器游戏，可以方便地以内存快照的方式来做），是一个难点，这也是我<a href="https://zhuanlan.zhihu.com/p/38280972" target="_blank" rel="noopener">前面文章</a>提到ECS在这个方式下的应用，云风的解释：</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-253646290632dd9ed3ca6453c4b754b5_1440w.jpg" alt="img">云风博客截图，地址<a href="https://blog.codingnow.com/2017/06/overwatch_ecs.html" target="_blank" rel="noopener">https://blog.codingnow.com/2017/06/overwatch_ecs.html</a></p>
-<p>ECS是一个好的处理方式，并且我找到<a href="https://link.zhihu.com/?target=https%3A//www.kisence.com/2017/11/12/guan-yu-zheng-tong-bu-de-xie-xin-de/">一篇文章</a>，也这样做了（我看过他开源的demo，做得还不够好，应该还是demo阶段，不太像是一个成型的项目）。这篇文章的思路是很清晰的，并且也点到了一些实实在在的痛点，解决思路也基本是正确的，可以参看。</p>
-<p>这块，我做得比较早了，当时守望先锋的文章还没出，我的战斗也没有基于ECS，所以，在处理快照上，只有自己理顺逻辑来做了。</p>
-<p>我的思路是，通过一个回滚接口，需要数据回滚的部分，实现接口，各自处理自己的保存快照和回滚。就像我们序列化一个复杂的配置，每个配置各自序列化自己的部分，最终合并成一个序列化好的文件。</p>
-<p>首先，定义接口，和快照数据的reader和writer</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-5052de9e1c12b7e87d2f452b29fdef61_1440w.jpg" alt="img"></p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-b666f214abd2a804e885237c5bcc119b_1440w.jpg" alt="img"></p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-2f49a68d6fd54381d8e7bdf3ffdfb283_1440w.jpg" alt="img"></p>
-<p>然后，就是每个模块，自己去处理自己的takeSnapshot和rollback，例如：</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-96bb5917e8a766ef79323613179f404d_1440w.jpg" alt="img">简单的数值回滚</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-1573d2a9eeec5b5d8e7e663a8e06f487_1440w.jpg" alt="img">复制的列表回滚和调用子模块回滚</p>
-<p>思路理顺以后，就可以很方便地处理了，注意write和read的顺序，注意处理好list，就解决了大部分问题。当然，在实现逻辑的过程中，时刻要注意，一个模块如何回滚（例如获取随机数也需要回滚）。</p>
-<p>有一个更简单的方式，就是给属性打Attribute，然后写通用的方法。例如，我早<strong>期的实现方案</strong>：</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-05fee97a51c743b54d8dca8074fe042f_1440w.jpg" alt="img">给属性打标签</p>
-<p>根据标签，通用的读写方法，通过反射来读写，就不需要每个模块自己去实现自己的方法了：</p>
-<p><img src="../../assets/images/2019-11-01-lock-step/v2-c27132db564887adc282fe621f2357e3_1440w.jpg" alt="img">部分代码</p>
-<p>这种方法，能很好地解决大部分问题，甚至前面提到的<a href="https://link.zhihu.com/?target=https%3A//github.com/suzuke/TrueSync/tree/master/Assets/TrueSync/Engine/Math">Truesync</a>，也是用的这种方式来做。</p>
-<p>但是这种方法有个难以回避的问题，就是GC，因为基于反射，当我们调用field的GetValue和SetValue的时候，GC难以避免。并且，因为全自动，不方便处理一些特殊逻辑，调试优化也不方便，最后改成了现有的方式，虽然看起来笨重一些，但是可控性更强，我后续做的很多优化，都方便很多。</p>
-<p>关于快照，也有很多可以优化的点，无论是GC内存上的，还是运行效率上的，都需要优化好，否则，可能带来性能问题。这块优化，有空另辟文章再细谈吧。</p>
-<p>当我们有了快照，就可以支持回滚，甚至跳转。例如我们要看战斗录像，如果没有快照，我们要跳到1000帧，就需要从第一帧，根据保存的操作指令，一直快速执行到1000帧，而有了快照，可以直接跳到1000帧，不需要执行中间的过程，如果需要在不同的帧之间切换，只需要跳转即可，这将带来巨大的帮助。</p>
-<p>参考文章：</p>
-<ul>
-<li>Minimization of Latency in Cheat-Proof Real-Time Gaming by Trusting Time-Stamp Servers</li>
-<li>End-to-end transmission control mechanisms for multiparty interactive applicatins on the Internet</li>
-<li>Dead Reckoning: Latency Hiding for Networked Games</li>
-<li>An Efficient Synchronization Mechanism for Mirrored Game Architectures</li>
-<li><a href="https://gameinstitute.qq.com/community/detail/117819" target="_blank" rel="noopener">https://gameinstitute.qq.com/community/detail/117819</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/38468615" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38468615</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-11-01-lock-step/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1064,7 +787,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1088,22 +811,15 @@
 
       
           <h2 id="怪物状态同步"><a href="#怪物状态同步" class="headerlink" title="怪物状态同步"></a>怪物状态同步</h2><p>在一个地图当中，玩家的状态同步之后，则需要同步地图中怪物的位置信息，怪物的位置信息同步方式一般有两种实现方式</p>
-<h3 id="基于客户端的状态同步"><a href="#基于客户端的状态同步" class="headerlink" title="基于客户端的状态同步"></a>基于客户端的状态同步</h3><p>一个地图中的怪物状态，实际上是由地图中玩家所决定的，当玩家施加攻击、使用技能，都会改变怪物的状态。在MapleStroy的设计当中，怪物的位置计算是属于离线计算，这也就是说，服务器不参与怪物的状态，这样的好处是节约流量、减缓服务器压力，但是坏处是，会出现怪物静止、吸怪等外挂手段。在移植MapleStroy的过程中，为了同步官方和考虑移动平台流量问题，因此采用此种手段。</p>
-<p>实现策略：</p>
-<p>怪物的位置由第一个进入该地图的玩家决定。这也就是说，当第一个玩家进入该地图之后，控制着当前地图中所有怪物的移动状态。当第二个玩家进入该地图之后，第一个玩家会广播当前所有怪物的状态，第二个玩家根据这些数据包进行改变。当然其他玩家发生了攻击，或者激怒怪物的操作后，也会广播这个消息。</p>
-<p>同时怪物的移动也是采用基于预言的状态同步，大体实现和玩家移动相似。</p>
-<p> 　怪物的同步在传统的端游里，是完全由服务器的怪物AI系统触发，客户端只是纯粹的接受服务器下发的怪物状态数据。对于手机游戏里，由于手机上很难出现像PC里那样的外挂，所以怪物的AI可以考虑放在客户端触发，同时减少怪物的状态同步。详细说明如下：</p>
-<h4 id="a-怪物的随机移动不同步"><a href="#a-怪物的随机移动不同步" class="headerlink" title="a) 怪物的随机移动不同步"></a>a) 怪物的随机移动不同步</h4><p>　　在地图上，怪物都会有一个固定的位置。怪物没有进入战斗状态时，就会在这个固定位置的周围走来走去，随机的移动。这个随机的移动设定由每个客户端自己控制，这样怪物的随机移动，就不用消息广播进行同步了。</p>
-<p>　　由于客户端自己控制怪物的随机走动，所以会出现不同客户端里，怪物位置不一样的问题。但由于怪物随机移动的范围较小，所以这个问题不是很明显，在手机上是可以接受的。角色打怪时，是扇形的伤害范围，所以即使怪物坐标在不同的客户端有点不一致，打怪的效果也可以接受。</p>
-<h4 id="b-怪物的行为同步"><a href="#b-怪物的行为同步" class="headerlink" title="b) 怪物的行为同步"></a>b) 怪物的行为同步</h4><p>　　当有角色攻击被动怪物，或者进入主动怪物的视野范围内时，怪物的AI就被这个角色所在的客户端锁定了，同时怪物进入攻击状态。攻击的判断完全由锁定怪物AI的客户端进行处理，同时这个客户端会将这个怪物的行为上发到服务器，由服务器广播给周围的其他玩家。</p>
-<p>　　怪物的AI锁定，使用抢占式，即谁最先发消息给服务器申请怪物的AI锁定，谁就获得了怪物的控制权，直到怪物死亡或脱离战斗状态。</p>
-<p>　　怪物可以每进行一次攻击，客户端就发一个消息给服务器。这样做，消息还是有点多，特别是一群怪围着几个角色进行攻击时，消息广播还是有点多。所以可以将状态的概念向上扩大，只同步怪物在攻击哪个玩家，而不同步每一次的攻击，然后由每个客户端根据怪物固定的攻击速度各自去表现。这样一个怪去攻击一个玩家，就只会有一次消息广播了。</p>
-<h4 id="c-精英怪和BOSS怪的AI"><a href="#c-精英怪和BOSS怪的AI" class="headerlink" title="c) 精英怪和BOSS怪的AI"></a>c) 精英怪和BOSS怪的AI</h4><p>　　精英怪和BOSS怪由于数量较少，而且比较重要，所以不能由客户端来申请AI控制权，而是服务器根据某种策略来控制。所使用的策略可以考虑角色的伤害值、防御值、角色与BOSS的距离远近等，根据这些因素，服务器计算出BOSS怪当前最适合攻击的对象（比如血量最少的玩家，最脆弱的法师等），然后将AI控制权发给那个客户端，由那个客户端控制攻击行为，同时通过消息让服务器同步给其他玩家。</p>
-<p>　　总结：怪物的同步方式的选择，就是尽量减少消息的广播，同时让游戏效果在可接受的范围内。怪物AI的这个处理方式，实际上是同时省去了游戏服务器的怪物AI模块（端游一般是专门用的一个进程或者另外一台物理服务器来进行怪物AI的计算），从而简化了MMO游戏的开发难度，同时保证了较好的游戏体验。 </p>
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
-<li><a href="https://www.jianshu.com/p/5dbdf81c4e69" target="_blank" rel="noopener">https://www.jianshu.com/p/5dbdf81c4e69</a></li>
-</ul>
-
+<h3 id="基于客户端的状态同步"><a href="#基于客户端的状态同步" class="headerlink" title="基于客户端的状态同步"></a>基于客户端的状态同步</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-11-01-state-sync-npc/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1153,7 +869,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1179,19 +895,14 @@
           <p>问题引入：在mmorpg游戏中，群战的时候，玩家释放技能，这时候会出现技能冷却时间，每一个技能都是一个定时器，或者在slg游戏中，玩家修建房屋，创建基地，都会产生一个延时操作，等到了指定时间后，完成房屋修建等任务！！！！！</p>
 <p>轮询的尴尬：使用一个定时器，定时遍历多个链表，判定链表里面的任务是否到期！ 效率低下,每一次遍历都需要筛选定时器，时间复杂度O（n）.</p>
 <p>多定时器的尴尬：同时创建多个定时器，每个定时器绑定到期任务，多定时器，会加大cpu的负荷，且任务的到期时间不同，必定会产生更多的定时器。</p>
-<p>解决方案：时间轮的引入</p>
-<p> <img src="../../assets/images/2019-10-29-time-wheel/20180817103356853.png" alt="img"> </p>
-<p>如果所示：将同一时间的任务放在一起，组成一个链表，图中每个格子分别指向这样一个链表，定时器每到期一次，图中的指针移动一格，如此循环往复，当指针指向某个格子，代表这个链表里面的定时器可能到期（注意，这里是可能，因为时间轮是一个循环的圈，比如运行一圈需要时间50s,那么一个100s的定时器，虽然在槽位1的链表中，但是需要时间轮运行两圈，这个定时器才到期）</p>
-<h2 id="A-full-example"><a href="#A-full-example" class="headerlink" title="A full example"></a>A full example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Task fired repeatedly</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">class IntervalTimerTask : TimerTask</span><br><span class="line">&#123;</span><br><span class="line">    public void Run(Timeout timeout)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine($&quot;IntervalTimerTask is fired at &#123;DateTime.UtcNow.Ticks &#x2F; 10000000L&#125;&quot;);</span><br><span class="line">        timeout.Timer.NewTimeout(this, TimeSpan.FromSeconds(2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Task only be fired for one time</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">class OneTimeTask : TimerTask</span><br><span class="line">&#123;</span><br><span class="line">    readonly string _userData;</span><br><span class="line">    public OneTimeTask(string data)</span><br><span class="line">    &#123;</span><br><span class="line">        _userData &#x3D; data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run(Timeout timeout)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine($&quot;&#123;_userData&#125; is fired at &#123;DateTime.UtcNow.Ticks &#x2F; 10000000L&#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">    HashedWheelTimer timer &#x3D; new HashedWheelTimer( tickDuration: TimeSpan.FromSeconds(1)</span><br><span class="line">        , ticksPerWheel: 100000</span><br><span class="line">        , maxPendingTimeouts: 0);</span><br><span class="line"></span><br><span class="line">    timer.NewTimeout(new OneTimeTask(&quot;A&quot;), TimeSpan.FromSeconds(5));</span><br><span class="line">    timer.NewTimeout(new OneTimeTask(&quot;B&quot;), TimeSpan.FromSeconds(4));</span><br><span class="line">    var timeout &#x3D; timer.NewTimeout(new OneTimeTask(&quot;C&quot;), TimeSpan.FromSeconds(3));</span><br><span class="line">    timer.NewTimeout(new OneTimeTask(&quot;D&quot;), TimeSpan.FromSeconds(2));</span><br><span class="line">    timer.NewTimeout(new OneTimeTask(&quot;E&quot;), TimeSpan.FromSeconds(1));</span><br><span class="line"></span><br><span class="line">    timeout.Cancel();</span><br><span class="line"></span><br><span class="line">    timer.NewTimeout(new IntervalTimerTask(), TimeSpan.FromSeconds(5));</span><br><span class="line">    Console.WriteLine($&quot;&#123;DateTime.UtcNow.Ticks &#x2F; 10000000L&#125; : Started&quot;);</span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The output of the sample is something like</p>
-<p><img src="../../assets/images/2019-10-29-time-wheel/console.png" alt=""></p>
-<p>c# 的实现</p>
-<ul>
-<li><a href="https://github.com/wangjia184/HashedWheelTimer" target="_blank" rel="noopener">https://github.com/wangjia184/HashedWheelTimer</a> </li>
-<li><a href="https://github.com/fanrice123/HashedWheelTimer.NET" target="_blank" rel="noopener">https://github.com/fanrice123/HashedWheelTimer.NET</a> </li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2019-10-29-time-wheel/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1241,7 +952,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1266,145 +977,14 @@
       
           <h4 id="什么是视差背景？"><a href="#什么是视差背景？" class="headerlink" title="什么是视差背景？"></a>什么是视差背景？</h4><p>视差效果，原本是一个天文学术语，当我们观察星空时，离我们远的星星移动速度较慢，离我们近的星星移动速度则较快。当我们坐在车上向车窗外看时，也会有这样的感觉，远处的群山似乎没有在动，而近处的稻田却在飞速掠过。</p>
 <p>简单地说，视差背景其实就是通过多层次的背景来模拟透视视差效果：就是当发生移动时，离照相机越近的背景移动越快；反之越慢。这样，我们的背景就会形成类似于透视视差的效果。</p>
-<p>那么，既然需要透视效果，为何不直接使用透视投影来做呢？这个原因是如果使用透视投影来产生视差的话，我们的远景必须真的是一个非常大的背景，你如果想模拟出一百倍于近景的远景，那么可能就需要相应尺寸的背景贴图。这种做法显然是做不到的。当然，如果是3D 背景的话有其他方式，不过对于2D 游戏而言，最直接有效的还是多层次背景模拟出视差效果。我们这里也主要聊聊如果通过多层次背景滚动的方式实现视差效果。</p>
-<p>在整个视差背景实现过程中，需要完成两个主要工作：</p>
-<ol>
-<li>实现单层背景的滚动；</li>
-<li>复合多层背景的滚动，实现视差效果；</li>
-</ol>
-<h4 id="实现单层背景的滚动"><a href="#实现单层背景的滚动" class="headerlink" title="实现单层背景的滚动"></a>实现单层背景的滚动</h4><p>背景滚动是实现视差效果的核心也是最重要的问题。背景滚动存在横向和纵向两种。所有使用视差背景的游戏都会有横向滚动的情况，而纵向滚动则未必都会有。我们这里以横向滚动来介绍背景滚动。我们有四种常规方式可以实现背景的滚动：</p>
-<ol>
-<li>通过移动一个四边形顶点的 UV 移动形成滚动，之后就称之为 UV 滚动方式；</li>
-<li>通过滚动移动多个连续的背景精灵形成滚动，之后就称之为精灵滚动方式；</li>
-<li>添加背景层照相机，移动照相机形成滚动，之后就称之为照相机移动方式；</li>
-<li>精灵滚动方式和照相机移动方式混合使用，之后就称之为混合滚动方式；</li>
-</ol>
-<p>为了更好地解释这几种实现方式，需要几张图片用于介绍：</p>
-<p>我们使用一个黄框精灵代表屏幕取景区域：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-101952876756Yj6.png" alt="img"></p>
-<p>接下来是三张可拼接的背景精灵：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-101952876820zdg.png" alt="img">)<img src="../../assets/images/2019-09-13-Parallax-2d/u-101952876827Lvz.png" alt="img">)<img src="../../assets/images/2019-09-13-Parallax-2d/u-101952876811twL.png" alt="img"></p>
-<h5 id="UV-滚动方式："><a href="#UV-滚动方式：" class="headerlink" title="UV 滚动方式："></a>UV 滚动方式：</h5><p>使用 UV 坐标移动形成滚动的效果看起来是这样的：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-101952876924lOw.gif" alt="img"></p>
-<p>在 UV 坐标移动的方法中，我们只是用一个和照相机取景区域一样大的精灵作为背景渲染区域。然后通过调整它的 UV 坐标和采样方式实现平铺背景以及背景滚动。具体实现步骤：</p>
-<ol>
-<li>准备一个覆盖整个屏幕的四边形顶点，并使用它显示背景贴图；</li>
-<li>调整 UV 坐标和纹理之间的采样方式，以实现纹理连续显示；</li>
-<li>移动时，修改四个顶点的 UV 坐标形成滚动；</li>
-</ol>
-<p>因为我们只使用一张精灵，我们区域采样的方式就是通过 UV 坐标。因此此方式下 UV 坐标存在两个作用：</p>
-<ol>
-<li>UV 坐标的整数部分标记了当前采样位置使用哪一张背景贴图；</li>
-<li>UV 坐标小数部分为选中背景贴图的采样 UV 坐标；</li>
-</ol>
-<p>因此，此精灵的 UV 坐标必定会大于[0,1]区间。</p>
-<p>如果背景使用的背景贴图只有一张的话，这个问题很容易解决。我们只要设置图形 API（OpenGL 或 DirectX，这里以 OpenGL 为例）的纹理包装类型（即所谓的 wrapping 类型）即可。所谓的包装类型即指定了当 UV 坐标值在[ 0,1 ]区间之外时，如何获取纹理。那么这里，我们需要让一张纹理重复出现。在 OpenGL 中，我们需要调用此函数来完成包装类型的设置：glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );稍微解释一下此函数：glTexParameteri 函数会对指定的纹理的参数进行设置。我们这里针对2D 纹理（第一参数 GL_TEXTURE_2D）的 x 方向即横向（第二参数 GL_TEXTURE_WRAP_S）的包装模式设置为重复出现的方式（第三参数 GL_REPEAT）。</p>
-<p>不过如果背景是多张不同的纹理连续出现的话，就不能使用上面的方法解决了。这个时候我们需要编写一个简单的 shader 在 shader 中完成 UV 坐标映射。这里截取出演示 demo 中，获取纹理相关的 shader 代码（GLSL 代码）提供大家参考：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;我们有三张背景贴图，对 UV 坐标对3取模，得到使用哪一种背景贴图。             </span><br><span class="line">int _index &#x3D; int( mod( v_TexCoord.x, 3.0 ));</span><br><span class="line">&#x2F;&#x2F;使用此贴图并使用 UV 坐标的小数部分进行像素采样。            </span><br><span class="line">gl_FragData[0] &#x3D; texture( u_BackgroundTextures[_index], fract(v_TexCoord));</span><br></pre></td></tr></table></figure>
-
-<p>UV 方式有着非常良好的性能，但是缺点就是只能处理简单的平铺背景，对于有着复杂结构或是效果的滚动背景没有办法使用。</p>
-<h5 id="精灵滚动方式："><a href="#精灵滚动方式：" class="headerlink" title="精灵滚动方式："></a>精灵滚动方式：</h5><p>使用精灵滚动形成滚动的效果看起来是这样的：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-10195287789913d.gif" alt="img"></p>
-<p>这种方式应该是比较直接的。我们首先使用背景精灵拼接出背景取景区域覆盖到的背景区域。然后在发生背景移动时，我们依然不需要移动背景取景区域，而是通过滚动移动所有的背景精灵来实现背景移动的效果。</p>
-<p>这种方式实现简单直接，但缺点是发生背景移动时，需要对所有的背景精灵进行移动。对于结构复杂元素较多的背景需要占用更多的性能。</p>
-<h5 id="照相机移动方式："><a href="#照相机移动方式：" class="headerlink" title="照相机移动方式："></a>照相机移动方式：</h5><p>使用照相机移动形成滚动的效果看起来是这样的：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-101952878215omm.gif" alt="img"></p>
-<p>这种方式与精灵滚动方式正好相反。在这种方式下，我们需要使用背景精灵拼接出完整的背景。同时在背景移动时，不移动背景精灵转而移动背景取景区域来实现背景移动效果。</p>
-<p>这种方式在移动过程中由于只需要移动背景照相机，所以有种很好的移动性能。但是为了使用此方法。我们需要预先将整个背景全部拼接。这样导致同时存在过多的背景精灵在场景中。如果使用的游戏引擎没有场景管理器或是场景管理器性能不佳的情况下，此方式反而会带来额外的性能消耗。</p>
-<h5 id="混合滚动方式："><a href="#混合滚动方式：" class="headerlink" title="混合滚动方式："></a>混合滚动方式：</h5><p>使用混合滚动方式形成的滚动效果看起来是这样的：</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/u-101952878467iBp.gif" alt="img"></p>
-<p>顾名思义，混合移动混合了精灵移动和照相机移动两种方式。我们在移动背景取景区域的同时，适时地滚动背景精灵。使得背景取景区域内的背景正确。</p>
-<p>这种方式结合了精灵滚动方式和照相机移动方式。避免了精灵滚动方式移动过程中，因为需要移动所有背景精灵带来的额外性能开销；也避免了照相机移动方式中，需要预先构建完整的背景而导致场景中存在过多的背景精灵带来的额外性能开销。当然，和照相机移动方式一样，避免不了每一层背景都需要有一个独立的背景照相机。同时在代码实现良好的情况下，性能比前两者都要好。</p>
-<h4 id="四种方式的优劣"><a href="#四种方式的优劣" class="headerlink" title="四种方式的优劣"></a>四种方式的优劣</h4><h5 id="平均性能："><a href="#平均性能：" class="headerlink" title="平均性能："></a>平均性能：</h5><p>UV 滚动方式只使用了一个四边形并且移动时也只是单纯改变了 UV 采样方式。它的性能是最好的；其次是混合滚动方式；照相机移动方式有更多的空间开销，同时此开销对性能的影响与游戏引擎的场景管理模块密切关联；精灵方式则有最大的移动性能消耗。</p>
-<h5 id="对复杂背景的支持："><a href="#对复杂背景的支持：" class="headerlink" title="对复杂背景的支持："></a>对复杂背景的支持：</h5><p>即四种方式所实现的背景可以有多复杂。UV 滚动方式碍于实现只能做简单的平铺背景的滚动效果；精灵滚动方式和混合滚动方式可以实现更为复杂一点的背景，可以在简单的平铺背景之上加入一些其他背景精灵元素；而照相机移动方式对背景的构建没有要求，它可以支持非常复杂的背景。</p>
-<h5 id="是否可以无限延伸："><a href="#是否可以无限延伸：" class="headerlink" title="是否可以无限延伸："></a>是否可以无限延伸：</h5><p>理论上四种方式都可以实现无限延伸。但是对于照相机移动方式来说，实现起来会比较麻烦。而另外三种方式都是循环利用同一个背景，所以天然支持无限延伸的背景。</p>
-<h5 id="复合多层背景的滚动，实现视差效果："><a href="#复合多层背景的滚动，实现视差效果：" class="headerlink" title="复合多层背景的滚动，实现视差效果："></a>复合多层背景的滚动，实现视差效果：</h5><p>有了上面的工作，这一步也是顺其自然就可以完成：</p>
-<p>我们首先要构建多层背景，多层背景可以同时只是用一种滚动方式；也可以不同层背景使用不同的滚动方式。比如最远的背景由于基本上都是简单的平铺可以使用 UV 滚动方式构建；而再近一点细节较多的背景层可以考虑后几种滚动方式构建背景。</p>
-<p>之后是移动，我们需要根据每一层背景的距离决定其在移动过程中的移动速度。速度如何决定并没有统一的方法或是模式。总之，这一点听听美术们的意见是比较合适的。</p>
-<h3 id="Unity混合模式1"><a href="#Unity混合模式1" class="headerlink" title="Unity混合模式1"></a>Unity混合模式1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Weiva Parallax</span><br><span class="line">&#x2F;&#x2F;&#x2F; 2D 视差效果</span><br><span class="line">&#x2F;&#x2F;&#x2F; 本组件背景视差效果是根据背景对象的世界坐标z值来计算。默认参数中的背景数组第一个元素为最远平面，</span><br><span class="line">&#x2F;&#x2F;&#x2F; 既与摄像机同步的平面，该对象之间的背景根据z值进行视差计算。也可以单独设置参数 synZ 强制设置最</span><br><span class="line">&#x2F;&#x2F;&#x2F; 远平面。大于最远平面的 z 值将会反超摄像机移动。</span><br><span class="line">&#x2F;&#x2F;&#x2F; weivain@qq.com</span><br><span class="line">&#x2F;&#x2F;&#x2F; www.weiva.com</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public class WVParallax : MonoBehaviour &#123;</span><br><span class="line"> </span><br><span class="line">    [Header(&quot;背景图片对象，Element 0 为与摄像机同步的背景层&quot;)]</span><br><span class="line">    public Transform[] backgrounds;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; 主摄像机</span><br><span class="line">    private Transform cam;</span><br><span class="line">    &#x2F;&#x2F; 上一帧摄像机的位置</span><br><span class="line">    private Vector3 previousCamPos;</span><br><span class="line">    &#x2F;&#x2F; 摄像机同步背景层的 z 值</span><br><span class="line">    [Header(&quot;摄像机同步背景层Z值，若0为背景层0&quot;)]</span><br><span class="line">    public float synZ&#x3D;0f;</span><br><span class="line">    [Header(&quot;偏移x系数&quot;)]</span><br><span class="line">    public float parallaxScaleX&#x3D;1f;</span><br><span class="line">    [Header(&quot;偏移y系数&quot;)]</span><br><span class="line">    public float parallaxScaleY&#x3D;1f;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; 初始化</span><br><span class="line">    void Start ()</span><br><span class="line">    &#123;</span><br><span class="line">        cam &#x3D; Camera.main.transform;</span><br><span class="line">        &#x2F;&#x2F; 上一帧摄像机的位置</span><br><span class="line">        previousCamPos &#x3D; cam.position;</span><br><span class="line">        if(synZ &#x3D;&#x3D; 0 &amp;&amp; null !&#x3D; backgrounds[0])</span><br><span class="line">        &#123;</span><br><span class="line">            synZ &#x3D; backgrounds[0].position.z;</span><br><span class="line">        &#125;</span><br><span class="line">        if(synZ &#x3D;&#x3D; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            synZ &#x3D; 100f;</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    &#x2F;&#x2F; 每一帧执行</span><br><span class="line">    void Update ()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 获得摄像机和上一帧的偏移值</span><br><span class="line">        float parallax &#x3D; previousCamPos.x - cam.position.x;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;摄像机偏移矢量</span><br><span class="line">        Vector3 camMove &#x3D; cam.position - previousCamPos;</span><br><span class="line">        camMove.x *&#x3D; parallaxScaleX;</span><br><span class="line">        camMove.y *&#x3D; parallaxScaleY;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;同步背景</span><br><span class="line">        for (int i &#x3D; 0; i &lt; backgrounds.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            if (null &#x3D;&#x3D; backgrounds[i]) continue;</span><br><span class="line"> </span><br><span class="line">            Vector3 targetToMove &#x3D; backgrounds[i].position + camMove * (backgrounds[i].position.z&#x2F;synZ);</span><br><span class="line">            backgrounds[i].position &#x3D; targetToMove;</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F; 更新上一帧摄像机的位置</span><br><span class="line">        previousCamPos &#x3D; cam.position;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Unity混合模式2"><a href="#Unity混合模式2" class="headerlink" title="Unity混合模式2"></a>Unity混合模式2</h3><p>在Unity官方2D游戏Demo中已使用到了视差滚动技术，笔者对此 Demo 中的视差滚动技术进行了研究，Demo 中使用 BackgroundParallax 脚本实现了视差功能，笔者编写此脚本代码说明。</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/424-1024x415.jpg" alt="4"></p>
-<p>官方 demo <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/2d-platformer-11228" target="_blank" rel="noopener">链接</a></p>
-<p>BackgroundParallax脚本代码说明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class BackgroundParallax : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">	public Transform[] backgrounds;				&#x2F;&#x2F; Array of all the backgrounds to be parallaxed.</span><br><span class="line">	public float parallaxScale;					&#x2F;&#x2F; The proportion of the camera&#39;s movement to move the backgrounds by.</span><br><span class="line">	public float parallaxReductionFactor;		&#x2F;&#x2F; How much less each successive layer should parallax.</span><br><span class="line">	public float smoothing;						&#x2F;&#x2F; How smooth the parallax effect should be.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	private Transform cam;						&#x2F;&#x2F; Shorter reference to the main camera&#39;s transform.</span><br><span class="line">	private Vector3 previousCamPos;				&#x2F;&#x2F; The postion of the camera in the previous frame.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	void Awake ()</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; Setting up the reference shortcut.</span><br><span class="line">		cam &#x3D; Camera.main.transform;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	void Start ()</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; The &#39;previous frame&#39; had the current frame&#39;s camera position.</span><br><span class="line">		previousCamPos &#x3D; cam.position;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	void Update ()</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; The parallax is the opposite of the camera movement since the previous frame multiplied by the scale.</span><br><span class="line">		float parallax &#x3D; (previousCamPos.x - cam.position.x) * parallaxScale;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; For each successive background...</span><br><span class="line">		for(int i &#x3D; 0; i &lt; backgrounds.Length; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; ... set a target x position which is their current position plus the parallax multiplied by the reduction.</span><br><span class="line">			float backgroundTargetPosX &#x3D; backgrounds[i].position.x + parallax * (i * parallaxReductionFactor + 1);</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; Create a target position which is the background&#39;s current position but with it&#39;s target x position.</span><br><span class="line">			Vector3 backgroundTargetPos &#x3D; new Vector3(backgroundTargetPosX, backgrounds[i].position.y, backgrounds[i].position.z);</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; Lerp the background&#39;s position between itself and it&#39;s target position.</span><br><span class="line">			backgrounds[i].position &#x3D; Vector3.Lerp(backgrounds[i].position, backgroundTargetPos, smoothing * Time.deltaTime);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Set the previousCamPos to the camera&#39;s position at the end of this frame.</span><br><span class="line">		previousCamPos &#x3D; cam.position;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="结合透视和正交相机在Unity2D游戏中制作视差效果"><a href="#结合透视和正交相机在Unity2D游戏中制作视差效果" class="headerlink" title="结合透视和正交相机在Unity2D游戏中制作视差效果"></a>结合透视和正交相机在Unity2D游戏中制作视差效果</h2><p>在开发MimpiDreams时，我们知道我们想用背景和前景做丰富的视差层。在Steam版本中，有几个图层来管理。所以我们想出了一个可能并不是独一无二的方法，不过在这里还是想概括一下。</p>
-<p>在unity中有好多使用一个正交相机并用脚本移动图层来设置视差层级的教程。还有一些建议用透视相机和对象的Z轴深度。如果这么做了，设置合适的精灵排序就会变的困难，并且还不能使用优化技术和其他想在MimpiDreams中使用的透视相机的特性。经典的 Mimpi 只用了透视相机来创建，对此我们还有一些<a href="http://www.manew.com/forum-ask-1.html" target="_blank" rel="noopener">问题</a>。为了节省填充率我们使用了不透明的对象，不过不得不用Z轴偏移来放置它们以免Z方向有冲突。然而，由于对它们应用了透视视角，它们就以不同的速度移动了。</p>
-<p>最好的方法是获得两者的优势。设置透视相机来渲染视差层，用正交相机来渲染有角色，平台，拼图等的主平面。</p>
-<p>当为视差使用透视相机时，就很容易设置它们了。在正交视差中，需要基于相机的距离来缩放每一个对象并放在适当的位置。Toby: The SecretMine的作者Lukáš Navrátil告诉我他差不多会花掉一半的工作时间来设置正交视差层。随着我们技术的结合，他可以做的更快。</p>
-<p>我和我的同事Jaroslav Stehlík一起开发了这种技术。现在让我们看一下如何设置。</p>
-<p><strong>Camera and Scene Setup</strong> <strong>相机和场景设置</strong><br>层级视图很简单。将视差相机放在主相机的下边，这样它们会一起移动。</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/181708eqz39rii9vrvuopx.png.thumb.jpg" alt="img"></p>
-<p><strong>Main Camera</strong></p>
-<p><strong>主相机</strong></p>
-<p>Clear Flags: Don’tclear</p>
-<p>Culling Mask:everything except parallax layer</p>
-<p>Projection:Orthographic</p>
-<p>Depth: -1</p>
-<p><strong>Parallax Camera Near</strong></p>
-<p><strong>近距离视差相机</strong></p>
-<p>Clear Flags: Depthonly</p>
-<p>Culling Mask:Parallax</p>
-<p>Projection:Perspective</p>
-<p>Clipping Planes</p>
-<p>Near: 0.01</p>
-<p>Far: 10</p>
-<p>Depth: 0</p>
-<p><strong>Parallax Camera Far</strong></p>
-<p><strong>远距离视差相机</strong></p>
-<p>Clear Flags: SolidColor (or whatever else you want to use as a background)</p>
-<p>Culling Mask:Parallax</p>
-<p>Projection:Perspective</p>
-<p>Clipping Planes</p>
-<p>Near: 10</p>
-<p>Far: 500</p>
-<p>Depth: -2</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/camera.png" alt="img"></p>
-<p>主相机会渲染除正交模式中视差层级之外的所有东西。这需要熟练使用“CullingMask”。“Clipping Planes”解决基于Z轴方向哪个视差对象被哪个视差相机渲染的问题，因此前景在正交平面之前，背景则在它的后边。相机放在Z轴-10的位置，所以在Z &lt; 0的视差中的所有东西都会被近处的相机渲染，在Z &gt; 0位置的对象就会被远处的相机渲染。“Depth”决定相机被渲染的正确顺序。</p>
-<p>现在在编辑器中需要把所有的视差对象放入视差层中，并将其他所有对象移出该层。</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/cameraview.png" alt="img"></p>
-<p>你需要考虑正交相机的尺寸和视角设置的透视区域。尤其想在游戏中使用变焦的时候，需要基于主相机的正交尺寸来设置视差的相机视角区域。关键是通常有一个特殊的平面（这个案例中为Z = 0），即视差层会和正交透视有同样的移动速度。这点很重要，因为稍后可以移动和缩放相机并且它会表现的很自然。在Mimpi Dreams开发初期，我们没有意识到那些并在视差设置中出现一些错误。我们不可以稍后更改它，因为它会复位所有的视差层。最后，由于我们没有过多的使用缩放，所以并没有产生多大影响。在下一个工程中，我们肯定会用这个设置。</p>
-<p>这里有一段可以设置缩放的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public float GetFieldOfView(float orthoSize, float distanceFromOrigin)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; orthoSize</span><br><span class="line">    float a &#x3D; orthoSize;</span><br><span class="line">    &#x2F;&#x2F; distanceFromOrigin</span><br><span class="line">    float b &#x3D; Mathf.Abs(distanceFromOrigin);</span><br><span class="line"> </span><br><span class="line">    float fieldOfView &#x3D; Mathf.Atan(a &#x2F; b)  * Mathf.Rad2Deg * 2f;</span><br><span class="line">    return fieldOfView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果想在Z轴移动相机，则需要更新视差相机的裁剪平面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; distanceFromOrigin</span><br><span class="line">float b &#x3D; Mathf.Abs(mainCamera.transform.position.z);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;change clipping planes based on main camera z-position</span><br><span class="line">farCamera.nearClipPlane &#x3D; b;</span><br><span class="line">farCamera.farClipPlane &#x3D; mainCamera.farClipPlane;</span><br><span class="line">nearCamera.farClipPlane &#x3D; b;</span><br><span class="line">nearCamera.nearClipPlane &#x3D; mainCamera.nearClipPlane;</span><br></pre></td></tr></table></figure>
-
-<p>如何变焦相机有两个选择。</p>
-<p>可以在Z轴移动主相机（并重新计算裁剪平面），或者可以改变主相机的正交尺寸（并重新计算视差相机的视角区域）。两个选择给出不同的效果，改变正交尺寸是更自然的选择。或者，可以结合这两种技术，看下边的视频。</p>
-<p><strong>unity 实例</strong></p>
-<p>Jaroslav准备并给出了你们可以尝试并学习的unity工程。感谢unity提供精选案例的免费资源！</p>
-<p>可以从Github下载案例工程。</p>
-<p>工程是用Unity 5.3.3f1制作的。</p>
-<p>还要看一下展示案例的视频。</p>
-<p><a href="https://www.youtube.com/watch?v=ptdweDDyB8o&feature=youtu.be" target="_blank" rel="noopener"><img src="../../assets/images/2019-09-13-Parallax-2d/0%5B1%5D.jpg" alt=""></a></p>
-<p><strong>编辑工作流程</strong><br>在视差层设置对象最好的方法是在编辑模式下去播放游戏。可以移动角色（和相机）让玩家看到它并调整对象至实际视口。唯一的问题是播放模式下在unity中做出的更改不会保存。然而可以在播放模式下拷贝编辑过的对象并粘贴到编辑器中然后保存。我们创建一个有子集的“content”。这个content是在播放模式下编辑和复制过的。退出播放模式后，这个原始的content会被删除，新的content从剪切板粘贴过来，然后预制件就可以使用了。</p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/181709gdpgid33t93vjfyf.png.thumb.jpg" alt="img"></p>
-<p>还有，不要忘记将新的对象放到视差层中。还可以编写或者使用一些编辑器工具来帮助你保存和自动完成对象层级设置。</p>
-<p>上边的案例实在编辑模式下执行的，所以可以在编辑器中用它来设置。不过我们在MimpiDreams中使用了这个工作流程，因为这对于美术设计在场景中移动很容易，并且他可以自己调整层级。</p>
-<p><strong>Summary</strong> <strong>总结</strong></p>
-<p><img src="../../assets/images/2019-09-13-Parallax-2d/181711j5s29z585k932ot6.gif" alt="img"></p>
-<p><strong>Some advantages of this solution</strong> <strong>这种解决方案的优势：</strong></p>
-<p>本地基本设置（脚本仅仅为了变焦）</p>
-<p>案例中更好的表现</p>
-<p>静态批处理，因为层级不会移动</p>
-<p>简单的编辑工作流程</p>
-<p><strong>Disadvantages</strong> <strong>劣势:</strong></p>
-<p>会产生更多的draw calls</p>
-<p>我们介绍了和Mimpi Dreams中制作视差效果不同的制作方法。你可能需要自定义一些东西。例如，我们显示所有摄像机的渲染纹理，不过在这边文章中，我想介绍最简单的设置。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">[ExecuteInEditMode]</span><br><span class="line">public class CameraParallax : MonoBehaviour &#123;</span><br><span class="line"></span><br><span class="line">    public Camera mainCamera;</span><br><span class="line">    public Camera farCamera;</span><br><span class="line">    public Camera nearCamera;</span><br><span class="line"></span><br><span class="line">    void OnEnable()</span><br><span class="line">    &#123;</span><br><span class="line">        InitCameras();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void LateUpdate()</span><br><span class="line">    &#123;</span><br><span class="line">        UpdateCameras();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void InitCameras()</span><br><span class="line">    &#123;</span><br><span class="line">        if(farCamera !&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            farCamera.transform.localPosition &#x3D; Vector3.zero;</span><br><span class="line">            farCamera.transform.rotation &#x3D; Quaternion.identity;</span><br><span class="line">            farCamera.transform.localScale &#x3D; Vector3.one;</span><br><span class="line">            farCamera.orthographic &#x3D; false;</span><br><span class="line">            farCamera.clearFlags &#x3D; CameraClearFlags.SolidColor;</span><br><span class="line">            farCamera.depth &#x3D; -2;</span><br><span class="line">            farCamera.transparencySortMode &#x3D; TransparencySortMode.Orthographic;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(mainCamera !&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            mainCamera.orthographic &#x3D; true;</span><br><span class="line">            mainCamera.clearFlags &#x3D; CameraClearFlags.Nothing;</span><br><span class="line">            mainCamera.depth &#x3D; -1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(nearCamera !&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            nearCamera.transform.localPosition &#x3D; Vector3.zero;</span><br><span class="line">            nearCamera.transform.rotation &#x3D; Quaternion.identity;</span><br><span class="line">            nearCamera.transform.localScale &#x3D; Vector3.one;</span><br><span class="line">            nearCamera.orthographic &#x3D; false;</span><br><span class="line">            nearCamera.clearFlags &#x3D; CameraClearFlags.Depth;</span><br><span class="line">            nearCamera.depth &#x3D; 0;</span><br><span class="line">            nearCamera.transparencySortMode &#x3D; TransparencySortMode.Orthographic;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void UpdateCameras()</span><br><span class="line">    &#123;</span><br><span class="line">        if(mainCamera &#x3D;&#x3D; null || farCamera &#x3D;&#x3D; null || nearCamera &#x3D;&#x3D; null) return;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; orthoSize</span><br><span class="line">        float a &#x3D; mainCamera.orthographicSize;</span><br><span class="line">        &#x2F;&#x2F; distanceFromOrigin</span><br><span class="line">        float b &#x3D; Mathf.Abs(mainCamera.transform.position.z);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;change clipping planes based on main camera z-position</span><br><span class="line">        farCamera.nearClipPlane &#x3D; b;</span><br><span class="line">        farCamera.farClipPlane &#x3D; mainCamera.farClipPlane;</span><br><span class="line">        nearCamera.farClipPlane &#x3D; b;</span><br><span class="line">        nearCamera.nearClipPlane &#x3D; mainCamera.nearClipPlane;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;update field fo view for parallax cameras</span><br><span class="line">        float fieldOfView &#x3D; Mathf.Atan(a &#x2F; b)  * Mathf.Rad2Deg * 2f;</span><br><span class="line">        nearCamera.fieldOfView &#x3D; farCamera.fieldOfView &#x3D; fieldOfView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>原文链接：</p>
-<ul>
-<li><p><a href="http://www.gamasutra.com/blogs/MichalBerlinger/20160323/268657/Combining_Perspective_and_Orthographic_Camera_for_Parallax_Effect_in_2D_Game.php" target="_blank" rel="noopener">http://www.gamasutra.com/blogs/MichalBerlinger/20160323/268657/Combining_Perspective_and_Orthographic_Camera_for_Parallax_Effect_in_2D_Game.php</a></p>
-</li>
-<li><p><a href="https://github.com/MichalBerlinger/ParallaxDemo" target="_blank" rel="noopener">https://github.com/MichalBerlinger/ParallaxDemo</a></p>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-13-Parallax-2d/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

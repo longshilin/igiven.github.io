@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,16 +228,15 @@
 
 
 
-<h1 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$env:http_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">$env:https_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">curl -vv http:&#x2F;&#x2F;www.google.com</span><br></pre></td></tr></table></figure>
-
-<p><img src="../../assets/images/2020-07-13-cons/image-20200716004313442.png" alt="image-20200716004313442"></p>
-<h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy&#x3D;127.0.0.1:1080</span><br><span class="line">export ftp_proxy&#x3D;127.0.0.1:1080</span><br><span class="line">export https_proxy&#x3D;127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="GIT"><a href="#GIT" class="headerlink" title="GIT"></a>GIT</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global https.proxy http:&#x2F;&#x2F;127.0.0.1:1080</span><br><span class="line">git config --global https.proxy http:&#x2F;&#x2F;127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-
-
+<h1 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-13-terminal-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -287,7 +286,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -314,19 +313,15 @@
 
 
 
-<h2 id="GITHUB-ACTIONS"><a href="#GITHUB-ACTIONS" class="headerlink" title="GITHUB ACTIONS"></a>GITHUB ACTIONS</h2><p>添加此action前记得先添加分支gh-pages,并设置github的pages为该分支</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout --orphan gh-pages</span><br><span class="line"># .nojekyll 的空文件来禁用 Jekyll 构建过程，然后按照静态站点生成器的说明在 本地构建站点。</span><br><span class="line">touch .nojekyll</span><br></pre></td></tr></table></figure>
-
-<p><img src="../../assets/images/2020-07-12-hexo-github/image-20200715164950805.png" alt="image-20200715164950805"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"># This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node</span><br><span class="line"># For more information see: https:&#x2F;&#x2F;help.github.com&#x2F;actions&#x2F;language-and-framework-guides&#x2F;using-nodejs-with-github-actions</span><br><span class="line"></span><br><span class="line">name: Node.js CI</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches: [ master ]</span><br><span class="line">  pull_request:</span><br><span class="line">    branches: [ master ]</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  build:</span><br><span class="line"></span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    strategy:</span><br><span class="line">      matrix:</span><br><span class="line">        node-version: [14.x]</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">    - name: 迁出main</span><br><span class="line">      uses: actions&#x2F;checkout@v2</span><br><span class="line">      with: </span><br><span class="line">        path: main</span><br><span class="line">        submodules: &#39;recursive&#39;</span><br><span class="line"></span><br><span class="line">    - name: Use Node.js $&#123;&#123; matrix.node-version &#125;&#125;</span><br><span class="line">      uses: actions&#x2F;setup-node@v1</span><br><span class="line">      with:</span><br><span class="line">        node-version: $&#123;&#123; matrix.node-version &#125;&#125;</span><br><span class="line">    </span><br><span class="line">    - name: 安装hexo</span><br><span class="line">      run : |</span><br><span class="line">        npm install -g hexo</span><br><span class="line">  </span><br><span class="line">    - name: 生成博客</span><br><span class="line">      run : |</span><br><span class="line">        cd main</span><br><span class="line">        npm install</span><br><span class="line">        hexo clean</span><br><span class="line">        hexo generate</span><br><span class="line">        ls</span><br><span class="line">      </span><br><span class="line">    - name: 迁出gh-pages</span><br><span class="line">      uses: actions&#x2F;checkout@v2</span><br><span class="line">      with:</span><br><span class="line">        path: gh-pages</span><br><span class="line">        ref: gh-pages</span><br><span class="line">        </span><br><span class="line">    - name: 部署到gh-pages</span><br><span class="line">      env:</span><br><span class="line">        TZ: Asia&#x2F;Shanghai</span><br><span class="line">      run: |</span><br><span class="line">        cp -rf main&#x2F;public&#x2F;* gh-pages</span><br><span class="line">        cd gh-pages</span><br><span class="line">        git config --global user.name &quot;zhepama&quot;</span><br><span class="line">        git config --global user.email &quot;zhepama@gmail.com&quot;</span><br><span class="line">        git add .</span><br><span class="line">        git commit -m &quot;Auto Delopy at &#96;date +&quot;%Y-%m-%d %H:%M&quot;&#96;&quot;</span><br><span class="line">        git push origin gh-pages</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
+<h2 id="GITHUB-ACTIONS"><a href="#GITHUB-ACTIONS" class="headerlink" title="GITHUB ACTIONS"></a>GITHUB ACTIONS</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-12-hexo-github/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -376,7 +371,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -401,48 +396,14 @@
       
           <h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h1><p>如果你是一个前端项目，可以使用 <code>Node.js</code> 的模板，点击 <code>Set up this workflow</code></p>
 <p><img src="../../assets/images/2020-07-11-github-actions/v2-93f521330d963d903561c0575d2d8fac_720w.jpg" alt="v2-93f521330d963d903561c0575d2d8fac_720w"></p>
-<p>此时生成了一个文件 <code>.github/workflows/nodejs.yaml</code>，修改内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">name: Git Action Test</span><br><span class="line"># on: 用来指定启动触发的事件，push 则表示在监听到 git push 到指定分支时触发。如此之外还可以是 pull_request。</span><br><span class="line">on: [push]   </span><br><span class="line"></span><br><span class="line">#jobs:一个 CI&#x2F;CD 的工作流有许多 jobs 组成，比如最典型的 job 是 lint，test，build 或者 deploy。</span><br><span class="line">#所有的 job 都是并行的,如果想顺序执行，可以这样 build-job: needs: test-job。</span><br><span class="line">jobs:         </span><br><span class="line">  build:</span><br><span class="line">	#runs-on用来指定执行系统环境，不仅有常用的 Linux 发行版，还可以是 macOS 或 Windows。</span><br><span class="line">    runs-on: ubuntu-latest  </span><br><span class="line"> 	# steps 表示每个 job 需要执行的步骤，比如这里我分成了四步：拉取分支 → 安装 Node 环境 → 构建项目 → 上传 COS。</span><br><span class="line">    steps:  </span><br><span class="line">    #Action 是组成工作流最核心最基础的元素。每个 Action 可以看作封装的独立脚本，有自己的操作逻辑，我们只需要 uses 并通过 with 传入参数即可。</span><br><span class="line">    - uses: actions&#x2F;checkout@v1 </span><br><span class="line">    - name: Use Node.js 10.x</span><br><span class="line">      uses: actions&#x2F;setup-node@v1</span><br><span class="line">      with:</span><br><span class="line">        node-version: 10.x</span><br><span class="line">    - name: npm install, build</span><br><span class="line">      run: |</span><br><span class="line">        npm install</span><br><span class="line">        npm run build --if-present</span><br><span class="line">      env:</span><br><span class="line">        CI: true</span><br></pre></td></tr></table></figure>
-
-<p>执行 <code>git push</code> 操作，此时可以在 <code>github</code> 的 <code>Actions</code> 标签页看到执行结果</p>
-<h1 id="安全相关"><a href="#安全相关" class="headerlink" title="安全相关"></a>安全相关</h1><p>如何在 <code>github action</code> 上访问敏感数据？如使用 <code>ssh</code> 登录时如何维护密码。</p>
-<p>我们可以在 github repo 上依次点击 <code>Settings</code> -&gt; <code>Secrets</code> 设置 <code>secret</code></p>
-<p><img src="../../assets/images/2020-07-11-github-actions/v2-51c0ee11b4bc61312d8e1af14d906432_720w.jpg" alt="v2-51c0ee11b4bc61312d8e1af14d906432_720w"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- name: setup aliyun oss</span><br><span class="line">  uses: manyuanrong&#x2F;setup-ossutil@master</span><br><span class="line">  with:</span><br><span class="line">    endpoint: oss-cn-beijing.aliyuncs.com</span><br><span class="line">    access-key-id: $&#123;&#123; secrets.OSS_KEY_ID &#125;&#125;</span><br><span class="line">    access-key-secret: $&#123;&#123; secrets.OSS_KEY_SECRET &#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里的 <code>secret</code> 就是一种 <code>context</code>，描述 CI/CD 一个 <code>workflow</code> 中的上下文信息，使用 <code>$</code> 语法表示。除了 <code>secret</code>，还有</p>
-<ul>
-<li><code>github</code>: <code>workflow</code> 的信息，如 <code>github.sha</code> 可以获取当前的 <code>commit SHA</code>，我们可以利用它为 <code>sentry</code> 或者 <code>docker image</code> 打入版本号</li>
-<li><code>env</code>: 环境变量</li>
-<li><code>job</code>: 当前执行 <code>job</code> 的信息，如 <code>job.status</code> 表示当前 <code>job</code> 的执行状态</li>
-<li><code>matrix</code>: 描述一些构建信息，如 <code>node</code> 以及 <code>os</code> 版本号</li>
-</ul>
-<p>更多 <code>context</code> 信息可以参考官方文档 <strong>Contexts and expression syntax for GitHub Actions[4]</strong></p>
-<h1 id="自动创建项目Release"><a href="#自动创建项目Release" class="headerlink" title="自动创建项目Release"></a>自动创建项目Release</h1><p>有些项目在发布新版本时，一般都会创建一个<code>Github Release</code>，并且把对应编译好之后的文件上传到<code>Release</code>的资源列表中，例如：<br><img src="../../assets/images/2020-07-11-github-actions/2659679572-62492fa02f19b6f9.png" alt="2659679572-62492fa02f19b6f9"></p>
-<p>如果这个使用手动操作的话，不仅步骤重复又繁琐(每次都要编译出各个操作系统对应的发行包再进行上传)，而且最蛋疼的是对于国内的网络环境来说，上传文件速度简直不能忍，好不容易上传了一大半搞不好就因为网络原因又要重新上传，相信用过的人都深有体会。</p>
-<p>我就在想如果能用<code>Github Actions</code>来创建<code>Release</code>,并且做对应的编译和上传，那上面的问题都可以迎刃而解了，于是在官方市场搜索了一下<code>Release</code>关键字，果然已经有提供对应的<code>actions</code>了：</p>
-<ul>
-<li><a href="https://github.com/actions/create-release" target="_blank" rel="noopener">create-release</a>: 用于创建 release</li>
-<li><a href="https://github.com/actions/upload-release-asset" target="_blank" rel="noopener">upload-release-asset</a>: 用于上传资源到对应的 release 中</li>
-</ul>
-<p>接着创建一个<code>Github仓库</code>，我测试的仓库地址是<a href="https://github.com/monkeyWie/github-actions-demo" target="_blank" rel="noopener">https://github.com/monkeyWie/github-actions-demo</a>，项目用 go 语言写的，代码非常简单就是两个 hello world 级别的代码，里面包含了普通的 go 程序和 cgo 程序。</p>
-<p>项目的构建流程是在项目<code>git push --tags</code>的时候，触发 workflow，通过<code>Github Actions</code>编译出来<code>Windows、Linux、macOS</code>三个操作系统对应的 64 位可执行文件，再根据<code>tag name</code>和<code>tag message</code>来创建对应的<code>Github Release</code>，并将编译好的文件上传。</p>
-<p>同样的创建一个<code>.github/workflows/main.yml</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">name: CI</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    # Sequence of patterns matched against refs&#x2F;tags</span><br><span class="line">    tags:</span><br><span class="line">      - &quot;v*&quot; # Push events to matching v*, i.e. v1.0, v20.15.10</span><br><span class="line">jobs:</span><br><span class="line">  build:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">      - name: Checkout source</span><br><span class="line">        uses: actions&#x2F;checkout@v1</span><br><span class="line">      - name: Use Golang</span><br><span class="line">        uses: actions&#x2F;setup-go@v1</span><br><span class="line">        with:</span><br><span class="line">          go-version: &quot;1.13.x&quot;</span><br><span class="line">      - name: Build normal</span><br><span class="line">        run: |</span><br><span class="line">          CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build -o normal-windows-x64.exe cmd&#x2F;normal&#x2F;main.go</span><br><span class="line">          CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build -o normal-linux-x64 cmd&#x2F;normal&#x2F;main.go</span><br><span class="line">          CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build -o normal-darwin-x64 cmd&#x2F;normal&#x2F;main.go</span><br><span class="line">          zip normal-windows-x64.zip normal-windows-x64.exe</span><br><span class="line">          zip normal-linux-x64.zip normal-linux-x64</span><br><span class="line">          zip normal-darwin-x64.zip normal-darwin-x64</span><br><span class="line">      - name: Build cgo</span><br><span class="line">        run: |</span><br><span class="line">          go get github.com&#x2F;monkeyWie&#x2F;xgo</span><br><span class="line">          ~&#x2F;go&#x2F;bin&#x2F;xgo -targets&#x3D;windows&#x2F;amd64,linux&#x2F;amd64,darwin&#x2F;amd64 -ldflags&#x3D;&quot;-w -s&quot; -pkg&#x3D;cmd&#x2F;cgo&#x2F;main.go -out&#x3D;cgo .</span><br><span class="line">          mv cgo-windows-* cgo-windows-x64.exe</span><br><span class="line">          mv cgo-linux-* cgo-linux-x64</span><br><span class="line">          mv cgo-darwin-* cgo-darwin-x64</span><br><span class="line">          zip cgo-windows-x64.zip cgo-windows-x64.exe</span><br><span class="line">          zip cgo-linux-x64.zip cgo-linux-x64</span><br><span class="line">          zip cgo-darwin-x64.zip cgo-darwin-x64</span><br><span class="line">      - name: Create Release</span><br><span class="line">        id: create_release</span><br><span class="line">        uses: monkeyWie&#x2F;create-release@master</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          tag_name: $&#123;&#123; github.ref &#125;&#125;</span><br><span class="line">          release_name: Release $&#123;&#123; github.ref &#125;&#125;</span><br><span class="line">          draft: false</span><br><span class="line">          prerelease: false</span><br><span class="line"></span><br><span class="line">      - name: Upload Release normal windows</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;normal-windows-x64.zip</span><br><span class="line">          asset_name: normal-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-windows-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br><span class="line">      - name: Upload Release normal linux</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;normal-linux-x64.zip</span><br><span class="line">          asset_name: normal-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-linux-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br><span class="line">      - name: Upload Release normal darwin</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;normal-darwin-x64.zip</span><br><span class="line">          asset_name: normal-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-darwin-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br><span class="line"></span><br><span class="line">      - name: Upload Release cgo windows</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;cgo-windows-x64.zip</span><br><span class="line">          asset_name: cgo-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-windows-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br><span class="line">      - name: Upload Release cgo linux</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;cgo-linux-x64.zip</span><br><span class="line">          asset_name: cgo-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-linux-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br><span class="line">      - name: Upload Release cgo darwin</span><br><span class="line">        uses: actions&#x2F;upload-release-asset@v1.0.1</span><br><span class="line">        env:</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">        with:</span><br><span class="line">          upload_url: $&#123;&#123; steps.create_release.outputs.upload_url &#125;&#125; # This pulls from the CREATE RELEASE step above, referencing it&#39;s ID to get its outputs object, which include a &#96;upload_url&#96;. See this blog post for more info: https:&#x2F;&#x2F;jasonet.co&#x2F;posts&#x2F;new-features-of-github-actions&#x2F;#passing-data-to-future-steps</span><br><span class="line">          asset_path: .&#x2F;cgo-darwin-x64.zip</span><br><span class="line">          asset_name: cgo-$&#123;&#123; steps.create_release.outputs.tag &#125;&#125;-darwin-x64.zip</span><br><span class="line">          asset_content_type: application&#x2F;zip</span><br></pre></td></tr></table></figure>
-
-<p>构建流程如下：</p>
-<ol>
-<li>监听 tag name 为<code>v</code>开头的 push</li>
-<li>运行一个 job，在<code>ubuntu</code>虚拟机环境下</li>
-<li>拉取源码，安装<code>golang 1.13.x</code>环境</li>
-<li>使用<code>go build</code>交叉编译出不同操作系统下 64 位可执行文件，并使用 zip 压缩</li>
-<li>使用<code>xgo</code>交叉编译出不同操作系统下 64 位可执行文件，并使用 zip 压缩</li>
-<li>使用<code>monkeyWie/create-release@master</code>创建 Release，其中会用到<code>$</code>，这是<code>Github Actions</code>内置的一个<a href="https://help.github.com/en/github/automating-your-workflow-with-github-actions/virtual-environments-for-github-actions#github_token-secret" target="_blank" rel="noopener">秘钥</a>，用于授权访问你自己的 github 存储库，原理就是使用这个<code>TOKEN</code>调用<code>Github API</code>来进行创建 release，还有一个<code>$</code>也是<code>Github Actions</code>内置的一个<a href="https://help.github.com/en/github/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#github-context" target="_blank" rel="noopener">变量</a>，然后通过 action 的<code>with</code>进行参数传递。</li>
-<li>使用<code>actions/upload-release-asset@v1.0.1</code>上传文件，这里使用了两个表达式<code>$</code>和<code>$</code>，可以获取到指定<code>action</code>的输出，第一个是获取创建好的 release 对应的上传地址，第二个是获取对应的 tag(例如：v1.0.0)，这样就可以在把上传的文件带上版本号。因为这个<code>action</code>不支持多个文件上传，所以就写了多个 action 进行上传。</li>
-</ol>
-<h1 id="市场"><a href="#市场" class="headerlink" title="市场"></a>市场</h1><p><a href="https://github.com/marketplace" target="_blank" rel="noopener">https://github.com/marketplace</a></p>
-<p><a href="https://docs.github.com/cn/actions/configuring-and-managing-workflows/using-environment-variables" target="_blank" rel="noopener">https://docs.github.com/cn/actions/configuring-and-managing-workflows/using-environment-variables</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-11-github-actions/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -492,7 +453,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -516,14 +477,15 @@
 
       
           <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p><img src="../../assets/images/2020-07-10-abp-doc/image-20200716181126415.png" alt="image-20200716181126415"></p>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>abp 使用拉的方式从github直接请求,然后存储到数据库作为缓存</p>
-<p>注意开发环境下,他会从github直接拉取而不会经过数据库缓存,所以会很慢</p>
-<h2 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h2><p>当你写完书的时候.打个tag,然后把tag的版本号填入上方的..最新版本的分支名称即可</p>
-<h2 id="404"><a href="#404" class="headerlink" title="404"></a>404</h2><p>因为访问github如果超时就会出现404.</p>
-<p>所以建议控制台设置代理然后运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$env:http_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">$env:https_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">dotnet run .\IG.Www.Web.csproj</span><br></pre></td></tr></table></figure>
-
-
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-07-10-abp-doc/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -573,7 +535,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -598,61 +560,14 @@
       
           <h3 id="使用npm安装gitbook"><a href="#使用npm安装gitbook" class="headerlink" title="使用npm安装gitbook"></a>使用npm安装gitbook</h3><p>现在安装 Node.js 都会默认安装 npm（node 包管理工具），所以我们不用单独安装 npm，打开命令行，执行以下命令安装 GitBook：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g gitbook-cli</span><br></pre></td></tr></table></figure>
-
-<p>使用<strong>Git Bash</strong>操作如下图：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-3ef32e72168040b1.png" alt="img"></p>
-<p>好了，准备好了三件套工具之后，就是来看看怎么编写<strong>GitBook</strong>了。</p>
-<h2 id="编写GitBook"><a href="#编写GitBook" class="headerlink" title="编写GitBook"></a>编写GitBook</h2><h3 id="创建电子书的文件夹目录"><a href="#创建电子书的文件夹目录" class="headerlink" title="创建电子书的文件夹目录"></a>创建电子书的文件夹目录</h3><blockquote>
-<p>想象一下，现在你准备构建一本书籍，你在硬盘上新建了一个叫 mybook 的文件夹，按照以前的做法，你会新建一个 Word 文档，写上标题，然后开始巴滋巴滋地笔耕。</p>
-</blockquote>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-4c42d4ea26ffe4d4.png" alt="img"></p>
-<h3 id="初始化Gitbook"><a href="#初始化Gitbook" class="headerlink" title="初始化Gitbook"></a>初始化Gitbook</h3><blockquote>
-<p>但是现在有了 GitBook，你首先要做的是在 mybook 文件夹下执行以下命令：</p>
-</blockquote>
-<p>使用<code>gitbook init</code>初始化gitbook，操作如下：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-325fdbbe1bad6026.png" alt="img"></p>
-<p>执行完后，你会看到多了两个文件 —— README.md 和 SUMMARY.md，它们的作用如下：</p>
-<ul>
-<li>README.md —— 书籍的介绍写在这个文件里</li>
-<li>SUMMARY.md —— 书籍的目录结构在这里配置</li>
-</ul>
-<h3 id="使用Typora来编写框架内容"><a href="#使用Typora来编写框架内容" class="headerlink" title="使用Typora来编写框架内容"></a>使用Typora来编写框架内容</h3><p>这时候，我们启动恭候多时的 Typora 来编辑这两个文件了：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-637f36f709e63f81.png" alt="img"></p>
-<p>编辑 SUMMARY.md 文件，内容修改为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 目录</span></span><br><span class="line"></span><br><span class="line">* [前言](README.md)</span><br><span class="line">* [第一章](Chapter1/README.md)</span><br><span class="line">  * [第1节：衣](Chapter1/衣.md)</span><br><span class="line">  * [第2节：食](Chapter1/食.md)</span><br><span class="line">  * [第3节：住](Chapter1/住.md)</span><br><span class="line">  * [第4节：行](Chapter1/行.md)</span><br><span class="line">* [第二章](Chapter2/README.md)</span><br><span class="line">* [第三章](Chapter3/README.md)</span><br><span class="line">* [第四章](Chapter4/README.md)</span><br></pre></td></tr></table></figure>
-
-<p>显示如下：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-a0e40da1d8ae2f1a.png" alt="img"></p>
-<h3 id="重新使用gitbook根据目录，初始化篇章"><a href="#重新使用gitbook根据目录，初始化篇章" class="headerlink" title="重新使用gitbook根据目录，初始化篇章"></a>重新使用gitbook根据目录，初始化篇章</h3><p>然后我们回到命令行，在 mybook 文件夹中再次执行 <code>gitbook init</code> 命令。GitBook 会查找 SUMMARY.md 文件中描述的目录和文件，如果没有则会将其创建。</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-92aaec1127fbe9c8.png" alt="img"></p>
-<p>Typora 是所见即所得（实时渲染）的 Markdown 编辑器，这时候它是这样的：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-e1fb9ef8f3b32226.png" alt="img"></p>
-<h3 id="启动服务，预览书籍"><a href="#启动服务，预览书籍" class="headerlink" title="启动服务，预览书籍"></a>启动服务，预览书籍</h3><p>接着我们执行 <code>gitbook serve</code> 来预览这本书籍，执行命令后会对 Markdown 格式的文档进行转换，默认转换为 html 格式，最后提示 “Serving book on <a href="https://links.jianshu.com/go?to=http%3A%2F%2Flocalhost%3A4000%2F" target="_blank" rel="noopener">http://localhost:4000</a>”。嗯，打开浏览器看一下吧：</p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-a49ea1d4e0bdeb98.png" alt="img"></p>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/13423234-ca03c52cfdc1ac64.png" alt="img"></p>
-<h2 id="结合-GitHub-Pages"><a href="#结合-GitHub-Pages" class="headerlink" title="结合 GitHub Pages"></a>结合 GitHub Pages</h2><p>GitHub Pages 是 GitHub 提供的静态网站托管服务。</p>
-<p>GitHub 上的每个仓库都可以拥有一个 GitHub Pages，对应的 URL 如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://<span class="tag">&lt;<span class="name">username</span>&gt;</span>.github.io/<span class="tag">&lt;<span class="name">repository</span>&gt;</span>/</span><br></pre></td></tr></table></figure>
-
-<p>GitHub Pages 的静态资源支持下面 3 个来源：</p>
-<ul>
-<li><code>master</code> 分支</li>
-<li><code>master</code> 分支的 <code>/docs</code> 目录</li>
-<li><code>gh-pages</code> 分支</li>
-</ul>
-<p><img src="../../assets/images/2020-07-06-gitbook-use/1624919-00837dbbb587799c.jpg" alt="img"></p>
-<p>执行下面命令，将 <code>_book</code> 目录推送到 GitHub 仓库的 <code>gh-pages</code> 分支。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout --orphan gh-pages</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> code .nojekyll</span></span><br></pre></td></tr></table></figure>
-
-<p>或者在生成静态网页时，将保存的目录指定为 <code>./docs</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gitbook build ./ ./docs</span></span><br></pre></td></tr></table></figure>
-
-<p>然后直接推送到 GitHub 仓库的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin master</span></span><br></pre></td></tr></table></figure>
-
-
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-06-gitbook-use/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -702,7 +617,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -727,61 +642,14 @@
       
           <h1 id="数据迁移上下文"><a href="#数据迁移上下文" class="headerlink" title="数据迁移上下文"></a>数据迁移上下文</h1><p>abp的dbcontext是分成两种的,一个是程序运行的dbcontext,一个是数据迁移的dbcontext</p>
 <p><code>PlayGroundMigrationsDbContext.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">protected override void OnModelCreating(ModelBuilder builder)</span><br><span class="line">&#123;</span><br><span class="line">    base.OnModelCreating(builder);</span><br><span class="line"></span><br><span class="line">    &#x2F;* Include modules to your migration db context *&#x2F;</span><br><span class="line"></span><br><span class="line">    builder.ConfigurePermissionManagement();</span><br><span class="line">    builder.ConfigureSettingManagement();</span><br><span class="line">    builder.ConfigureBackgroundJobs();</span><br><span class="line">    builder.ConfigureAuditLogging();</span><br><span class="line">    builder.ConfigureIdentity();</span><br><span class="line">    builder.ConfigureIdentityServer();</span><br><span class="line">    builder.ConfigureFeatureManagement();</span><br><span class="line">    builder.ConfigureTenantManagement();</span><br><span class="line"></span><br><span class="line">    &#x2F;* Configure your own tables&#x2F;entities inside the ConfigurePlayGround method *&#x2F;</span><br><span class="line"></span><br><span class="line">    builder.ConfigurePlayGround();</span><br><span class="line">    builder.ConfigureBlogging();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>PlayGroundDbContext.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">protected override void OnModelCreating(ModelBuilder builder)</span><br><span class="line">&#123;</span><br><span class="line">    base.OnModelCreating(builder);</span><br><span class="line"></span><br><span class="line">    &#x2F;* Configure the shared tables (with included modules) here *&#x2F;</span><br><span class="line"></span><br><span class="line">    builder.Entity&lt;AppUser&gt;(b &#x3D;&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        b.ToTable(AbpIdentityDbProperties.DbTablePrefix + &quot;Users&quot;); &#x2F;&#x2F;Sharing the same table &quot;AbpUsers&quot; with the IdentityUser</span><br><span class="line"></span><br><span class="line">        b.ConfigureByConvention();</span><br><span class="line">        b.ConfigureAbpUser();</span><br><span class="line"></span><br><span class="line">        &#x2F;* Configure mappings for your additional properties</span><br><span class="line">         * Also see the PlayGroundEfCoreEntityExtensionMappings class</span><br><span class="line">         *&#x2F;</span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">    &#x2F;* Configure your own tables&#x2F;entities inside the ConfigurePlayGround method *&#x2F;</span><br><span class="line"></span><br><span class="line">    builder.ConfigurePlayGround();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们看到他们共同执行了 builder.ConfigurePlayGround();</p>
-<h2 id="为什么这样设计"><a href="#为什么这样设计" class="headerlink" title="为什么这样设计?"></a>为什么这样设计?</h2><ul>
-<li>为了模块间不产生依赖,例如用户表,迁移dbcontext中使用了IdentityUser,而运行的dbcontext使用了appuser进行了对其的映射,<a href="https://github.com/abpframework/abp/issues/1998" target="_blank" rel="noopener">https://github.com/abpframework/abp/issues/1998</a></li>
-<li>如何为user添加属性.<a href="https://github.com/abpframework/abp/issues/2453" target="_blank" rel="noopener">https://github.com/abpframework/abp/issues/2453</a></li>
-</ul>
-<h1 id="如何共用user"><a href="#如何共用user" class="headerlink" title="如何共用user"></a>如何共用user</h1><p>我们来看下定义的Iuser接口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public interface IUser : IAggregateRoot&lt;Guid&gt;, IMultiTenant</span><br><span class="line">&#123;</span><br><span class="line">    string UserName &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    [CanBeNull]</span><br><span class="line">    string Email &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    [CanBeNull]</span><br><span class="line">    string Name  &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    [CanBeNull]</span><br><span class="line">    string Surname &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    bool EmailConfirmed &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    [CanBeNull]</span><br><span class="line">    string PhoneNumber &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    bool PhoneNumberConfirmed &#123; get; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>dbcontext中的配置字段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static void ConfigureAbpUser&lt;TUser&gt;(this EntityTypeBuilder&lt;TUser&gt; b)</span><br><span class="line">    where TUser : class, IUser</span><br><span class="line">&#123;</span><br><span class="line">    b.Property(u &#x3D;&gt; u.TenantId).HasColumnName(nameof(IUser.TenantId));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.UserName).IsRequired().HasMaxLength(AbpUserConsts.MaxUserNameLength).HasColumnName(nameof(IUser.UserName));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.Email).IsRequired().HasMaxLength(AbpUserConsts.MaxEmailLength).HasColumnName(nameof(IUser.Email));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.Name).HasMaxLength(AbpUserConsts.MaxNameLength).HasColumnName(nameof(IUser.Name));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.Surname).HasMaxLength(AbpUserConsts.MaxSurnameLength).HasColumnName(nameof(IUser.Surname));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.EmailConfirmed).HasDefaultValue(false).HasColumnName(nameof(IUser.EmailConfirmed));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.PhoneNumber).HasMaxLength(AbpUserConsts.MaxPhoneNumberLength).HasColumnName(nameof(IUser.PhoneNumber));</span><br><span class="line">    b.Property(u &#x3D;&gt; u.PhoneNumberConfirmed).HasDefaultValue(false).HasColumnName(nameof(IUser.PhoneNumberConfirmed));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>dbcontext中的user表是如何创建,更新和使用的..<code>UserLookupService.cs</code></p>
-<p>先看下查找,其中<code>IdentityUserRepositoryExternalUserLookupServiceProvider : IExternalUserLookupServiceProvider,</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public async Task&lt;TUser&gt; FindByIdAsync(Guid id, CancellationToken cancellationToken &#x3D; default)</span><br><span class="line">       &#123;</span><br><span class="line">           var localUser &#x3D; await _userRepository.FindAsync(id, cancellationToken: cancellationToken);</span><br><span class="line"></span><br><span class="line">           if (ExternalUserLookupServiceProvider &#x3D;&#x3D; null)</span><br><span class="line">           &#123;</span><br><span class="line">               return localUser;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           if (SkipExternalLookupIfLocalUserExists &amp;&amp; localUser !&#x3D; null)</span><br><span class="line">           &#123;</span><br><span class="line">               return localUser;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           IUserData externalUser;</span><br><span class="line"></span><br><span class="line">           try</span><br><span class="line">           &#123;</span><br><span class="line">               externalUser &#x3D; await ExternalUserLookupServiceProvider.FindByIdAsync(id, cancellationToken);</span><br><span class="line">               if (externalUser &#x3D;&#x3D; null)</span><br><span class="line">               &#123;</span><br><span class="line">                   if (localUser !&#x3D; null)</span><br><span class="line">                   &#123;</span><br><span class="line">                       &#x2F;&#x2F;TODO: Instead of deleting, should be make it inactive or something like that?</span><br><span class="line">                       await WithNewUowAsync(() &#x3D;&gt; _userRepository.DeleteAsync(localUser, cancellationToken: cancellationToken));</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   return null;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           catch (Exception ex)</span><br><span class="line">           &#123;</span><br><span class="line">               Logger.LogException(ex);</span><br><span class="line">               return localUser;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           if (localUser &#x3D;&#x3D; null)</span><br><span class="line">           &#123;</span><br><span class="line">               await WithNewUowAsync(() &#x3D;&gt; _userRepository.InsertAsync(CreateUser(externalUser), cancellationToken: cancellationToken));</span><br><span class="line">               return await _userRepository.FindAsync(id, cancellationToken: cancellationToken);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           if (localUser is IUpdateUserData &amp;&amp; ((IUpdateUserData)localUser).Update(externalUser))</span><br><span class="line">           &#123;</span><br><span class="line">               await WithNewUowAsync(() &#x3D;&gt; _userRepository.UpdateAsync(localUser, cancellationToken: cancellationToken));</span><br><span class="line">           &#125;</span><br><span class="line">           else</span><br><span class="line">           &#123;</span><br><span class="line">               return localUser;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           return await _userRepository.FindAsync(id, cancellationToken: cancellationToken);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-<p>根据上面代码可见,如果找不到该用户..会自动创建一个,如何继承了IUpdateUserData则会更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">if (localUser &#x3D;&#x3D; null)</span><br><span class="line">&#123;</span><br><span class="line">    await WithNewUowAsync(() &#x3D;&gt; _userRepository.InsertAsync(CreateUser(externalUser), cancellationToken: cancellationToken));</span><br><span class="line">    return await _userRepository.FindAsync(id, cancellationToken: cancellationToken);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (localUser is IUpdateUserData &amp;&amp; ((IUpdateUserData)localUser).Update(externalUser))</span><br><span class="line">&#123;</span><br><span class="line">    await WithNewUowAsync(() &#x3D;&gt; _userRepository.UpdateAsync(localUser, cancellationToken: cancellationToken));</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    return localUser;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>更新还可以通过eventbus</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class BlogUserSynchronizer :</span><br><span class="line">    IDistributedEventHandler&lt;EntityUpdatedEto&lt;UserEto&gt;&gt;,</span><br><span class="line">    ITransientDependency</span><br><span class="line">&#123;</span><br><span class="line">    protected IBlogUserRepository UserRepository &#123; get; &#125;</span><br><span class="line">    protected IBlogUserLookupService UserLookupService &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    public BlogUserSynchronizer(</span><br><span class="line">        IBlogUserRepository userRepository, </span><br><span class="line">        IBlogUserLookupService userLookupService)</span><br><span class="line">    &#123;</span><br><span class="line">        UserRepository &#x3D; userRepository;</span><br><span class="line">        UserLookupService &#x3D; userLookupService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public async Task HandleEventAsync(EntityUpdatedEto&lt;UserEto&gt; eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        var user &#x3D; await UserRepository.FindAsync(eventData.Entity.Id);</span><br><span class="line">        if (user &#x3D;&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            user &#x3D; await UserLookupService.FindByIdAsync(eventData.Entity.Id);</span><br><span class="line">            if (user &#x3D;&#x3D; null)</span><br><span class="line">            &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (user.Update(eventData.Entity))</span><br><span class="line">        &#123;</span><br><span class="line">            await UserRepository.UpdateAsync(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="如何给IdentityUser添加额外的属性"><a href="#如何给IdentityUser添加额外的属性" class="headerlink" title="如何给IdentityUser添加额外的属性"></a>如何给IdentityUser添加额外的属性</h1><h2 id="Extra-Properties"><a href="#Extra-Properties" class="headerlink" title="Extra Properties"></a>Extra Properties</h2><p>首先IdentityUser已经被定义,虽然我们可以通过dbcontext配置修改数据表的字段,,但是不能被映射,所以有了Extra Properties</p>
-<p><a href="https://docs.abp.io/zh-Hans/abp/latest/Customizing-Application-Modules-Extending-Entities" target="_blank" rel="noopener">https://docs.abp.io/zh-Hans/abp/latest/Customizing-Application-Modules-Extending-Entities</a></p>
-<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><p>会在数据库中创建字段</p>
-<p><code>AppUser.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public virtual string Sex &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">private AppUser()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>PlayGroundDbContext.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">builder.Entity&lt;AppUser&gt;(b &#x3D;&gt;</span><br><span class="line">&#123;</span><br><span class="line">    b.ToTable(AbpIdentityDbProperties.DbTablePrefix + &quot;Users&quot;); &#x2F;&#x2F;Sharing the same table &quot;AbpUsers&quot; with the IdentityUser</span><br><span class="line"></span><br><span class="line">    b.ConfigureByConvention();</span><br><span class="line">    b.ConfigureAbpUser();</span><br><span class="line"></span><br><span class="line">    &#x2F;* Configure mappings for your additional properties</span><br><span class="line">     * Also see the PlayGroundEfCoreEntityExtensionMappings class</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    b.Property(x &#x3D;&gt; x.Sex).HasMaxLength(128);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>PlayGroundEfCoreEntityExtensionMappings.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public static void Configure()</span><br><span class="line"> &#123;</span><br><span class="line">     PlayGroundModulePropertyConfigurator.Configure();</span><br><span class="line"></span><br><span class="line">     OneTimeRunner.Run(() &#x3D;&gt;</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;* You can configure entity extension properties for the</span><br><span class="line">          * entities defined in the used modules.</span><br><span class="line">          *</span><br><span class="line">          * The properties defined here becomes table fields.</span><br><span class="line">          * If you want to use the ExtraProperties dictionary of the entity</span><br><span class="line">          * instead of creating a new field, then define the property in the</span><br><span class="line">          * PlayGroundDomainObjectExtensions class.</span><br><span class="line">          *</span><br><span class="line">          * Example:</span><br><span class="line">          *</span><br><span class="line">          * ObjectExtensionManager.Instance</span><br><span class="line">          *    .MapEfCoreProperty&lt;IdentityUser, string&gt;(</span><br><span class="line">          *        &quot;MyProperty&quot;,</span><br><span class="line">          *        b &#x3D;&gt; b.HasMaxLength(128)</span><br><span class="line">          *    );</span><br><span class="line">          *</span><br><span class="line">          * See the documentation for more:</span><br><span class="line">          * https:&#x2F;&#x2F;docs.abp.io&#x2F;en&#x2F;abp&#x2F;latest&#x2F;Customizing-Application-Modules-Extending-Entities</span><br><span class="line">          *&#x2F;</span><br><span class="line"></span><br><span class="line">         ObjectExtensionManager.Instance</span><br><span class="line">               .MapEfCoreProperty&lt;IdentityUser, string&gt;(</span><br><span class="line">           nameof(AppUser.Sex),</span><br><span class="line">           b &#x3D;&gt; b.HasMaxLength(128)</span><br><span class="line">               );</span><br><span class="line">     &#125;);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们来看看生成的迁移表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public partial class Added_Sex_T_User : Migration</span><br><span class="line">&#123;</span><br><span class="line">    protected override void Up(MigrationBuilder migrationBuilder)</span><br><span class="line">    &#123;</span><br><span class="line">        migrationBuilder.AddColumn&lt;string&gt;(</span><br><span class="line">            name: &quot;Sex&quot;,</span><br><span class="line">            table: &quot;AbpUsers&quot;,</span><br><span class="line">            maxLength: 128,</span><br><span class="line">            nullable: true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected override void Down(MigrationBuilder migrationBuilder)</span><br><span class="line">    &#123;</span><br><span class="line">        migrationBuilder.DropColumn(</span><br><span class="line">            name: &quot;Sex&quot;,</span><br><span class="line">            table: &quot;AbpUsers&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="../../assets/images/2020-07-05-abp-database-migration/image-20200714123314743.png" alt="image-20200714123314743"></p>
-<p>它时如何被添加到迁移dbcontext中的</p>
-<p><code>AbpEntityTypeBuilderExtensions.cs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static void ConfigureByConvention(this EntityTypeBuilder b)</span><br><span class="line">&#123;</span><br><span class="line">    b.TryConfigureConcurrencyStamp();</span><br><span class="line">    b.TryConfigureExtraProperties();  &#x2F;&#x2F;配置扩展属性,就是ExtraProperties字段</span><br><span class="line">    b.TryConfigureObjectExtensions();&#x2F;&#x2F;就是这里对象扩展,ObjectExtensionManager.Instance添加属性,然后从这里再根据类型读取出来</span><br><span class="line">    b.TryConfigureMayHaveCreator();</span><br><span class="line">    b.TryConfigureMustHaveCreator();</span><br><span class="line">    b.TryConfigureSoftDelete();</span><br><span class="line">    b.TryConfigureDeletionTime();</span><br><span class="line">    b.TryConfigureDeletionAudited();</span><br><span class="line">    b.TryConfigureCreationTime();</span><br><span class="line">    b.TryConfigureLastModificationTime();</span><br><span class="line">    b.TryConfigureModificationAudited();</span><br><span class="line">    b.TryConfigureMultiTenant();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p>你可以创建<strong>自己的表</strong>来存储属性,而不是创建新实体并映射到同一表. 你通常复制原始实体的一些值. 例如可以将 <code>Name</code> 字段添加到你自己的表中,它是原表中 <code>Name</code> 字段的副本.</p>
-<p>在这种情况下你不需要处理迁移问题,但是需要处理数据复制问题. 当重复的值发生变化时,你应该在表中同步相同的变化. 你可以使用本地或分布式<a href="https://docs.abp.io/zh-Hans/abp/latest/Event-Bus" target="_blank" rel="noopener">事件总线</a>订阅原始实体的更改事件. 这是根据来自另一个微服务的数据推荐的方法,特别是如果它们有单独的物理数据库(你可以在网络中搜索关于微服务设计的数据共享,这是一个广泛的主题).</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-07-05-abp-database-user/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -831,7 +699,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -862,10 +730,14 @@
 <li>sciprttable Render Pipeline (SRP) 名词，是一种实现可编程管线的一种方法(即通过C#代码，调用API来自己定义渲染顺序，相机工作方式顺序，光照特性等很多渲染相关的东西)，通过这种方法写出来的代码文件称之为SRP。</li>
 </ul>
 <p>相关链接</p>
-<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/93203710" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/93203710</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-07-04-unity-render-pipeline/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -915,7 +787,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -944,98 +816,15 @@
 <li><strong>Shaders</strong> 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。</li>
 <li><strong>Textures</strong> 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表面颜色时使用纹理。除了游戏对象表面的基本颜色（反照率）之外，纹理还可表示材质表面的许多其他方面，例如其反射率或粗糙度。</li>
 </ul>
-<h2 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h2><p><img src="../../assets/images/2020-07-03-unity-mesh/201808082025438" alt="这里写图片描述"></p>
-<ul>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Default" target="_blank" rel="noopener">Default</a></li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#NormalMap" target="_blank" rel="noopener">Normal Map</a> 法线贴图就是在原物体的凹凸表面的每个点上均作法线，通过RGB颜色通道来标记法线的方向，你可以把它理解成与原凹凸表面平行的另一个不同的表面，但实际上它又只是一个光滑的平面</li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Editor" target="_blank" rel="noopener">Editor GUI and Legacy</a> </li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Sprite" target="_blank" rel="noopener">Sprite (2D and UI)</a></li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Cursor" target="_blank" rel="noopener">Cursor</a>  光标文件</li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Cookie" target="_blank" rel="noopener">Cookie</a> 聚光灯贴图</li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Lightmap" target="_blank" rel="noopener">Lightmap</a>  光照贴图</li>
-<li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#SingleChannel" target="_blank" rel="noopener">Single Channel</a></li>
-</ul>
-<h1 id="Mesh"><a href="#Mesh" class="headerlink" title="Mesh"></a>Mesh</h1><ul>
-<li>顶点坐标（vertex） 顶点坐标数组存放Mesh的每个顶点的空间坐标，假设某mesh有n个顶点，则vertex的size为n</li>
-<li>三角形序列（triangle） 每个mesh都由若干个三角形组成，而三角形的三个点就是顶点坐标里的点，三角形的数组的size = 三角形个数 * 3.</li>
-<li>法线（normal） 法线数组存放mesh每个顶点的法线，大小与顶点坐标对应，normal[i]对应顶点vertex[i]的法线.它不仅说明了<code>面片的朝向，还可用于计算光照模型</code>。</li>
-<li>次法线 (subnormal)</li>
-<li>纹理坐标（uv） 它定义了图片上每个点的位置的信息. 这些点与3D模型是相互联系的, 以决定表面纹理贴图的位置. UV就是将<a href="http://baike.baidu.com/view/42116.htm" target="_blank" rel="noopener">图像</a>上每一个点精确对应到模型物体的表面. uv[i]对应vertex[i]</li>
-<li>切线 (tangent) 切线是垂直于法线的一条向量，由于垂直于法线的向量有无数条，所以切线最终规定为由UV坐标来决定朝向。</li>
-</ul>
-<p>例如：左图利用三个点绘制了一个三角形，而右图则通过两个三角形得到了一个四边形：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190805190859508.png" alt="img"></p>
-<p>注：这里需要注意的是，很明显从左图中给定的三个点，有两种方式可以得到三角图元，即</p>
-<ul>
-<li>顺时针旋转（也称左手螺旋）：p0-&gt;p1-&gt;p2</li>
-<li>逆时针旋转（右手螺旋）：p0-&gt;p2-&gt;p1</li>
-</ul>
-<p>它们的区别在哪里呢？类似于物理中左右手判断法则，拇指指示了三角图元的法线方向。法线其中一个作用是指明了三角图元的方向，如果从反方向看的话，这个图元是不可见的。而unity3d是左手坐标系在渲染时默认只渲染正面，背面是看不见的。</p>
-<p>那么要绘制上图中的三角形，即问题在于表达三个点的坐标，也就可以表示为下面的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vector2[] vertices &#x3D; new Vector2[]&#123; </span><br><span class="line">	new Vector2( 0, 0 ),							&#x2F;&#x2F; p0</span><br><span class="line">	new Vector2( 0, 1 ),							&#x2F;&#x2F; p1</span><br><span class="line">	new Vector2( 1, 0 ),							&#x2F;&#x2F; p2</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>而如果要绘制四边形，也就需要六个点的坐标，如下面所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Vector2[] vertices &#x3D; new Vector2[]&#123; </span><br><span class="line">	&#x2F;&#x2F; 三角图元 0</span><br><span class="line">	new Vector2( 0, 0 ),							&#x2F;&#x2F; p0</span><br><span class="line">	new Vector2( 0, 1 ),							&#x2F;&#x2F; p1</span><br><span class="line">	new Vector2( 1, 0 ),							&#x2F;&#x2F; p2</span><br><span class="line">	&#x2F;&#x2F; 三角图元 1</span><br><span class="line">	new Vector2( 0, 1 ),							&#x2F;&#x2F; p1</span><br><span class="line">	new Vector2( 1, 1 ),							&#x2F;&#x2F; p3</span><br><span class="line">	new Vector2( 1, 0 ),							&#x2F;&#x2F; p2</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>如果单纯使用顶点来表示（绘制）图形，是非常直观的——因为我们知道每一个顶点的位置信息，并且知道每三个点构成一个三角图元。然而从上面绘制四边形的数据中可以发现，三角图元1中有两个顶点的位置信息（p1和p3）和三角图元0是一样的。这也就增加了一些开销。</p>
-<p>总而言之，这个额外的存储开销是完全可以去除的，方法就是使用索引（Indices）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Vector2[] vertices &#x3D; new Vector2[]&#123; </span><br><span class="line">	new Vector2( 0, 0 ),							&#x2F;&#x2F; p0</span><br><span class="line">	new Vector2( 0, 1 ),							&#x2F;&#x2F; p1</span><br><span class="line">	new Vector2( 1, 0 ),							&#x2F;&#x2F; p2</span><br><span class="line"> &#125;;</span><br><span class="line"> int[] indices &#x3D; new indices[]&#123;</span><br><span class="line"> 	0, 1, 2											&#x2F;&#x2F; 表示 0-&gt;1-&gt;2 构成一个三角图元</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>没错，indices就是这么一回事，原来是vertices数组中，每三个顶点表示一个三角图元，现在是indices数组中，每三个整型表示一个图元。这些整形不存储真正的数据，<code>只有用到时才从vertices中取出，也就是所谓的索引了</code>。</p>
-<h1 id="SubMesh"><a href="#SubMesh" class="headerlink" title="SubMesh"></a>SubMesh</h1><p>面提到过，MeshRenderer负责对MeshFilter中的Mesh进行绘制，而绘制依赖于着色器，或者说着色器生成的材质（Material）。简单来说，材质具体描述了Mesh中的数据如何进行绘制。<br>Material只负责一个Mesh的一次绘制，但是现在有一个要求是，Mesh的不同部分，要求使用不同的材质。例如上面所绘制的四边形，两个三角面片要求绘制出不同的颜色。这个时候就需要使用SubMesh了。<br>从名字也能看出，SubMesh类似于Mesh，并且Mesh包含SubMesh。但是和Mesh不一样的是，SubMesh只有triangles信息，也就是说SubMesh使用自身的 triangles信息，索引找到 Mesh上的顶点信息（如vertices、 uv、normal等）后进行三角面片的绘制。它们的关系如下图所示：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806210636364.png" alt="在这里插入图片描述"></p>
-<p>这个设置的过程依赖于Mesh中的API是 SetTriangles，其函数原型为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> @parm triangles: 			SubMesh的triangles</span><br><span class="line"> @parm submesh: 			属于Mesh中的第几个submesh</span><br><span class="line"> @parm calculateBounds：	是否计算包围盒，默认为true。设置为false会使用当前存在的包围盒以减少CPU开销</span><br><span class="line"> @parm baseVertex：			triangles中每一个元素的偏移值，默认为0；</span><br><span class="line">*&#x2F;</span><br><span class="line">public void SetTriangles(int[] triangles, int submesh, bool calculateBounds &#x3D; true, int baseVertex &#x3D; 0);</span><br></pre></td></tr></table></figure>
-
-<p>用法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Vector3[] vertices &#x3D; new Vector3[]&#123;</span><br><span class="line">	     new Vector3( 0, 0, 0 ),</span><br><span class="line">	     new Vector3( 0, 1, 0 ),</span><br><span class="line">	     new Vector3( 1, 0, 0 ),</span><br><span class="line">	     new Vector3( 1, 1, 0 ),</span><br><span class="line">	&#125;;</span><br><span class="line">	int[] subTriangles_0 &#x3D; new int[]&#123;</span><br><span class="line">		0, 1, 2</span><br><span class="line">	&#125;;</span><br><span class="line">	int[] subTriangles_1 &#x3D; new int[]&#123;</span><br><span class="line">		1, 3, 2</span><br><span class="line">	&#125;;</span><br><span class="line">	Mesh mesh &#x3D; new Mesh();</span><br><span class="line">	mesh.vertices &#x3D; vertices;</span><br><span class="line">	&#x2F;&#x2F; 告诉 Mesh它将会有两个SubMesh</span><br><span class="line">	mesh.subMeshCount &#x3D; 2;</span><br><span class="line">	mesh.SetTriangles( subTriangles_0 , 0 );</span><br><span class="line">	mesh.SetTriangles( subTriangles_1 , 1 );</span><br><span class="line">	&#x2F;&#x2F; 重新计算normal信息，不然后面的 material会不起作用</span><br><span class="line">	mesh.RecaculateNormals();</span><br><span class="line">	&#x2F;&#x2F; MeshFilter</span><br><span class="line">	MeshFilter meshFilter &#x3D; GetComponent&lt;MeshFilter&gt;();</span><br><span class="line">	if( meshFilter &#x3D;&#x3D; null ) meshFilter &#x3D; gameObject.AddComponent&lt;MeshFilter&gt;();</span><br><span class="line">	meshFilter.mesh &#x3D; mesh;</span><br><span class="line">	&#x2F;&#x2F; MeshRenderer</span><br><span class="line">	MeshRenderer meshRenderer &#x3D; GetComponent&lt;MeshRenderer&gt;();</span><br><span class="line">	if( meshRenderer &#x3D;&#x3D; null ) gameObject.AddComponent&lt;MeshRenderer&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>将上述代码挂载到一个空节点上运行，可以得到以下结果：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223230787.png" alt="img"></p>
-<p>嗯？！难不成笔者在骗人，这里明明只有一个三角面片。莫慌，之前不是说过，要求两个三角面片使用不同的材质吗？如果运行时，将MeshRenderer的Material的Size设为2的话，你会发现另外一个三角图元也出现了：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223831570.png" alt="img"></p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223841210.png" alt="img"></p>
-<p>也就是说，有多少个SubMesh，就需要有多少个Material，并且它们的绘制关系是一一对应的。即第一个SubMesh使用第一个<br>Material绘制，第二个SubMesh使用第二个Material绘制，以此类推。为了验证这个，接下来创建两个默认的Material，将它们的Albedo分别设置为红色和绿色，接着运行时将这两个 Material赋给MeshRenderer，将会得到如下图所示的运行结果：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/2019080622511158.png" alt="在这里插入图片描述"></p>
-<p>另外，如果双击 MeshFilter的 Mesh属性，从下面的预览窗口，也能看到这个Mesh有两个SubMesh：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806225353486.png" alt="在这里插入图片描述"></p>
-<blockquote>
-<p>如何在unity显示线框图<br>选择场景视图在其工具栏左侧的显示模式。前三个选项是阴影线框和阴影线框。</p>
-</blockquote>
-<h1 id="MeshCombine"><a href="#MeshCombine" class="headerlink" title="MeshCombine"></a>MeshCombine</h1><p>MeshCombine，就是合并网格。</p>
-<p>为什么好好的模型要进行网格的合并呢？</p>
-<p>如果从应用的角度来看的话，通过网格合并可以实现游戏中的换装，你可能会说，更换的服装例如帽子好好的，为什么要合并到人物模型上？</p>
-<p>问题在于，如果游戏中不是所有人物模型都是标准的人型呢？例如魔兽世界中，不同种族的头部模型大小是不一致的，很容易出现穿模。当然可以同一顶帽子制作适配于不同种族的模型，反正这个工作是美术做的（溜）。但是从整体出发的话，这样做无疑增加了游戏容量的大小，也会减慢游戏开发的进度，同时一定程度上影响代码的简洁性。</p>
-<p>但是通过网格合并，将帽子的网格合并到人物模型上，并且蒙皮至人物头部的骨骼上。这样以后，由于骨骼的大小、旋转、位移信息会影响顶点，因此一旦这个帽子戴到别的人物模型身上时，由于它们头部骨骼的大小不一样，那么帽子也会自动变大。也就达到了同一个模型，适用于多个人物模型的目的。<br>（关于骨骼、蒙皮、骨骼蒙皮动画，可以参考下面的扩展资料）</p>
-<p>关于网格合并，同样Unity在 Mesh提供了相关的API：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> @parm combine: 			要进行合并的CombineInstance实例</span><br><span class="line"> @parm mergeSubMeshes: 		是否将SubMesh进行合并，true为将SubMesh进行合并，false表示以SubMesh的形式存在</span><br><span class="line"> @parm useMatrices: 		是否应用定义在CombineInstance中的transform信息</span><br><span class="line"> @hashLightmapData: 		如果为true，则应用CombineInstance中的lightmapScaleOffset对mesh中的lightmapUV进行偏移</span><br><span class="line">*&#x2F;</span><br><span class="line">public void CombineMeshes(CombineInstance[] combine, bool mergeSubMeshes &#x3D; true, bool useMatrices &#x3D; true, bool hasLightmapData &#x3D; false);</span><br></pre></td></tr></table></figure>
-
-<p>要使用它也很简单，如下面的代码所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 收集要合并的物体的所有Mesh信息</span><br><span class="line">       MeshFilter[] childMeshFilters &#x3D; GetComponentsInChildren&lt;MeshFilter&gt;();</span><br><span class="line"></span><br><span class="line">       CombineInstance[] destCombineInstances &#x3D; new CombineInstance[childMeshFilters.Length];</span><br><span class="line">       for ( int i &#x3D; 0; i &lt; childMeshFilters.Length; i++)</span><br><span class="line">       &#123;</span><br><span class="line">           destCombineInstances[i] &#x3D; new CombineInstance();</span><br><span class="line">           destCombineInstances[i].mesh &#x3D; childMeshFilters[i].mesh;</span><br><span class="line">           destCombineInstances[i].transform &#x3D; childMeshFilters[i].transform.localToWorldMatrix;</span><br><span class="line"></span><br><span class="line">           &#x2F;&#x2F; 隐藏子物体，或者Destory</span><br><span class="line">           childMeshFilters[i].gameObject.SetActive(false);</span><br><span class="line">       &#125;</span><br><span class="line">       Mesh destMesh &#x3D; new Mesh();</span><br><span class="line">       &#x2F;&#x2F; 进行合并</span><br><span class="line">       destMesh.CombineMeshes(destCombineInstances, true);</span><br><span class="line">       destMesh.RecalculateNormals();</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F; 将合并后的mesh赋给当前的MeshFilter</span><br><span class="line">       MeshFilter meshFilter &#x3D; GetComponent&lt;MeshFilter&gt;();</span><br><span class="line">       if (meshFilter &#x3D;&#x3D; null) meshFilter &#x3D; gameObject.AddComponent&lt;MeshFilter&gt;();</span><br><span class="line">       meshFilter.mesh &#x3D; destMesh;</span><br><span class="line"></span><br><span class="line">       MeshRenderer meshRenderer &#x3D; GetComponent&lt;MeshRenderer&gt;();</span><br><span class="line">       if( meshRenderer &#x3D;&#x3D; null)</span><br><span class="line">       &#123;</span><br><span class="line">           meshRenderer &#x3D; gameObject.AddComponent&lt;MeshRenderer&gt;();</span><br><span class="line">           &#x2F;&#x2F; 设置MeshRenderer的material</span><br><span class="line">           Material material &#x3D; new Material(Shader.Find(&quot;Standard&quot;));</span><br><span class="line">           meshRenderer.material &#x3D; material;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/96084686" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/96084686</a></li>
-<li><a href="https://docs.unity.cn/cn/2018.4/Manual/class-Mesh.html" target="_blank" rel="noopener">https://docs.unity.cn/cn/2018.4/Manual/class-Mesh.html</a></li>
-<li><a href="https://docs.unity.cn/cn/2020.1/Manual/Shaders.html" target="_blank" rel="noopener">https://docs.unity.cn/cn/2020.1/Manual/Shaders.html</a></li>
-<li><a href="https://learnopengl-cn.github.io/" target="_blank" rel="noopener">https://learnopengl-cn.github.io/</a></li>
-<li><a href="https://blog.csdn.net/Arkish/article/details/98482430" target="_blank" rel="noopener">https://blog.csdn.net/Arkish/article/details/98482430</a></li>
-<li><a href="https://blog.csdn.net/tw_345/article/details/79771454" target="_blank" rel="noopener">https://blog.csdn.net/tw_345/article/details/79771454</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/96084686" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/96084686</a></li>
-<li><a href="https://blog.csdn.net/ecidevilin/category_9266800.html" target="_blank" rel="noopener">https://blog.csdn.net/ecidevilin/category_9266800.html</a></li>
-</ul>
-
+<h2 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-07-03-unity-mesh/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1085,7 +874,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1115,18 +904,14 @@
 <li>怎么样才能早起？</li>
 </ul>
 <p>第二章作者主要围绕着他的金字塔,进行阐述</p>
-<ol>
-<li>要制定宏伟目标（要有人生规划/长期目标） </li>
-<li>建立季度体系（用90天而不是365天作为规划的周期，定期回顾，选择重点目标，建立笔记和日程） </li>
-<li>固有习惯（通过培养固有习惯协助自己实现目标，比如早起，比如运动） </li>
-<li>理想惯例（建立仪式感，建立理想一周安排） </li>
-<li>高效能策略（合并日程记录工具，文档管理工具和笔记工具，确保专注时间，实现零平衡，即收件箱清零，项目清单清零，桌面和工作区域整洁） </li>
-<li>追踪进度（日，周，月，季度，年度反思，设定一个问责联系人） </li>
-<li>成为达人（站立工作，听音乐工作等）</li>
-</ol>
-<p>第三章 作者说明了怎么实践金字塔，把一个大的目标拆成一个一个小目标放在每天。</p>
-<p>总体来说,可实施性还是很高的.人总是有惰性的,同时喜欢先做简单的事情.</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/essay-2020-07-02-zao-qi-mo-fa/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1176,7 +961,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1200,25 +985,15 @@
 
       
           <h1 id="添加应用到开始屏幕"><a href="#添加应用到开始屏幕" class="headerlink" title="添加应用到开始屏幕"></a>添加应用到开始屏幕</h1><p>右键默认就有添加到开始屏幕</p>
-<h1 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h1><p>默认布局位于 C:\Users\username\AppData\Local\Microsoft\Windows\Shell\ ..注意这是默认布局</p>
-<p>真实的布局是存在与注册表中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Export-StartLayout –path c:\start\start.xml</span><br><span class="line">Import-StartLayout -layoutpath c:\start\start.xml -mountpath &quot;C:\&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-<h2 id="其他路径"><a href="#其他路径" class="headerlink" title="其他路径"></a>其他路径</h2><p>C:\ProgramData\Microsoft\Windows\Start Menu\Programs</p>
-<p>C:\Users\zhepama\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</p>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/windows/configuration/customize-and-export-start-layout#export-the-start-layout" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/configuration/customize-and-export-start-layout#export-the-start-layout</a></li>
-<li><a href="https://docs.microsoft.com/en-us/powershell/module/startlayout/import-startlayout?view=win10-ps" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/powershell/module/startlayout/import-startlayout?view=win10-ps</a></li>
-</ul>
-
+<h1 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-02-win10-start-menu/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,33 +226,14 @@
       
           <h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在本系列的「第一篇文章」中，我们介绍了关于权威服务器及其反作弊特性，然而仅仅是最简单的实现可能会导致关于可玩性和响应速度的问题。在「第二篇文章」中，我们提出了「客户端预测」的方案来克服这个困难。</p>
 <p>以上两篇文章事实上介绍的是一种在连接到有传输延迟的远程权威服务器的状况下，可以让玩家像单机游戏一样流畅的控制角色移动的一种概念和技术。</p>
-<p>在本文中，我们将会讨论在在同一台服务器上有「其他玩家控制的角色」的情况。</p>
-<h2 id="PART-2-服务器-time-step"><a href="#PART-2-服务器-time-step" class="headerlink" title="PART 2 服务器 time step"></a>PART 2 服务器 time step</h2><p>在之前的文章中，我们的服务器的实现非常简单，它负责处理客户端的输入并更新游戏状态，最后将结果发送回客户端。如果有多个玩家在一起玩，那服务端主循环的逻辑有所不同了。<br>在接下来的场景中，几个客户端玩家会同时发送数据，玩家发出操作指令会非常频繁（高APM的玩家，一秒钟可能发出10个以上的操作指令），如果服务端每收到某个玩家的一条指令，就去执行input逻辑，然后广播游戏状态，这样的性能是非常差的，会消耗很多的cpu和bandwidth。<br>一个更好的办法是，利用一个queue，将客户端的输入信息缓存起来，在服务端，游戏状态以一定的频率(例如100ms一次)进行更新，每次更新的时间间隔(100ms)，就被称之为time step。<br>在每个更新循环迭代中，服务端处理queue里面所有的input，然后逐个进行计算，将最后计算的结果更新到所有客户端。<br>总体来说，整个游戏世界的更新和客户端的输入频率、数量是相对独立的，它的更新频率也是可控的。</p>
-<h2 id="PART-3-低频更新处理"><a href="#PART-3-低频更新处理" class="headerlink" title="PART 3 低频更新处理"></a>PART 3 低频更新处理</h2><p>从客户端来看，这个方法运行的很平滑，客户端的预测行为独立于服务端的更新，所以它依然可以使用预测技术。不过，由于真个游戏世界的状态以一个比较低的频率进行更新，那么本地客户端对其他玩家知道的信息就很少了，信息越少的话，其他玩家的行为动作要模拟的话，就不会很准确。<br>本地客户端收到其他玩家更新坐标的消息，如何进行处理呢，有一个最简单的办法就是，每次直接使用收到的坐标进行更新，但这样看起来会有抖动，每100ms更新一次坐标，就得抖动一次，如下图所示：</p>
-<p><img src="../../assets/images/2020-02-02-net-sync-entity-interpolation/fpm3-01.png" alt="Client 1 as seen by Client 2."></p>
-<p>对Client2来说，Client1的位置最开始再p(10,10)，不一会直接跳到p(11,10)，100ms后又跳到(12,0)，这样的体验是很差的。那么，如何改善游戏体验呢？ 针对不同的游戏，有不同的处理方式，一般来说，客户端的行为越方便预测，就越容易做平滑处理。</p>
-<h2 id="PART-4-航位推测法"><a href="#PART-4-航位推测法" class="headerlink" title="PART 4 航位推测法"></a>PART 4 航位推测法</h2><p>假设你在玩赛车游戏。一辆速度非常快的汽车是可以预测的——例如，如果它以每秒100米的速度行驶，一秒钟后，它将比它开始行驶的地方提前大约100米。</p>
-<p>为什么是大约呢？在那一秒内，汽车可能加速或减速了一点，或者向右或向左转了一点——这里的关键词是“一点”。汽车的机动性是这样的：在高速行驶时，无论玩家实际做什么，其在任何时间点的位置都高度依赖于其先前的位置、速度和方向。换句话说，赛车不能立即进行180度转弯。</p>
-<p>对于每100毫秒发送一次更新的服务器，这是如何工作的？客户端接收到服务器发送来的每个其他车的速度和行驶方向；在接下来的100毫秒内，它不会接收到任何新信息，但仍需要显示它们的运行情况。要做的最简单的事情是假设汽车的航向和加速度在100毫秒内保持不变，并使用该参数在本地运行汽车物理。然后，100毫秒后，当服务器更新到达时，汽车的位置被修正。</p>
-<p>根据许多因素，校正可以是大的或相对小的。如果玩家把车保持在直线上，并且不改变车速，那么预测的位置将与修正的位置完全相同。另一方面，如果玩家撞到什么东西，预测的位置将是非常错误的。</p>
-<p>请注意，推算定位可以应用于低速情况，例如战列舰。实际上，“dead reckoning”一词起源于航海。</p>
-<h2 id="PART-5-实体插值"><a href="#PART-5-实体插值" class="headerlink" title="PART 5 实体插值"></a>PART 5 实体插值</h2><p>有许多情况航位推是没法处理的 - 对于玩家的方向和速度可以瞬间改变的都不行，比如3D射击，玩家经常快速跑动，停下，快速转向等，在这种情况下，航位推算法就非常无力了。因为位置和速度和前面的数据无关。</p>
-<p>你可以选择在接到服务器的请求的时候直接更新玩家的位置，而客户端看到的就是网上其他的玩家每100ms跳一下，感觉会非常奇怪。</p>
-<p>你现在拥有的是每100ms由服务器传送过来的权威数据，现在要做的是如何在这100ms内让网络角色看起来非常自然，解决问题的关键就是将网络玩家显示在过去的某个时刻。</p>
-<p>假设你在t=1000收到位置信息，你已经在t=900收到了一次位置信息，所以你知道玩家在t=900和t=1000的位置，所以在t=1000到t=1100之间，你只要显示玩家t=900到t=1000的位置。这种方法，你所显示的都是玩家的真实数据，只是有100ms的延迟。</p>
-<p><img src="../../assets/images/2020-02-02-net-sync-entity-interpolation/fpm3-02.png" alt="Client 2 renders Client 1 in the past, interpolating last known positions."></p>
-<p>用来插值的t=900和t=1000的数据依赖于游戏。插值通常都可以处理得很好。如果不是这种方法，你可能需要服务器发送更加详细的移动信息了 - 比如更多的位置采样点，或者每10ms发送一次(你不必发十倍的数据 - 因为你发的微小的位移数据，在这种情况下数据的格式可以很好的优化一下)。</p>
-<p>当使用这种技术的时候，每一个玩家都和游戏世界有一点点不同步，因为每个玩家看到自己的世界是当前的，但是其他的玩家都是过去的。但即使是快速的游戏，这100ms的延迟都不是那么明显。</p>
-<p>有一种情况除外 - 当你需要时间和空间的准确性的时候，比如一个玩家射击另一个玩家的时候，因为其他的玩家都是存在于过去的某个时候，你的瞄准其实是有100ms的延迟的 - 也就是说，你设计的目标是100ms的某个目标！ 这个问题我们下一篇会进行讨论。</p>
-<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>在权威服务器的环境中，有着不确定的服务器更新和网络延迟，在这种情况下你还要给玩家平滑的移动。在第二篇中，我们展示了一种客户端预测和服务器调和的技术，来实现实时的角色控制，这样的方案让玩家能够得到即时的反馈，移除了致命的延迟。</p>
-<p>其他玩家的同步还是一个问题，但是，在这篇文章中，我们提出了两种解决方案。</p>
-<p>第一种是航位推技术，这种模拟需要entity的位置能够通过前一个时候的位置，速度，加速度来推算出来，当不满足这种情况的时候，航位推就没用了。</p>
-<p>第二种是插值技术，不预测将来的位置，只是使用服务器传来的数据，这种就会造成显示的entity总是过去的某个时刻。最后的结果就是玩家的角色总是当前时刻，而其他看到的entity都是过去的某个时刻，这种情况可以产生一种难以置信的无缝体验。</p>
-<p>但是，当游戏需要高速离散的准确性的时候，比如射击或者移动物体，美景就破灭了：你看其他玩家的位置和服务器的位置不一致，别的玩家看你的位置也不是正确的，这样爆头就不可能发生了！很多游戏都有爆头这一说，我们将在下面的文章中来讨论这个问题。</p>
-<ul>
-<li><a href="http://www.gabrielgambetta.com/entity-interpolation.html" target="_blank" rel="noopener">http://www.gabrielgambetta.com/entity-interpolation.html</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-net-sync-entity-interpolation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -302,7 +283,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -337,45 +318,14 @@
 </ul>
 </li>
 </ul>
-<p>从玩家的角度来看，以上行为会导致两个重要的结果：</p>
-<ul>
-<li>玩家看到 <strong>自己</strong> 处于 <strong>现在</strong></li>
-<li>玩家看到 <strong>其他玩家</strong> 处于 <strong>过去</strong></li>
-</ul>
-<p>这其实并没有什么大不了的问题，但是对于时间和空间非常敏感的事件就会造成很大的问题；比如在射击游戏中爆掉敌人的头！</p>
-<h2 id="PART-2-延时补偿"><a href="#PART-2-延时补偿" class="headerlink" title="PART 2 延时补偿"></a>PART 2 延时补偿</h2><p>假设你正用狙击枪完美的瞄准目标的头部，此时射击绝对万无一失。</p>
-<p>然而却没打到。。。</p>
-<p>为什么会发生这种事情。。</p>
-<p>因为我们之前解释过的 client-server 架构，你瞄准的是 100ms 之前的玩家的头，而不是开枪的时候的玩家的头。。。</p>
-<p>在某种程度上相当于你在一个光速非常非常慢的宇宙中进行游戏，你瞄准的是敌人过去的位置，当你扣下扳机的时候他早就走远了。。</p>
-<p>比较幸运的是有一个相对简单的解决方案，对几乎所有的玩家都是友好的，下面来解释一下它的工作流程：</p>
-<ul>
-<li>开火的时候，客户端发送开火指令到服务器，同时包含开火的一瞬间确切的时间和方向。</li>
-<li>这是关键的一步。由于服务器获取所有带有时间戳的输入，因此它可以在过去的任何时刻重构世界。特别是，它可以在任何时间点按照任何客户端眼中的样子重建世界。</li>
-<li>这意味着服务器可以准确地知道你开枪的那一刻你的武器瞄准了什么。这是你的敌人过去的头部位置，但服务器知道这是他的头部在你当前客户端所在的位置。</li>
-<li>服务器在该时间点处理快照，并更新客户端。</li>
-</ul>
-<p>于是皆大欢喜～</p>
-<p>服务器很开心是因为他是服务器，他永远都很开心。。。哦好冷啊</p>
-<p>你很开心是因为你瞄准目标头部并射击，完成了一记漂亮的爆头</p>
-<p>你的敌人可能是唯一不完全开心的哪个，如果他站在原地被你爆头那就是他的问题，但是如果他在移动的话，只能说明你是特别厉害的狙击手。</p>
-<p>但是如果他在掩体附近，然后移动到掩体内部的安全位置后才被命中了呢？</p>
-<p>好吧这的确有可能发生，但这就是你要为此付出的代价，因为你可以射击「过去的他」，他可能在进入掩体后几毫秒被射击。</p>
-<p>从某种程度上来说这是不公平的，但这是大家接受程度最高的解决方案了，明明瞄准开枪最后却 miss 问题更大～</p>
-<h2 id="PART-3-总结"><a href="#PART-3-总结" class="headerlink" title="PART 3 总结"></a>PART 3 总结</h2><p>这篇文章是快节奏多人游戏同步这个系列的最后一篇了，虽然这类问题很难得到完美解答，但是对相关概念有了清晰理解以后再看也并不是那么困难。</p>
-<p>虽然本文的读者都是游戏开发者，但依然有着另一部分读者对此很感兴趣，那就是玩家们。对玩家来说去理解诸如此类问题依然是一件很有趣的事情。</p>
-<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><p>以下是一些参考资料包括文章和源码之类的，可以帮助大家更方便的理解相关概念。</p>
-<p>与本文相关性最高的文章如下 </p>
-<p><a href="http://www.gabrielgambetta.com/lag-compensation.html" target="_blank" rel="noopener">http://www.gabrielgambetta.com/lag-compensation.html</a></p>
-<p><a href="http://www.gabrielgambetta.com/client-side-prediction-live-demo.html" target="_blank" rel="noopener">http://www.gabrielgambetta.com/client-side-prediction-live-demo.html</a></p>
-<p><a href="http://gafferongames.com/networking-for-game-programmers/what-every-programmer-needs-to-know-about-game-networking/" target="_blank" rel="noopener">What Every Programmer Needs to Know About Game Networking</a></p>
-<p> <a href="https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization" target="_blank" rel="noopener">Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization</a>.</p>
-<p><a href="https://link.springer.com/article/10.1007/s00530-012-0271-3#Sec17" target="_blank" rel="noopener">https://link.springer.com/article/10.1007/s00530-012-0271-3#Sec17</a></p>
-<p><a href="https://github.com/search?l=C%23&amp;q=lag+compensation&amp;type=Repositories" target="_blank" rel="noopener">https://github.com/search?l=C%23&amp;q=lag+compensation&amp;type=Repositories</a></p>
-<p><a href="https://github.com/search?l=C%23&amp;p=1&amp;q=Fast-Paced+Multiplayer&amp;type=Repositories" target="_blank" rel="noopener">https://github.com/search?l=C%23&amp;p=1&amp;q=Fast-Paced+Multiplayer&amp;type=Repositories</a></p>
-<p><a href="https://github.com/JoaoBorks/unity-fastpacedmultiplayer" target="_blank" rel="noopener">https://github.com/JoaoBorks/unity-fastpacedmultiplayer</a></p>
-<p><a href="https://github.com/gamestdio/timeline" target="_blank" rel="noopener">https://github.com/gamestdio/timeline</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-net-sync-lag-compensation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -425,7 +375,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -451,60 +401,14 @@
           <p>在一个采用C/S架构的游戏中，客户端和服务端的游戏状态有差异是不可避免的。客户端和服务端各自都维护了一份游戏状态。这两份游戏状态依赖网络包通信保持同步。但由于各客户端到服务端的时延具有不确定性，游戏状态同步变得非常困难。通常服务端在游戏拓扑中承载的是状态仲裁者的角色，客户端玩家看到的“经验证”的有效游戏状态总是延后于服务端的游戏状态。</p>
 <p>网络时延是必然存在的，所以游戏状态的不同步也是必然存在的。但我们可以通过技术手段尽量减轻不同步问题对用户体验带来的影响。</p>
 <p>技术术语：</p>
-<p>1）<strong>Latency</strong>：Latency指的是数据包从客户端发送到服务端再收到服务端回包所用的时间，通常被称为RTT。虽然单程的数据包传输时间并不总是等于RTT/2，但是简单起见我们可以认为两者是相等的。下文说到Latency都是说一个RTT时间，单程Latency则是指RTT/2。</p>
-<p>80年代有个工具叫ping使用ICMP echo测试延迟，所以人们常把RTT和ping联系起来。ping这个指令现在还在用。</p>
-<p>2）<strong>Hit Box</strong>：角色的3D模型代表了哪些区域是参与到“命中”计算的。你看不到hit box，你只能看到模型。hit box可能比模型大，也可能比模型小，也有可能很不精确，这都取决于具体的实现。我们知道，tick rate会影响命中判定，但是hit box不精确可能对玩家在是否命中方面的感受影响更大。</p>
-<p>3）<strong>Tick Rate</strong>：Tick Rate指游戏服务端更新游戏状态的频率。单位是hertz。如果服务器的Tick Rate是64，这就意味着服务端每秒钟最多向客户端发送64次数据包。这些同步数据包包括了游戏状态更新，比如player和场景对象位置等。一次tick的长度就是其持续时间，单位为ms。</p>
-<p>比如，64 rate时tick长度是15.6ms，20 rate时是50ms，10 rate时是100ms</p>
-<p>4）<strong>Client Update Rate</strong>：这是客户端接收服务端更新的频率。比如说，如果client update rate是20，而服务器tick rate是64，那么从体验上来说，这个客户端实际是在和一个tick rate为20的服务器联机。通常这个是配在客户端本地的，也有可能是写死的。</p>
-<p>5）<strong>Framerate</strong>：这个是指客户端每秒最多可以渲染多少帧，通常被称为FPS</p>
-<p>6）<strong>Refresh Rate</strong>：显示设备每秒钟刷新多少次。单位为hertz。如果framerate是30，一个显示频率为60的设备将把每个画面显示两次。反过来，如果framerate是120，但是显示频率为60，那么显示设备只能显示每秒60帧。显示设备的频率比framerate大，提升framerate才有意义。大多数显示设备频率是60或120。</p>
-<p>7）<strong>Interpolation</strong>：这是一种平滑场景对象移动的技术。实际上内插值所做的就是在场景对象的两个位置之间做插值，以让运动过程平滑。插值延迟通常是2tick，也不尽然。举个内插值的例子，如果一个玩家沿着一条直线移动，在tick1的时候位置在0.5m，在tick2的时候位置在1m，内插值的作用就是让客户端看起来是平滑的从0.5m移到1m。但是服务器实际看到的是离散的位置，要么在0.5m或1m，不可能在中间的某个位置。如果没有插值，游戏的抖动将非常明显，特别是在从服务端更新了一个运动对象的位置后。内插值只在客户端做，实际上减慢了将整个游戏状态绘制到屏幕上的速率。</p>
-<p>8）<strong>Extrapolation</strong>：这是客户端补偿延迟的另一种技术。客户端将场景对象的位置做外插值，这样就不会导致绘制的时候没有更新到新数据。通常优先使用内插值，特别是FPS游戏，因为玩家的移动是不可预期的，外插值的结果可能通常是错的。</p>
-<p>9）<strong>Lag Compensation</strong>：延迟补偿是服务端减小客户端延迟影响的一种方法。如果没有延迟补偿，或者延迟补偿做的不好，由于客户端看到的是经过延迟后的游戏状态，玩家要命中目标就必须使用一些预判技巧。实际上，延迟补偿所做的，就是当服务器从客户端收到操作（比如开枪）后，将操作发生时间往回调一个单向时延的时间。服务端游戏状态和客户端游戏状态的时间差异（也被称为”Client Delay”）可用下式给出：</p>
-<p>ClientDelay = (1/2 * Latency) + InterpolationDelay</p>
-<p>延迟补偿的实际操作步骤：</p>
-<ol>
-<li>Player A看到Player B向一个角落跑去</li>
-<li>Player A开枪，其客户端把这个操作发送给服务器</li>
-<li>假定A的延迟的一半是Xms，那么Xms后服务器将收到Player A的操作</li>
-<li>服务器从记录的历史信息中找到A开枪时B所在的位置。一般情况下，服务器应该往回看 (Xms + Player A’s interpolation delay) 来回滚到A开枪时的游戏状态。但是这个时间是可以调的，取决于开发者希望延迟补偿算法如何工作。</li>
-<li>服务器判定这次的开枪是否命中。如果子弹的轨迹和目标模型的hit box相交，就认为是命中了。在这个例子中，我们假定命中了。在Player B看来，他觉得自己已经躲到墙后面了。但是Player B看到的游戏状态所处的时间和Server认定的开枪时间是有差异的，可以表示为：<br>(1/2 * PlayerALatency + 1/2 * PlayerBLatency + TimeSinceLastTick)</li>
-<li>在下一次tick中，服务器使用计算结果更新所有客户端：Player A看到自己命中了目标，Player B看到自己掉血或挂掉了。</li>
-</ol>
-<p>需要注意的是，如果两个玩家对射，而且都命中了，游戏如何处理就取决于实现了。比如说在CS:GO中，如果先收到的射击操作命中了目标玩家，那么后续收到的那个玩家的射击就会被丢弃。这样就避免了两个玩家的射击请求在同一帧，然后都命中，都挂掉。在Overwatch中，这种情况是可能的。这里是有取舍的。</p>
-<p>按照CS:GO的做法，网络较好的玩家是有很大优势的。经常会有“我在挂掉前打中了目标，但是他没死”的情况。你甚至在挂掉前能听到你的枪响和命中的声音，却没对目标造成伤害。</p>
-<p>若是在Overwatch中，玩家反应时间的差异对结果影响较小。比如说，如果服务器tick rate是64，若Player A比Player B早15ms射击，那么双方的射击都是在同一个15.6ms tick之内，所以最终结果是双方都命中，都死掉了。</p>
-<p>如果延迟补偿过度，就会出现“我朝目标早前的位置开枪，却还是命中他了”。<br>若延迟补偿不足，则会出现“我必须对目标的移动做预判，这样才能命中”。<br>服务器做延迟补偿所记录的历史数据应该是有限的，不然高延迟的玩家会明显拖累其他玩家的游戏体验。</p>
-<p>在Overwatch中，服务端延迟补偿也被称为Favoring the shooter(<a href="https://link.zhihu.com/?target=https%3A//www.vg247.com/2016/04/05/overwatch-devs-talk-netcode-and-favouring-the-shooter/">https://www.vg247.com/2016/04/05/overwatch-devs-talk-netcode-and-favouring-the-shooter/</a>, <a href="https://link.zhihu.com/?target=https%3A//www.pcgamesn.com/overwatch/overwatch-netcode">https://www.pcgamesn.com/overwatch/overwatch-netcode</a>)，也就是说，如果你在自己屏幕上瞄准了目标并射击，那么很大概率将命中目标。也有例外情况。比如，若你射击目标的那一刻，目标跳跃躲开了，这时服务器认为目标做了一个完美的闪避，可能会被判断未命中。所以计算命中时并不总是使用射击那一刻的信息。这是为了玩家体验打的补丁。</p>
-<p>如果你是要设计一套同步方案，根据设计目的不同可能有不同的方案。公平性、即时反馈、网络流量等都可能是重要的设计目标。可以参考以下因素：</p>
-<p>1）网络链接。延迟越低越好。选择一个延迟最低的服务器开始游戏是很重要的。网络上的拥塞程度也会导致网络延迟。延迟补偿可以帮助解决“射击和命中”的问题，但是如果你的网络不好，更多的情况下，你可能会体验到“已经跑到墙后面还是被打中”或者“我先射击但还是死掉了”的情况。</p>
-<p>2）如果你的客户端frame rate很低（只要低于显示设备刷新频率或跟他差不多），会导致感受延迟变大，通常比tick rate带来的问题更严重。</p>
-<p>3）尽量使用内插值。大多数游戏使用的内插值间隔是tick间隔的两倍，主要考虑到如果一个数据包丢掉了，玩家的移动中断也不会在屏幕上表现出来。如果网络状况很好，没有丢包，把插值间隔设置为tick间隔是没有问题的。但是如果有丢包，就会导致抖动。比如在CS:GO中，这对体验的影响比把服务端tick rate从20调高到64带来的体验影响更明显。如果这个值设的太低，会导致极大的抖动。</p>
-<p>4）如果有可能，你应该增加游戏的client update rate来优化体验。其代价是CPU和带宽消耗。对于客户端来说，除非你家的网络带宽非常低，增加CPU和带宽消耗是可以接受的。</p>
-<p>5）如果你的显示设备刷新率是60hz，那么很有可能你根本感受不到tick rate在64和128会有什么差异，因为由于tick rate差异导致的改变根本无法通过你的显示设备体现出来。</p>
-<p>6）通常来说，服务端tick rate越高，用户交互就越流畅，也更准确。当然网络同步量也越大。如果我们对比tick rate64（CS:GO比赛）和20（Overwatch Beta服务器宣传的帧率），两者因为帧率差异导致的最大可感受延迟是35ms.平均情况下是17.5ms.大多数人是察觉不到其中的差异的，但是有经验的玩家通常是能感受到的。高的tick rate并不会影响到延迟补偿的工作。所以有时候，你还是会有明明自己已经跑到墙后面了可是还是死了的体验。把tick rate提高到64并不能解决这个问题。</p>
-<p>7）Responsiveness: 当你按下按键的时候，需要能立刻看到反馈。这对动作游戏和FPS游戏都是非常重要的。有多个因素会影响即时反馈。首先，客户端发送玩家的输入应该是即时的。其次，客户端不等服务端回应就根据玩家的输入做状态预测和插值。在Overwatch中，客户端会维护一个历史纪录用于验证客户端预测的准确性。最后，服务端tick rate也会影响反馈。投射物的模拟也应和玩家做类似处理，并加上飞行时间，让玩家对反馈产生的时间有预期。</p>
-<p>8）处理丢包。在Overwatch中，丢包是通过在客户端加速“命令帧”和在服务端设置命令缓存来解决的(<a href="https://link.zhihu.com/?target=http%3A//www.gdcvault.com/play/1024001/-Overwatch-Gameplay-Architecture-and">http://www.gdcvault.com/play/1024001/-Overwatch-Gameplay-Architecture-and</a>, <a href="https://link.zhihu.com/?target=http%3A//www.gad.qq.com/article/detail/28682">http://www.gad.qq.com/article/detail/28682</a>). 首先，系统采用确定性模拟技术，将时间量化为“命令帧”。每个命令帧都固定为16毫秒（比赛时是7毫秒）。服务端和客户端模拟都运行在保持同步的时钟和这个量化值之上，保持固定的更新频率。当客户端意识到丢包时，会比约定频率更快的模拟，而服务端则将命令缓冲区增大。客户端发送指令的频率加快，而服务端缓冲变大以容忍更多的丢包。客户端的指令数据包包含了未经服务端确认过的所有指令，这样服务端就有机会在实际模拟并发送确认包前更新缓冲区。</p>
-<p><strong>延迟改进</strong></p>
-<p>暴雪表示会采用一些技术来改进延迟的情况：</p>
-<ul>
-<li>把网络状况相近的玩家匹配到一起，这样相对公平</li>
-<li>提供60帧tick的服务器，目前是20帧的服务器</li>
-<li>网络稳定时候，直接使用客户端指令，而不是缓存48ms的</li>
-<li>网络波动时候，回溯加一个上限，比如250ms，不再是无限回溯了</li>
-</ul>
-<ul>
-<li><a href="https://www.gdcvault.com/play/1024001/-Overwatch-Gameplay-Architecture-and" target="_blank" rel="noopener">Overwatch - Gameplay Architecture and Netcode - GDCVault</a></li>
-<li><a href="http://gad.qq.com/article/detail/28682" target="_blank" rel="noopener">《守望先锋》架构设计与网络同步 - GAD</a></li>
-<li><a href="http://gad.qq.com/article/detail/28219" target="_blank" rel="noopener">《守望先锋》中的网络脚本化的武器和技能系统 - GAD</a></li>
-<li><a href="https://www.gdcvault.com/play/1024653/Networking-Scripted-Weapons-and-Abilities" target="_blank" rel="noopener">Networking Scripted Weapons and Abilities in Overwatch - GDC Vault</a></li>
-<li><a href="https://blog.codingnow.com/2017/06/overwatch_ecs.html" target="_blank" rel="noopener">浅谈《守望先锋》中的 ECS 架构 - 云风的 BLOG</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/25703934" target="_blank" rel="noopener">GDC 2017 技术选荐合辑 - 知乎专栏</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/28825322" target="_blank" rel="noopener">守望先锋等 FPS 游戏的网络同步 - 知乎专栏</a></li>
-<li><a href="https://www.gamereplays.org/overwatch/portals.php?show=page&name=overwatch-a-guide-to-understanding-netcode" target="_blank" rel="noopener">A guide to understanding netcode - GAMEREPLAYS.ORG</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-overwatch-a-guide-to-understanding-netcode/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -554,7 +458,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -586,25 +490,14 @@
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">禁用安全工具,使/usr/<span class="built_in">local</span>可以挂载到非系统盘,需要进入安全模式执行</span></span><br><span class="line">csrutil disable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 挂载非系统盘到/usr/<span class="built_in">local</span></span></span><br><span class="line">vi /etc/fstab</span><br><span class="line">UUID=BA245166-9FB3-4D88-98E3-147559D0B531 /usr/local apfs rw,auto,nobrowse</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置环境变量HOMEBREW_TEMP需要和brew在同一个硬盘</span></span><br><span class="line">vi ~/.bash_profile</span><br><span class="line">export PATH="/usr/local/bin:$PATH"</span><br><span class="line">export HOMEBREW_TEMP=/usr/local/temp</span><br></pre></td></tr></table></figure>
-
-<h3 id="切换国内的镜像源"><a href="#切换国内的镜像源" class="headerlink" title="切换国内的镜像源"></a>切换国内的镜像源</h3><p>Homebrew 默认使用的是国外的源，在下载时速度可能会比较慢。好在国内的清华大学和中科大提供了 Homebrew 的镜像源，我们可以很轻松的切换源，从而提升我们的下载速度。</p>
-<h4 id="使用中科大的镜像"><a href="#使用中科大的镜像" class="headerlink" title="使用中科大的镜像"></a>使用中科大的镜像</h4><p>执行如下命令，即可切换为中科大的镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin git://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin git://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用清华大学的镜像"><a href="#使用清华大学的镜像" class="headerlink" title="使用清华大学的镜像"></a>使用清华大学的镜像</h4><p>执行如下命令，即可切换为清华大学的镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git -C <span class="string">"<span class="variable">$(brew --repo)</span>"</span> remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br><span class="line"></span><br><span class="line">git -C <span class="string">"<span class="variable">$(brew --repo homebrew/core)</span>"</span> remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-Brewfile-完成环境迁移"><a href="#使用-Brewfile-完成环境迁移" class="headerlink" title="使用 Brewfile 完成环境迁移"></a>使用 Brewfile 完成环境迁移</h3><p>设备永久了，我们的电脑中会有大量的软件，如果你需要迁移环境，重新安装会是一个大麻烦，好在 Homebrew 本身为我们提供了一个非常好用的环境迁移的工具 —— Homebrew Bundle</p>
-<p>你首先需要在之前的电脑中执行 <code>brew bundle dump</code> 来完成当前环境的导出,导出完成后，你会得到一个 <em>Brewfile</em>。</p>
-<p><img src="../../assets/images/2020-01-13-brew/1.jpeg" alt="img">然后将 <em>Brewfile</em> 复制到新的电脑中，并执行 <code>brew bundle</code> 来开始安装的过程。</p>
-<h3 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h3><p><img src="../../assets/images/2020-01-13-brew/%E6%88%AA%E5%B1%8F2020-02-05%E4%B8%8A%E5%8D%884.33.45.png" alt="截屏2020-02-05上午4.33.45"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install launchrocket</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="常用链接"><a href="#常用链接" class="headerlink" title="常用链接"></a>常用链接</h3><p><a href="https://github.com/Homebrew/homebrew-services" target="_blank" rel="noopener">https://github.com/Homebrew/homebrew-services</a></p>
-<p><a href="https://sspai.com/post/56009" target="_blank" rel="noopener">https://sspai.com/post/56009</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-01-13-brew/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -654,7 +547,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -684,149 +577,14 @@
 <li><p>是扇形角度范围内</p>
 </li>
 </ul>
-<p>计算怪物是否在你的视野范围内其实可以这么看<br><img src="../../assets/images/2020-01-13-unity-attack-detection/80f6c4220d181e73991a8dfdfda32a81.png" alt="【小松教你手游开发】【unity实用技能】计算目标物体是否在自己的扇形视野范围"></p>
-<p>Avatar的正方向向量与Avatar到Enemy之间向量的夹角大小是否小于于视线大小的一半。</p>
-<p>这样就能判断是否在视线范围内。</p>
-<p>所以现在的问题就是这么计算这个夹角</p>
-<p>计算的方式是，</p>
-<ol>
-<li><p>获取Avatar正方向的一个点与Avatar世界坐标相减，获取正方向向量</p>
-</li>
-<li><p>Enemy的世界坐标与Avatar世界坐标相减，获取Enemy到Avatar的方向向量</p>
-</li>
-<li><p>调用Vector3.Angle(a, b)计算夹角</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">   public GameObject avatar;</span><br><span class="line">   public GameObject enemy;</span><br><span class="line">   </span><br><span class="line">&#x2F;&#x2F;扇形距离 攻击距离  扇形的半径 </span><br><span class="line">   float minDistance &#x3D; 10f;</span><br><span class="line">   &#x2F;&#x2F;扇形的角度 也就是攻击的角度</span><br><span class="line">   float minAngle &#x3D; 120f;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">   void Update ()</span><br><span class="line">   &#123;</span><br><span class="line">       Vector3 avatarPos &#x3D; avatar.transform.position;</span><br><span class="line">       Vector3 enemyPos &#x3D; enemy.transform.position;</span><br><span class="line">       </span><br><span class="line">       &#x2F;&#x2F;与敌人的距离</span><br><span class="line">       float distance &#x3D; Vector3.Distance(avatarPos, enemyPos);</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F;主角相对于目标的向量</span><br><span class="line">       Vector3 srcLocalVect &#x3D; enemyPos - avatarPos;</span><br><span class="line">       srcLocalVect.y &#x3D; 0;</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F;获取主角正前方的一个点</span><br><span class="line">       Vector3 forwardLocalPos &#x3D; avatar.transform.forward * 1 + avatarPos;</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F;获取正方向向量</span><br><span class="line">       Vector3 forwardLocalVect &#x3D; forwardLocalPos - avatarPos;</span><br><span class="line">       forwardLocalVect.y &#x3D; 0;</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F;计算角度</span><br><span class="line">       float angle &#x3D; Vector3.Angle(srcLocalVect, forwardLocalVect);</span><br><span class="line"></span><br><span class="line">       if(distance &lt; minDistance &amp;&amp; angle &lt; minAngle&#x2F;2)</span><br><span class="line">       &#123;</span><br><span class="line">           Debug.Log(&quot;In EyeSight&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="长方形范围攻击检测"><a href="#长方形范围攻击检测" class="headerlink" title="长方形范围攻击检测"></a>长方形范围攻击检测</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class AttackCHeck : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;要攻击的目标</span><br><span class="line">    public Transform Target;</span><br><span class="line"></span><br><span class="line">    private void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;计算玩家与敌人的距离</span><br><span class="line">        float distance &#x3D; Vector3.Distance(transform.position, Target.position);</span><br><span class="line">        &#x2F;&#x2F;玩家与敌人的方向向量</span><br><span class="line">        Vector3 temVec &#x3D; Target.position - transform.position;</span><br><span class="line">        &#x2F;&#x2F;与玩家正前方做点积</span><br><span class="line">        float forwardDistance &#x3D; Vector3.Dot(temVec, transform.forward.normalized);</span><br><span class="line">        if (forwardDistance &gt; 0 &amp;&amp; forwardDistance &lt;&#x3D; 10)</span><br><span class="line">        &#123;</span><br><span class="line">            float rightDistance &#x3D; Vector3.Dot(temVec, transform.right.normalized);</span><br><span class="line"></span><br><span class="line">            if (Mathf.Abs(rightDistance) &lt;&#x3D; 3)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;进入攻击范围&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="判断目标点是否在指定的矩形内（两个随机点确定的矩形）"><a href="#判断目标点是否在指定的矩形内（两个随机点确定的矩形）" class="headerlink" title="判断目标点是否在指定的矩形内（两个随机点确定的矩形）"></a>判断目标点是否在指定的矩形内（两个随机点确定的矩形）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Rectangle01</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Min为当前坐标系中矩形的最小点</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Max为当前坐标系中矩形的最大点</span><br><span class="line">    public Vector2 Min;</span><br><span class="line">    public Vector2 Max;</span><br><span class="line"> </span><br><span class="line">    public bool Contains( Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        if (point.x &lt; this.Min.x)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (point.x &gt; this.Max.x)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (point.y &lt; this.Min.y)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (point.y &gt; this.Max.y)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void CalcVertices(out Vector2 vertex0, out Vector2 vertex1, out Vector2 vertex2, out Vector2 vertex3)</span><br><span class="line">    &#123;</span><br><span class="line">        vertex0 &#x3D; this.Min;</span><br><span class="line">        vertex1 &#x3D; new Vector2(this.Max.x, this.Min.y);</span><br><span class="line">        vertex2 &#x3D; this.Max;</span><br><span class="line">        vertex3 &#x3D; new Vector2(this.Min.x, this.Max.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试   脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">public class TestRt01 : MonoBehaviour &#123;</span><br><span class="line"> </span><br><span class="line">    public Transform Point;</span><br><span class="line">    public Transform RtPoint0, RtPoint1;</span><br><span class="line">    public Rectangle01 rtBox;</span><br><span class="line"> </span><br><span class="line">    private const float _pointRadius &#x3D; 0.1f;</span><br><span class="line">  </span><br><span class="line">    private void OnDrawGizmos()</span><br><span class="line">    &#123;</span><br><span class="line">        if (rtBox !&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            DrawRt(rtBox);</span><br><span class="line">            Gizmos.DrawSphere(Point.position, _pointRadius);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKeyDown(KeyCode.Q))</span><br><span class="line">        &#123;</span><br><span class="line">            rtBox &#x3D; CreateFromTwoPoints(RtPoint0.position, RtPoint1.position);</span><br><span class="line">            bool cont &#x3D; rtBox.Contains(Point.position);</span><br><span class="line">            if (cont)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点不在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public Rectangle01 CreateFromTwoPoints(Vector2 point0, Vector2 point1)</span><br><span class="line">    &#123;</span><br><span class="line">        Rectangle01 rt &#x3D; new Rectangle01();</span><br><span class="line">        if (point0.x &lt; point1.x)</span><br><span class="line">        &#123;</span><br><span class="line">            rt.Min.x &#x3D; point0.x;</span><br><span class="line">            rt.Max.x &#x3D; point1.x;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            rt.Min.x &#x3D; point1.x;</span><br><span class="line">            rt.Max.x &#x3D; point0.x;</span><br><span class="line">        &#125;</span><br><span class="line">        if (point0.y &lt; point1.y)</span><br><span class="line">        &#123;</span><br><span class="line">            rt.Min.y &#x3D; point0.y;</span><br><span class="line">            rt.Max.y &#x3D; point1.y;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            rt.Min.y &#x3D; point1.y;</span><br><span class="line">            rt.Max.y &#x3D; point0.y;</span><br><span class="line">        &#125;</span><br><span class="line">        return rt;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    protected void DrawRt( Rectangle01 box)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 v0, v1, v2, v3;</span><br><span class="line">        box.CalcVertices(out v0, out v1, out v2, out v3);</span><br><span class="line">        Gizmos.color &#x3D; Color.blue;</span><br><span class="line">        Gizmos.DrawLine(v0, v1);</span><br><span class="line">        Gizmos.DrawLine(v1, v2);</span><br><span class="line">        Gizmos.DrawLine(v2, v3);</span><br><span class="line">        Gizmos.DrawLine(v3, v0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="判断目标点是否在某一矩形区域（以任一点为中心的矩形区域）"><a href="#判断目标点是否在某一矩形区域（以任一点为中心的矩形区域）" class="headerlink" title="判断目标点是否在某一矩形区域（以任一点为中心的矩形区域）"></a>判断目标点是否在某一矩形区域（以任一点为中心的矩形区域）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public class Box &#123;</span><br><span class="line"> </span><br><span class="line">    public Vector2 Center;</span><br><span class="line">    public Vector2 Axis0;</span><br><span class="line">    public Vector2 Axis1;</span><br><span class="line">    public Vector2 Extents;</span><br><span class="line"> </span><br><span class="line">    public Box(Vector2 center, Vector2 axis0, Vector2 axis1, Vector2 extents)</span><br><span class="line">    &#123;</span><br><span class="line">        this.Center &#x3D; center;</span><br><span class="line">        this.Axis0 &#x3D; axis0;</span><br><span class="line">        this.Axis1 &#x3D; axis1;</span><br><span class="line">        this.Extents &#x3D; extents;</span><br><span class="line">    &#125;</span><br><span class="line">    public bool Contains(Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 vector;</span><br><span class="line">        vector.x &#x3D; point.x - this.Center.x;</span><br><span class="line">        vector.y &#x3D; point.y - this.Center.y;</span><br><span class="line">        float num &#x3D; vector.Dot(ref this.Axis0);</span><br><span class="line">        if (num &lt; -this.Extents.x)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (num &gt; this.Extents.x)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        num &#x3D; vector.Dot(ref this.Axis1);</span><br><span class="line">        if (num &lt; -this.Extents.y)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (num &gt; this.Extents.y)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void CalcVertices(out Vector2 vertex0, out Vector2 vertex1, out Vector2 vertex2, out Vector2 vertex3)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 vector &#x3D; (Vector2)(this.Axis0 * this.Extents.x);</span><br><span class="line">        Vector2 vector2 &#x3D; (Vector2)(this.Axis1 * this.Extents.y);</span><br><span class="line">        vertex0 &#x3D; (this.Center - vector) - vector2;</span><br><span class="line">        vertex1 &#x3D; (this.Center + vector) - vector2;</span><br><span class="line">        vertex2 &#x3D; (this.Center + vector) + vector2;</span><br><span class="line">        vertex3 &#x3D; (this.Center - vector) + vector2;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public static class Vector2ex</span><br><span class="line">&#123;</span><br><span class="line">    public static float Dot(this Vector2 vector, ref Vector2 value)</span><br><span class="line">    &#123;</span><br><span class="line">        return ((vector.x * value.x) + (vector.y * value.y));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class TestBox : MonoBehaviour &#123;</span><br><span class="line"> </span><br><span class="line">    public Transform Point;</span><br><span class="line">    public Transform rtBox;</span><br><span class="line">    Box box;</span><br><span class="line">    private const float _pointRadius &#x3D; .11f;</span><br><span class="line">    private void OnDrawGizmos()</span><br><span class="line">    &#123;</span><br><span class="line">        if (box!&#x3D;null)</span><br><span class="line">        &#123;</span><br><span class="line">            Gizmos.DrawSphere(Point.position, _pointRadius);</span><br><span class="line">            DrawBox(ref box);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKeyDown(KeyCode.Q))</span><br><span class="line">        &#123;</span><br><span class="line">            box &#x3D; new Box(rtBox.position, rtBox.right, rtBox.up, rtBox.localScale); ;</span><br><span class="line">            bool cont &#x3D; box.Contains(Point.position);</span><br><span class="line">            if (cont)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点不在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    protected void DrawBox(ref Box box)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 v0, v1, v2, v3;</span><br><span class="line"> </span><br><span class="line">        box.CalcVertices(out v0, out v1, out v2, out v3);</span><br><span class="line">        Gizmos.color &#x3D; Color.blue;</span><br><span class="line">        Gizmos.DrawLine(v0, v1);</span><br><span class="line">        Gizmos.DrawLine(v1, v2);</span><br><span class="line">        Gizmos.DrawLine(v2, v3);</span><br><span class="line">        Gizmos.DrawLine(v3, v0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="半圆形攻击范围检测"><a href="#半圆形攻击范围检测" class="headerlink" title="半圆形攻击范围检测"></a>半圆形攻击范围检测</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class AttackCHeck : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;要攻击的目标</span><br><span class="line">    public Transform Target;</span><br><span class="line">    private void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;计算玩家与敌人的距离</span><br><span class="line">        float distance &#x3D; Vector3.Distance(transform.position, Target.position);</span><br><span class="line">        &#x2F;&#x2F;玩家与敌人的方向向量</span><br><span class="line">        Vector3 temVec &#x3D; Target.position - transform.position;</span><br><span class="line">        &#x2F;&#x2F;与玩家正前方做点积</span><br><span class="line">        float forwardDistance &#x3D; Vector3.Dot(temVec, transform.forward.normalized);</span><br><span class="line">        if (forwardDistance &gt; 0 &amp;&amp; forwardDistance &lt;&#x3D; 10)</span><br><span class="line">        &#123;</span><br><span class="line">            if (distance &lt;&#x3D; 5)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;进入攻击范围&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="圆形攻击范围"><a href="#圆形攻击范围" class="headerlink" title="圆形攻击范围"></a>圆形攻击范围</h1><p>圆形攻击范围有两种，以玩着荣耀的王昭君大招为例子，</p>
-<p>第一种是制定位置施法：新版本的王昭君的大招是指定位置施法的，也就是说在玩家固定施法半径以内可随意放一个圆形的技能。在半径之内的敌人受伤。</p>
-<p>第二种是固定位置施法：老版本的王昭君大招是在自身一定半径以内，敌人在这个范围内受伤。</p>
-<p>其实两种判断都很简单，只需要判断敌人和SkillPosition之间的距离是否小于半径即可。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20180425195609483.png" alt="img"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; 不定点式圆形攻击</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;attacked&quot;&gt;被攻击方&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;skillPosition&quot;&gt;技能释放位置&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;radius&quot;&gt;半径&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;&lt;&#x2F;returns&gt;</span><br><span class="line">    public bool CircleAttack(Transform attacked,Transform skillPosition, float radius)</span><br><span class="line">    &#123;</span><br><span class="line">        float distance &#x3D; Vector3.Distance(attacked.position, skillPosition.position);</span><br><span class="line">        if (distance &lt; radius)</span><br><span class="line">        &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>方法2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Circle &#123;</span><br><span class="line"> </span><br><span class="line">    public Vector2 Center;</span><br><span class="line">    public float Radius;</span><br><span class="line"> </span><br><span class="line">    public Circle(Vector2 center, float radius)</span><br><span class="line">    &#123;</span><br><span class="line">        this.Center &#x3D; center;</span><br><span class="line">        this.Radius &#x3D; radius;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public bool Contains( Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 vector &#x3D; point - this.Center;</span><br><span class="line">        return (vector.SqrMagnitude() &lt;&#x3D; (this.Radius * this.Radius));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public Vector2 Eval(float t)</span><br><span class="line">    &#123;</span><br><span class="line">        return new Vector2(this.Center.x + (this.Radius * Mathf.Cos(t)), this.Center.y + (this.Radius * Mathf.Sin(t)));</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="判断一个点是否在三角形里面"><a href="#判断一个点是否在三角形里面" class="headerlink" title="判断一个点是否在三角形里面"></a>判断一个点是否在三角形里面</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public static  bool InTrigon(Vector3 _target,Vector3 _center,Vector3 _left,Vector3 _right)&#123;  </span><br><span class="line">        Vector3 Ctl&#x3D;_left-_center;  </span><br><span class="line">        Vector3 Ctr&#x3D;_right -_center;  </span><br><span class="line">        Vector3 Ctt&#x3D;_target-_center;  </span><br><span class="line">        Vector3 Ltr&#x3D;_right-_left;  </span><br><span class="line">        Vector3 Ltc&#x3D;_right-_center;  </span><br><span class="line">        Vector3 Ltt&#x3D;_left-_target;  </span><br><span class="line">        Vector3 Rtl&#x3D;_left-_right;  </span><br><span class="line">        Vector3 Rtc&#x3D;_center-_right;  </span><br><span class="line">        Vector3 Rtt&#x3D;_target-_right;  </span><br><span class="line">        if(   </span><br><span class="line">           Vector3.Dot(Vector3.Cross(Ctl,Ctr).normalized,Vector3.Cross(Ctl,Ctt).normalized)&#x3D;&#x3D;1&amp;&amp;  </span><br><span class="line">           Vector3.Dot(Vector3.Cross(Ltr,Ltc).normalized,Vector3.Cross(Ltr,Ltt).normalized)&#x3D;&#x3D;1&amp;&amp;  </span><br><span class="line">           Vector3.Dot(Vector3.Cross(Rtc,Rtl).normalized,Vector3.Cross(Rtc,Rtt).normalized)&#x3D;&#x3D;1  </span><br><span class="line">           )  </span><br><span class="line">            return true;  </span><br><span class="line">        else  </span><br><span class="line">            return false;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>原理：通过向量之间的对比，利用点乘和差乘实现判断一个点是否在三角形里面。</p>
-<p>叉乘： 叉乘结果用右手判断法则。</p>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">public class Triangle </span><br><span class="line">&#123;</span><br><span class="line">    public enum Orientations</span><br><span class="line">    &#123;</span><br><span class="line">        CW,&#x2F;&#x2F;三个点顺时针</span><br><span class="line">        CCW,&#x2F;&#x2F;三个点逆时针</span><br><span class="line">        None&#x2F;&#x2F;不清楚点的顺序</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public Vector2 V0;</span><br><span class="line">    public Vector2 V1;</span><br><span class="line">    public Vector2 V2;</span><br><span class="line">    public Triangle(Vector2 v0, Vector2 v1, Vector2 v2)</span><br><span class="line">    &#123;</span><br><span class="line">        this.V0 &#x3D; v0;</span><br><span class="line">        this.V1 &#x3D; v1;</span><br><span class="line">        this.V2 &#x3D; v2;</span><br><span class="line">    &#125;</span><br><span class="line">    public static Triangle CreateTriangle2(Transform v0, Transform v1, Transform v2)</span><br><span class="line">    &#123;</span><br><span class="line">        return new Triangle(v0.position, v1.position, v2.position);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public Orientations CalcOrientation(float threshold &#x3D; 1E-05f)</span><br><span class="line">    &#123;</span><br><span class="line">        float num &#x3D; this.CalcDeterminant();</span><br><span class="line">        if (num &gt; threshold)</span><br><span class="line">        &#123;</span><br><span class="line">            return Orientations.CCW;</span><br><span class="line">        &#125;</span><br><span class="line">        if (num &lt; -threshold)</span><br><span class="line">        &#123;</span><br><span class="line">            return Orientations.CW;</span><br><span class="line">        &#125;</span><br><span class="line">        return Orientations.None;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public float CalcDeterminant()</span><br><span class="line">    &#123;</span><br><span class="line">        return ((((((this.V1.x * this.V2.y) + (this.V0.x * this.V1.y)) + (this.V2.x * this.V0.y)) - (this.V1.x * this.V0.y)) - (this.V2.x * this.V1.y)) - (this.V0.x * this.V2.y));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public bool Contains(Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        bool flag &#x3D; (((point.x - this.V1.x) * (this.V0.y - this.V1.y)) - ((point.y - this.V1.y) * (this.V0.x - this.V1.x))) &lt; 0f;</span><br><span class="line">        bool flag2 &#x3D; (((point.x - this.V2.x) * (this.V1.y - this.V2.y)) - ((point.y - this.V2.y) * (this.V1.x - this.V2.x))) &lt; 0f;</span><br><span class="line">        if (flag !&#x3D; flag2)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        bool flag3 &#x3D; (((point.x - this.V0.x) * (this.V2.y - this.V0.y)) - ((point.y - this.V0.y) * (this.V2.x - this.V0.x))) &lt; 0f;</span><br><span class="line">        return (flag2 &#x3D;&#x3D; flag3);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; 当已经知道 三个顶点的顺序是逆时针方向的时候使用</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;point&quot;&gt;&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;&lt;&#x2F;returns&gt;</span><br><span class="line">    public bool ContainsCCW(Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        if ((((point.x - this.V0.x) * (this.V1.y - this.V0.y)) - ((point.y - this.V0.y) * (this.V1.x - this.V0.x))) &gt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if ((((point.x - this.V1.x) * (this.V2.y - this.V1.y)) - ((point.y - this.V1.y) * (this.V2.x - this.V1.x))) &gt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if ((((point.x - this.V2.x) * (this.V0.y - this.V2.y)) - ((point.y - this.V2.y) * (this.V0.x - this.V2.x))) &gt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; 当已经知道 三个顶点的顺序是顺时针方向的时候使用</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;point&quot;&gt;&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;&lt;&#x2F;returns&gt;</span><br><span class="line">    public bool ContainsCW(Vector2 point)</span><br><span class="line">    &#123;</span><br><span class="line">        if ((((point.x - this.V0.x) * (this.V1.y - this.V0.y)) - ((point.y - this.V0.y) * (this.V1.x - this.V0.x))) &lt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if ((((point.x - this.V1.x) * (this.V2.y - this.V1.y)) - ((point.y - this.V1.y) * (this.V2.x - this.V1.x))) &lt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if ((((point.x - this.V2.x) * (this.V0.y - this.V2.y)) - ((point.y - this.V2.y) * (this.V0.x - this.V2.x))) &lt; 0f)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class TriangleTest : MonoBehaviour &#123;</span><br><span class="line">    public Transform Point;</span><br><span class="line">    public Transform V0, V1, V2;</span><br><span class="line">    Triangle triangle;</span><br><span class="line">    private void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if (Input.GetKeyDown(KeyCode.Q))</span><br><span class="line">        &#123;</span><br><span class="line">            triangle &#x3D; Triangle.CreateTriangle2(V0, V1, V2);</span><br><span class="line">            Triangle.Orientations orientation &#x3D; triangle.CalcOrientation();</span><br><span class="line"> </span><br><span class="line">            bool cont &#x3D; false;</span><br><span class="line">            if (orientation &#x3D;&#x3D; Triangle.Orientations.CCW)</span><br><span class="line">            &#123;</span><br><span class="line">                 cont &#x3D; triangle.Contains(Point.position);</span><br><span class="line">                 &#x2F;&#x2F;cont1 &#x3D; triangle.ContainsCCW(Point.position); &#x2F;&#x2F; 如果你知道三角形方向(顶点顺序方向)，就用这个</span><br><span class="line">            &#125;</span><br><span class="line">            else if (orientation &#x3D;&#x3D; Triangle.Orientations.CW)</span><br><span class="line">            &#123;</span><br><span class="line">                 cont &#x3D; triangle.Contains(Point.position);</span><br><span class="line">                 &#x2F;&#x2F;cont1 &#x3D; triangle.ContainsCW(Point.position); &#x2F;&#x2F; 如果你知道三角形方向(顶点顺序方向)，就用这个</span><br><span class="line">            &#125;</span><br><span class="line">            else &#x2F;&#x2F; Degenerate</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.LogError(&quot;Triangle is degenerate&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (cont)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(&quot;目标点不在矩形范围内&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private void OnDrawGizmos()</span><br><span class="line">    &#123;</span><br><span class="line">        if (triangle!&#x3D;null)</span><br><span class="line">        &#123;</span><br><span class="line">            DrawTriangle( triangle);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    void DrawTriangle( Triangle triangle)</span><br><span class="line">    &#123;</span><br><span class="line">        Gizmos.color &#x3D; Color.blue;</span><br><span class="line">        Gizmos.DrawLine(triangle.V0, triangle.V1);</span><br><span class="line">        Gizmos.DrawLine(triangle.V1, triangle.V2);</span><br><span class="line">        Gizmos.DrawLine(triangle.V2, triangle.V0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>其实这些小算法基本上用的全是向量的计算,向量的计算有两种</p>
-<h3 id="向量的点乘"><a href="#向量的点乘" class="headerlink" title="向量的点乘"></a>向量的点乘</h3><p>–&gt;A . B = |A| * |B| * cos θ<br>–&gt;点乘应用</p>
-<ol>
-<li>如果 让 A 等于单位向量 |A| ==1 c点积 等于 B 在 A 上的投影</li>
-<li>如果 让 A B等于单位向量 arccos(a.b) == 夹角</li>
-</ol>
-<h3 id="向量的叉乘"><a href="#向量的叉乘" class="headerlink" title="向量的叉乘"></a>向量的叉乘</h3><p>–&gt;A* B = C C就是A和B的法向量<br>–&gt;叉乘应用</p>
-<ol>
-<li>c 是有方向 。 通过 左手 定则 可以知道 C 的方向</li>
-<li>所以叉乘一般是用来计算方向的</li>
-<li>A 和 B 都是单位向量 arcsin(|A*B|) 等于 夹角</li>
-</ol>
-<h1 id="凸多边形碰撞-分离轴定理算法"><a href="#凸多边形碰撞-分离轴定理算法" class="headerlink" title="凸多边形碰撞(分离轴定理算法)"></a>凸多边形碰撞(分离轴定理算法)</h1><p><strong><em>正文如下：\</em></strong></p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170204235932265.jpg" alt="多边形碰撞"></p>
-<p>分离轴定理（英文简称SAT）是一项用于检测凸多边形碰撞的技术。</p>
-<p>我绝不是这个方面的专家，但当检测碰撞的需求出现在我面前之后，我做了大量的阅读并最终在ActionScript 3中实现了它。</p>
-<p>我想，我应该把我所学到的分享给大家，希望大家不会在这方面被坑得很惨：）</p>
-<p>当我发现我需要在flash中检测多边形碰撞时，我碰巧地遇到了一个叫“分离轴定理”的方法。但唯一的问题是，为了真正地掌握它，我可费了不少功夫。</p>
-<p>在阅读了大量有关碰撞检测的资料，并参看了一些代码示例后，这个方法总算被我领悟了。</p>
-<p>为了帮助其他那些不精通数学的开发者，我想我应该写下这一篇能快速阐明这个算法工作原理的简短介绍。我还在下文引入了一个使用分离轴定理实现的demo，以及供大家下载并使用的ActionScript 3源代码。<strong>（译者：demo和源代码请到原文中查看和下载）</strong></p>
-<p>注意：分离轴定理需要一点数学向量的知识，所以在深究这个算法前，你最好复习一下这方面的内容。</p>
-<h1 id="算法简述"><a href="#算法简述" class="headerlink" title="算法简述"></a>算法简述</h1><p>从根本上来讲，分离轴定理（以及其他碰撞算法）的用途就是去检测并判断两个图形之间是否有间隙。分离轴定理中用到的方法使算法本身显得十分独特。</p>
-<p>我所听到过分离轴定理的最好类比方式是这样的：</p>
-<p>假想你拿一个电筒从不同的角度照射到两个图形上，那么会有怎样的一系列的阴影投射到它们之后的墙壁上呢？</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205000242395.jpg" alt="投影问题"></p>
-<p>如果你用这个方式从每一个角度上对这两个图形进行处理，并都找不到任何的间隙，那么这两个图形就一定接触。如果你找到了一个间隙，那么这两个图形就显而易见地没有接触。</p>
-<p>从编程的角度来讲，从每个可能的角度上去检测会使处理变得十分密集。不过幸运的是，由于多边形的性质，你只需要检测其中几个关键的角度。</p>
-<p>你需要检测的角度数量就正是这个多边形的边数。也就是说，你所需检测的角度最大数量就是你要检测碰撞的两个多边形边数之和。举个例子，两个五边形就需要检测10个角度。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205000357272.jpg" alt="角度选取"></p>
-<h1 id="如何在代码中实现"><a href="#如何在代码中实现" class="headerlink" title="如何在代码中实现"></a>如何在代码中实现</h1><p>这是一个简易但比较啰嗦的方法，以下是基本的步骤：</p>
-<p><strong>步骤一：</strong>从需要检测的多边形中取出一条边，并找出它的法向量（垂直于它的向量），这个向量将会是我们的一个“投影轴”。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205000919294.jpg" alt="步骤一图解"></p>
-<p><strong>步骤二：</strong>循环获取第一个多边形的每个点，并将它们投影到这个轴上。（记录这个多边形投影到轴上的最高和最低点）</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205001546835.jpg" alt="步骤二图解"></p>
-<p><strong>步骤三：</strong>对第二个多边形做同样的处理。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205001940563.jpg" alt="步骤三图解"></p>
-<p><strong>步骤四：</strong>分别得到这两个多边形的投影，并检测这两段投影是否重叠。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205002051627.jpg" alt="步骤四图解"></p>
-<p>如果你发现了这两个投影到轴上的“阴影”有间隙，那么这两个图形一定没有相交。但如果没有间隙，那么它们则可能接触，你需要继续检测直到把两个多边形的每条边都检测完。如果你检测完每条边后，都没有发现任何间隙，那么它们是相互碰撞的。</p>
-<p>这个算法基本就是如此的。</p>
-<p>顺带提一下，如果你记录了哪个轴上的投影重叠值最小（以及重叠了多少），那么你就能用这个值来分开这两个图形。</p>
-<h2 id="那么如何处理圆呢？"><a href="#那么如何处理圆呢？" class="headerlink" title="那么如何处理圆呢？"></a>那么如何处理圆呢？</h2><p>在分离轴定理中，检测圆与检测多边形相比，会有点点奇异，但仍然是可以实现的。</p>
-<p>最值得注意的是，圆是没有任何的边，所以是没有明显的用于投影的轴。但它有一条“不是很明显的”的投影轴。这条轴就是途经圆心和多边形上离圆心最近的顶点的直线。</p>
-<p><img src="../../assets/images/2020-01-13-unity-attack-detection/20170205002152799.jpg" alt="圆的投影轴"></p>
-<p>在这以后就是按套路遍历另一个多边形的每条投影轴，并检测是否有投影重叠。</p>
-<p>噢，对了，万一你想知道如何把圆投影到轴上，那你只用简单地把圆心投影上去，然后加上和减去半径就能得到投影长度了。</p>
-<h1 id="优点与不足"><a href="#优点与不足" class="headerlink" title="优点与不足"></a>优点与不足</h1><p>和其他的碰撞检测技术一样，分离轴定理算法有它自己的优点和不足。以下是其一些优点和不足的简要概述：</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>（译者：原来老外也喜欢先谈优点啊～&gt;～）</p>
-<ul>
-<li>分离轴定理算法十分得快——它完美地使用了基本的数学向量知识。只要间隙一旦被检测出来，那么你就能马上得出结果，消除不必要的运算。</li>
-<li>分离轴定理算法十分得准——至少据我所知是这样的。（译者：突然感觉作者好不靠谱啊，囧……）</li>
-</ul>
-<h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><ul>
-<li>分离轴定理算法只适用于凸多边形——复杂的图形（译者：指的是凹多边形，比如五角星）无法使用此方法，除非你把它们分成一些小的凸多边形，然后依次检验这些小的多边形。</li>
-<li>分离轴定理算法无法告诉你是那条边发生的碰撞——仅仅是告诉你重叠了多少和分开它们所需的最短距离。</li>
-</ul>
-<p>可能这个算法会有更多优点和不足之处，但是我想这应该是最主要的几个了。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我希望这篇文章能帮助你了解到分离轴定理算法。我已经尽可能地不提供过多的信息并讲解得十分简明了。（我绝不是数学方面的专家，所以如果我遗漏了什么，我深表歉意）</p>
-<p>以下是一些帮助我理解分离轴定理算法的页面：</p>
-<ul>
-<li><a href="http://www.harveycartel.org/metanet/tutorials/tutorialA.html" target="_blank" rel="noopener">harverycartel.org</a>——有更多详细的表述以及很多很酷的示例。我在这个页面上学到了很多。</li>
-<li><a href="http://gpwiki.org/index.php/VB:Tutorials:Building_A_Physics_Engine:Basic_Intersection_Detection" target="_blank" rel="noopener">GPWiki.org</a>——有不错的讲解和代码示例，我用这些代码作为编写自己代码的基础。</li>
-<li><a href="http://www.tonypa.pri.ee/vectors/index.html" target="_blank" rel="noopener">Tony Pa</a>——向量教程，学习向量的不错资源。</li>
-<li><a href="http://www.gamedev.net/community/forums/topic.asp?topic_id=251638" target="_blank" rel="noopener">GameDev.net forum</a>——一个论坛成员写的分离轴定理碰撞检测系统，带给了我一些计算方面的想法。</li>
-</ul>
-<p><strong>本文翻译自<a href="http://www.sevenson.com.au/" target="_blank" rel="noopener">@sevenson</a>的文章<a href="http://www.sevenson.com.au/actionscript/sat/" target="_blank" rel="noopener">Separating Axis Theorem (SAT) Explanation</a> 。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class XRect&#123;</span><br><span class="line">    private Vector2 _point0 &#x3D; new Vector2();</span><br><span class="line">    private Vector2 _point1 &#x3D; new Vector2();</span><br><span class="line">    private Vector2 _point2 &#x3D; new Vector2();</span><br><span class="line">    private Vector2 _point3 &#x3D; new Vector2();</span><br><span class="line"></span><br><span class="line">    public List&lt;Vector2&gt; _pointList &#x3D; new List&lt;Vector2&gt;();</span><br><span class="line"></span><br><span class="line">    private float _min &#x3D; 0;</span><br><span class="line">    private float _max &#x3D; 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void UpdatePoint(RectTransform RT)</span><br><span class="line">    &#123;</span><br><span class="line">        float x &#x3D; RT.localPosition.x;</span><br><span class="line">        float y &#x3D; RT.localPosition.y;</span><br><span class="line">        float width &#x3D; RT.sizeDelta.x;</span><br><span class="line">        float height &#x3D; RT.sizeDelta.y;</span><br><span class="line">        float angle &#x3D; RT.localRotation.eulerAngles.z;</span><br><span class="line"></span><br><span class="line">        Vector2 centerV &#x3D; new Vector2(RT.localPosition.x, RT.localPosition.y);</span><br><span class="line"></span><br><span class="line">        _point0 &#x3D; new Vector2(x - width &#x2F; 2, y + height &#x2F; 2);</span><br><span class="line">        _point0 &#x3D; _Transform(_point0,angle,centerV);</span><br><span class="line"></span><br><span class="line">        _point1 &#x3D; new Vector2(x + width &#x2F; 2, y + height &#x2F; 2);</span><br><span class="line">        _point1 &#x3D; _Transform(_point1, angle, centerV);</span><br><span class="line"></span><br><span class="line">        _point2 &#x3D; new Vector2(x + width &#x2F; 2, y - height &#x2F; 2);</span><br><span class="line">        _point2 &#x3D; _Transform(_point2, angle, centerV);</span><br><span class="line"></span><br><span class="line">        _point3 &#x3D; new Vector2(x - width &#x2F; 2, y - height &#x2F; 2);</span><br><span class="line">        _point3 &#x3D; _Transform(_point3, angle, centerV);</span><br><span class="line"></span><br><span class="line">        _pointList.Clear();</span><br><span class="line">        _pointList.Add(_point0);</span><br><span class="line">        _pointList.Add(_point1);</span><br><span class="line">        _pointList.Add(_point2);</span><br><span class="line">        _pointList.Add(_point3);</span><br><span class="line"></span><br><span class="line">        Vector3[] temp &#x3D; new Vector3[4];</span><br><span class="line">        RT.GetLocalCorners(temp);</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取投影轴</span><br><span class="line">    public Vector2 GetAxis(int index)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 v &#x3D; _GetEdge(index);</span><br><span class="line"></span><br><span class="line">        Vector2 result &#x3D; new Vector2();</span><br><span class="line"></span><br><span class="line">        result.x &#x3D; v.y;</span><br><span class="line">        result.y &#x3D; 0 - v.x;</span><br><span class="line"></span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void ResetProjection(Vector2 axis)</span><br><span class="line">    &#123;</span><br><span class="line">        if (axis.x &#x3D;&#x3D; 0 &amp;&amp; axis.y &#x3D;&#x3D; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.LogError(&quot;投影轴数据错误！&quot;);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        float projectionX;</span><br><span class="line">        Vector2 v;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; _pointList.Count; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            v &#x3D; _pointList[i];</span><br><span class="line">            if (axis.x &#x3D;&#x3D; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                projectionX &#x3D; v.y;</span><br><span class="line">            &#125;</span><br><span class="line">            else if (axis.y &#x3D;&#x3D; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                projectionX &#x3D; v.x;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                projectionX &#x3D; (v.x - axis.x &#x2F; axis.y * v.y) &#x2F; (1 + Mathf.Pow(axis.x &#x2F; axis.y, 2));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            if (i &#x3D;&#x3D; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                _min &#x3D; projectionX;</span><br><span class="line">                _max &#x3D; projectionX;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                if (projectionX &gt; _max)</span><br><span class="line">                &#123;</span><br><span class="line">                    _max &#x3D; projectionX;</span><br><span class="line">                &#125;</span><br><span class="line">                if (projectionX &lt; _min)</span><br><span class="line">                &#123;</span><br><span class="line">                    _min &#x3D; projectionX;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public float GetMin()</span><br><span class="line">    &#123;</span><br><span class="line">        return _min;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public float GetMax()</span><br><span class="line">    &#123;</span><br><span class="line">        return _max;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取边向量</span><br><span class="line">    private Vector2 _GetEdge(int index)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 result &#x3D; new Vector2();</span><br><span class="line">        switch (index)</span><br><span class="line">        &#123;</span><br><span class="line">            case 0:</span><br><span class="line">                result &#x3D; _point1 - _point0;</span><br><span class="line">                break;</span><br><span class="line">            case 1:</span><br><span class="line">                result &#x3D; _point2 - _point1;</span><br><span class="line">                break;</span><br><span class="line">            case 2:</span><br><span class="line">                result &#x3D; _point3 - _point2;</span><br><span class="line">                break;</span><br><span class="line">            case 3:</span><br><span class="line">                result &#x3D; _point0 - _point3;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Vector2 _Transform(Vector2 v,float angle,Vector2 centerV)</span><br><span class="line">    &#123;</span><br><span class="line">        Vector2 result &#x3D; new Vector2();</span><br><span class="line"></span><br><span class="line">        float initX &#x3D; v.x;</span><br><span class="line">        float initY &#x3D; v.y;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;将顶点移动到原点四周</span><br><span class="line">        float centerPointX &#x3D; initX - centerV.x;</span><br><span class="line">        float centerPointY &#x3D; initY - centerV.y;</span><br><span class="line"></span><br><span class="line">        float r &#x3D; angle * Mathf.Deg2Rad;</span><br><span class="line"></span><br><span class="line">        float a &#x3D; Mathf.Cos(r);</span><br><span class="line">        float b &#x3D; Mathf.Sin(r);</span><br><span class="line"></span><br><span class="line">        result.x &#x3D; centerPointX * a + centerPointY * (-b) + centerV.x;</span><br><span class="line">        result.y &#x3D; centerPointX * b + centerPointY * a + centerV.y;</span><br><span class="line"></span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class XCollisionHelper &#123;</span><br><span class="line"></span><br><span class="line">    private static XCollisionHelper _instance;</span><br><span class="line"></span><br><span class="line">    public static XCollisionHelper GetInstance()</span><br><span class="line">    &#123;</span><br><span class="line">        if (_instance  &#x3D;&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            _instance &#x3D; new XCollisionHelper();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return _instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public bool Check(XRect xRect1,XRect xRect2)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt;4;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            Vector2 axis &#x3D; xRect1.GetAxis(i);</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F;获取两个矩形在投影轴上的范围</span><br><span class="line">            xRect1.ResetProjection(axis);</span><br><span class="line">            xRect2.ResetProjection(axis);</span><br><span class="line"></span><br><span class="line">            if (xRect1.GetMin() &gt; xRect2.GetMax() || xRect1.GetMax() &lt; xRect2.GetMin())</span><br><span class="line">            &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 0; i &lt; 4; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            Vector2 axis &#x3D; xRect2.GetAxis(i);</span><br><span class="line"></span><br><span class="line">            xRect1.ResetProjection(axis);</span><br><span class="line">            xRect2.ResetProjection(axis);</span><br><span class="line"></span><br><span class="line">            if (xRect1.GetMin() &gt; xRect2.GetMax() || xRect1.GetMax() &lt; xRect2.GetMin())</span><br><span class="line">            &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">﻿using System;</span><br><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.EventSystems;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line"></span><br><span class="line">public class XRectItemCtrl : MonoBehaviour, IDragHandler</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    public Image imgRect;</span><br><span class="line">    private XRect _xRect &#x3D; new XRect();</span><br><span class="line"></span><br><span class="line">    public XRect GetXRect()</span><br><span class="line">    &#123;</span><br><span class="line">        RectTransform RT &#x3D; transform.GetComponent&lt;RectTransform&gt;();</span><br><span class="line">        _xRect.UpdatePoint(RT);</span><br><span class="line"></span><br><span class="line">        if (transform.gameObject.name &#x3D;&#x3D; &quot;Image0&quot;)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return _xRect;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void OnDrag(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        RectTransform RT &#x3D; transform.GetComponent&lt;RectTransform&gt;();</span><br><span class="line">        RT.localPosition &#x3D; new Vector2(RT.localPosition.x + eventData.delta.x, RT.localPosition.y + eventData.delta.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="其他的一些参考"><a href="#其他的一些参考" class="headerlink" title="其他的一些参考"></a>其他的一些参考</h1><ul>
-<li><a href="https://github.com/irixapps/Unity-Line-Triangle-Collision" target="_blank" rel="noopener"></a></li>
-<li><a href="https://github.com/dmanning23/CollisionBuddy" target="_blank" rel="noopener"></a></li>
-<li><a href="https://github.com/dotnet-ad/Humper" target="_blank" rel="noopener"></a></li>
-<li><a href="https://github.com/xiaolangfensi/Collision" target="_blank" rel="noopener"></a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-01-13-unity-attack-detection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -876,7 +634,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -901,45 +659,14 @@
       
           <p>CentOS 7 开始默认使用<a href="https://en.wikipedia.org/wiki/Systemd" target="_blank" rel="noopener">Systemd</a>作为开启启动脚本的管理工具，<a href="https://github.com/shadowsocks/" target="_blank" rel="noopener">Shadowsocks</a>则是当前比较受欢迎的科学上网工具，本文将介绍如何在 CentOS 下安装和配置 Shadowsocks 服务。</p>
 <h2 id="安装-pip"><a href="#安装-pip" class="headerlink" title="安装 pip"></a>安装 pip</h2><p><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">pip</a>是 python 的包管理工具。在本文中将使用 python 版本的 shadowsocks，此版本的 shadowsocks 已发布到 pip 上，因此我们需要通过 pip 命令来安装。</p>
-<p>在控制台执行以下命令安装 pip：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">"https://bootstrap.pypa.io/get-pip.py"</span> -o <span class="string">"get-pip.py"</span></span><br><span class="line">python3 get-pip.py</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装配置-shadowsocks"><a href="#安装配置-shadowsocks" class="headerlink" title="安装配置 shadowsocks"></a>安装配置 shadowsocks</h2><p>在控制台执行以下命令安装 shadowsocks：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后，需要创建配置文件<code>/etc/shadowsocks.json</code>，内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="number">8388</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"uzon57jd0v869t7w"</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<ul>
-<li><code>method</code>为加密方法，可选<code>aes-128-cfb, aes-192-cfb, aes-256-cfb, bf-cfb, cast5-cfb, des-cfb, rc4-md5, chacha20, salsa20, rc4, table</code></li>
-<li><code>server_port</code>为服务监听端口</li>
-<li><code>password</code>为密码，可使用<a href="http://ucdok.com/project/generate_password.html" target="_blank" rel="noopener">密码生成工具</a>生成一个随机密码</li>
-</ul>
-<p>以上三项信息在配置 shadowsocks 客户端时需要配置一致，具体说明可查看 shadowsocks 的帮助文档。</p>
-<h2 id="配置自启动"><a href="#配置自启动" class="headerlink" title="配置自启动"></a>配置自启动</h2><p>新建启动脚本文件<code>/etc/systemd/system/shadowsocks.service</code>，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Shadowsocks</span><br><span class="line">After&#x3D;network.target auditd.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">TimeoutStartSec&#x3D;0</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;ssserver -c &#x2F;etc&#x2F;shadowsocks.json --pid-file &#x2F;var&#x2F;run&#x2F;shadowsocks.pid -d start</span><br><span class="line">ExecStop&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;ssserver -c &#x2F;etc&#x2F;shadowsocks.json  --pid-file &#x2F;var&#x2F;run&#x2F;shadowsocks.pid -d stop</span><br><span class="line">PIDFile&#x3D;&#x2F;var&#x2F;run&#x2F;shadowsocks.pid</span><br><span class="line">Restart&#x3D;always</span><br><span class="line">RestartSec&#x3D;4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
-
-<p>执行以下命令启动 shadowsocks 服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> shadowsocks</span><br><span class="line">systemctl start shadowsocks</span><br></pre></td></tr></table></figure>
-
-<p>为了检查 shadowsocks 服务是否已成功启动，可以执行以下命令查看服务的状态：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status shadowsocks -l</span><br></pre></td></tr></table></figure>
-
-<p>如果服务启动成功，则控制台显示的信息可能类似这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">● shadowsocks.service - Shadowsocks</span><br><span class="line">   Loaded: loaded (&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;shadowsocks.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Mon 2015-12-21 23:51:48 CST; 11min ago</span><br><span class="line"> Main PID: 19334 (ssserver)</span><br><span class="line">   CGroup: &#x2F;system.slice&#x2F;shadowsocks.service</span><br><span class="line">           └─19334 &#x2F;usr&#x2F;bin&#x2F;python &#x2F;usr&#x2F;bin&#x2F;ssserver -c &#x2F;etc&#x2F;shadowsocks.json</span><br><span class="line"></span><br><span class="line">Dec 21 23:51:48 morning.work systemd[1]: Started Shadowsocks.</span><br><span class="line">Dec 21 23:51:48 morning.work systemd[1]: Starting Shadowsocks...</span><br><span class="line">Dec 21 23:51:48 morning.work ssserver[19334]: INFO: loading config from &#x2F;etc&#x2F;shadowsocks.json</span><br><span class="line">Dec 21 23:51:48 morning.work ssserver[19334]: 2015-12-21 23:51:48 INFO     loading libcrypto from libcrypto.so.10</span><br><span class="line">Dec 21 23:51:48 morning.work ssserver[19334]: 2015-12-21 23:51:48 INFO     starting server at 0.0.0.0:8388</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: &#x2F;lib64&#x2F;libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup</span><br></pre></td></tr></table></figure>
-
-<p>以前在openssl，有<code>EVP_CIPHER_CTX_cleanup</code>函数.1.1.0版本中替换成为<code>EVP_CIPHER_CTX_reset</code></p>
-<p>解决办法：找到报错的文件(注意:根据你的python版本修改,看报错信息中使用的openssl文件)</p>
-<p><code>vim /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py</code></p>
-<p>全文搜索cleanup将所有<code>EVP_CIPHER_CTX_cleanup</code>替换成为<code>EVP_CIPHER_CTX_reset</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:%s&#x2F;cleanup&#x2F;reset&#x2F;</span><br><span class="line"></span><br><span class="line">:x</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-01-12-centosn-ss-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -989,7 +716,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1015,288 +742,14 @@
           <p>“碰乜鬼嘢啊，碰走晒我滴靓牌”。想到“碰”就自然联想到了“麻将”这一伟大发明。当然除了“碰”，洗牌的时候也充满了各种『碰撞』。</p>
 <p>好了，不废话。直入主题——碰撞检测。</p>
 <p>在 2D 环境下，常见的碰撞检测方法如下：</p>
-<ul>
-<li>外接图形判别法<ul>
-<li>轴对称包围盒（Axis-Aligned Bounding Box），即无旋转矩形。</li>
-<li>圆形碰撞</li>
-<li>圆形与矩形（无旋转）</li>
-<li>圆形与旋转矩形（以矩形中心点为旋转轴）</li>
-</ul>
-</li>
-<li>光线投射法</li>
-<li>分离轴定理</li>
-<li>其他<ul>
-<li>地图格子划分</li>
-<li>像素检测</li>
-</ul>
-</li>
-</ul>
-<p>下文将由易到难的顺序介绍上述各种碰撞检测方法：外接图形判别法 &gt; 其他 &gt; 光线投射法 &gt; 分离轴定理。</p>
-<p>另外，有一些场景只要我们约定好限定条件，也能实现我们想要的碰撞，如下面的碰壁反弹：</p>
-<iframe name="cp_embed_1" src="https://codepen.io/JChehe/embed/WRLLYX?height=270&amp;theme-id=0&amp;slug-hash=WRLLYX&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=Boundary%20collision%20detection&amp;name=cp_embed_1" scrolling="no" frameborder="0" height="270" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="Boundary collision detection" class="cp_embed_iframe " id="cp_embed_WRLLYX" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>当球碰到边框就反弹(如<code>x/y轴方向速度取反</code>)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(ball.left &lt; 0 || ball.right  &gt; rect.width)  ball.velocityX &#x3D; -ball.velocityX</span><br><span class="line">if(ball.top  &lt; 0 || ball.bottom &gt; rect.height) ball.velocityY &#x3D; -ball.velocityY</span><br></pre></td></tr></table></figure>
-
-<p>再例如当一个人走到 <code>100px</code> 位置时不进行跳跃，就会碰到石头等等。</p>
-<p>因此，某些场景只需通过设定到适当的参数即可实现碰撞检测。</p>
-<h2 id="外接图形判别法"><a href="#外接图形判别法" class="headerlink" title="外接图形判别法"></a>外接图形判别法</h2><h3 id="轴对称包围盒（Axis-Aligned-Bounding-Box）"><a href="#轴对称包围盒（Axis-Aligned-Bounding-Box）" class="headerlink" title="轴对称包围盒（Axis-Aligned Bounding Box）"></a>轴对称包围盒（Axis-Aligned Bounding Box）</h3><p>概念：判断任意两个（无旋转）矩形的任意一边是否无间距，从而判断是否碰撞。</p>
-<p>算法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rect1.x &lt; rect2.x + rect2.width &amp;&amp;</span><br><span class="line">rect1.x + rect1.width &gt; rect2.x &amp;&amp;</span><br><span class="line">rect1.y &lt; rect2.y + rect2.height &amp;&amp;</span><br><span class="line">rect1.height + rect1.y &gt; rect2.y</span><br></pre></td></tr></table></figure>
-
-<p>两矩形间碰撞的各种情况：<br><img src="../../assets/images/2020-01-12-Collision-detection/rectangle_collision.png" alt="轴对称包围盒"></p>
-<p>在线运行示例（先点击运行示例以获取焦点，下同）：</p>
-<iframe name="cp_embed_2" src="https://codepen.io/JChehe/embed/rjoZdZ?height=215&amp;theme-id=0&amp;slug-hash=rjoZdZ&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=AxisAlignedBoundingBox%20collision%20detection&amp;name=cp_embed_2" scrolling="no" frameborder="0" height="215" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="AxisAlignedBoundingBox collision detection" class="cp_embed_iframe " id="cp_embed_rjoZdZ" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>缺点：</p>
-<ul>
-<li>相对局限：两物体必须是矩形，且均不允许旋转（即关于水平和垂直方向上对称）。</li>
-<li>对于包含着图案（非填满整个矩形）的矩形进行碰撞检测，可能存在精度不足的问题。</li>
-<li>物体运动速度过快时，可能会在相邻两动画帧之间快速穿越，导致忽略了本应碰撞的事件发生。</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>（类）矩形物体间的碰撞。</li>
-</ul>
-<h3 id="圆形碰撞（Circle-Collision）"><a href="#圆形碰撞（Circle-Collision）" class="headerlink" title="圆形碰撞（Circle Collision）"></a>圆形碰撞（Circle Collision）</h3><p>概念：通过判断任意两个圆形的圆心距离是否小于两圆半径之和，若小于则为碰撞。</p>
-<p>两点之间的距离由以下公式可得：<br><img src="../../assets/images/2020-01-12-Collision-detection/two_point_distance.png" alt="两点之间距离"></p>
-<p>判断两圆心距离是否小于两半径之和：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Math.sqrt(Math.pow(circleA.x - circleB.x, 2) +</span><br><span class="line">          Math.pow(circleA.y - circleB.y, 2)) </span><br><span class="line">    &lt; circleA.radius + circleB.radius</span><br></pre></td></tr></table></figure>
-
-<p>图例：<br><img src="../../assets/images/2020-01-12-Collision-detection/circle_collision.png" alt="圆形间的碰撞检测"></p>
-<p>在线运行示例：</p>
-<iframe name="cp_embed_3" src="https://codepen.io/JChehe/embed/EZrorG?height=219&amp;theme-id=0&amp;slug-hash=EZrorG&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=EZrorG&amp;name=cp_embed_3" scrolling="no" frameborder="0" height="219" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="EZrorG" class="cp_embed_iframe " id="cp_embed_EZrorG" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>缺点：</p>
-<ul>
-<li>与『轴对称包围盒』类似</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>（类）圆形的物体，如各种球类碰撞。</li>
-</ul>
-<h3 id="圆形与矩形（无旋转）"><a href="#圆形与矩形（无旋转）" class="headerlink" title="圆形与矩形（无旋转）"></a>圆形与矩形（无旋转）</h3><p>概念：通过找出矩形上离圆心最近的点，然后通过判断该点与圆心的距离是否小于圆的半径，若小于则为碰撞。</p>
-<p>那如何找出矩形上离圆心最近的点呢？下面我们从 x 轴、y 轴两个方向分别进行寻找。为了方便描述，我们先约定以下变量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">矩形上离圆心最近的点为变量：closestPoint &#x3D; &#123;x, y&#125;;</span><br><span class="line">矩形 rect &#x3D; &#123;x, y, w, h&#125;; &#x2F;&#x2F; 左上角与宽高</span><br><span class="line">圆形 circle &#x3D; &#123;x, y, r&#125;; &#x2F;&#x2F; 圆心与半径</span><br></pre></td></tr></table></figure>
-
-<p>首先是 x 轴：</p>
-<p>如果圆心在矩形的左侧（<code>if(circle.x &lt; rect.x)</code>），那么 <code>closestPoint.x = rect.x</code>。<br><img src="../../assets/images/2020-01-12-Collision-detection/cicle_rectangle_left.png" alt="圆心在矩形的左侧"></p>
-<p>如果圆心在矩形的右侧（<code>else if(circle.x &gt; rect.x + rect.w)</code>），那么 <code>closestPoint.x = rect.x + rect.w</code>。<br><img src="../../assets/images/2020-01-12-Collision-detection/circle_rectangle_right.png" alt="圆心在矩形的右侧"></p>
-<p>如果圆心在矩形的正上下方（<code>else</code>），那么 <code>closestPoint.x = circle.x</code>。<br><img src="../../assets/images/2020-01-12-Collision-detection/circle_rectangle_center.png" alt="圆心在矩形的正上下方"></p>
-<p>同理，对于 y 轴（此处不列举图例）：</p>
-<p>如果圆心在矩形的上方（<code>if(circle.y &lt; rect.y)</code>），那么 <code>closestPoint.y = rect.y</code>。</p>
-<p>如果圆心在矩形的下方（<code>else if(circle.y &gt; rect.y + rect.h)</code>），那么 <code>closestPoint.y = rect.y + rect.h</code>。</p>
-<p>如果圆心在矩形的正左右两侧（<code>else</code>），那么 <code>closestPoint.y = circle.y</code>。</p>
-<p>因此，通过上述方法即可找出矩形上离圆心最近的点了，然后通过『两点之间的距离公式』得出『最近点』与『圆心』的距离，最后将其与圆的半径相比，即可判断是否发生碰撞。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var distance &#x3D; Math.sqrt(Math.pow(closestPoint.x - circle.x, 2) + Math.pow(closestPoint.y - circle.y, 2))</span><br><span class="line"></span><br><span class="line">if(distance &lt; circle.r) return true &#x2F;&#x2F; 发生碰撞</span><br><span class="line">else return false &#x2F;&#x2F; 未发生碰撞</span><br></pre></td></tr></table></figure>
-
-<p>在线运行示例：</p>
-<iframe name="cp_embed_4" src="https://codepen.io/JChehe/embed/aWqpdo?height=277&amp;theme-id=0&amp;slug-hash=aWqpdo&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=Circle%20and%20Rectangle&amp;name=cp_embed_4" scrolling="no" frameborder="0" height="277" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="Circle and Rectangle" class="cp_embed_iframe " id="cp_embed_aWqpdo" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>缺点：</p>
-<ul>
-<li>矩形需是轴对称的，即不能旋转。</li>
-</ul>
-<h3 id="圆形与旋转矩形（以矩形中心为旋转轴）"><a href="#圆形与旋转矩形（以矩形中心为旋转轴）" class="headerlink" title="圆形与旋转矩形（以矩形中心为旋转轴）"></a>圆形与旋转矩形（以矩形中心为旋转轴）</h3><p>概念：即使矩形以其中心为旋转轴进行了旋转，但是判断它与圆形是否发生碰撞的本质还是找出矩形上离圆心的最近点。</p>
-<p>对于旋转后的矩形，要找出其离圆心最近的点，视乎有些困难。其实，我们可以将我们思想的范围进行扩大：将矩形的旋转看作是整个画布的旋转。那么我们将画布（即 Canvas）反向旋转『矩形旋转的角度』后，所看到的结果就是上一个方法“圆形与矩形（无旋转）”的情形。因此，我们只需求出画布旋转后的圆心位置，即可使用『圆形与矩形（无旋转）』的判断方法了。</p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/circle_and_rotated_rect.png" alt="绕矩形中心旋转后的画布"></p>
-<p>先给出可直接套用的公式，从而得出旋转后的圆心坐标：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x’ &#x3D; cos(β) * (cx – centerX) – sin(β) * (cy – centerY) + centerX</span><br><span class="line">y’ &#x3D; sin(β) * (cx – centerX) + cos(β) * (cy – centerY) + centerY</span><br></pre></td></tr></table></figure>
-
-
-
-<p>下面给出该公式的推导过程：</p>
-<p>根据下图，计算某个点绕另外一个点旋转一定角度后的坐标。我们设 A(x,y) 绕 B(a,b) 旋转 β 度后的位置为 C(c,d)。</p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/circle_and_rotated_rect_formula.png" alt="某个点绕另外一个点旋转一定角度后的坐标的公式推导"></p>
-<ol>
-<li>设 A 点旋转前的角度为 δ，则旋转（逆时针）到 C 点后的角度为(δ+β)</li>
-<li>由于 |AB| 与 |CB| 相等（即长度），且<ol>
-<li>|AB| = y/sin(δ) = x / cos(δ)</li>
-<li>|CB| = d/sin(δ + β) = c / cos(δ + β)</li>
-</ol>
-</li>
-<li>半径 r = x / cos(δ) = y / sin(δ) = d / sin(δ + β) = c / cos(δ + β)</li>
-<li>由以下三角函数两角和差公式：<ul>
-<li>sin(δ + β) = sin(δ)cos(β) + cos(δ)sin(β)</li>
-<li>cos(δ + β) = cos(δ)cos(β) - sin(δ)sin(β)</li>
-</ul>
-</li>
-<li>可得出旋转后的坐标：<ul>
-<li>c = r * cos(δ + β) = r * cos(δ)cos(β) - r * sin(δ)sin(β) = x * cos(β) - y * sin(β)</li>
-<li>d = r * sin(δ + β) = r * sin(δ)cos(β) + r * cos(δ)sin(β) = y * cos(β) + x * sin(β)</li>
-</ul>
-</li>
-</ol>
-<p>由上述公式推导后可得：旋转后的坐标 (c,d) 只与旋转前的坐标 (x,y) 及旋转的角度 β 有关。</p>
-<p>当然，(c,d) 是旋转一定角度后『相对于旋转点（轴）的坐标』。因此，前面提到的『可直接套用的公式』中加上了矩形的中心点的坐标值。</p>
-<p>从图中也可以得出以下结论：A 点旋转后的 C 点总是在圆周（半径为 |AB|）上运动，利用这点可让物体绕旋转点（轴）做圆周运动。</p>
-<p>得到旋转后的圆心坐标值后，即可使用『圆形与矩形（无旋转）』方法进行碰撞检测了。</p>
-<p>在线运行案例：</p>
-<iframe name="cp_embed_5" src="https://codepen.io/JChehe/embed/dWmYjO?height=313&amp;theme-id=0&amp;slug-hash=dWmYjO&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=Circle%20and%20Rotated%20Rectangle%20Collision%20Detection&amp;name=cp_embed_5" scrolling="no" frameborder="0" height="313" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="Circle and Rotated Rectangle Collision Detection" class="cp_embed_iframe " id="cp_embed_dWmYjO" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>优点：</p>
-<ul>
-<li>相对于圆形与矩形（未旋转）的方法，适用范围更广。</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="地图格子划分"><a href="#地图格子划分" class="headerlink" title="地图格子划分"></a>地图格子划分</h3><p>概念：将地图（场景）划分为一个个格子。地图中参与检测的对象都存储着自身所在格子的坐标，那么你即可以认为两个物体在相邻格子时为碰撞，又或者两个物体在同一格才为碰撞。另外，采用此方式的前提是：地图中所有可能参与碰撞的物体都要是格子单元的大小或者是其整数倍。</p>
-<p><code>蓝色X</code> 为障碍物：<br><img src="../../assets/images/2020-01-12-Collision-detection/map_cell_collision.png" alt="地图格子碰撞检测"></p>
-<p>实现方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 通过特定标识指定（非）可行区域</span><br><span class="line">map &#x3D; [</span><br><span class="line">  [0, 0, 1, 1, 1, 0, 0, 0, 0],</span><br><span class="line">  [0, 1, 1, 0, 0, 1, 0, 0, 0],</span><br><span class="line">  [0, 1, 0, 0, 0, 0, 1, 0, 0],</span><br><span class="line">  [0, 1, 0, 0, 0, 0, 1, 0, 0],</span><br><span class="line">  [0, 1, 1, 1, 1, 1, 1, 0, 0]</span><br><span class="line">],</span><br><span class="line">&#x2F;&#x2F; 设定角色的初始位置</span><br><span class="line">player &#x3D; &#123;left: 2, top: 2&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 移动前（后）判断角色的下一步的动作（如不能前行）</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>在线运行示例：</p>
-<iframe name="cp_embed_6" src="https://codepen.io/JChehe/embed/pRqqGV?height=268&amp;theme-id=0&amp;slug-hash=pRqqGV&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=map%20cell%20collision%20detection&amp;name=cp_embed_6" scrolling="no" frameborder="0" height="268" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="map cell collision detection" class="cp_embed_iframe " id="cp_embed_pRqqGV" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>缺点：</p>
-<ul>
-<li>适用场景局限。</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>推箱子、踩地雷等</li>
-</ul>
-<h3 id="像素检测"><a href="#像素检测" class="headerlink" title="像素检测"></a>像素检测</h3><p>概念：以像素级别检测物体之间是否存在重叠，从而判断是否碰撞。</p>
-<p>实现方法有多种，下面列举在 Canvas 中的两种实现方式：</p>
-<ol>
-<li>如下述的案例中，通过将两个物体在 offscreen canvas 中判断同一位置（坐标）下是否同时存在非透明的像素。</li>
-<li>利用 canvas 的 <code>globalCompositeOperation = &#39;destination-in&#39;</code> 属性。该属性会让两者的重叠部分会被保留，其余区域都变成透明。因此，若存在非透明像素，则为碰撞。</li>
-</ol>
-<p>注意，当待检测碰撞物体为两个时，第一种方法需要两个 offscreen canvas，而第二种只需一个。</p>
-<blockquote>
-<p>offscreen canvas：与之相关的是 offscreen rendering。正如其名，它会在某个地方进行渲染，但不是屏幕。“某个地方”其实是<strong>内存</strong>。渲染到内存比渲染到屏幕更快。—— <a href="http://devbutze.blogspot.com/2014/02/html5-canvas-offscreen-rendering.html" target="_blank" rel="noopener">Offscreen Rendering</a></p>
-</blockquote>
-<p>当然，我们这里并不是利用 <code>offscreen render</code> 的性能优势，而是利用 <code>offscreen canvas</code> 保存独立物体的像素。换句话说：<strong>onscreen canvas 只是起展示作用，碰撞检测是在 offscreen canvas 中进行</strong>。</p>
-<p>另外，由于需要逐像素检测，若对整个 Canvas 内所有像素都进行此操作，无疑会浪费很多资源。因此，我们可以先通过运算得到两者<strong>相交区域</strong>，然后只对该区域内的像素进行检测即可。</p>
-<p>图例：<br><img src="../../assets/images/2020-01-12-Collision-detection/pixel_collision.png" alt="像素检测"></p>
-<p>下面示例展示了第一种实现方式：</p>
-<iframe name="cp_embed_7" src="https://codepen.io/JChehe/embed/qRLLzB?height=307&amp;theme-id=0&amp;slug-hash=qRLLzB&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=pixel%20collision%20detection&amp;name=cp_embed_7" scrolling="no" frameborder="0" height="307" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="pixel collision detection" class="cp_embed_iframe " id="cp_embed_qRLLzB" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>缺点：</p>
-<ul>
-<li>因为需要检查每一像素来判定是否碰撞，性能要求比较高。</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>需要以像素级别检测物体是否碰撞。</li>
-</ul>
-<h2 id="光线投射法（Ray-Casting）"><a href="#光线投射法（Ray-Casting）" class="headerlink" title="光线投射法（Ray Casting）"></a>光线投射法（Ray Casting）</h2><p>概念：通过检测两个物体的速度矢量是否存在交点，且该交点满足一定条件。</p>
-<p>对于下述抛小球入桶的案例：画一条与物体的速度向量相重合的线(<code>#1</code>)，然后再从另一个待检测物体出发，连线到前一个物体，绘制第二条线(<code>#2</code>)，根据两条线的交点位置来判定是否发生碰撞。</p>
-<p>抛球进桶图例：<br><img src="../../assets/images/2020-01-12-Collision-detection/ray_casting_collision.png" alt="光线投射法"></p>
-<p>在小球飞行的过程中，需要不断计算两直线的交点。</p>
-<p>当满足以下两个条件时，那么应用程序就可以判定小球已落入桶中：</p>
-<ul>
-<li>两直线交点在桶口的左右边沿间</li>
-<li>小球位于第二条线（<code>#2</code>）下方</li>
-</ul>
-<p>在线运行示例：</p>
-<iframe name="cp_embed_8" src="https://codepen.io/JChehe/embed/ZLVwwE?height=517&amp;theme-id=0&amp;slug-hash=ZLVwwE&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=ray%20casting%20collision%20detection&amp;name=cp_embed_8" scrolling="no" frameborder="0" height="517" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="ray casting collision detection" class="cp_embed_iframe " id="cp_embed_ZLVwwE" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>优点：</p>
-<ul>
-<li>适合运动速度快的物体</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>适用范围相对局限。</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>抛球运动进桶。</li>
-</ul>
-<h2 id="分离轴定理（Separating-Axis-Theorem）"><a href="#分离轴定理（Separating-Axis-Theorem）" class="headerlink" title="分离轴定理（Separating Axis Theorem）"></a>分离轴定理（Separating Axis Theorem）</h2><p>概念：通过判断任意两个 <code>凸多边形</code> 在任意角度下的投影是否均存在重叠，来判断是否发生碰撞。若在某一角度光源下，两物体的投影存在间隙，则为不碰撞，否则为发生碰撞。</p>
-<p>图例：<br><img src="../../assets/images/2020-01-12-Collision-detection/sat_base.png" alt="分离轴定理"></p>
-<p>在程序中，遍历所有角度是不现实的。那如何确定 <code>投影轴</code> 呢？其实<strong>投影轴的数量与多边形的边数相等即可。</strong></p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/sat_projection_two.png" alt="https://misc.aotu.io/JChehe/2017-02-13-2d-collision-detection/sat_projection_two.png"></p>
-<p>以较高抽象层次判断两个凸多边形是否碰撞：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function polygonsCollide(polygon1, polygon2) &#123;</span><br><span class="line">    var axes, projection1, projection2</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 根据多边形获取所有投影轴</span><br><span class="line">    axes &#x3D; polygon1.getAxes()</span><br><span class="line">    axes.push(polygon2.getAxes())</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 遍历所有投影轴，获取多边形在每条投影轴上的投影</span><br><span class="line">    for(each axis in axes) &#123;</span><br><span class="line">        projection1 &#x3D; polygon1.project(axis)</span><br><span class="line">        projection2 &#x3D; polygon2.project(axis)</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 判断投影轴上的投影是否存在重叠，若检测到存在间隙则立刻退出判断，消除不必要的运算。</span><br><span class="line">        if(!projection1.overlaps(projection2))</span><br><span class="line">            return false</span><br><span class="line">    &#125;</span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码有几个需要解决的地方：</p>
-<ul>
-<li>如何确定多边形的各个投影轴</li>
-<li>如何将多边形投射到某条投影轴上</li>
-<li>如何检测两段投影是否发生重叠</li>
-</ul>
-<h4 id="投影轴"><a href="#投影轴" class="headerlink" title="投影轴"></a>投影轴</h4><p>如下图所示，我们使用一条从 p1 指向 p2 的向量来表示多边形的某条边，我们称之为<strong>边缘向量</strong>。在分离轴定理中，还需要确定一条垂直于边缘向量的法向量，我们称之为“<strong>边缘法向量</strong>”。</p>
-<p><strong>投影轴</strong>平行于边缘法向量。投影轴的位置不限，因为其长度是无限的，故而多边形在该轴上的投影是一样的。该轴的方向才是关键的。</p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/sat_projection_one.png" alt="投影轴"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 以原点(0,0)为始，顶点为末。最后通过向量减法得到 边缘向量。</span><br><span class="line">var v1 &#x3D; new Vector(p1.x, p1.y)</span><br><span class="line">    v2 &#x3D; new Vector(p2.x, p2.y)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 首先得到边缘向量，然后再通过边缘向量获得相应边缘法向量（单位向量）。</span><br><span class="line">&#x2F;&#x2F; 两向量相减得到边缘向量 p2p1（注：上面应该有个右箭头，以表示向量）。</span><br><span class="line">&#x2F;&#x2F; 设向量 p2p1 为(A,B)，那么其法向量通过 x1x2+y1y2 &#x3D; 0 可得：(-B,A) 或 (B,-A)。</span><br><span class="line">    axis &#x3D; v1.edge(v2).normal()</span><br></pre></td></tr></table></figure>
-
-<p>以下是向量对象的部分实现，具体可看源码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">var Vector &#x3D; function(x, y) &#123;</span><br><span class="line">    this.x &#x3D; x</span><br><span class="line">    this.y &#x3D; y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector.prototype &#x3D; &#123;</span><br><span class="line">    &#x2F;&#x2F; 获取向量大小（即向量的模），即两点间距离</span><br><span class="line">    getMagnitude: function() &#123;</span><br><span class="line">        return Math.sqrt(Math.pow(this.x, 2),</span><br><span class="line">                         Math.pow(this.y, 2))</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 点积的几何意义之一是：一个向量在平行于另一个向量方向上的投影的数值乘积。</span><br><span class="line">    &#x2F;&#x2F; 后续将会用其计算出投影的长度</span><br><span class="line">    dotProduct: function(vector) &#123;</span><br><span class="line">        return this.x * vector.x + this.y + vector.y</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 向量相减 得到边</span><br><span class="line">    subtarct: function(vector) &#123;</span><br><span class="line">        var v &#x3D; new Vector()</span><br><span class="line">        v.x &#x3D; this.x - vector.x</span><br><span class="line">        v.y &#x3D; this.y - vector.y</span><br><span class="line">        return v</span><br><span class="line">    &#125;,</span><br><span class="line">    edge: function(vector) &#123;</span><br><span class="line">        return this.substract(vector)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 获取当前向量的法向量（垂直）</span><br><span class="line">    perpendicular: function() &#123;</span><br><span class="line">        var v &#x3D; new Vector()</span><br><span class="line">        v.x &#x3D; this.y</span><br><span class="line">        v.y &#x3D; 0 - this.x</span><br><span class="line">        return v</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 获取单位向量（即向量大小为1，用于表示向量方向），一个非零向量除以它的模即可得到单位向量</span><br><span class="line">    normalize: function() &#123;</span><br><span class="line">        var v &#x3D; new Vector(0, 0)</span><br><span class="line">            m &#x3D; this.getMagnitude()</span><br><span class="line">        if(m !&#x3D;&#x3D; 0) &#123;</span><br><span class="line">            v.x &#x3D; this.x &#x2F; m</span><br><span class="line">            v.y &#x3D; this.y &#x2F;m</span><br><span class="line">        &#125;</span><br><span class="line">        return v</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 获取边缘法向量的单位向量，即投影轴</span><br><span class="line">    normal: function() &#123;</span><br><span class="line">        var p &#x3D; this.perpendicular()</span><br><span class="line">        return p .normalize()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="../../assets/images/2020-01-12-Collision-detection/vector_subtract.png" alt="此处输入图片的描述"><br>向量相减</p>
-<p>更多关于向量的知识可通过其它渠道学习。</p>
-<h4 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h4><p>投影的大小：通过将一个多边形上的每个顶点与原点(0,0)组成的向量，投影在某一投影轴上，然后保留该多边形在该投影轴上所有投影中的最大值和最小值，这样即可表示一个多边形在某投影轴上的投影了。</p>
-<p>判断两多边形的投影是否重合：<code>projection1.max &gt; projection2.min &amp;&amp; project2.max &gt; projection.min</code></p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/sat_project_length.png" alt="此处输入图片的描述"><br>为了易于理解，示例图将坐标轴<code>原点(0,0)</code>放置于三角形<code>边1</code>投影轴的适当位置。</p>
-<p>由上述可得投影对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 用最大和最小值表示某一凸多边形在某一投影轴上的投影位置</span><br><span class="line">var Projection &#x3D; function (min, max) &#123;</span><br><span class="line">    this.min</span><br><span class="line">    this.max</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">projection.prototype &#x3D; &#123;</span><br><span class="line">    &#x2F;&#x2F; 判断两投影是否重叠</span><br><span class="line">    overlaps: function(projection) &#123;</span><br><span class="line">        return this.max &gt; projection.min &amp;&amp; projection.max &gt; this.min</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如何得到向量在投影轴上的长度？<br>向量的点积的其中一个几何含义是：一个向量在平行于另一个向量方向上的投影的数值乘积。<br>由于<strong>投影轴</strong>是单位向量（长度为<code>1</code>），投影的长度为 <code>x1 * x2 + y1 * y2</code></p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/dot_product.png" alt="点积"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 根据多边形的每个定点，得到投影的最大和最小值，以表示投影。</span><br><span class="line">function project &#x3D; function (axis) &#123;</span><br><span class="line">    var scalars &#x3D; [], v &#x3D; new Vector()</span><br><span class="line">    </span><br><span class="line">    this.points.forEach(function (point) &#123;</span><br><span class="line">        v.x &#x3D; point.x</span><br><span class="line">        v.y &#x3D; point.y</span><br><span class="line">        scalars.push(v.dotProduct(axis))</span><br><span class="line">    &#125;)</span><br><span class="line">    return new Projection(Math.min.apply(Math, scalars),</span><br><span class="line">                          Math.max,apply(Math, scalars))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="圆形与多边形之间的碰撞检测"><a href="#圆形与多边形之间的碰撞检测" class="headerlink" title="圆形与多边形之间的碰撞检测"></a>圆形与多边形之间的碰撞检测</h4><p>由于圆形可近似地看成一个有无数条边的正多边形，而我们不可能按照这些边一一进行投影与测试。我们只需将圆形投射到一条投影轴上即可，这条轴就是圆心与多边形顶点中最近的一点的连线，如图所示：</p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/sat_projection_circle.png" alt="圆形与多边形的投影轴"></p>
-<p>因此，该投影轴和多边形自身的投影轴就组成了一组待检测的投影轴了。</p>
-<p>而对于圆形与圆形之间的碰撞检测依然是最初的两圆心距离是否小于两半径之和。</p>
-<p>分离轴定理的整体代码实现，可查看以下案例：</p>
-<iframe name="cp_embed_9" src="https://codepen.io/JChehe/embed/KabEaw?height=364&amp;theme-id=0&amp;slug-hash=KabEaw&amp;default-tab=result&amp;user=JChehe&amp;embed-version=2&amp;pen-title=SeparatingAxisTheorem&amp;name=cp_embed_9" scrolling="no" frameborder="0" height="364" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" title="SeparatingAxisTheorem" class="cp_embed_iframe " id="cp_embed_KabEaw" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-style: inherit; font-family: inherit; font-size: 16px; vertical-align: baseline; width: 1230px; overflow: hidden; display: block;"></iframe>
-
-
-
-<p>优点：</p>
-<ul>
-<li>精确</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>不适用于凹多边形</li>
-</ul>
-<p>适用案例：</p>
-<ul>
-<li>任意凸多边形和圆形。</li>
-</ul>
-<p>更多关于分离轴定理的资料：</p>
-<ul>
-<li><a href="http://www.sevenson.com.au/actionscript/sat/" target="_blank" rel="noopener">Separating Axis Theorem (SAT) explanation</a></li>
-<li><a href="http://www.metanetsoftware.com/technique/tutorialA.html" target="_blank" rel="noopener">Collision detection and response</a></li>
-<li><a href="http://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169" target="_blank" rel="noopener">Collision detection Using the Separating Axis Theorem</a></li>
-<li><a href="http://www.codezealot.org/archives/55" target="_blank" rel="noopener">SAT (Separating Axis Theorem)</a></li>
-<li><a href="http://rocketmandevelopment.com/blog/separation-of-axis-theorem-for-collision-detection/" target="_blank" rel="noopener">Separation of Axis Theorem (SAT) for Collision Detection</a></li>
-</ul>
-<h4 id="延伸：最小平移向量（MIT）"><a href="#延伸：最小平移向量（MIT）" class="headerlink" title="延伸：最小平移向量（MIT）"></a>延伸：最小平移向量（MIT）</h4><p>通常来说，如果碰撞之后，相撞的双方依然存在，那么就需要将两者分开。分开之后，可以使原来相撞的两物体彼此弹开，也可以让他们黏在一起，还可以根据具体需要来实现其他行为。不过首先要做的是，还是将两者分开，这就需要用到最小平移向量（Minimum Translation Vector, MIT）。</p>
-<p><img src="../../assets/images/2020-01-12-Collision-detection/mit.png" alt="最小平移向量"></p>
-<h3 id="碰撞性能优化"><a href="#碰撞性能优化" class="headerlink" title="碰撞性能优化"></a>碰撞性能优化</h3><p>若每个周期都需要对全部物体进行两两判断，会造成浪费（因为有些物体分布在不同区域，根本不会发生碰撞）。所以，大部分游戏都会将碰撞分为两个阶段：粗略和精细（broad/narrow）。</p>
-<h4 id="粗略阶段（Broad-Phase）"><a href="#粗略阶段（Broad-Phase）" class="headerlink" title="粗略阶段（Broad Phase）"></a>粗略阶段（Broad Phase）</h4><p>Broad phase 能为你提供有可能碰撞的实体列表。这可通过一些特殊的数据结构实现，它们能为你提供这些信息：实体存在哪里和哪些实体在其周围。这些数据结构可以是：四叉树（Quad Trees）、R树（R-Trees）或空间哈希映射（Spatial Hashmap）等。</p>
-<p>读者若感兴趣，可以自行查阅相关信息。</p>
-<h4 id="精细阶段（Narrow-Phase）"><a href="#精细阶段（Narrow-Phase）" class="headerlink" title="精细阶段（Narrow Phase）"></a>精细阶段（Narrow Phase）</h4><p>当你有了较小的实体列表，你可以利用精细阶段的算法（如上述讲述的碰撞算法）得到一个确切的答案（是否发生碰撞）。</p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>碰撞检测有多种，选择合适最重要。</p>
-<p>完！</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection" target="_blank" rel="noopener">MDN：2D collision detection</a></li>
-<li><a href="https://item.jd.com/11231175.html?dist=jd" target="_blank" rel="noopener">《HTML5 Canvas 核心技术：图形、动画与游戏开发》</a></li>
-<li><a href="http://lazyfoo.net/SDL_tutorials/lesson19/index.php" target="_blank" rel="noopener">Circular Collision Detection</a></li>
-<li><a href="http://www.migapro.com/circle-and-rotated-rectangle-collision-detection/" target="_blank" rel="noopener">Circle and Rotated Rectangle Collision Detection</a></li>
-<li><a href="http://www.cnblogs.com/ywxgod/archive/2010/08/06/1793609.html" target="_blank" rel="noopener">推导坐标旋转公式</a></li>
-</ul>
-<p>感谢您的阅读，本文由 <a href="https://aotu.io/" target="_blank" rel="noopener">凹凸实验室</a> 版权所有。如若转载，请注明出处：凹凸实验室（<a href="https://aotu.io/notes/2017/02/16/2d-collision-detection/）" target="_blank" rel="noopener">https://aotu.io/notes/2017/02/16/2d-collision-detection/）</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-01-12-Collision-detection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1346,7 +799,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1371,13 +824,14 @@
       
           <h4 id="1-利用碰撞器的触发器Trigger"><a href="#1-利用碰撞器的触发器Trigger" class="headerlink" title="1.利用碰撞器的触发器Trigger"></a>1.利用碰撞器的触发器Trigger</h4><p>  这种是比较基础的做法，利用OnTriggerEntry函数，当目标进入触发器时触发。例如玩家有一把剑，我要做攻击判定的话，我就可以在剑上挂一个触发器，设定好大小，当播放动画时，随着剑的挥动，目标会进入Trigger的范围，此时就会调用OnTriggerEntry函数。但是这样做有个弊端，如果挥舞速度太快，检测会有问题；还有就是必须满足“进入”这个条件，也就是说如果原来目标就在触发器范围内，或者触发器在目标内，是不会触发函数的。所以这种方法不太适用于3D游戏。</p>
 <p>  不过这种方法也不是不能用，只是适用条件有限，在2D游戏上，结合上Animation的录制功能，通过动画来改变Trigger的大小，这样就可以触发OnTriggerEntry函数一次或者多次，这样也是可以做出不错效果的。在3D游戏中，可以在人物前面放置一个大小合适Trigger当做攻击范围，再结合动画事件进行攻击判定，不过这样做的缺点是攻击范围大小恒定，如果人物的攻击范围大小不一，就要创建很多空子物体来设定Trigger范围，脚本也不好管理。</p>
-<h4 id="2-利用数学判断"><a href="#2-利用数学判断" class="headerlink" title="2.利用数学判断"></a>2.利用数学判断</h4><p>  可以定义两个向量作为攻击范围，向量有方向也有长度，攻击范围是可以确定的。例如设定两个向量，向量1为Transform.forward的左偏45度，向量2为Transform.forward的右偏45度，长度均为5。此时攻击范围为半径为5，度数为90°的扇形。此时就可以计算敌人是不是在攻击范围内，可以通过Vector3.Angle来计算（角度制），Vector3.Distance来计算距离。</p>
-<p>  这种方法的局限在于1.如何获取到敌人的游戏物体，可以通过触发器也可以遍历你的敌人列表。2.当敌人体积过大时，有可能身体的一部分已经进入攻击范围，但是postion没有进入攻击范围，此时判定就会出现错误。看情况使用。</p>
-<h4 id="3-利用射线Raycast"><a href="#3-利用射线Raycast" class="headerlink" title="3.利用射线Raycast"></a>3.利用射线Raycast</h4><p>  使用Physics.Raycast()这个方法来发射射线，当射线碰到物体，或者碰到指定Laymask层的物体，或者一定距离后就会返回，返回值是Bool类型。通过out关键字来输出碰撞到的物体的信息，变量类型为RaycastHit。例如我定义一个射线Ray ray =new Ray(), 一个射线返回RaycastHit hit，那么就应该这么使用Physics.Raycast(ray,out hit),表示碰到物体，就会返回ture，物体信息储存在hit中。没有碰到，就会范围false，hit为null。这个方法还有很多重载，可以自己查阅API，根据情况使用。</p>
-<p>  这种方法是射击游戏的常用判断方法，可以结合lineRender来渲染子弹飞过的特效。不过这种方法也不是万能的，它的局限在于射出射线的点只有一个，用来做射击游戏的攻击判定是非常合适的，但是不能用来做判定比较严格的游戏。为什么呢，因为射击游戏的发射方向是可以根据准星调整的，视觉上的判定也是准星方向，如果是动作游戏，rpg游戏之类的，攻击类型多样，就会出现差错。例如一个从上至下的斩击，攻击范围应该是竖着的一条线，那么射线应该怎发射呢？如果直直的往前发射，那么当敌人蹲下的时候，就会检测不到。你或许会想做成动作模式不就完了吗？（就是类似于龙之谷的操作方式），也是不行的，判定始终在攻击轨迹中央，和攻击动画和攻击特效有出入。</p>
-<h4 id="4-利用射线Linecast"><a href="#4-利用射线Linecast" class="headerlink" title="4.利用射线Linecast"></a>4.利用射线Linecast</h4><p>  这也是Physics的一个方法， Physics.Linecast（）。连接两个点形成线段，如果线段中间有物体，就返回true,否则返回flase，同样，这个方法需要定义一个RaycastHit类型的变量来接收返回数据，具体方法为Physics.Linecast（Vector3 point1, Vector3 point2，out hit）。这种方法需要在武器或者拳头或者其他的需要攻击判定的地方设定一个点，当动画播放时，这个点的世界坐标就会变化，此时我们可以选择记录某几个时间点上判定点的世界坐标，再用Linecast进行判定。一般取判定点的坐标的话我们同样可以利用动画事件。</p>
-<p>  这种方法调试的时候最好用lineRender把攻击轨迹渲染出来，或者用Debug.DrawLine()画出来（记得设定存在时间，不然一瞬间就消失了看不到），这样可以方便调整我们取判定点的时间节点，不然可能会疑惑，明明我设定好了，怎么检测不到。这种方法适合于动作游戏，以及一些判定比较精细的游戏。需要注意的一点是，Linecast每一帧都会进行判定，一般我们只需要一个动作判定一次，那么还需要在代码里进行约束。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-01-11-unity-attack-range-detection-type/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1427,7 +881,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1453,54 +907,14 @@
           <p>程序的运行要去加载所需要的dll文件，在程序运行的时候往往会遇到dll找不到的问题，或者不能确定所加载的dll文件是否是自己所需要的dll，遇到dll出问题的时候往往会不知所措，但是一旦知道了dll的加载顺序，按这个去查找解决就会方便和得心应手了。</p>
 <p>(1)先搜索可执行文件所在路径，再搜索系统路径：%PATH%（环境变量所配置的路径）</p>
 <p>一般Path中的值为：%SystemRoot%\system32;%SystemRoot%;  </p>
-<p>(2)然后按下列顺序搜索 DLL： </p>
-<p>1、当前进程的可执行模块所在的目录。</p>
-<p>2、当前目录。</p>
-<p>3、Windows 系统目录。GetSystemDirectory 函数检索此目录的路径。</p>
-<p>4、Windows 目录。GetWindowsDirectory 函数检索此目录的路径。</p>
-<p>5、PATH 环境变量中列出的目录。</p>
-<p>有时候确定了加载的dll文件确实是自己所想加载的dll文件，但是还会发生错误的可能原因，就是dll文件被损坏，此时需要重新替换现有的dll文件；或者dll文件和所用的头文件（.h文件）不匹配，即是头文件中的函数，在dll文件中没有实现，这样的话，找到对应的dll文件就ok了。</p>
-<p><strong>AssemblyLoadContext</strong></p>
-<p>基本上AssemblyLoadContext是AppDomain的继承者，它提供相同而且更多的功能-除了安全边界（隔离）。最小的安全边界是进程，因此你将需要使用进程间通信来正确隔离数据和代码执行。</p>
-<p>官网文档中提到Appdomain已经过时了，为了兼容旧的版本，提供了部分功能。建议在.NET Core3.0及更高的版本使用AssemblyLoadContext。</p>
-<p><strong>从AppDomain迁移到AssemblyLoadContext</strong></p>
-<p>也许你仍在应用程序中使用AppDomain。现在，以下代码显示如何用AssemblyLoadContext的相应方法去替换掉AppDomain方法：</p>
-<ul>
-<li>获取所有程序集</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var assembliesInAppDomain &#x3D; AppDomain.CurrentDomain.GetAssemblies();</span><br><span class="line">var assembliesInAssemblyLoadContext &#x3D; AssemblyLoadContext.Default.Assemblies;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加载一个程序集</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(&quot;path&quot;));</span><br><span class="line">AssemblyLoadContext.Default.LoadFromAssemblyName(AssemblyName.GetAssemblyName(&quot;path&quot;));</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加载一个程序集 路径或者字节数组:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppDomain.CurrentDomain.Load(File.ReadAllBytes(&quot;path&quot;));</span><br><span class="line">AssemblyLoadContext.Default.LoadFromStream(File.OpenRead(&quot;path&quot;));&#x2F;&#x2F; orAssemblyLoadContext.Default.LoadFromAssemblyPath(&quot;path&quot;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>测试封装的获取程序集方法GetAssemblies</li>
-</ul>
-<p>准备工作：</p>
-<ol>
-<li><p>创建一个控制台程序</p>
-</li>
-<li><p>添加一个类库项目，命名为AA.Service</p>
-<p>在控制台应用程序，添加一个类TypeFinder代码如下：</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">public class TypeFinder</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 获取物理路径 </span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;\bin\Debug\netcoreapp3.0&lt;&#x2F;returns&gt;</span><br><span class="line">        public virtual string GetBinDirectory()</span><br><span class="line">        &#123;</span><br><span class="line">            return AppContext.BaseDirectory;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 获取程序集</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;&lt;&#x2F;returns&gt;</span><br><span class="line">        public IList&lt;Assembly&gt; GetAssemblies()</span><br><span class="line">        &#123;</span><br><span class="line">            var binPath &#x3D; GetBinDirectory();</span><br><span class="line">            var addedAssemblyNames &#x3D; new List&lt;string&gt;();</span><br><span class="line">            var assemblies &#x3D; new List&lt;Assembly&gt;();</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F;</span><br><span class="line">            foreach (var assembly in AssemblyLoadContext.Default.Assemblies.Where(a&#x3D;&gt;IsNotSysAssembly(a.FullName)))</span><br><span class="line">            &#123;</span><br><span class="line">                if (addedAssemblyNames.Contains(assembly.FullName))</span><br><span class="line">                    continue;</span><br><span class="line">                addedAssemblyNames.Add(assembly.FullName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            foreach (var dllPath in Directory.GetFiles(binPath, &quot;*.dll&quot;,</span><br><span class="line">                 SearchOption.TopDirectoryOnly))</span><br><span class="line">            &#123;</span><br><span class="line">                try</span><br><span class="line">                &#123;</span><br><span class="line">                    var an &#x3D; AssemblyName.GetAssemblyName(dllPath);</span><br><span class="line">                    if (!addedAssemblyNames.Contains(an.FullName))</span><br><span class="line">                    &#123;</span><br><span class="line">                        AssemblyLoadContext.Default.LoadFromAssemblyName(an);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                catch (BadImageFormatException ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Trace.TraceError(ex.ToString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            foreach (var assembly in AssemblyLoadContext.Default.Assemblies.Where(a &#x3D;&gt; IsNotSysAssembly(a.FullName)))</span><br><span class="line">            &#123;</span><br><span class="line">                if (addedAssemblyNames.Contains(assembly.FullName))</span><br><span class="line">                    continue;</span><br><span class="line"></span><br><span class="line">                assemblies.Add(assembly);</span><br><span class="line">            &#125;</span><br><span class="line">            return assemblies;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 排除系统程序集</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;assemblyName&quot;&gt;&lt;&#x2F;param&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;&lt;&#x2F;returns&gt;</span><br><span class="line">        private bool IsNotSysAssembly(string assemblyName) </span><br><span class="line">        &#123;</span><br><span class="line">            return !assemblyName.StartsWith(&quot;Microsoft.&quot;)</span><br><span class="line">                      &amp;&amp; !assemblyName.StartsWith(&quot;System.&quot;)</span><br><span class="line">                      &amp;&amp; !assemblyName.StartsWith(&quot;Newtonsoft.&quot;)</span><br><span class="line">                      &amp;&amp; assemblyName !&#x3D; &quot;netstandard&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>在控制台应用程序添加引用AA.Service类库，生成查看bin文件，出现了AA.Service.dll</p>
-<p><img src="../../assets/images/2020-01-06-dll-load/640.webp" alt="img"></p>
-<p>调用代码输出(排除系统dll以Microsoft、system开头的)程序集：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var assemblies&#x3D; new TypeFinder().GetAssemblies();        </span><br><span class="line">foreach (var a in assemblies)             </span><br><span class="line">&#123;                </span><br><span class="line">Console.WriteLine(a.FullName);            </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<p><img src="../../assets/images/2020-01-06-dll-load/640.webp" alt="img"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-01-06-dll-load/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1550,7 +964,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1575,70 +989,14 @@
       
           <h1 id="那么何为字节序（Endia）呢？"><a href="#那么何为字节序（Endia）呢？" class="headerlink" title="那么何为字节序（Endia）呢？"></a>那么何为字节序（Endia）呢？</h1><p>Big Endian是指低地址存放最高有效字节（MSB），而Little Endian则是低地址存放最低有效字节（LSB）。</p>
 <p><strong>大端模式</strong></p>
-<p>所谓的大端模式（Big-endian），是指数据的高字节，保存在内存的低地址中，而数据的低字节，保存在内存的高地址中，这样的存储模式有点儿类似于把数据当作字符串顺序处理：地址由小向大增加，而数据从高位往低位放；</p>
-<p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0000430: e684 6c4e 0100 1800 53ef 0100 0100 0000</span><br><span class="line"></span><br><span class="line">0000440: b484 6c4e 004e ed00 0000 0000 0100 0000</span><br></pre></td></tr></table></figure>
-
-<p>在大端模式下，前32位应该这样读:<code>e6 84 6c 4e</code> ( 假设int占4个字节)</p>
-<p>记忆方法: <code>地址的增长顺序与值的增长顺序相反</code></p>
-<p><strong>小端模式</strong></p>
-<p>所谓的小端模式（Little-endian），是指数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，这种存储模式将地址的高低和数据位权有效地结合起来，高地址部分权值高，低地址部分权值低，和我们的逻辑方法一致。</p>
-<p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0000430: e684 6c4e 0100 1800 53ef 0100 0100 0000</span><br><span class="line"></span><br><span class="line">0000440: b484 6c4e 004e ed00 0000 0000 0100 0000</span><br></pre></td></tr></table></figure>
-
-<p>在小端模式下，前32位应该这样读: <code>4e 6c 84 e6</code>( 假设int占4个字节)</p>
-<p>记忆方法: <code>地址的增长顺序与值的增长顺序相同</code></p>
-<p>有图有真相，举个例子，数字 <strong>0x12345678</strong> 在两种不同字节序CPU中的存储顺序如下图</p>
-<p><img src="../../assets/images/2020-01-05-big-little-endian/20160414225024808" alt="pic1"></p>
-<h2 id="为什么会有这样的情况呢？"><a href="#为什么会有这样的情况呢？" class="headerlink" title="为什么会有这样的情况呢？"></a>为什么会有这样的情况呢？</h2><p>这是因为在计算机系统中，我们是以字节为单位的，每个地址单元都对应着一个字节，一个字节为8bit。但是在C语言中除了8bit的char之外，还有16bit的short型，32bit的long型（要看具体的编译器），另外，对于位数大于8位的处理器，例如16位或者32位的处理器，由于寄存器宽度大于一个字节，那么必然存在着一个如果将多个字节安排的问题。因此就导致了大端存储模式和小端存储模式。例如一个16bit的short型x，在内存中的地址为0x0010，x的值为0x1122，那么0x11为高字节，0x22为低字节。对于大端模式，就将0x11放在低地址中，即0x0010中，0x22放在高地址中，即0x0011中。小端模式，刚好相反。我们常用的X86结构是小端模式，而KEIL C51则为大端模式。很多的ARM，DSP都为小端模式。有些ARM处理器还可以由硬件来选择是大端模式还是小端模式。</p>
-<ul>
-<li>Motorola的<strong>PowerPC</strong>系列CPU采用Big Endian方式存储数据。</li>
-<li>Intel的<strong>x86</strong>系列CPU采用Little Endian方式存储数据。</li>
-<li>ARM既可以工作在大端模式，也可以工作在小端模式。</li>
-</ul>
-<p><strong>再来说说，一些我所收集到的情况吧。</strong></p>
-<ul>
-<li>Windos(x86,x64)和Linux(x86,x64)都是<strong>Little Endian</strong>操作系统</li>
-<li>在ARM上，我见到的都是用<strong>Little Endian</strong>方式存储数据。</li>
-<li>C/C++语言编写的程序里数据存储顺序是跟编译平台<strong>所在的CPU相关</strong>的。</li>
-<li>JAVA编写的程序则唯一采用<strong>Big Endian</strong>方式来存储数据。</li>
-<li>所有网络协议也都是采用<strong>Big Endian</strong>的方式来传输数据的。所以有时我们也会把<strong>Big Endian</strong>方式称之为<strong>网络字节序</strong>。</li>
-</ul>
-<h2 id="为什么要注意字节序的问题呢？"><a href="#为什么要注意字节序的问题呢？" class="headerlink" title="为什么要注意字节序的问题呢？"></a>为什么要注意字节序的问题呢？</h2><p>你可能这么问。当然，如果你写的程序只在单机环境下面运行，并且不和别人的程序打交道，那么你完全可以忽略字节序的存在。但是，如果你的程序要跟别人的程序产生交互呢？尤其是当你把你在微机上运算的结果运用到计算机群上去的话。在这里我想说说两种语言。C/C++语言编写的程序里数据存储顺序是跟编译平台所在的CPU相关的，而JAVA编写的程序则唯一采用big endian方式来存储数据。试想，如果你用C/C++语言在x86平台下编写的程序跟别人的JAVA程序互通时会产生什么结果？就拿上面的 0x12345678来说，你的程序传递给别人的一个数据，将指向0x12345678的指针传给了JAVA程序，由于JAVA采取big endian方式存储数据，很自然的它会将你的数据翻译为0x78563412。什么？竟然变成另外一个数字了？是的，就是这种后果。因此，在你的C程序传给JAVA程序之前有必要进行字节序的转换工作。</p>
-<h1 id="网络字节序"><a href="#网络字节序" class="headerlink" title="网络字节序"></a>网络字节序</h1><h2 id="一、在进行网络通信时是否需要进行字节序转换？"><a href="#一、在进行网络通信时是否需要进行字节序转换？" class="headerlink" title="一、在进行网络通信时是否需要进行字节序转换？"></a>一、在进行网络通信时是否需要进行字节序转换？</h2><p>   相同字节序的平台在进行网络通信时可以不进行字节序转换，但是跨平台进行网络数据通信时必须进行字节序转换。</p>
-<p>   原因如下：网络协议规定接收到得第一个字节是高字节，存放到低地址，所以发送时会首先去低地址取数据的高字节。小端模式的多字节数据在存放时，低地址存放的是低字节，而被发送方网络协议函数发送时会首先去低地址取数据（想要取高字节，真正取得是低字节），接收方网络协议函数接收时会将接收到的第一个字节存放到低地址（想要接收高字节，真正接收的是低字节），所以最后双方都正确的收发了数据。而相同平台进行通信时，如果双方都进行转换最后虽然能够正确收发数据，但是所做的转换是没有意义的，造成资源的浪费。而不同平台进行通信时必须进行转换，不转换会造成错误的收发数据，字节序转换函数会根据当前平台的存储模式做出相应正确的转换，如果当前平台是大端，则直接返回不进行转换，如果当前平台是小端，会将接收到得网络字节序进行转换。</p>
-<h2 id="二、网络字节序"><a href="#二、网络字节序" class="headerlink" title="二、网络字节序"></a><strong>二、网络字节序</strong></h2><p>​    网络上传输的数据都是字节流,对于一个多字节数值,在进行网络传输的时候,先传递哪个字节?也就是说,当接收端收到第一个字节的时候,它将这个字节作为高位字节还是低位字节处理,是一个比较有意义的问题; UDP/TCP/IP协议规定:把接收到的第一个字节当作高位字节看待,这就要求发送端发送的第一个字节是高位字节;而在发送端发送数据时,发送的第一个字节是该数值在内存中的起始地址处对应的那个字节,也就是说,该数值在内存中的起始地址处对应的那个字节就是要发送的第一个高位字节(即:高位字节存放在低地址处);由此可见,多字节数值在发送之前,在内存中因该是以大端法存放的; 所以说,网络字节序是大端字节序; 比如,我们经过网络发送整型数值0x12345678时,在80X86平台中,它是以小端发存放的,在发送之前需要使用系统提供的字节序转换函数htonl()将其转换成大端法存放的数值;</p>
-<h1 id="c-大端转换"><a href="#c-大端转换" class="headerlink" title="c# 大端转换"></a>c# 大端转换</h1><p>c#在windows平台上是小端字节序(Windos(x86,x64)和Linux(x86,x64)都是<strong>Little Endian</strong>操作系统,不止是c#)。网络发送字节流是按大端序发送，也就是从左到右发送，和c#的小端序相反，造成网关不能正常识别协议。所以需要转换</p>
-<p><strong>大小端转换</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int x &#x3D; 439041118;  &#x2F;&#x2F; 十六进制为 1A2B3C5E</span><br><span class="line"></span><br><span class="line">string s &#x3D; null;</span><br><span class="line"></span><br><span class="line">byte[] b &#x3D; BitConverter.GetBytes( x );</span><br><span class="line"></span><br><span class="line">s &#x3D; BitConverter.ToString( b ); &#x2F;&#x2F; 小端模式</span><br><span class="line">Console.WriteLine( s ); &#x2F;&#x2F; 小端输出 为 5E-3C-2B-1A</span><br><span class="line"></span><br><span class="line">Array.Reverse( b ); &#x2F;&#x2F; 反转</span><br><span class="line"></span><br><span class="line">s &#x3D; BitConverter.ToString( b ); &#x2F;&#x2F; 大端模式</span><br><span class="line">Console.WriteLine( &quot;&#123;0:x&#125;&quot;, s ); &#x2F;&#x2F; 大端输出 为 1A-2B-3C-5E</span><br><span class="line"></span><br><span class="line">Console.ReadKey();</span><br></pre></td></tr></table></figure>
-
-<p><strong>C# 判断数据在此计算机结构中存储时的字节顺序（“Endian”性质），即大端还是小端</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int data &#x3D; 439041118; &#x2F;&#x2F; 十六进制为 1A2B3C5E</span><br><span class="line">byte[] bData &#x3D; BitConverter.GetBytes( data );</span><br><span class="line">            </span><br><span class="line">if (BitConverter.IsLittleEndian) &#x2F;&#x2F; 若为 小端模式</span><br><span class="line">&#123;</span><br><span class="line">   Array.Reverse( bData ); &#x2F;&#x2F; 转换为 大端模式               </span><br><span class="line">&#125;</span><br><span class="line">string s &#x3D; BitConverter.ToString( bData );</span><br><span class="line"></span><br><span class="line">Console.WriteLine(s);</span><br><span class="line"></span><br><span class="line">Console.ReadKey();</span><br></pre></td></tr></table></figure>
-
-<p> <strong>一些封装</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#x2F;&#x2F;翻转byte数组</span><br><span class="line">public static void ReverseBytes(byte[] bytes)</span><br><span class="line">&#123;</span><br><span class="line">    byte tmp;</span><br><span class="line">    int len &#x3D; bytes.Length;</span><br><span class="line"></span><br><span class="line">    for (int i &#x3D; 0; i &lt; len &#x2F; 2; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        tmp &#x3D; bytes[len - 1 - i];</span><br><span class="line">        bytes[len - 1 - i] &#x3D; bytes[i];</span><br><span class="line">        bytes[i] &#x3D; tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;规定转换起始位置和长度</span><br><span class="line"> public static void ReverseBytes(byte[] bytes, int start, int len)</span><br><span class="line"> &#123;</span><br><span class="line">     int end &#x3D; start + len - 1;</span><br><span class="line">     byte tmp;</span><br><span class="line">     int i &#x3D; 0;</span><br><span class="line">     for (int index &#x3D; start; index &lt; start + len&#x2F;2; index++,i++)</span><br><span class="line">     &#123;</span><br><span class="line">         tmp &#x3D; bytes[end - i];</span><br><span class="line">         bytes[end - i] &#x3D; bytes[index];</span><br><span class="line">         bytes[index] &#x3D; tmp;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 翻转字节顺序 (16-bit)</span><br><span class="line">public static UInt16 ReverseBytes(UInt16 value)</span><br><span class="line">&#123;</span><br><span class="line">  return (UInt16)((value &amp; 0xFFU) &lt;&lt; 8 | (value &amp; 0xFF00U) &gt;&gt; 8);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 翻转字节顺序 (32-bit)</span><br><span class="line">public static UInt32 ReverseBytes(UInt32 value)</span><br><span class="line">&#123;</span><br><span class="line">  return (value &amp; 0x000000FFU) &lt;&lt; 24 | (value &amp; 0x0000FF00U) &lt;&lt; 8 |</span><br><span class="line">         (value &amp; 0x00FF0000U) &gt;&gt; 8 | (value &amp; 0xFF000000U) &gt;&gt; 24;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 翻转字节顺序 (64-bit)</span><br><span class="line">public static UInt64 ReverseBytes(UInt64 value)</span><br><span class="line">&#123;</span><br><span class="line">  return (value &amp; 0x00000000000000FFUL) &lt;&lt; 56 | (value &amp; 0x000000000000FF00UL) &lt;&lt; 40 |</span><br><span class="line">         (value &amp; 0x0000000000FF0000UL) &lt;&lt; 24 | (value &amp; 0x00000000FF000000UL) &lt;&lt; 8 |</span><br><span class="line">         (value &amp; 0x000000FF00000000UL) &gt;&gt; 8 | (value &amp; 0x0000FF0000000000UL) &gt;&gt; 24 |</span><br><span class="line">         (value &amp; 0x00FF000000000000UL) &gt;&gt; 40 | (value &amp; 0xFF00000000000000UL) &gt;&gt; 56;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>另外c#直接提供了网络字节序转换方法。</p>
-<p><code>System.Net.IPAddress.HostToNetworkOrder</code>（本机到网络转换）</p>
-<p><code>System.Net.IPAddress.NetworkToHostOrder</code>(网络字节转成本机)</p>
-<p>推荐使用这种方法，简单有效。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">short x &#x3D; 6;</span><br><span class="line">short b &#x3D; System.Net.IPAddress.HostToNetworkOrder(x); &#x2F;&#x2F;把x转成相应的大端字节数</span><br><span class="line">byte[] bb &#x3D; System.BitConverter.GetBytes(b);&#x2F;&#x2F;这样直接取到的就是大端字节序字节数组。</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="对于字符串型："><a href="#对于字符串型：" class="headerlink" title="对于字符串型："></a>对于字符串型：</h2><p>使用 System.Text.Encoding.Default.GetBytes();直接取字串对应字节数组。</p>
-<p>不知道为什么这个方法取到的直接就是大端字节数组。不用转换。</p>
-<p>后来查了一下，关于字串的字节序问题，因为gbk和utf-8都是以单个字节表示数字的，所以不存在字节序问题，在多个不同系统架构都用。对于utf-16，则是以双字节表示一个整数，所以为会有字节序问题，分大小端unicode。</p>
-<p>System.Text.Encoding.Default.GetBytes();在我的简体中文系统上是以gb2312的编码，也就是单个字来进行编码的，所以也不会有字节序问题。</p>
-<p>补充：“<strong>对于任何字符编码，编码单元的顺序是由编码方案指定的，与endian无关。</strong>例如GBK的编码单元是字节，用两个字节表示一个汉字。这两个字节的顺序是固定的，不受CPU字节序的影响。UTF-16的编码单元是word（双字节），word之间的顺序是编码方案指定的，word内部的字节排列才会受到endian的影响。”，</p>
-<p>所以utf-8也没有字节序的问题。字节序问题之存在于需要使用两个字节以上来表示整数。而UTF-8只是一串字节流，不存在字节序问题，不过将这些字节流翻译成Unicode比其他的传输方式复杂。以字节为单位编码的，无论一个汉字是多少个字节，都无字节序问题。</p>
-<p>你注意，字节序问题不是指多个字节传输的先后，这个是固定的无异议的。而是指一个多字节编码在机器中的表示方式问题。<br><code>char str[] = &quot;abaksdkakskasklasflk&quot;；</code></p>
-<p>这个无字节序问题。但<br><code>int  str[] = {0x11223344, 2, 3 }</code></p>
-<p>就有字节序问题了。因为str[0]同样数值不同机器中表示不同。</p>
-<p>而剩下的， 就是字符编码内部的字节序了。比如UTF-16是用两个字节表示一个字符，但是这两个字节内部如何排序，系统并不知道，所以必须指定字节序。但是UTF-8由于几个字节表示并不相同，一定要从那个表示长度的字节开始读，相当于一开始就知道该从哪里是队头队尾，所以不存在字节序问题。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-01-05-big-little-endian/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

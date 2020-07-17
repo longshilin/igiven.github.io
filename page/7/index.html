@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,7 +230,14 @@
 <li>使用reflexil就能看到他的汇编码</li>
 </ol>
 <p><img src="../../assets/images/2019-09-04-mono.cecil-inject/1567660270933.png" alt="1567660270933"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-04-mono-cecil-inject/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -280,7 +287,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,32 +320,14 @@
 <ul>
 <li><strong>Generate Code 实现和生成结果</strong><br>在Gen代码阶段，对热更生效的部分逻辑，基本就是根据之前在代码中标记了HotfixAttribute的类进行收集，然后使用XLua的模板代码生成器，生成对应名为DelegateBridge类。__Gen_Delegate_Imp这个就是到时候要重复使用到的映射到Lua中function的委托。</li>
 </ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> __Gen_Delegate_Imp0()</span><br><span class="line">&#123;</span><br><span class="line">    RealStatePtr L = luaEnv.rawL;</span><br><span class="line">    <span class="keyword">int</span> errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);</span><br><span class="line">    PCall(L, <span class="number">0</span>, <span class="number">0</span>, errFunc);</span><br><span class="line">    LuaAPI.lua_settop(L, errFunc - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>生成的代码就是先设置errorFuncRef（异常回调），luaReference（Lua方法）。如果在XLua中设置了热更修复代码，那么就会在C#中生成一个DelegateBridge，而其luaReference的指向就是Lua中的方法，所以这个只能调用指定的__Gen_Delegate_Imp，调用其他会报错。</p>
-<ul>
-<li><strong>Hotfix Inject</strong><br>这一步是在Unity为C#代码生成完对应dll之后，由XLua再来对dll注入一些判断条件式来完成是否进行Lua调用的行为。<br>判断方法很简单，检查对应类静态字段是否有DelegateBridge对象。<br>实现如下：</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">injectMethod</span>(<span class="params">MethodDefinition method, HotfixFlagInTool hotfixType</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">            <span class="keyword">var</span> type = method.DeclaringType;</span><br><span class="line">            <span class="keyword">bool</span> isFinalize = (method.Name == <span class="string">"Finalize"</span> &amp;&amp; method.IsSpecialName);</span><br><span class="line">            <span class="comment">//__Gen_Delegate_Imp 方法引用</span></span><br><span class="line">            MethodReference invoke = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">int</span> param_count = method.Parameters.Count + (method.IsStatic ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//根据返回值和参数个数类型，查找对应的委托方法</span></span><br><span class="line">            <span class="keyword">if</span> (!findHotfixDelegate(method, <span class="keyword">out</span> invoke, hotfixType))</span><br><span class="line">            &#123;</span><br><span class="line">                Error(<span class="string">"can not find delegate for "</span> + method.DeclaringType + <span class="string">"."</span> + method.Name + <span class="string">"! try re-genertate code."</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (invoke == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"unknow exception!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            invoke = injectAssembly.MainModule.Import(invoke);</span><br><span class="line">            <span class="comment">//插入的类静态字段，用来标记对应的方法是否有对应的Lua注入</span></span><br><span class="line">            FieldReference fieldReference = <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">//方法中的变量定义</span></span><br><span class="line">            VariableDefinition injection = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">bool</span> isIntKey = hotfixType.HasFlag(HotfixFlagInTool.IntKey) &amp;&amp; !type.HasGenericParameters &amp;&amp; isTheSameAssembly;</span><br><span class="line">            <span class="comment">//isIntKey = !type.HasGenericParameters;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!isIntKey)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//新建变量，加入方法体的变量组中</span></span><br><span class="line">                injection = <span class="keyword">new</span> VariableDefinition(invoke.DeclaringType);</span><br><span class="line">                method.Body.Variables.Add(injection);</span><br><span class="line">                <span class="comment">//获取这个方法对应的委托名，因为有重载方法存在，所以之前已经注入的过的方法会在这边获取时候计数加1，</span></span><br><span class="line">                <span class="comment">//比如第一个重载获取的是__Hotfix0，那么下一个重载会是__Hotfix1，判断是否注入就是是否设置对应FieldReference。</span></span><br><span class="line">                <span class="keyword">var</span> luaDelegateName = getDelegateName(method);</span><br><span class="line">                <span class="keyword">if</span> (luaDelegateName == <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    Error(<span class="string">"too many overload!"</span>);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//创建对应的静态Field名字就是上面取到的luaDelegateName </span></span><br><span class="line">                FieldDefinition fieldDefinition = <span class="keyword">new</span> FieldDefinition(luaDelegateName, Mono.Cecil.FieldAttributes.Static | Mono.Cecil.FieldAttributes.Private,</span><br><span class="line">                    invoke.DeclaringType);</span><br><span class="line">                type.Fields.Add(fieldDefinition);</span><br><span class="line">                fieldReference = fieldDefinition.GetGeneric();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">bool</span> ignoreValueType = hotfixType.HasFlag(HotfixFlagInTool.ValueTypeBoxing);</span><br><span class="line">            <span class="comment">//IL插入位置，现在定位的是方法体的第一行</span></span><br><span class="line">            <span class="keyword">var</span> insertPoint = method.Body.Instructions[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">//获取IL处理器</span></span><br><span class="line">            <span class="keyword">var</span> processor = method.Body.GetILProcessor();</span><br><span class="line">            <span class="comment">//构造函数的处理逻辑先跳过这边不做分析</span></span><br><span class="line">            <span class="keyword">if</span> (method.IsConstructor)</span><br><span class="line">            &#123;</span><br><span class="line">                insertPoint = findNextRet(method.Body.Instructions, insertPoint);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Dictionary&lt;Instruction, Instruction&gt; originToNewTarget = <span class="keyword">new</span> Dictionary&lt;Instruction, Instruction&gt;();</span><br><span class="line">            HashSet&lt;Instruction&gt; noCheck = <span class="keyword">new</span> HashSet&lt;Instruction&gt;();</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> (insertPoint != <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//isIntKey这边用到的是Xlua中的AutoIdMap，这边只对最基础的功能做分析，这边就分析基础的注入了。</span></span><br><span class="line">                Instruction firstInstruction;</span><br><span class="line">                <span class="keyword">if</span> (isIntKey)</span><br><span class="line">                &#123;</span><br><span class="line">                    firstInstruction = processor.Create(OpCodes.Ldc_I4, bridgeIndexByKey.Count);</span><br><span class="line">                    processor.InsertBefore(insertPoint, firstInstruction);</span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Call, hotfixFlagGetter));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">//创建第一条IL语句，获取类的静态Field压入方法栈中，其实就是之前luaDelegateName获取的字段</span></span><br><span class="line">                    firstInstruction = processor.Create(OpCodes.Ldsfld, fieldReference);</span><br><span class="line">                    <span class="comment">//插入insertPoint之前</span></span><br><span class="line">                    processor.InsertBefore(insertPoint, firstInstruction);</span><br><span class="line">                    <span class="comment">//创建并插入IL，获取栈顶的值并压入到对应的变量中，injection就是我们之前创建的新建变量</span></span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Stloc, injection));</span><br><span class="line">                    <span class="comment">//创建并插入IL，压入变量体中的值到栈</span></span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldloc, injection));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//创建跳转语句，为false时候直接跳转insertPoint,</span></span><br><span class="line">                <span class="comment">//这边OpCodes.Brfalse看起来是布尔值判断，其实也会判断是否为null</span></span><br><span class="line">                <span class="keyword">var</span> jmpInstruction = processor.Create(OpCodes.Brfalse, insertPoint);</span><br><span class="line">                processor.InsertBefore(insertPoint, jmpInstruction);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (isIntKey)</span><br><span class="line">                &#123;</span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldc_I4, bridgeIndexByKey.Count));</span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Call, delegateBridgeGetter));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">//创建并插入IL,再次压入变量的值，因为上面做完判断后，栈顶的值就会被弹出，所以这边要再次压入</span></span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldloc, injection));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; param_count; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i &lt; ldargs.Length)</span><br><span class="line">                    &#123;</span><br><span class="line">                        processor.InsertBefore(insertPoint, processor.Create(ldargs[i]));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (i &lt; <span class="number">256</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldarg_S, (<span class="keyword">byte</span>)i));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldarg, (<span class="keyword">short</span>)i));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (i == <span class="number">0</span> &amp;&amp; !method.IsStatic &amp;&amp; type.IsValueType)</span><br><span class="line">                    &#123;</span><br><span class="line">                        processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ldobj, type));</span><br><span class="line">                        </span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">//对值类型进行Box</span></span><br><span class="line">                    <span class="keyword">if</span> (ignoreValueType)</span><br><span class="line">                    &#123;</span><br><span class="line">                        TypeReference paramType;</span><br><span class="line">                        <span class="keyword">if</span> (method.IsStatic)</span><br><span class="line">                        &#123;</span><br><span class="line">                            paramType = method.Parameters[i].ParameterType;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                            paramType = (i == <span class="number">0</span>) ? type : method.Parameters[i - <span class="number">1</span>].ParameterType;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (paramType.IsValueType)</span><br><span class="line">                        &#123;</span><br><span class="line">                            processor.InsertBefore(insertPoint, processor.Create(OpCodes.Box, paramType));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//创建并插入IL，调用invoke方法，因为之前已经压入injection的值，DelegateBridge的对象</span></span><br><span class="line">                processor.InsertBefore(insertPoint, processor.Create(OpCodes.Call, invoke));</span><br><span class="line">                <span class="comment">//普通方法，加入返回操作</span></span><br><span class="line">                <span class="keyword">if</span> (!method.IsConstructor &amp;&amp; !isFinalize)</span><br><span class="line">                &#123;</span><br><span class="line">                    processor.InsertBefore(insertPoint, processor.Create(OpCodes.Ret));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (!method.IsConstructor)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    originToNewTarget[insertPoint] = firstInstruction;</span><br><span class="line">                    noCheck.Add(jmpInstruction);</span><br><span class="line">                &#125;</span><br><span class="line">                insertPoint = findNextRet(method.Body.Instructions, insertPoint);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (method.IsConstructor)</span><br><span class="line">            &#123;</span><br><span class="line">                fixBranch(processor, method.Body.Instructions, originToNewTarget, noCheck);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (isFinalize)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (method.Body.ExceptionHandlers.Count == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> InvalidProgramException(<span class="string">"Finalize has not try-catch? Type :"</span> + method.DeclaringType);</span><br><span class="line">                &#125;</span><br><span class="line">                method.Body.ExceptionHandlers[<span class="number">0</span>].TryStart = method.Body.Instructions[<span class="number">0</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (isIntKey)</span><br><span class="line">            &#123;</span><br><span class="line">                bridgeIndexByKey.Add(method);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">string</span> <span class="title">getDelegateName</span>(<span class="params">MethodDefinition method</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">            <span class="keyword">string</span> fieldName = method.Name;</span><br><span class="line">            <span class="keyword">if</span> (fieldName.StartsWith(<span class="string">"."</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                fieldName = fieldName.Substring(<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">string</span> ccFlag = method.IsConstructor ? <span class="string">"_c"</span> : <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">string</span> luaDelegateName = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">var</span> type = method.DeclaringType;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX_OVERLOAD; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">string</span> tmp = ccFlag + <span class="string">"__Hotfix"</span> + i + <span class="string">"_"</span> + fieldName;</span><br><span class="line">                <span class="keyword">if</span> (!type.Fields.Any(f =&gt; f.Name == tmp)) <span class="comment">// injected</span></span><br><span class="line">                &#123;</span><br><span class="line">                    luaDelegateName = tmp;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> luaDelegateName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>xlua.hotfix</strong>在完成生成代码和注入后，只要在Lua中调用xlua.hotfix或util.hotfix<em>ex方法就可以实现C#代码热更了。</em>hotfix和hotfixex的区别在与是否可以调用原C#代码，其实ex的实现也是调用了hotfix，在下面将分析hotfix和hotfix_ex的实现原理。<br>先分析下hotfix的Lua代码，代码在第一篇文章中的实例化lua中：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">init_xlua.lua</span><br><span class="line">xlua.hotfix &#x3D; function(cs, field, func)</span><br><span class="line">           &#x2F;&#x2F;判空</span><br><span class="line">           if func &#x3D;&#x3D; nil then func &#x3D; false end</span><br><span class="line">           &#x2F;&#x2F;检查并且统一转化为table</span><br><span class="line">           &#x2F;&#x2F;因为在Xlua中可以一次传一个方法，或者一次传一组方法</span><br><span class="line">           local tbl &#x3D; (type(field) &#x3D;&#x3D; &#39;table&#39;) and field or &#123;[field] &#x3D; func&#125;</span><br><span class="line">           &#x2F;&#x2F;遍历需要hotfix的代码，key是方法名，v是对应的func</span><br><span class="line">           for k, v in pairs(tbl) do</span><br><span class="line">               &#x2F;&#x2F;构造函数的hotfix，这边不做分析了，原理一样</span><br><span class="line">               local cflag &#x3D; &#39;&#39;</span><br><span class="line">               if k &#x3D;&#x3D; &#39;.ctor&#39; then</span><br><span class="line">                   cflag &#x3D; &#39;_c&#39;</span><br><span class="line">                   k &#x3D; &#39;ctor&#39;</span><br><span class="line">               end</span><br><span class="line">               &#x2F;&#x2F;检查v的类型</span><br><span class="line">               local f &#x3D; type(v) &#x3D;&#x3D; &#39;function&#39; and v or nil</span><br><span class="line">               &#x2F;&#x2F;调用access函数，其在初始化注册，最终实现在C#中下文解析实现</span><br><span class="line">               xlua.access(cs, cflag .. &#39;__Hotfix0_&#39;..k, f) -- at least one</span><br><span class="line">               &#x2F;&#x2F;尝试给重载方法也添加上function如果有重载的话</span><br><span class="line">               pcall(function()</span><br><span class="line">                   for i &#x3D; 1, 99 do</span><br><span class="line">                       xlua.access(cs, cflag .. &#39;__Hotfix&#39;..i..&#39;_&#39;..k, f)</span><br><span class="line">                   end</span><br><span class="line">               end)</span><br><span class="line">           end</span><br><span class="line">           &#x2F;&#x2F;设置私有访问</span><br><span class="line">           xlua.private_accessible(cs)</span><br><span class="line">         end</span><br></pre></td></tr></table></figure>
-
-<p><strong>XLuaAccess在C#中的实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"> &#x2F;&#x2F;xlua.access(cs, cflag .. &#39;__Hotfix0_&#39;..k, f)</span><br><span class="line"></span><br><span class="line"> public static int XLuaAccess(RealStatePtr L)</span><br><span class="line"> &#123;</span><br><span class="line">     try</span><br><span class="line">     &#123;</span><br><span class="line">         </span><br><span class="line">         ObjectTranslator translator &#x3D; ObjectTranslatorPool.Instance.Find(L);</span><br><span class="line">         &#x2F;&#x2F;获取对应的CS类Type</span><br><span class="line">         Type type &#x3D; getType(L, translator, 1);</span><br><span class="line">         object obj &#x3D; null;</span><br><span class="line">         if (type &#x3D;&#x3D; null &amp;&amp; LuaAPI.lua_type(L, 1) &#x3D;&#x3D; LuaTypes.LUA_TUSERDATA)</span><br><span class="line">         &#123;</span><br><span class="line">             obj &#x3D; translator.SafeGetCSObj(L, 1);</span><br><span class="line">             if (obj &#x3D;&#x3D; null)</span><br><span class="line">             &#123;</span><br><span class="line">                 return LuaAPI.luaL_error(L, &quot;xlua.access, #1 parameter must a type&#x2F;c# object&#x2F;string&quot;);</span><br><span class="line">             &#125;</span><br><span class="line">             type &#x3D; obj.GetType();</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         if (type &#x3D;&#x3D; null)</span><br><span class="line">         &#123;</span><br><span class="line">             return LuaAPI.luaL_error(L, &quot;xlua.access, can not find c# type&quot;);</span><br><span class="line">         &#125;</span><br><span class="line">         &#x2F;&#x2F;将cflag .. &#39;__Hotfix0_&#39;..k 转为fieldName，这个字段就是之前Inject时候创建的类静态字段名</span><br><span class="line">         string fieldName &#x3D; LuaAPI.lua_tostring(L, 2);</span><br><span class="line"></span><br><span class="line">         BindingFlags bindingFlags &#x3D; BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;</span><br><span class="line">         &#x2F;&#x2F;这边访问一定是Set所以后面就不分析了，这边就是反射获取对应的FieldInfo，重点在于translator.GetObject方法。</span><br><span class="line">         if (LuaAPI.lua_gettop(L) &gt; 2) &#x2F;&#x2F; set</span><br><span class="line">         &#123;</span><br><span class="line">             var field &#x3D; type.GetField(fieldName, bindingFlags);</span><br><span class="line">             if (field !&#x3D; null)</span><br><span class="line">             &#123;</span><br><span class="line">                 field.SetValue(obj, translator.GetObject(L, 3, field.FieldType));</span><br><span class="line">                 return 0;</span><br><span class="line">             &#125;</span><br><span class="line">             var prop &#x3D; type.GetProperty(fieldName, bindingFlags);</span><br><span class="line">             if (prop !&#x3D; null)</span><br><span class="line">             &#123;</span><br><span class="line">                 prop.SetValue(obj, translator.GetObject(L, 3, prop.PropertyType), null);</span><br><span class="line">                 return 0;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         else</span><br><span class="line">         &#123;</span><br><span class="line">             ...</span><br><span class="line">         &#125;</span><br><span class="line">         return LuaAPI.luaL_error(L, &quot;xlua.access, no field &quot; + fieldName);</span><br><span class="line">     &#125;</span><br><span class="line">     catch (Exception e)</span><br><span class="line">     &#123;</span><br><span class="line">         return LuaAPI.luaL_error(L, &quot;c# exception in xlua.access: &quot; + e);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#x2F;&#x2F;为了减少篇幅，只展示必要代码</span><br><span class="line"> public object GetObject(RealStatePtr L, int index, Type type)</span><br><span class="line"> &#123;</span><br><span class="line">     int udata &#x3D; LuaAPI.xlua_tocsobj_safe(L, index);</span><br><span class="line"></span><br><span class="line">     if (udata !&#x3D; -1)</span><br><span class="line">     &#123;</span><br><span class="line">         ...</span><br><span class="line">     &#125;</span><br><span class="line">     else</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;&#x2F;一些特殊值类型的返回</span><br><span class="line">         ...</span><br><span class="line">         return (objectCasters.GetCaster(type)(L, index, null));</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#x2F;&#x2F;为了减少篇幅，只展示必要代码</span><br><span class="line"> public ObjectCast GetCaster(Type type)</span><br><span class="line">&#123;</span><br><span class="line">     ...</span><br><span class="line">     ObjectCast oc;</span><br><span class="line">     &#x2F;&#x2F;缓存行为，继续分析第一次获取的caster委托</span><br><span class="line">     if (!castersMap.TryGetValue(type, out oc))</span><br><span class="line">     &#123;</span><br><span class="line">         oc &#x3D; genCaster(type);</span><br><span class="line">         castersMap.Add(type, oc);</span><br><span class="line">     &#125;</span><br><span class="line">     return oc;</span><br><span class="line"> &#125;</span><br><span class="line"> &#x2F;&#x2F;为了减少篇幅，只展示必要代码</span><br><span class="line"> private ObjectCast genCaster(Type type)</span><br><span class="line"> &#123;</span><br><span class="line">     </span><br><span class="line">     ObjectCast fixTypeGetter &#x3D; (RealStatePtr L, int idx, object target) &#x3D;&gt;</span><br><span class="line">     &#123;</span><br><span class="line">         if (LuaAPI.lua_type(L, idx) &#x3D;&#x3D; LuaTypes.LUA_TUSERDATA)</span><br><span class="line">         &#123;</span><br><span class="line">             object obj &#x3D; translator.SafeGetCSObj(L, idx);</span><br><span class="line">             return (obj !&#x3D; null &amp;&amp; type.IsAssignableFrom(obj.GetType())) ? obj : null;</span><br><span class="line">         &#125;</span><br><span class="line">         return null;</span><br><span class="line">     &#125;; </span><br><span class="line">     if ...</span><br><span class="line">     &#x2F;&#x2F;在Inject代码时候我们已经知道其字段类型就是DelegateBridge，所以会返回的就是这个表达式</span><br><span class="line">     else if (typeof(DelegateBridgeBase).IsAssignableFrom(type))</span><br><span class="line">     &#123;</span><br><span class="line">         return (RealStatePtr L, int idx, object target) &#x3D;&gt;</span><br><span class="line">         &#123;</span><br><span class="line">             &#x2F;&#x2F;缓存行为，分析CreateDelegateBridge</span><br><span class="line">             object obj &#x3D; fixTypeGetter(L, idx, target);</span><br><span class="line">             if (obj !&#x3D; null) return obj;</span><br><span class="line"></span><br><span class="line">             if (!LuaAPI.lua_isfunction(L, idx))</span><br><span class="line">             &#123;</span><br><span class="line">                 return null;</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">             return translator.CreateDelegateBridge(L, null, idx);</span><br><span class="line">         &#125;;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#x2F;&#x2F;为了减少篇幅，只展示必要代码</span><br><span class="line"> public object CreateDelegateBridge(RealStatePtr L, Type delegateType, int idx)</span><br><span class="line"> &#123;</span><br><span class="line">     &#x2F;&#x2F;这边只是查找是否这个方法已经有缓存了，有的话直接返回，没有就要Create，我们继续分析Create的事。</span><br><span class="line">     LuaAPI.lua_pushvalue(L, idx);</span><br><span class="line">     LuaAPI.lua_rawget(L, LuaIndexes.LUA_REGISTRYINDEX);</span><br><span class="line">     &#x2F;&#x2F;不为null就是已经生成过，就直接从缓存获取</span><br><span class="line">     if (!LuaAPI.lua_isnil(L, -1))</span><br><span class="line">     &#123;</span><br><span class="line">         retrun ...</span><br><span class="line">     &#125;</span><br><span class="line">     else</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;&#x2F;弹出刚刚查询过的nil值</span><br><span class="line">         LuaAPI.lua_pop(L, 1);</span><br><span class="line">     &#125;</span><br><span class="line">     &#x2F;&#x2F;开始生成对应的DelegateBridge</span><br><span class="line">     &#x2F;&#x2F;压入idx对应的值，idx对应的值是Lua中的function</span><br><span class="line">     LuaAPI.lua_pushvalue(L, idx);</span><br><span class="line">     &#x2F;&#x2F;获取function对应的引用id</span><br><span class="line">     int reference &#x3D; LuaAPI.luaL_ref(L);</span><br><span class="line">     &#x2F;&#x2F;再次压入idx对应的值，idx对应的值是Lua中的function</span><br><span class="line">     LuaAPI.lua_pushvalue(L, idx);</span><br><span class="line">     &#x2F;&#x2F;压入function对应的引用id</span><br><span class="line">     LuaAPI.lua_pushnumber(L, reference);</span><br><span class="line">     &#x2F;&#x2F;将栈顶的两个值以字典形式存在全局变量表中，这个的作用就是上面的代码查询是否已经在lua中缓存。</span><br><span class="line">     LuaAPI.lua_rawset(L, LuaIndexes.LUA_REGISTRYINDEX);</span><br><span class="line">     DelegateBridgeBase bridge;</span><br><span class="line">     try</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;&#x2F;创建DelegateBridge，注意这边的reference，这个就是对应了lua中修复的lua函数，</span><br><span class="line">         &#x2F;&#x2F;我们在Inject时候call的方法会使用到这个参数。</span><br><span class="line">         bridge &#x3D; new DelegateBridge(reference, luaEnv);</span><br><span class="line">     &#125;</span><br><span class="line">     catch(Exception e)</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;&#x2F;异常情况下的，清场操作</span><br><span class="line">         LuaAPI.lua_pushvalue(L, idx);</span><br><span class="line">         LuaAPI.lua_pushnil(L);</span><br><span class="line">         LuaAPI.lua_rawset(L, LuaIndexes.LUA_REGISTRYINDEX);</span><br><span class="line">         LuaAPI.lua_pushnil(L);</span><br><span class="line">         LuaAPI.xlua_rawseti(L, LuaIndexes.LUA_REGISTRYINDEX, reference);</span><br><span class="line">         throw e;</span><br><span class="line">     &#125;</span><br><span class="line">     &#x2F;&#x2F;因为hotfix时候，delegateType传进来是个null，后续代码不会被调用到，就不做分析了。</span><br><span class="line">     if (delegateType &#x3D;&#x3D; null)</span><br><span class="line">     &#123;</span><br><span class="line">         &#x2F;&#x2F;缓存到字典中，注意这里是弱引用所以会被回收，被回收后，需要从lua中查询到对应引用值，然后再生产。</span><br><span class="line">         delegate_bridges[reference] &#x3D; new WeakReference(bridge);</span><br><span class="line">         return bridge;</span><br><span class="line">     &#125;</span><br><span class="line">     ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样在进行调用hotfix后，对应的要修复的类的静态字段就会被设置上对应的DelegateBridge对象，然后在C#代码执行到对应的需要热更修复的方法时候，会先执行我们注入的IL代码，检查是否有对应的DelegateBridge。那么就是调用DelegateBridge中对应的方法，方法中包含的reference就是Lua对应的function，这样就执行到了lua中去，实现了热更。</p>
-<ul>
-<li><strong>util.hotfix_ex的实现</strong><br>其实现直白的来讲就是在调用util.hotfix_ex(functionB)时候，真正设置的是一个中间函数A，它被设置为对应方法的热更修复函数。<br>在调用A进行热更时候，它先设置这个方法的热更方法为空，然后调用原先设置的functionB，当functionB调用完后，然后再设置回热更方法为A，那么就能实现在热更修复方法functionB中调用原先的方法。<br>因为设置这些参数都是带反射的，所以在高频场景是有性能消耗的。<br>代码实现如下：</li>
-</ul>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">hotfix_ex</span><span class="params">(cs, field, func)</span></span></span><br><span class="line">    <span class="comment">--断言，检查参数</span></span><br><span class="line">    <span class="built_in">assert</span>(<span class="built_in">type</span>(field) == <span class="string">'string'</span> <span class="keyword">and</span> <span class="built_in">type</span>(func) == <span class="string">'function'</span>, <span class="string">'invalid argument: #2 string needed, #3 function needed!'</span>)</span><br><span class="line">    <span class="comment">--创建中间函数，就是上文提到的A</span></span><br><span class="line">    <span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">func_after</span><span class="params">(...)</span></span></span><br><span class="line">        <span class="comment">--先将需要热更修复的方法设置为nil，那么再调用方法时候会执行的就是之前方法</span></span><br><span class="line">        xlua.hotfix(cs, field, <span class="literal">nil</span>)</span><br><span class="line">        <span class="comment">--执行func，就是上文提到的functionB</span></span><br><span class="line">        <span class="keyword">local</span> ret = &#123;func(...)&#125;</span><br><span class="line">        <span class="comment">---重新将需要热更修复的方法设置为中间函数A</span></span><br><span class="line">        xlua.hotfix(cs, field, func_after)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">unpack</span>(ret)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">--设置需要热更修复为中间函数A</span></span><br><span class="line">    xlua.hotfix(cs, field, func_after)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>结束语</strong>整个Hotfix的实现也分析完了，后续的文章将继续分析，XLua中的各种优化技巧实现，比如无GC传值，模板生成技术。</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-03-xlua-inject/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -388,7 +377,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,13 +404,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Project&gt;</span><br><span class="line">    &lt;PropertyGroup&gt;</span><br><span class="line">        &lt;NuGet-Kritner-SolarProjection&gt;1.0.2&lt;&#x2F;NuGet-Kritner-SolarProjection&gt;</span><br><span class="line">    &lt;&#x2F;PropertyGroup&gt;</span><br><span class="line">&lt;&#x2F;Project&gt;</span><br></pre></td></tr></table></figure>
 
 <p>然后修改你的项目文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ItemGroup&gt;</span><br><span class="line">  &lt;PackageReference Include&#x3D;&quot;Kritner.SolarProjection&quot; Version&#x3D;&quot;$(NuGet-Kritner-SolarProjection)&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;ItemGroup&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files" target="_blank" rel="noopener">包的版本号</a></li>
-<li><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/customize-your-build?view=vs-2019" target="_blank" rel="noopener">Directory.Build.props的说明</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2019-09-02-nuget-manager/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -471,7 +461,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -499,245 +489,15 @@
 <li>RDB 将数据库的快照（snapshot）以二进制的方式保存到磁盘中。</li>
 <li>AOF 则以协议文本的方式，将所有对数据库进行过写入的命令（及其参数）记录到 AOF 文件，以此达到记录数据库状态的目的。</li>
 </ul>
-<p><img src="../../assets/images/2019-09-02-redis-aof-rdb/graphviz-a7c5f2bb064f2c0307d15dca06d7d31d3adfc032.svg" alt=""></p>
-<p>本章首先介绍 AOF 功能的运作机制， 了解命令是如何被保存到 AOF 文件里的， 观察不同的 AOF 保存模式对数据的安全性、以及 Redis 性能的影响。</p>
-<p>之后会介绍从 AOF 文件中恢复数据库状态的方法，以及该方法背后的实现机制。</p>
-<p>最后还会介绍对 AOF 进行重写以调整文件体积的方法， 并研究这种方法是如何在不改变数据库状态的前提下进行的。</p>
-<p>因为本章涉及 AOF 运行的相关机制， 如果还没了解过 AOF 功能的话， 请先阅读 <a href="http://redis.io/topics/persistence" target="_blank" rel="noopener">Redis 持久化手册中关于 AOF 的部分</a> 。</p>
-<p><strong>无论是rdb还是aof都是把存储的文件恢复到内存中</strong></p>
-<h1 id="RDB优点与缺点"><a href="#RDB优点与缺点" class="headerlink" title="RDB优点与缺点"></a>RDB优点与缺点</h1><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
-<li>如果要进行大规模数据的恢复，RDB方式要比AOF方式恢复速度要快。</li>
-<li>RDB可以最大化Redis性能，父进程做的就是fork子进程，然后继续接受客户端请求，让子进程负责持久化操作，父进程无需进行IO操作。</li>
-<li>RDB是一个非常紧凑(compact)的文件,它保存了某个时间点的数据集，非常适合用作备份，同时也非常适合用作灾难性恢复，它只有一个文件，内容紧凑，通过备份原文件到本机外的其他主机上，一旦本机发生宕机，就能将备份文件复制到redis安装目录下，通过启用服务就能完成数据的恢复。</li>
-</ul>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
-<li>RDB这种持久化方式不太适应对数据完整性要求严格的情况，因为，尽管我们可以用过修改快照实现持久化的频率，但是要持久化的数据是一段时间内的整个数据集的状态，如果在还没有触发快照时，本机就宕机了，那么对数据库所做的写操作就随之而消失了并没有持久化本地dump.rdb文件中。</li>
-<li>每次进行RDB时，父进程都会fork一个子进程，由子进程来进行实际的持久化操作，如果数据集庞大，那么fork出子进程的这个过程将是非常耗时的，就会出现服务器暂停客户端请求，将内存中的数据复制一份给子进程，让子进程进行持久化操作。<br><img src="../../assets/images/2019-09-02-redis-aof-rdb/20181004174024768.png" alt="img"></li>
-</ul>
-<h2 id="AOF-命令同步"><a href="#AOF-命令同步" class="headerlink" title="AOF 命令同步"></a>AOF 命令同步</h2><p>Redis 将所有对数据库进行过写入的命令（及其参数）记录到 AOF 文件， 以此达到记录数据库状态的目的， 为了方便起见， 我们称呼这种记录过程为同步。</p>
-<p>举个例子， 如果执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; RPUSH list 1 2 3 4</span><br><span class="line">(integer) 4</span><br><span class="line"></span><br><span class="line">redis&gt; LRANGE list 0 -1</span><br><span class="line">1) &quot;1&quot;</span><br><span class="line">2) &quot;2&quot;</span><br><span class="line">3) &quot;3&quot;</span><br><span class="line">4) &quot;4&quot;</span><br><span class="line"></span><br><span class="line">redis&gt; KEYS *</span><br><span class="line">1) &quot;list&quot;</span><br><span class="line"></span><br><span class="line">redis&gt; RPOP list</span><br><span class="line">&quot;4&quot;</span><br><span class="line"></span><br><span class="line">redis&gt; LPOP list</span><br><span class="line">&quot;1&quot;</span><br><span class="line"></span><br><span class="line">redis&gt; LPUSH list 1</span><br><span class="line">(integer) 3</span><br><span class="line"></span><br><span class="line">redis&gt; LRANGE list 0 -1</span><br><span class="line">1) &quot;1&quot;</span><br><span class="line">2) &quot;2&quot;</span><br><span class="line">3) &quot;3&quot;</span><br></pre></td></tr></table></figure>
-
-<p>那么其中四条对数据库有修改的写入命令就会被同步到 AOF 文件中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RPUSH list 1 2 3 4</span><br><span class="line"></span><br><span class="line">RPOP list</span><br><span class="line"></span><br><span class="line">LPOP list</span><br><span class="line"></span><br><span class="line">LPUSH list 1</span><br></pre></td></tr></table></figure>
-
-<p>为了处理的方便， AOF 文件使用网络通讯协议的格式来保存这些命令。</p>
-<p>比如说， 上面列举的四个命令在 AOF 文件中就实际保存如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*6</span><br><span class="line">$5</span><br><span class="line">RPUSH</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">1</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">$1</span><br><span class="line">3</span><br><span class="line">$1</span><br><span class="line">4</span><br><span class="line">*2</span><br><span class="line">$4</span><br><span class="line">RPOP</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">*2</span><br><span class="line">$4</span><br><span class="line">LPOP</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">*3</span><br><span class="line">$5</span><br><span class="line">LPUSH</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>除了 <a href="http://redis.readthedocs.org/en/latest/connection/select.html#select" target="_blank" rel="noopener">SELECT</a> 命令是 AOF 程序自己加上去的之外， 其他命令都是之前我们在终端里执行的命令。</p>
-<p>同步命令到 AOF 文件的整个过程可以分为三个阶段：</p>
-<ol>
-<li>命令传播：Redis 将执行完的命令、命令的参数、命令的参数个数等信息发送到 AOF 程序中。</li>
-<li>缓存追加：AOF 程序根据接收到的命令数据，将命令转换为网络通讯协议的格式，然后将协议内容追加到服务器的 AOF 缓存中。</li>
-<li>文件写入和保存：AOF 缓存中的内容被写入到 AOF 文件末尾，如果设定的 AOF 保存条件被满足的话， <code>fsync</code> 函数或者 <code>fdatasync</code> 函数会被调用，将写入的内容真正地保存到磁盘中。</li>
-</ol>
-<p>以下几个小节将详细地介绍这三个步骤。</p>
-<h2 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h2><p>当一个 Redis 客户端需要执行命令时， 它通过网络连接， 将协议文本发送给 Redis 服务器。</p>
-<p>比如说， 要执行命令 <code>SET KEY VALUE</code> ， 客户端将向服务器发送文本 <code>&quot;*3\r\n$3\r\nSET\r\n$3\r\nKEY\r\n$5\r\nVALUE\r\n&quot;</code> 。</p>
-<p>服务器在接到客户端的请求之后， 它会根据协议文本的内容， 选择适当的命令函数， 并将各个参数从字符串文本转换为 Redis 字符串对象（<code>StringObject</code>）。</p>
-<p>比如说， 针对上面的 <a href="http://redis.readthedocs.org/en/latest/string/set.html#set" target="_blank" rel="noopener">SET</a> 命令例子， Redis 将客户端的命令指针指向实现 <a href="http://redis.readthedocs.org/en/latest/string/set.html#set" target="_blank" rel="noopener">SET</a> 命令的 <code>setCommand</code> 函数， 并创建三个 Redis 字符串对象， 分别保存 <code>SET</code> 、 <code>KEY</code> 和 <code>VALUE</code> 三个参数（命令也算作参数）。</p>
-<p>每当命令函数成功执行之后， 命令参数都会被传播到 AOF 程序， 以及 REPLICATION 程序（本节不讨论这个，列在这里只是为了完整性的考虑）。</p>
-<p>这个执行并传播命令的过程可以用以下伪代码表示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (execRedisCommand(cmd, argv, argc) &#x3D;&#x3D; EXEC_SUCCESS):</span><br><span class="line"></span><br><span class="line">    if aof_is_turn_on():</span><br><span class="line">        # 传播命令到 AOF 程序</span><br><span class="line">        propagate_aof(cmd, argv, argc)</span><br><span class="line"></span><br><span class="line">    if replication_is_turn_on():</span><br><span class="line">        # 传播命令到 REPLICATION 程序</span><br><span class="line">        propagate_replication(cmd, argv, argc)</span><br></pre></td></tr></table></figure>
-
-<p>以下是该过程的流程图：</p>
-<p><img src="../../assets/images/2019-09-02-redis-aof-rdb/graphviz-a5c804211267a10a5c3ffa47c5b600727191a3be.svg" alt=""></p>
-<h2 id="缓存追加"><a href="#缓存追加" class="headerlink" title="缓存追加"></a>缓存追加</h2><p>当命令被传播到 AOF 程序之后， 程序会根据命令以及命令的参数， 将命令从字符串对象转换回原来的协议文本。</p>
-<p>比如说， 如果 AOF 程序接受到的三个参数分别保存着 <code>SET</code> 、 <code>KEY</code> 和 <code>VALUE</code> 三个字符串， 那么它将生成协议文本 <code>&quot;*3\r\n$3\r\nSET\r\n$3\r\nKEY\r\n$5\r\nVALUE\r\n&quot;</code> 。</p>
-<p>协议文本生成之后， 它会被追加到 <code>redis.h/redisServer</code> 结构的 <code>aof_buf</code> 末尾。</p>
-<p><code>redisServer</code> 结构维持着 Redis 服务器的状态， <code>aof_buf</code> 域则保存着所有等待写入到 AOF 文件的协议文本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct redisServer &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 其他域...</span><br><span class="line"></span><br><span class="line">    sds aof_buf;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 其他域...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>至此， 追加命令到缓存的步骤执行完毕。</p>
-<p>综合起来，整个缓存追加过程可以分为以下三步：</p>
-<ol>
-<li>接受命令、命令的参数、以及参数的个数、所使用的数据库等信息。</li>
-<li>将命令还原成 Redis 网络通讯协议。</li>
-<li>将协议文本追加到 <code>aof_buf</code> 末尾。</li>
-</ol>
-<h2 id="文件写入和保存"><a href="#文件写入和保存" class="headerlink" title="文件写入和保存"></a>文件写入和保存</h2><p>每当服务器常规任务函数被执行、 或者事件处理器被执行时， <code>aof.c/flushAppendOnlyFile</code> 函数都会被调用， 这个函数执行以下两个工作：</p>
-<p>WRITE：根据条件，将 <code>aof_buf</code> 中的缓存写入到 AOF 文件。</p>
-<p>SAVE：根据条件，调用 <code>fsync</code> 或 <code>fdatasync</code> 函数，将 AOF 文件保存到磁盘中。</p>
-<p>两个步骤都需要根据一定的条件来执行， 而这些条件由 AOF 所使用的保存模式来决定， 以下小节就来介绍 AOF 所使用的三种保存模式， 以及在这些模式下， 步骤 WRITE 和 SAVE 的调用条件。</p>
-<h2 id="AOF-保存模式"><a href="#AOF-保存模式" class="headerlink" title="AOF 保存模式"></a>AOF 保存模式</h2><p>Redis 目前支持三种 AOF 保存模式，它们分别是：</p>
-<ol>
-<li><code>AOF_FSYNC_NO</code> ：不保存。</li>
-<li><code>AOF_FSYNC_EVERYSEC</code> ：每一秒钟保存一次。</li>
-<li><code>AOF_FSYNC_ALWAYS</code> ：每执行一个命令保存一次。</li>
-</ol>
-<p>以下三个小节将分别讨论这三种保存模式。</p>
-<h3 id="不保存"><a href="#不保存" class="headerlink" title="不保存"></a>不保存</h3><p>在这种模式下， 每次调用 <code>flushAppendOnlyFile</code> 函数， WRITE 都会被执行， 但 SAVE 会被略过。</p>
-<p>在这种模式下， SAVE 只会在以下任意一种情况中被执行：</p>
-<ul>
-<li>Redis 被关闭</li>
-<li>AOF 功能被关闭</li>
-<li>系统的写缓存被刷新（可能是缓存已经被写满，或者定期保存操作被执行）</li>
-</ul>
-<p>这三种情况下的 SAVE 操作都会引起 Redis 主进程阻塞。</p>
-<h3 id="每一秒钟保存一次"><a href="#每一秒钟保存一次" class="headerlink" title="每一秒钟保存一次"></a>每一秒钟保存一次</h3><p>在这种模式中， SAVE 原则上每隔一秒钟就会执行一次， 因为 SAVE 操作是由后台子线程调用的， 所以它不会引起服务器主进程阻塞。</p>
-<p>注意， 在上一句的说明里面使用了词语“原则上”， 在实际运行中， 程序在这种模式下对 <code>fsync</code> 或 <code>fdatasync</code> 的调用并不是每秒一次， 它和调用 <code>flushAppendOnlyFile</code> 函数时 Redis 所处的状态有关。</p>
-<p>每当 <code>flushAppendOnlyFile</code> 函数被调用时， 可能会出现以下四种情况：</p>
-<ul>
-<li><p>子线程正在执行 SAVE ，并且：</p>
-<blockquote>
-<ol>
-<li>这个 SAVE 的执行时间未超过 2 秒，那么程序直接返回，并不执行 WRITE 或新的 SAVE 。</li>
-<li>这个 SAVE 已经执行超过 2 秒，那么程序执行 WRITE ，但不执行新的 SAVE 。注意，因为这时 WRITE 的写入必须等待子线程先完成（旧的） SAVE ，因此这里 WRITE 会比平时阻塞更长时间。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>子线程没有在执行 SAVE ，并且：</p>
-<blockquote>
-<ol>
-<li>上次成功执行 SAVE 距今不超过 1 秒，那么程序执行 WRITE ，但不执行 SAVE 。</li>
-<li>上次成功执行 SAVE 距今已经超过 1 秒，那么程序执行 WRITE 和 SAVE 。</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<p>可以用流程图表示这四种情况：</p>
-<p><img src="../../assets/images/2019-09-02-redis-aof-rdb/graphviz-1b226a6d0f09ed1b61a30d899372834634b96504.svg" alt=""></p>
-<p>根据以上说明可以知道， 在“每一秒钟保存一次”模式下， 如果在情况 1 中发生故障停机， 那么用户最多损失小于 2 秒内所产生的所有数据。</p>
-<p>如果在情况 2 中发生故障停机， 那么用户损失的数据是可以超过 2 秒的。</p>
-<p>Redis 官网上所说的， AOF 在“每一秒钟保存一次”时发生故障， 只丢失 1 秒钟数据的说法， 实际上并不准确。</p>
-<h3 id="每执行一个命令保存一次"><a href="#每执行一个命令保存一次" class="headerlink" title="每执行一个命令保存一次"></a>每执行一个命令保存一次</h3><p>在这种模式下，每次执行完一个命令之后， WRITE 和 SAVE 都会被执行。</p>
-<p>另外，因为 SAVE 是由 Redis 主进程执行的，所以在 SAVE 执行期间，主进程会被阻塞，不能接受命令请求。</p>
-<h2 id="AOF-保存模式对性能和安全性的影响"><a href="#AOF-保存模式对性能和安全性的影响" class="headerlink" title="AOF 保存模式对性能和安全性的影响"></a>AOF 保存模式对性能和安全性的影响</h2><p>在上一个小节， 我们简短地描述了三种 AOF 保存模式的工作方式， 现在， 是时候研究一下这三个模式在安全性和性能方面的区别了。</p>
-<p>对于三种 AOF 保存模式， 它们对服务器主进程的阻塞情况如下：</p>
-<ol>
-<li>不保存（<code>AOF_FSYNC_NO</code>）：写入和保存都由主进程执行，两个操作都会阻塞主进程。</li>
-<li>每一秒钟保存一次（<code>AOF_FSYNC_EVERYSEC</code>）：写入操作由主进程执行，阻塞主进程。保存操作由子线程执行，不直接阻塞主进程，但保存操作完成的快慢会影响写入操作的阻塞时长。</li>
-<li>每执行一个命令保存一次（<code>AOF_FSYNC_ALWAYS</code>）：和模式 1 一样。</li>
-</ol>
-<p>因为阻塞操作会让 Redis 主进程无法持续处理请求， 所以一般说来， 阻塞操作执行得越少、完成得越快， Redis 的性能就越好。</p>
-<p>模式 1 的保存操作只会在AOF 关闭或 Redis 关闭时执行， 或者由操作系统触发， 在一般情况下， 这种模式只需要为写入阻塞， 因此它的写入性能要比后面两种模式要高， 当然， 这种性能的提高是以降低安全性为代价的： 在这种模式下， 如果运行的中途发生停机， 那么丢失数据的数量由操作系统的缓存冲洗策略决定。</p>
-<p>模式 2 在性能方面要优于模式 3 ， 并且在通常情况下， 这种模式最多丢失不多于 2 秒的数据， 所以它的安全性要高于模式 1 ， 这是一种兼顾性能和安全性的保存方案。</p>
-<p>模式 3 的安全性是最高的， 但性能也是最差的， 因为服务器必须阻塞直到命令信息被写入并保存到磁盘之后， 才能继续处理请求。</p>
-<p>综合起来，三种 AOF 模式的操作特性可以总结如下：</p>
-<table>
-<thead>
-<tr>
-<th align="left">模式</th>
-<th align="left">WRITE 是否阻塞？</th>
-<th align="left">SAVE 是否阻塞？</th>
-<th align="left">停机时丢失的数据量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>AOF_FSYNC_NO</code></td>
-<td align="left">阻塞</td>
-<td align="left">阻塞</td>
-<td align="left">操作系统最后一次对 AOF 文件触发 SAVE 操作之后的数据。</td>
-</tr>
-<tr>
-<td align="left"><code>AOF_FSYNC_EVERYSEC</code></td>
-<td align="left">阻塞</td>
-<td align="left">不阻塞</td>
-<td align="left">一般情况下不超过 2 秒钟的数据。</td>
-</tr>
-<tr>
-<td align="left"><code>AOF_FSYNC_ALWAYS</code></td>
-<td align="left">阻塞</td>
-<td align="left">阻塞</td>
-<td align="left">最多只丢失一个命令的数据。</td>
-</tr>
-</tbody></table>
-<h2 id="AOF-文件的读取和数据还原"><a href="#AOF-文件的读取和数据还原" class="headerlink" title="AOF 文件的读取和数据还原"></a>AOF 文件的读取和数据还原</h2><p>AOF 文件保存了 Redis 的数据库状态， 而文件里面包含的都是符合 Redis 通讯协议格式的命令文本。</p>
-<p>这也就是说， 只要根据 AOF 文件里的协议， 重新执行一遍里面指示的所有命令， 就可以还原 Redis 的数据库状态了。</p>
-<p>Redis 读取 AOF 文件并还原数据库的详细步骤如下：</p>
-<ol>
-<li>创建一个不带网络连接的伪客户端（fake client）。</li>
-<li>读取 AOF 所保存的文本，并根据内容还原出命令、命令的参数以及命令的个数。</li>
-<li>根据命令、命令的参数和命令的个数，使用伪客户端执行该命令。</li>
-<li>执行 2 和 3 ，直到 AOF 文件中的所有命令执行完毕。</li>
-</ol>
-<p>完成第 4 步之后， AOF 文件所保存的数据库就会被完整地还原出来。</p>
-<p>注意， 因为 Redis 的命令只能在客户端的上下文中被执行， 而 AOF 还原时所使用的命令来自于 AOF 文件， 而不是网络， 所以程序使用了一个没有网络连接的伪客户端来执行命令。 伪客户端执行命令的效果， 和带网络连接的客户端执行命令的效果， 完全一样。</p>
-<p>整个读取和还原过程可以用以下伪代码表示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def READ_AND_LOAD_AOF():</span><br><span class="line"></span><br><span class="line">    # 打开并读取 AOF 文件</span><br><span class="line">    file &#x3D; open(aof_file_name)</span><br><span class="line">    while file.is_not_reach_eof():</span><br><span class="line"></span><br><span class="line">        # 读入一条协议文本格式的 Redis 命令</span><br><span class="line">        cmd_in_text &#x3D; file.read_next_command_in_protocol_format()</span><br><span class="line"></span><br><span class="line">        # 根据文本命令，查找命令函数，并创建参数和参数个数等对象</span><br><span class="line">        cmd, argv, argc &#x3D; text_to_command(cmd_in_text)</span><br><span class="line"></span><br><span class="line">        # 执行命令</span><br><span class="line">        execRedisCommand(cmd, argv, argc)</span><br><span class="line"></span><br><span class="line">    # 关闭文件</span><br><span class="line">    file.close()</span><br></pre></td></tr></table></figure>
-
-<p>作为例子， 以下是一个简短的 AOF 文件的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$3</span><br><span class="line">key</span><br><span class="line">$5</span><br><span class="line">value</span><br><span class="line">*8</span><br><span class="line">$5</span><br><span class="line">RPUSH</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">1</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">$1</span><br><span class="line">3</span><br><span class="line">$1</span><br><span class="line">4</span><br><span class="line">$1</span><br><span class="line">5</span><br><span class="line">$1</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
-
-<p>当程序读入这个 AOF 文件时， 它首先执行 <code>SELECT 0</code> 命令 —— 这个 <code>SELECT</code> 命令是由 AOF 写入程序自动生成的， 它确保程序可以将数据还原到正确的数据库上。</p>
-<p>然后执行后面的 <code>SET key value</code> 和 <code>RPUSH 1 2 3 4</code> 命令， 还原 <code>key</code> 和 <code>list</code> 两个键的数据。</p>
-<p>为了避免对数据的完整性产生影响， 在服务器载入数据的过程中， 只有和数据库无关的订阅与发布功能可以正常使用， 其他命令一律返回错误。</p>
-<h2 id="AOF-重写"><a href="#AOF-重写" class="headerlink" title="AOF 重写"></a>AOF 重写</h2><p>AOF 文件通过同步 Redis 服务器所执行的命令， 从而实现了数据库状态的记录， 但是， 这种同步方式会造成一个问题： 随着运行时间的流逝， AOF 文件会变得越来越大。</p>
-<p>举个例子， 如果服务器执行了以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RPUSH list 1 2 3 4      &#x2F;&#x2F; [1, 2, 3, 4]</span><br><span class="line"></span><br><span class="line">RPOP list               &#x2F;&#x2F; [1, 2, 3]</span><br><span class="line"></span><br><span class="line">LPOP list               &#x2F;&#x2F; [2, 3]</span><br><span class="line"></span><br><span class="line">LPUSH list 1            &#x2F;&#x2F; [1, 2, 3]</span><br></pre></td></tr></table></figure>
-
-<p>那么光是记录 <code>list</code> 键的状态， AOF 文件就需要保存四条命令。</p>
-<p>另一方面， 有些被频繁操作的键， 对它们所调用的命令可能有成百上千、甚至上万条， 如果这样被频繁操作的键有很多的话， AOF 文件的体积就会急速膨胀， 对 Redis 、甚至整个系统的造成影响。</p>
-<p>为了解决以上的问题， Redis 需要对 AOF 文件进行重写（rewrite）： 创建一个新的 AOF 文件来代替原有的 AOF 文件， 新 AOF 文件和原有 AOF 文件保存的数据库状态完全一样， 但新 AOF 文件的体积小于等于原有 AOF 文件的体积。</p>
-<p>以下就来介绍 AOF 重写的实现方式。</p>
-<h2 id="AOF-重写的实现"><a href="#AOF-重写的实现" class="headerlink" title="AOF 重写的实现"></a>AOF 重写的实现</h2><p>所谓的“重写”其实是一个有歧义的词语， 实际上， AOF 重写并不需要对原有的 AOF 文件进行任何写入和读取， 它针对的是数据库中键的当前值。</p>
-<p>考虑这样一个情况， 如果服务器对键 <code>list</code> 执行了以下四条命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RPUSH list 1 2 3 4      &#x2F;&#x2F; [1, 2, 3, 4]</span><br><span class="line"></span><br><span class="line">RPOP list               &#x2F;&#x2F; [1, 2, 3]</span><br><span class="line"></span><br><span class="line">LPOP list               &#x2F;&#x2F; [2, 3]</span><br><span class="line"></span><br><span class="line">LPUSH list 1            &#x2F;&#x2F; [1, 2, 3]</span><br></pre></td></tr></table></figure>
-
-<p>那么当前列表键 <code>list</code> 在数据库中的值就为 <code>[1, 2, 3]</code> 。</p>
-<p>如果我们要保存这个列表的当前状态， 并且尽量减少所使用的命令数， 那么最简单的方式不是去 AOF 文件上分析前面执行的四条命令， 而是直接读取 <code>list</code> 键在数据库的当前值， 然后用一条 <code>RPUSH 1 2 3</code> 命令来代替前面的四条命令。</p>
-<p>再考虑这样一个例子， 如果服务器对集合键 <code>animal</code> 执行了以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SADD animal cat                 &#x2F;&#x2F; &#123;cat&#125;</span><br><span class="line"></span><br><span class="line">SADD animal dog panda tiger     &#x2F;&#x2F; &#123;cat, dog, panda, tiger&#125;</span><br><span class="line"></span><br><span class="line">SREM animal cat                 &#x2F;&#x2F; &#123;dog, panda, tiger&#125;</span><br><span class="line"></span><br><span class="line">SADD animal cat lion            &#x2F;&#x2F; &#123;cat, lion, dog, panda, tiger&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么使用一条 <code>SADD animal cat lion dog panda tiger</code> 命令， 就可以还原 <code>animal</code> 集合的状态， 这比之前的四条命令调用要大大减少。</p>
-<p>除了列表和集合之外， 字符串、有序集、哈希表等键也可以用类似的方法来保存状态， 并且保存这些状态所使用的命令数量， 比起之前建立这些键的状态所使用命令的数量要大大减少。</p>
-<p>根据键的类型， 使用适当的写入命令来重现键的当前值， 这就是 AOF 重写的实现原理。 整个重写过程可以用伪代码表示如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">def AOF_REWRITE(tmp_tile_name):</span><br><span class="line"></span><br><span class="line">  f &#x3D; create(tmp_tile_name)</span><br><span class="line"></span><br><span class="line">  # 遍历所有数据库</span><br><span class="line">  for db in redisServer.db:</span><br><span class="line"></span><br><span class="line">    # 如果数据库为空，那么跳过这个数据库</span><br><span class="line">    if db.is_empty(): continue</span><br><span class="line"></span><br><span class="line">    # 写入 SELECT 命令，用于切换数据库</span><br><span class="line">    f.write_command(&quot;SELECT &quot; + db.number)</span><br><span class="line"></span><br><span class="line">    # 遍历所有键</span><br><span class="line">    for key in db:</span><br><span class="line"></span><br><span class="line">      # 如果键带有过期时间，并且已经过期，那么跳过这个键</span><br><span class="line">      if key.have_expire_time() and key.is_expired(): continue</span><br><span class="line"></span><br><span class="line">      if key.type &#x3D;&#x3D; String:</span><br><span class="line"></span><br><span class="line">        # 用 SET key value 命令来保存字符串键</span><br><span class="line"></span><br><span class="line">        value &#x3D; get_value_from_string(key)</span><br><span class="line"></span><br><span class="line">        f.write_command(&quot;SET &quot; + key + value)</span><br><span class="line"></span><br><span class="line">      elif key.type &#x3D;&#x3D; List:</span><br><span class="line"></span><br><span class="line">        # 用 RPUSH key item1 item2 ... itemN 命令来保存列表键</span><br><span class="line"></span><br><span class="line">        item1, item2, ..., itemN &#x3D; get_item_from_list(key)</span><br><span class="line"></span><br><span class="line">        f.write_command(&quot;RPUSH &quot; + key + item1 + item2 + ... + itemN)</span><br><span class="line"></span><br><span class="line">      elif key.type &#x3D;&#x3D; Set:</span><br><span class="line"></span><br><span class="line">        # 用 SADD key member1 member2 ... memberN 命令来保存集合键</span><br><span class="line"></span><br><span class="line">        member1, member2, ..., memberN &#x3D; get_member_from_set(key)</span><br><span class="line"></span><br><span class="line">        f.write_command(&quot;SADD &quot; + key + member1 + member2 + ... + memberN)</span><br><span class="line"></span><br><span class="line">      elif key.type &#x3D;&#x3D; Hash:</span><br><span class="line"></span><br><span class="line">        # 用 HMSET key field1 value1 field2 value2 ... fieldN valueN 命令来保存哈希键</span><br><span class="line"></span><br><span class="line">        field1, value1, field2, value2, ..., fieldN, valueN &#x3D;\</span><br><span class="line">        get_field_and_value_from_hash(key)</span><br><span class="line"></span><br><span class="line">        f.write_command(&quot;HMSET &quot; + key + field1 + value1 + field2 + value2 +\</span><br><span class="line">                        ... + fieldN + valueN)</span><br><span class="line"></span><br><span class="line">      elif key.type &#x3D;&#x3D; SortedSet:</span><br><span class="line"></span><br><span class="line">        # 用 ZADD key score1 member1 score2 member2 ... scoreN memberN</span><br><span class="line">        # 命令来保存有序集键</span><br><span class="line"></span><br><span class="line">        score1, member1, score2, member2, ..., scoreN, memberN &#x3D; \</span><br><span class="line">        get_score_and_member_from_sorted_set(key)</span><br><span class="line"></span><br><span class="line">        f.write_command(&quot;ZADD &quot; + key + score1 + member1 + score2 + member2 +\</span><br><span class="line">                        ... + scoreN + memberN)</span><br><span class="line"></span><br><span class="line">      else:</span><br><span class="line"></span><br><span class="line">        raise_type_error()</span><br><span class="line"></span><br><span class="line">      # 如果键带有过期时间，那么用 EXPIREAT key time 命令来保存键的过期时间</span><br><span class="line">      if key.have_expire_time():</span><br><span class="line">        f.write_command(&quot;EXPIREAT &quot; + key + key.expire_time_in_unix_timestamp())</span><br><span class="line"></span><br><span class="line">    # 关闭文件</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
-
-<h2 id="AOF-后台重写"><a href="#AOF-后台重写" class="headerlink" title="AOF 后台重写"></a>AOF 后台重写</h2><p>上一节展示的 AOF 重写程序可以很好地完成创建一个新 AOF 文件的任务， 但是， 在执行这个程序的时候， 调用者线程会被阻塞。</p>
-<p>很明显， 作为一种辅佐性的维护手段， Redis 不希望 AOF 重写造成服务器无法处理请求， 所以 Redis 决定将 AOF 重写程序放到（后台）子进程里执行， 这样处理的最大好处是：</p>
-<ol>
-<li>子进程进行 AOF 重写期间，主进程可以继续处理命令请求。</li>
-<li>子进程带有主进程的数据副本，使用子进程而不是线程，可以在避免锁的情况下，保证数据的安全性。</li>
-</ol>
-<p>不过， 使用子进程也有一个问题需要解决： 因为子进程在进行 AOF 重写期间， 主进程还需要继续处理命令， 而新的命令可能对现有的数据进行修改， 这会让当前数据库的数据和重写后的 AOF 文件中的数据不一致。</p>
-<p>为了解决这个问题， Redis 增加了一个 AOF 重写缓存， 这个缓存在 fork 出子进程之后开始启用， Redis 主进程在接到新的写命令之后， 除了会将这个写命令的协议内容追加到现有的 AOF 文件之外， 还会追加到这个缓存中：</p>
-<p><img src="../../assets/images/2019-09-02-redis-aof-rdb/graphviz-982033b83f571a133367a8830ee5cca84f6a08e5.svg" alt=""></p>
-<p>换言之， 当子进程在执行 AOF 重写时， 主进程需要执行以下三个工作：</p>
-<ol>
-<li>处理命令请求。</li>
-<li>将写命令追加到现有的 AOF 文件中。</li>
-<li>将写命令追加到 AOF 重写缓存中。</li>
-</ol>
-<p>这样一来可以保证：</p>
-<ol>
-<li>现有的 AOF 功能会继续执行，即使在 AOF 重写期间发生停机，也不会有任何数据丢失。</li>
-<li>所有对数据库进行修改的命令都会被记录到 AOF 重写缓存中。</li>
-</ol>
-<p>当子进程完成 AOF 重写之后， 它会向父进程发送一个完成信号， 父进程在接到完成信号之后， 会调用一个信号处理函数， 并完成以下工作：</p>
-<ol>
-<li>将 AOF 重写缓存中的内容全部写入到新 AOF 文件中。</li>
-<li>对新的 AOF 文件进行改名，覆盖原有的 AOF 文件。</li>
-</ol>
-<p>当步骤 1 执行完毕之后， 现有 AOF 文件、新 AOF 文件和数据库三者的状态就完全一致了。</p>
-<p>当步骤 2 执行完毕之后， 程序就完成了新旧两个 AOF 文件的交替。</p>
-<p>这个信号处理函数执行完毕之后， 主进程就可以继续像往常一样接受命令请求了。 在整个 AOF 后台重写过程中， 只有最后的写入缓存和改名操作会造成主进程阻塞， 在其他时候， AOF 后台重写都不会对主进程造成阻塞， 这将 AOF 重写对性能造成的影响降到了最低。</p>
-<p>以上就是 AOF 后台重写， 也即是 <a href="http://redis.readthedocs.org/en/latest/server/bgrewriteaof.html#bgrewriteaof" target="_blank" rel="noopener">BGREWRITEAOF</a> 命令的工作原理。</p>
-<h2 id="AOF-后台重写的触发条件"><a href="#AOF-后台重写的触发条件" class="headerlink" title="AOF 后台重写的触发条件"></a>AOF 后台重写的触发条件</h2><p>AOF 重写可以由用户通过调用 <a href="http://redis.readthedocs.org/en/latest/server/bgrewriteaof.html#bgrewriteaof" target="_blank" rel="noopener">BGREWRITEAOF</a> 手动触发。</p>
-<p>另外， 服务器在 AOF 功能开启的情况下， 会维持以下三个变量：</p>
-<ul>
-<li>记录当前 AOF 文件大小的变量 <code>aof_current_size</code> 。</li>
-<li>记录最后一次 AOF 重写之后， AOF 文件大小的变量 <code>aof_rewrite_base_size</code> 。</li>
-<li>增长百分比变量 <code>aof_rewrite_perc</code> 。</li>
-</ul>
-<p>每次当 <code>serverCron</code> 函数执行时， 它都会检查以下条件是否全部满足， 如果是的话， 就会触发自动的 AOF 重写：</p>
-<ol>
-<li>没有 <a href="http://redis.readthedocs.org/en/latest/server/bgsave.html#bgsave" target="_blank" rel="noopener">BGSAVE</a> 命令在进行。</li>
-<li>没有 <a href="http://redis.readthedocs.org/en/latest/server/bgrewriteaof.html#bgrewriteaof" target="_blank" rel="noopener">BGREWRITEAOF</a> 在进行。</li>
-<li>当前 AOF 文件大小大于 <code>server.aof_rewrite_min_size</code> （默认值为 1 MB）。</li>
-<li>当前 AOF 文件大小和最后一次 AOF 重写后的大小之间的比率大于等于指定的增长百分比。</li>
-</ol>
-<p>默认情况下， 增长百分比为 <code>100%</code> ， 也即是说， 如果前面三个条件都已经满足， 并且当前 AOF 文件大小比最后一次 AOF 重写时的大小要大一倍的话， 那么触发自动 AOF 重写。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
-<li>AOF 文件通过保存所有修改数据库的命令来记录数据库的状态。</li>
-<li>AOF 文件中的所有命令都以 Redis 通讯协议的格式保存。</li>
-<li>不同的 AOF 保存模式对数据的安全性、以及 Redis 的性能有很大的影响。</li>
-<li>AOF 重写的目的是用更小的体积来保存数据库状态，整个重写过程基本上不影响 Redis 主进程处理命令请求。</li>
-<li>AOF 重写是一个有歧义的名字，实际的重写工作是针对数据库的当前值来进行的，程序既不读写、也不使用原有的 AOF 文件。</li>
-<li>AOF 可以由用户手动触发，也可以由服务器自动触发。</li>
-</ul>
-
+<p><img src="../../assets/images/2019-09-02-redis-aof-rdb/graphviz-a7c5f2bb064f2c0307d15dca06d7d31d3adfc032.svg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2019-09-02-redis-aof-rdb/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -787,7 +547,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -812,203 +572,14 @@
       
           <p>C#代码在编写后，是需要执行编译的，才能起效，这样如果在手机端，没有对应的编译环境，那么对应的c#代码就无法实现热更。ILRuntime实现的基础，也是基于AssetBundle的资源热更新方式，将需要热更新的c#代码打包成DLL，在每次完成资源打包后，对应的DLL会被作为资源热更新出去。这样就规避了编译相关的环节，实现了热更。</p>
 <h1 id="AppDomain"><a href="#AppDomain" class="headerlink" title="AppDomain"></a>AppDomain</h1><p>我们运行一个.NET应用程序或者一个运行库宿主时，OS会首先建立一个进程，然后会在进程中加载CLR(这个加载一般是通过调用_CorExeMain或者_CorBindToRuntimeEx方法来实现)，在加载CLR时会创建一个默认的AppDomain，它是CLR的运行单元，程序的Main方法就是在这里执行，这个默认的AppDomain是唯一且不能被卸载的，当该进程消灭时，默认AppDomain才会随之消失。</p>
-<p>一个进程中可以有多个AppDomain，且它们直接是相互隔离的，我们的Assembly是不能单独执行的，它必须被加载到某个AppDomain中，要想<strong>卸载一个Assembly</strong>就只能卸载其AppDomain。</p>
-<blockquote>
-<p>无法删除WindowsApplication1: 访问被拒绝<br>请确定磁盘末被写保护<br>而且文件末被使用  </p>
-</blockquote>
-<p>除非你关掉作业管理服务器，然后再操作，显然这样做是很不合理的。</p>
-<p>并且默认AppDomain是不能被卸载的，那么我们该怎么办呢，我想到的方法是动态的加载Assembly，新建一个AppDomain，让Assembly加载到这个新AppDomain中然后执行，当执行完后卸载这个新的AppDomain即可。核心思想就是：<strong>如果程序集被加载到默认应用程序域中，则当进程运行时将无法从内存中卸载该程序集。但是，如果打开另一个应用程序域来加载和执行程序集，则卸载该应用程序域时也会同时卸载程序集。使用此技术最小化长时间运行的进程的工作集</strong>。</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525160300209-2123986426.png" alt="img"></p>
-<ol>
-<li><p>AppDomain vs 进程<br>AppDomain被创建在进程中，一个进程内可以有多个AppDomain。一个AppDomain只能属于一个进程。</p>
-</li>
-<li><p>AppDomain vs 线程<br>其实两者本来没什么好对比的。AppDomain是个静态概念，只是限定了对象的边界；线程是个动态概念，它可以运行在不同的AppDomain。一个AppDomain内可以创建多个线程，但是不能限定这些线程只能在本AppDomain内执行代码。CLR中的System.Threading.Thread对象其实是个soft thread，它并不能被操作系统识别；操作系统能识别的是hard thread。一个soft thread只属于一个AppDomain，穿越AppDomain的是hard thread。当hard thread访问到某个AppDomain时,一个AppDomain就会为之产生一个soft thread。<br>hard thread有thread local storage(TLS)，这个存储区被CLR用来存储这个hard thread当前对应AppDomain引用以及softthread引用。当一个hard thread穿越到另外一个AppDomain时，TLS中的这些引用也会改变。<br>当然这个说法很可能是和CLR的实现相关的。</p>
-</li>
-<li><p>AppDomain vs Assembly<br>Assembly是.Net程序的基本部署单元，它可以为CLR提供用于识别类型的元数据等等。Assembly不能单独执行，它必须被加载到AppDomain中，然后由AppDomain创建程序集中的对象。一个Assembly可以被多个AppDomain加载，一个AppDomain可以加载多个Assembly。每个AppDomain引用到某个类型的时候需要把相应的assembly在各自的AppDomain中初始化。因此，每个AppDomain会单独保持一个类的静态变量。</p>
-</li>
-<li><p>AppDomain vs 对象<br>任何对象只能属于一个AppDomain。AppDomain用来隔离对象，不同AppDomain之间的对象必须通过Proxy(reference type)或者Clone(value type)通信。引用类型需要继承System.MarshalByRefObject才能被Marshal/UnMarshal(Proxy)。值类型需要设置Serializable属性才能被Marshal/UnMarshal(Clone)。</p>
-</li>
-<li><p>AppDomain vs Assembly Code<br>AppDomain和程序集的源代码是什么关系呢？每个程序集的代码会分别装载到各个AppDomain中？<br>首先我们要把程序集分3类<br>1.mscorlib，这是每个.net程序都要引用到的程序集。<br>2.GAC，这个是强命名的公用程序集，可以被所有的.net程序引用。<br>3.Assembly not in GAC，这是普通的assembly，可以不是强命名，不放到GAC中。<br>启动CLR，进入entry point时可以设置LoaderOptimization属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[LoaderOptimization(LoaderOptimization.MultiDomain]</span><br><span class="line">static void Main()</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="../../assets/images/2019-09-02-ilruntime/20160504151602702.png" alt="img"></p>
-<p>LoaderOptimization属性可以设置三个不同的枚举值，来设置针对前面说的三种程序集的代码存放以及访问方式。</p>
-<ul>
-<li><p>SingleDomain，由于只启动一个AppDomain，那么code就被直接装载到了AppDomain中，访问静态变量更快捷。</p>
-</li>
-<li><p>MultiDomain，所有的Assembly代码是进程级别的，因此所有的AppDomain只访问一份代码。这大大减少了程序占用的内存，但是由于程序集的静态变量仍然在各个AppDomain中，因此代码访问静态变量需要先得到AppDomain的引用再进行转换，速度会受到影响。</p>
-</li>
-<li><p>MultiDomainHost，只有GAC代码是共享的，非GAC的Assembly依然会加载到被使用的AppDomain中，这样提高了静态变量的访问速度，当然也增加了程序占用的内存。 </p>
-<p>不管是哪种方式，mscorlib始终是process级别的，即只有一份mscorlib代码在内存中。</p>
-</li>
-</ul>
-</li>
-</ol>
-<h1 id="使用dll进行热更"><a href="#使用dll进行热更" class="headerlink" title="使用dll进行热更"></a>使用dll进行热更</h1><p>文章并不是完全的实现热更新,实现的是windows和android平台下，对于dll文件的热更新。对于IOS为什么不能热更新，我们后续会讨论到，先看看安卓和windows下 dll的热更新步骤。</p>
-<ul>
-<li><p>新建一个ClassLibrary（类库）的工程，在其中实现对应的类和方法；</p>
-</li>
-<li><p>将该工程导出为DLL；</p>
-</li>
-<li><p>将DLL改为bytes文件，存入Unity工程中的StreamingAssets文件夹下；</p>
-</li>
-<li><p>在工程运行的时候，读取StreamingAssets下的Dll文件，用Assembly.Load(byte[] bytes )的方法，将DLL文件读取出来，进而执行相关的操作。这一步的代码为：</p>
-</li>
-</ul>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525160707418-392942905.png" alt="img"></p>
-<p>unity工程在执行的时候，会构建一个默认的appDomain，Assembly.Load，其实就是在这个程序域上加载Dll,所以相关的实质和前面一个部分相差不大，这就是c#热更新在unity中的应用(IOS不包括)。</p>
-<h3 id="ios不能基于以上热更的原因"><a href="#ios不能基于以上热更的原因" class="headerlink" title="ios不能基于以上热更的原因"></a>ios不能基于以上热更的原因</h3><p>只要我们设定mono的编译模式为full-aot（比如打IOS安装包的时候），则在运行时试图使用JIT编译时，mono自身的JIT编译器就会禁止<strong><em>生成新的代码</em></strong>(不要混淆Reflection.Emit和反射)这种行为进而报告这个异常。JIT编译的过程根本还没开始，就被自己扼杀了。</p>
-<p><strong>JIT——just in time，即时编译。</strong></p>
-<blockquote>
-<p>一个程序在它运行的时候创建并且运行了全新的代码，而并非那些最初作为这个程序的一部分保存在硬盘上的固有的代码。就叫JIT。</p>
-</blockquote>
-<p>IOS并非把JIT禁止了。或者换个句式讲，IOS封了内存（或者堆）的可执行权限，相当于变相的封锁了JIT这种编译方式。</p>
-<h1 id="ILRuntime"><a href="#ILRuntime" class="headerlink" title="ILRuntime"></a>ILRuntime</h1><blockquote>
-<p>ILRuntime借助Mono.Cecil库来读取DLL的PE信息，以及当中类型的所有信息，最终得到方法的IL汇编码，然后通过内置的IL解译执行虚拟机来执行DLL中的代码</p>
-</blockquote>
-<h3 id="借助Mono-Ceil库来读取DLL的PE信息以及当中类型的所有信息"><a href="#借助Mono-Ceil库来读取DLL的PE信息以及当中类型的所有信息" class="headerlink" title="借助Mono.Ceil库来读取DLL的PE信息以及当中类型的所有信息"></a>借助Mono.Ceil库来读取DLL的PE信息以及当中类型的所有信息</h3><p>这一步是如何实现的，跟随源代码做一个详细的跟踪。</p>
-<p>首先，是构建一个全局的appDomain(这儿不是程序域的意思，只是取其名字意思来表示)</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525183908084-111024744.png" alt="img"></p>
-<p> 基于WWW的方式加载AssetBundle或者DLL/PDB后，接下来是将其封入到MemoryStream中，将dll和pdb的bytes都存入到内存流中后，执行其内部实现的LoadAssembly方法。</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525183929820-235902445.png" alt="img"></p>
-<p>关键的是第一行，从Mono中加载模块：</p>
-<p> <img src="../../assets/images/2019-09-02-ilruntime/656520-20180525183948767-1521954007.png" alt="img"></p>
-<p>进一步跟踪：</p>
-<p>ReadImageFrom的操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184006047-408828631.png" alt="img"></p>
-<p> 其中ImageReader最终来自BinaryReader:</p>
-<p> <img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184022207-1494733614.png" alt="img"></p>
-<p>那么接下来的ReadImage操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184038682-930110102.png" alt="img"></p>
-<p>这四个操作，是最核心的操作，分别读取DLL的PE的各个信息，这样我们就进入下一个步骤。</p>
-<h3 id="最终得到方法的IL汇编码"><a href="#最终得到方法的IL汇编码" class="headerlink" title="最终得到方法的IL汇编码"></a>最终得到方法的IL汇编码</h3><p>让我们分拆来看看这几个读取函数的实现</p>
-<p>1）ReadOptionalHeaders</p>
-<p>主要读取PE的相关信息，不做过多解释，可以参看源码阅读理解；</p>
-<p>2）ReadSections</p>
-<p>读取分块数据</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184056941-656677137.png" alt="img"></p>
-<p>封装一个Section，然后去执行读取，然后赋值给section的Data，注意回退了Index</p>
-<h3 id="ReadCLIHeader"><a href="#ReadCLIHeader" class="headerlink" title="ReadCLIHeader"></a>ReadCLIHeader</h3><p>这步比较简单</p>
-<p> <img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184110212-726126206.png" alt="img"></p>
-<p>4) ReadMetadata</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184136211-1306602825.png" alt="img"></p>
-<p>核心是两个操作，一个是ReadMetadataStream，就是根据不同的标识符来新建不同的存储结构；一个是ReadTableHeap:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184150898-1035213362.png" alt="img"></p>
-<p>初始化heap中的Table后，进行一次Compute，获取size:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180525184214923-1218850507.png" alt="img"></p>
-<p>然后填充size:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/v2-07369c744923a79035a3729bbc488943_hd.jpg" alt="img"></p>
-<p>基于这四步操作，我们可以将IL的汇编码存储到Image中，然后进一步执行后续的CreateModule操作:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/v2-0a604dfba776c9c99f2e72627724c340_hd.jpg" alt="img"></p>
-<p>具体到，就是：</p>
-<p> <img src="../../assets/images/2019-09-02-ilruntime/v2-b252bba4e6d01e512c2305c5c7b355c5_hd.jpg" alt="img"></p>
-<p>其中的ReadModule为：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/v2-32399e9573a7779ecbf82743b30fc184_hd.jpg" alt="img"></p>
-<p>具体的读取manifest和Module内部数据，可以参看源码。</p>
-<h3 id="基于LoadedTypes来实现反射方法的调用"><a href="#基于LoadedTypes来实现反射方法的调用" class="headerlink" title="基于LoadedTypes来实现反射方法的调用"></a>基于LoadedTypes来实现反射方法的调用</h3><p>在ILRuntime中，不能基于System.Type来直接获取热更新DLL中的类，只有基于唯一的appDomain实例，基于LoadedTypes这种来获取热更新中的DLL，基于代码来分析，更为详细：</p>
-<p>首先，加载获取该DLL中的指定类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var it &#x3D; appDomain.LoadedTypes[&quot;HotFix_Project.InstanceClass&quot;]</span><br></pre></td></tr></table></figure>
-
-<p>跟踪LoadedTypes：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public Dictionary&lt;string, IType&gt; LoadedTypes&#123;get&#123;return mapType.InnerDictionary;&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>跟踪看mapType.InnerDictionary:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadSafeDictionary&lt;string, IType&gt; mapType &#x3D; new ThreadSafeDictionary&lt;string, IType&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>这个mapType是什么时候装配的？</p>
-<p>来自于文章二中的LoadAssembly的后续操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144431337-1618869539.png" alt="img"></p>
-<p>那么这个module.GetTypes是如何操作的？</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144453022-436088052.png" alt="img"></p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144501605-1680011964.png" alt="img"></p>
-<p>分别基于协程来return type以及其nestedTypes，关键是看Types是怎么获取的：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144515817-1301453461.png" alt="img"></p>
-<p>关键是read操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144530095-1073548484.png" alt="img"></p>
-<p>继续跟进Read操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144543549-1339229040.png" alt="img"></p>
-<p>关键是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var mtypes &#x3D; metadata.Types</span><br></pre></td></tr></table></figure>
-
-<p>后续都是对其的封装和填充，对于metadata的填充，来自于InitializeTypeDefinitions这个操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144611448-160157189.png" alt="img"></p>
-<p>关键操作是ReadType这个操作：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144626456-2070945940.png" alt="img"></p>
-<p>构建一个内部定义的类，然后做数据填充，看看关键的几个属性的设置：BaseType ,设置其父类型，fields<em>range/methods_range</em> 是对属性范围和方法范围的设置：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144639749-1842647497.png" alt="img"></p>
-<p>所以基本方法还是ReadListRange:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144651716-2020934616.png" alt="img"></p>
-<p>在这儿，我们最终回到了文章二中对于IL虚拟机中的tableHeap的引用，最后实现了和文章二的首尾呼应。</p>
-<p>好了，收起思绪，回到最开始的，获取类，这样获得的一个类，这样得到的一个类，继承自IType，在Unity主工程中，则需要System.Type才能继续使用反射接口，其对于的封装来自昱这个ILType封装的ReflectionType， 其中的ILRuntimeType继承自Type类：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144705308-507336274.png" alt="img"></p>
-<p>基于其，可以直接调用System.Type的GetConstructor方法，构建实例，归并几个代码，可以表示为（直接使用的实例源代码）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var it &#x3D; appDomain.LoadedTypes[&quot;HotFix_Project.InstanceClass&quot;];</span><br><span class="line">var type &#x3D; it.ReflectionType;</span><br><span class="line">var ctor &#x3D; type.GetConstructor(new System.Type[0]);</span><br><span class="line">var obj &#x3D; ctor.Invoke(null);</span><br></pre></td></tr></table></figure>
-
-<p>对应可以得到DLL中该类的构造函数的调用：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144743649-1121461434.png" alt="img"></p>
-<h3 id="基于appDomain内嵌的Invoke来实现反射"><a href="#基于appDomain内嵌的Invoke来实现反射" class="headerlink" title="基于appDomain内嵌的Invoke来实现反射"></a>基于appDomain内嵌的Invoke来实现反射</h3><p>在ILRuntime中，在appDomain中内嵌了一套Invoke的实现，可以在Unity工程中直接调用来实现对热更新DLL中类的方法的调用：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144758068-1015276210.png" alt="img"></p>
-<p>关键操作就是2步： GetType和 GetMethod，获取类型的过程，和前面有点类似，就是对mapType中存储的获取，如果没有，则进行查找和填充，这儿重点说说方法是如何获取的：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144811489-2012923950.png" alt="img"></p>
-<p>粗看就是从methods中取出来，做相应的检查，如果通过则返回，那么初始化操作看看：</p>
-<p> <img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144823104-1803890663.png" alt="img"></p>
-<p>最后还是从definition.Methods中取出，逐个遍历其中的方法做一个分类存储，如果有静态构造函数，且满足对于的参数条件，则执行一次静态构造。</p>
-<p>回到开始，在获取到类和方法的相关信息后，就可以执行对于的参数检验，然后执行反射：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144840373-1429288247.png" alt="img"></p>
-<p>可见，就是获取到一个IL的解释器，然后执行相应的反射，具体Run怎么执行，就不继续深入贴图了，有兴趣的可以持续跟踪（基本思路就是对stack的操作，塞入各个参数，然后执行一次操作，塞入结果，然后退回）</p>
-<p>对于ILRuntime的反射基本就先研究到这儿，如果要应用到自己的项目中，可以继续深入研究一下代码，看看实现的具体细节。这儿附上开源的相关文档：</p>
-<p><a href="https://link.zhihu.com/?target=https%3A//ourpalm.github.io/ILRuntime/public/v1/guide/reflection.html">ILRuntime中的反射</a></p>
-<h3 id="热更新DLL和Unity主工程的相互调用"><a href="#热更新DLL和Unity主工程的相互调用" class="headerlink" title="热更新DLL和Unity主工程的相互调用"></a>热更新DLL和Unity主工程的相互调用</h3><p>基于前面的反射，我们可以基本理出热更DLL和unity主工程的交互本质: 基于IL虚拟机或者.net本身反射来实现交互，对于热更新DLL，其调用unity主工程，则主要是在热更新工程中添加对于unity工程的Assembly-CSharp的引用：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144900607-89436059.png" alt="img"></p>
-<p>基于这个引用，可以调用其中类的各自方法，举两个类来测试：</p>
-<p>一个不继承自MonoBehaviour：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144913680-316348813.png" alt="img"></p>
-<p>一个继承自MonoBehaviour:</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144932643-1419524295.png" alt="img"></p>
-<p>这两个Unity主工程中的类以及其中的方法，在热更新DLL中调用：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528144946464-1425100319.png" alt="img"></p>
-<p>可以在Unity主工程中得到输出：</p>
-<p><img src="../../assets/images/2019-09-02-ilruntime/656520-20180528145001101-1886163550.png" alt="img"></p>
-<p>看一下track可以大概了解整个反射的执行过程。</p>
-<p>对于Unity执行热更DLL中的调用，就是第一部分的反射实例。</p>
-<h1 id="热修复HOTFIX"><a href="#热修复HOTFIX" class="headerlink" title="热修复HOTFIX"></a>热修复HOTFIX</h1><p>腾讯开源的Unity热更解决方案xLua有一个非常吸引人的特性就是Hotfix，其原理是使用Mono.Cecil库对进行C#层编译出来的dll程序集进行IL代码注入。其作者也在知乎的回答中简单说明了原理：<a href="https://link.jianshu.com/?t=https://www.zhihu.com/question/54344452/answer/139413144" target="_blank" rel="noopener">如何评价腾讯在Unity下的xLua（开源）热更方案？ - 车雄生的回答 - 知乎</a></p>
-<blockquote>
-<p><strong>Mono.Ceil</strong></p>
-<p>一个可加载并浏览现有程序集并进行动态修改并保存的.NET框架。可以静态注入程序集（注入后生成新的程序集）和动态注入程序集（注入后不改变目标程序集，只在运行时改变程序集行为。可以通过其实现AOP等高级功能</p>
-</blockquote>
-<p>Unity的代码在修改之后会自动编译到Library\ScriptAssemblies下的两个Assembly中，所以我会尝试着将代码注入到其中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Test : MonoBehaviour&#123;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">       InjectMod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void InjectMod () &#123;</span><br><span class="line">       Debug.Log(&quot;Heihei asdasd&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将Test绑定到场景物体上，运行后我们会发现输出<code>Heihei asdasd</code>，就像我们预期的一样。 然后我们尝试着将代码注入到该函数中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">private static bool hasGen &#x3D; false;</span><br><span class="line">[PostProcessBuild(1000)]</span><br><span class="line">private static void OnPostprocessBuildPlayer(BuildTarget buildTarget, string buildPath)</span><br><span class="line">&#123;</span><br><span class="line">   hasGen &#x3D; false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[PostProcessScene]</span><br><span class="line">public static void TestInjectMothodOnPost()</span><br><span class="line">&#123;</span><br><span class="line">   if (hasGen &#x3D;&#x3D; true) return;</span><br><span class="line">   hasGen &#x3D; true;</span><br><span class="line"></span><br><span class="line">   TestInjectMothod();</span><br><span class="line">&#125;</span><br><span class="line">[InitializeOnLoadMethod]</span><br><span class="line">public static void TestInjectMothod()</span><br><span class="line">&#123;</span><br><span class="line">   var assembly &#x3D; AssemblyDefinition.ReadAssembly(@&quot;D:\Documents\Unity5Projects\UnityDllInjector\Library\ScriptAssemblies\Assembly-CSharp.dll&quot;);</span><br><span class="line">   var types &#x3D; assembly.MainModule.GetTypes();</span><br><span class="line">   foreach(var type in types)</span><br><span class="line">   &#123;</span><br><span class="line">      foreach(var Method in type.Methods)</span><br><span class="line">      &#123;</span><br><span class="line">         if(Method.Name &#x3D;&#x3D; &quot;InjectMod&quot;)</span><br><span class="line">         &#123;</span><br><span class="line">            InjectMethod(Method, assembly);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   var writerParameters &#x3D; new WriterParameters &#123; WriteSymbols &#x3D; true &#125;;</span><br><span class="line">   assembly.Write(@&quot;D:\Documents\Unity5Projects\UnityDllInjector\Library\ScriptAssemblies\Assembly-CSharp.dll&quot;, new WriterParameters());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们首先看<code>TestInjectMothod</code>,这是我们在编辑器下进行注入的函数，这里我们需要注意的是，每当我们修改代码之后我们注入的结果会被覆盖掉，所以我们在每次修改代码之后都需要进行注入，所以我们这里添加了标签：<code>InitializeOnLoadMethod</code>这个标签的意思是，当初始化的时候都进行执行，所以编译完成之后就会自动执行。</p>
-<p>然后我们看前面两个函数，这两个函数是为了在打包时进行注入而存在的，其中hasGen是为了防止重复注入而定义的flag。</p>
-<p>然后我们查看一下我们的注入方法<code>InjectMethod</code>,在这个函数中我们可以看到，我们首先将我们所需要的函数导入，然后插入到方法的最前端：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">private static void InjectMethod(MethodDefinition method, AssemblyDefinition assembly)</span><br><span class="line">&#123;</span><br><span class="line">   var firstIns &#x3D; method.Body.Instructions.First();</span><br><span class="line">   var worker &#x3D; method.Body.GetILProcessor();</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;获取Debug.Log方法引用</span><br><span class="line">   var hasPatchRef &#x3D; assembly.MainModule.Import(</span><br><span class="line">   typeof(Debug).GetMethod(&quot;Log&quot;, new Type[] &#123; typeof(string) &#125;));</span><br><span class="line">   &#x2F;&#x2F;插入函数</span><br><span class="line">   var current &#x3D; InsertBefore(worker, firstIns, worker.Create(OpCodes.Ldstr, &quot;Inject&quot;));</span><br><span class="line">   current &#x3D; InsertBefore(worker, firstIns, worker.Create(OpCodes.Call, hasPatchRef));</span><br><span class="line">   &#x2F;&#x2F;计算Offset</span><br><span class="line">   ComputeOffsets(method.Body);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; 语句前插入Instruction, 并返回当前语句</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">private static Instruction InsertBefore(ILProcessor worker, Instruction target, Instruction instruction)</span><br><span class="line">&#123;</span><br><span class="line">   worker.InsertBefore(target, instruction);</span><br><span class="line">   return instruction;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; 语句后插入Instruction, 并返回当前语句</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">private static Instruction InsertAfter(ILProcessor worker, Instruction target, Instruction instruction)</span><br><span class="line">&#123;</span><br><span class="line">   worker.InsertAfter(target, instruction);</span><br><span class="line">   return instruction;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;计算注入后的函数偏移值</span><br><span class="line">private static void ComputeOffsets(MethodBody body)</span><br><span class="line">&#123;</span><br><span class="line">   var offset &#x3D; 0;</span><br><span class="line">   foreach (var instruction in body.Instructions)</span><br><span class="line">   &#123;</span><br><span class="line">      instruction.Offset &#x3D; offset;</span><br><span class="line">      offset +&#x3D; instruction.GetSize();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>等待编译完成，并且运行程序，我们发现在输出原来的语句之前多了一句“Inject”<br>可是我们在查看代码的时候并没有发生任何改变，这是因为我们只修改了dll而并非修改源代码。 </p>
-<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
-<li><p>ILRuntime并没有创建一个Appdomain,只是取其名字意思.始终工作在默认的AppDomain</p>
-</li>
-<li><p>ILRuntime中使用Unity项目的委托,需要创建<strong>DelegateAdapter</strong></p>
-</li>
-<li><p>ILRuntime中继承Unity项目中的类,需要实现<strong>继承适配器</strong></p>
-</li>
-<li><p>通常情况下，如果要从热更DLL中调用Unity主工程或者Unity的接口，是需要通过反射接口来调用的，包括市面上不少其他热更方案，也是通过这种方式来对CLR方接口进行调用的。(反射一个类,然后创建对象,然后保存到runtime中,调用方法也是通过反射)</p>
-<p>但是这种方式有着明显的弊端，最突出的一点就是通过反射来调用接口调用效率会比直接调用低很多，再加上反射传递函数参数时需要使用<code>object[]</code>数组，这样不可避免的每次调用都会产生不少GC Alloc。众所周知GC Alloc高意味着在Unity中执行会存在较大的性能问题。</p>
-<p>ILRuntime通过CLR方法绑定机制，可以<code>选择性</code>的对经常使用的CLR接口进行直接调用，从而尽可能的消除反射调用开销以及额外的<code>GC Alloc</code></p>
-<p>CLR绑定借助了ILRuntime的CLR重定向机制来实现，因为实质上也是将对CLR方法的反射调用重定向到我们自己定义的方法里面来。</p>
-</li>
-</ul>
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/dotnet/framework/app-domains/use" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/framework/app-domains/use</a></li>
-<li><a href="https://www.cnblogs.com/murongxiaopifu/p/4278947.html" target="_blank" rel="noopener">https://www.cnblogs.com/murongxiaopifu/p/4278947.html</a></li>
-<li><a href="https://www.cnblogs.com/murongxiaopifu/p/4211964.html" target="_blank" rel="noopener">https://www.cnblogs.com/murongxiaopifu/p/4211964.html</a></li>
-<li><a href="https://www.cnblogs.com/zblade/p/9100146.html" target="_blank" rel="noopener">https://www.cnblogs.com/zblade/p/9100146.html</a></li>
-<li><a href="http://ourpalm.github.io/ILRuntime/public/v1/guide/bind.html" target="_blank" rel="noopener">http://ourpalm.github.io/ILRuntime/public/v1/guide/bind.html</a></li>
-<li><a href="https://www.jianshu.com/p/4bef7f66aefd" target="_blank" rel="noopener">https://www.jianshu.com/p/4bef7f66aefd</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-02-ilruntime/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1058,7 +629,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1185,27 +756,15 @@
 <td align="left">#define directive for assertions control process.</td>
 </tr>
 </tbody></table>
-<h2 id="在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择"><a href="#在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择" class="headerlink" title="在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择"></a>在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择</h2><p>一旦切换到 .NET 4.x 等效脚本运行时，可使用 PlayerSettings 中的下拉菜单指定“Api Compatibility Level”（“Edit &gt; Project Settings &gt; Player”）。 有两种选项：</p>
-<ul>
-<li><strong>.NET Standard 2.0</strong>。 此配置文件与 .NET Foundation 发布的 <a href="https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md" target="_blank" rel="noopener">.NET Standard 2.0 配置文件</a>匹配。 Unity 建议新项目使用 .NET Standard 2.0。 它比 .NET 4.x 小，有利于尺寸受限的平台。 此外，Unity 承诺在 Unity 支持的所有平台上支持此配置文件。</li>
-<li><strong>.NET 4.x</strong>。 此配置文件提供对最新 .NET 4 API 的访问权限。 它包括 .NET Framework 类库中提供的所有代码，并且支持 .NET Standard 2.0 配置文件。 如果 .NET Standard 2.0 配置文件中未包含项目所需的部分 API，请使用 .NET 4.x 配置文件。 但此 API 的某些部分并非在所有 Unity 平台上均受支持。</li>
-</ul>
-<p>可在 Unity 的<a href="https://blogs.unity3d.com/2018/03/28/updated-scripting-runtime-in-unity-2018-1-what-does-the-future-hold/" target="_blank" rel="noopener">博客文章</a>中阅读有关这些选项的更多信息。</p>
-<h3 id="使用-NET-4-x-API-兼容级别时添加程序集引用"><a href="#使用-NET-4-x-API-兼容级别时添加程序集引用" class="headerlink" title="使用 .NET 4.x API 兼容级别时添加程序集引用"></a>使用 .NET 4.x API 兼容级别时添加程序集引用</h3><p>在“API 兼容级别”下拉列表中使用 .NET Standard 2.0 设置时，将引用和使用 API 配置文件中的所有程序集。 但是，在使用较大的 .NET 4.x 配置文件时，默认情况下不会引用 Unity 附带的某些程序集。 若要使用这些 API，必须手动添加程序集引用。 可在 Unity 编辑器安装的 MonoBleedingEdge/lib/mono 目录中查看 Unity 附带的程序集：</p>
-<p><img src="../../assets/images/2019-09-02-unity-reference-dll/vstu_monobleedingedge.png" alt="MonoBleedingEdge 目录"></p>
-<p>例如，如果使用的是 .NET 4.x 配置文件且希望使用 <code>HttpClient</code>，则必须为 System.Net.Http.dll 添加程序集引用。 如果没有它，编译器将报错，指示缺少程序集引用：</p>
-<p><img src="../../assets/images/2019-09-02-unity-reference-dll/vstu_missing-reference.png" alt="缺少程序集引用"></p>
-<p>每次打开 Unity 项目时 Visual Studio 都会为其重新生成 .csproj 和 .sln 文件。 因此，无法直接在 Visual Studio 中添加程序集引用，因为它们将在重新打开项目时丢失。 相反，必须使用名为 mcs.rsp 的特殊文本文件：</p>
-<ol>
-<li>在 Unity 项目的根Assets目录中创建名为 mcs.rsp 的新文本文件。</li>
-<li>在空文本文件的第一行，输入：<code>-r:System.Net.Http.dll</code>，然后保存文件。 可将“System.Net.Http.dll”替换为可能缺少引用的任何包含的程序集。</li>
-<li>重启 Unity 编辑器。</li>
-</ol>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/visualstudio/cross-platform/unity-scripting-upgrade?view=vs-2019</a></li>
-<li><a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/PlatformDependentCompilation.html</a></li>
-</ul>
-
+<h2 id="在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择"><a href="#在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择" class="headerlink" title="在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择"></a>在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-02-unity-reference-dll/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1255,7 +814,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1280,36 +839,14 @@
       
           <p>在本文中将详细的描述Addressable对于内存的管理，如果正确的卸载资源</p>
 <h2 id="镜像资源的加载与卸载"><a href="#镜像资源的加载与卸载" class="headerlink" title="镜像资源的加载与卸载"></a>镜像资源的加载与卸载</h2><p>Addressables是否能够正确的清理内存主要的取决于是否正确的进行镜像资源的加载与卸载，而如何做到这点又取决于加载的资源的类型与使用加载的方法。<code>Addressables.Release</code>方法可以接受加载到的对象，也可以接受加载时返回的操作句柄(<code>AsyncOperationHandle</code>).比如，进行场景创建时，加载后返回一个<code>AsyncOperationHandle&lt;SceneInstance&gt;</code>，你可以通过返回的句柄或者<code>handle.Result</code>(在这种情况下返回的Result为<code>SceneInstance</code>对象)进行场景的的释放。</p>
-<p>接下来将详细的描述一下不同资源的释放方式及规则。</p>
-<h2 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h2><p>此处的资源指的是使用<code>Addressables.LoadAssetAsync</code> 或者 <code>Addressables.LoadAssetsAsync</code>加载的资源。<br>使用上述的两个方法会将资源加载到内存中，但是并不实例化它，每次调用后对应的资源的引用记数都会增加1。如果您使用<code>LoadAssetAsync</code>对同一个“地址”的资源调用了3次，您将会得到三个不同的<code>AsyncOperationHandle</code>的实例，同时这些实例均引用相同的底层操作，对就应的底层操作的引用记数会变成3。如果资源加载成功，加载到的资源将会被存储到<code>AsyncOperationHandle.Result</code>中，您可以使用Unity的方法进行实例化<code>Object.instantite</code>，但是这种操作方式不会造成Adressables的引用记数发生变化。</p>
-<p>使用<code>Addressables.Release</code>方法可以进行卸载，调用后引用记数会减1，一旦资源的引用记数为0，那么它会被彻底的卸载掉。</p>
-<h2 id="场景加载"><a href="#场景加载" class="headerlink" title="场景加载"></a>场景加载</h2><p>可以使用<code>Addressables.LoadSceneAsync</code>进行场景的加载，同时可以在参数中指定使用<code>Single</code>或者<code>Additive</code>模式，如果指定使用<code>Single</code>模式，那么当前所在打开的场景都会被关闭。</p>
-<p>可以使用<code>Addressables.UnloadSceneAsync</code>进行场景的卸载，或者打开新场景时使用<code>Single</code>模式。</p>
-<p>当想要打开一个新场景时可以使用上述Addressables提供的方法或者使用 <code>SceneManager.LoadScene</code>/<code>SceneManager.LoadSceneAsync</code>，一个新场景的打开会关闭当前的场景，那么对应的引用记数也会正确的减少。</p>
-<h2 id="GameObject的实例化"><a href="#GameObject的实例化" class="headerlink" title="GameObject的实例化"></a>GameObject的实例化</h2><p>GameObject的实例化相对其它的资源有些特殊，在Unity中使用<code>Resources.Load</code>其实只是将Prefab的数据加载到了内存中，并未真正的实例化，所以需要再次调用<code>Object.instantite</code>才能正确的得到需要的GameObject，在Addressables中也是这样的，不过Addressable提供了一些便利的方法<code>Addressables.InstantiateAsync</code>可以直接得到对应的GameObject。</p>
-<p>当使用<code>Addressables.InstantiateAsync</code>加载一个Prefab时，Addressable会自动实例化，同时在加载的过程中Addressable在加载Prefab的同时也会加载其依赖，将所有的引用记数全部增加。对同一“地址”的资源调用<code>InstantiateAsync</code>三次，将会使其依赖的所有资源的引用记数均增加为3.但是与三次调用<code>LoadAssetAsync</code>不同的是每次调用<code>InstantiateAsync</code>将会得到一个指向同一个操作的<code>AsyncOperationHandle</code>,这是因为每一个<code>InstantiateAsync</code>都将得到一个唯一的实例。与其它调用方法的另外一个区别在于<code>InstantiateAsync</code>有一个可选参数<code>trackHandle</code>，如果将其设置为false，在<code>AsyncOperationHandle</code>释放前，您必须自己保管着此对象，在此期间您可以执行一些操作。这种方法可以提高效率但是需要更多格外的代码来实现。</p>
-<p>关闭实例所在场景或者使用<code>Addressables.ReleaseInstance</code>可以卸载掉实例化的对象。</p>
-<p>如果您在加载时将<code>trackHandle</code>设置为false,那么您只能通过调用<code>Addressables.ReleaseInstance</code>并将返回的句柄做为参数，而不能再使用真实的GameObject做为参数进行释放了。</p>
-<p>关于<code>Addressables.ReleaseInstance</code>格外的说明：如果调用<code>Addressables.ReleaseInstance</code>方法来释放一个实例,但是此实例不是由Addressable创建或者说在使用Addressable创建时设置了<code>trackHandle=false</code>，此方法调用后将会返回false，以表示Addressable无法释放此实例</p>
-<p>使用<code>Addressables.InstantiateAsync</code>方法本身会有一些格外的开销，如果您需要实例化同一个对象很多次，比如说一帧内实例化100个，使用此方法就不再合适，可以考虑使用<code>Addressables.LoadAssetAsync</code>进行资源的加载，同时自己保存返回的结果，然后再使用<code>GameObject.Instantiate()</code>进行实例化，同时当所有的GameObject不再使用后，再通过<code>Addessables.Release</code>方法将保存的结果进行释放。使用此种方法虽然可以提高部分性能，但是需要对其增加格外的管理。</p>
-<p>使用<code>Addressables.InstantiateAsync</code>方法本身会有一些格外的开销，如果您需要实例化同一个对象很多次，比如说一帧内实例化100个，可以考虑使用Addressable进行资源的加载</p>
-<h2 id="Addressable分析工具"><a href="#Addressable分析工具" class="headerlink" title="Addressable分析工具"></a>Addressable分析工具</h2><p>通过<em>Window-&gt;Asset Management-&gt;Addressable Profiler</em>可以打开Addressable的分析工具，在使用此工具前需要将配置中的<em>Send Profiler Events</em>打开（默认情况下配置文件为Assets/AddressableAssetsData/AddressableAssetSettings)</p>
-<p><img src="../../assets/images/2019-09-01-addressable/sendprofilerevent.png" alt="Send Profiler Events"></p>
-<p>窗口中显示了Addressable操作的引用记数，包括加载的AssetBundle及加载的资源等等。</p>
-<ul>
-<li>白色的竖线表示选择的当前的帧</li>
-<li>蓝色的背景当前加载的资源</li>
-<li>绿色的部分表示引用记数</li>
-</ul>
-<p><img src="../../assets/images/2019-09-01-addressable/profiler.png" alt="Profiler"></p>
-<h2 id="内存清理时机"><a href="#内存清理时机" class="headerlink" title="内存清理时机"></a>内存清理时机</h2><p>即使一个资源的不再被引用也不代表此资源被卸载了，因为一个AssetBundle中可能包含有多个资源，比如：一个名称”stuff”的AssetBundle中包含有三个资源”tree”,“tank”,“cow”，当资源”tree”被加载后，能够看到”tree”的引用记录会是1，同时”stuff”的引用记数也是1，接着如果加载了”tank”资源，此时”tree”与”tank”的引用记数均为1，同时”stuff”的记数会是2。接下来卸载资源”tree”，则”tree”的引用记数将会减少为0，在”Addressable Profiler”中对应于”tree”的记录将会被删除，但是此时由于AssetBundle对应的”stuff”并未被卸载，因为还有其它的在使用此AssetBundle。使用AssetBundle时可以从AssetBundle中加载部分内容，但是不能部分卸载AssetBundle，只有AssetBundle中的任何资源都不再被使用时，此AssetBundle才会被卸载</p>
-<p>当使用Unity的<code>Resources.UnloadUnusedAssets</code> (查看<a href="https://docs.unity3d.com/ScriptReference/Resources.UnloadUnusedAssets.html)时，上述描述中的&quot;tree&quot;将会被卸载掉，但是由于我们无法检测到此操作，所以我们只能反映引用记数的变化，而不是真正内存中内容的变化。" target="_blank" rel="noopener">https://docs.unity3d.com/ScriptReference/Resources.UnloadUnusedAssets.html)时，上述描述中的&quot;tree&quot;将会被卸载掉，但是由于我们无法检测到此操作，所以我们只能反映引用记数的变化，而不是真正内存中内容的变化。</a></p>
-<p>需要注意的是：使用<code>Resources.UnloadUnusedAssets</code>是一个很费时的操作，一般情况下不建议频繁使用，只有在场景切换时进行调用</p>
-<p>此段文字有些绕口，简单来说就是由于一个AssetBundle中包含有多个资源，其中的多个资源被加载出来后，只有所有的资源均不再使用时才会正确的卸载掉AssetBundle，同时对于加载出来的资源一般情况下，即使不再使用后也不是立即卸载的，依赖于引擎底层的实现。在Unity中通过使用<code>Resources.UnloadUnusedAssets</code>可以将不再使用的资源给卸载掉，但是由于此接口过于耗时，并不推荐频繁使用。可以使用的情况一般有：1 进行场景切换时，2 在某些大资源被销毁时，比如说：某此UI界面占用资源特别多，当此UI界面关闭时可以调用。</p>
-<h3 id="一些注意点"><a href="#一些注意点" class="headerlink" title="一些注意点"></a>一些注意点</h3><ul>
-<li>不要想着用异步加载ui..那会很卡..会出现莫名其妙的事情</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-01-addressable/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1359,7 +896,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1384,31 +921,14 @@
       
           <h3 id="UGUI的合图是在什么时候发生的？"><a href="#UGUI的合图是在什么时候发生的？" class="headerlink" title="UGUI的合图是在什么时候发生的？"></a>UGUI的合图是在什么时候发生的？</h3><p>Unity合大图的时机是根据设置来的。<em>Edit-&gt;ProjectSetting-&gt;Editor</em></p>
 <p><img src="../../assets/images/2019-09-01-spriteAtlas/1567211125212.png" alt="1567211125212"></p>
-<p>如上图，可以在打包的时候合，也可以编辑器运行的时候就合。Editor中合成的大图是放在缓存目录里：<code>Library/AtlasCache</code>。</p>
-<ul>
-<li>Enabled For Builds  （Unity将精灵打包到Sprite Atlas中，仅用于已发布的版本。Editor和Play模式引用原始源纹理而不是Sprite Atlas中的纹理。）。</li>
-<li>Always Enabled   （默认情况下启用此选项。Unity将选定的纹理打包到Sprite Atlases中，Sprite在运行时引用打包的Textures。但是，Sprites将在Editor模式期间引用原始未压缩的纹理。）。</li>
-</ul>
-<p>简单的说:</p>
-<ul>
-<li>如果想测试spritepacker是否生效以及代码相关..这时候选择Always Enabled..可以理解为生产模式</li>
-<li>如果平时开发Enabled For Builds,只有打包的时候才构建..可以理解为开发模式</li>
-</ul>
-<h3 id="Include-in-Build到底干了什么？"><a href="#Include-in-Build到底干了什么？" class="headerlink" title="Include in Build到底干了什么？"></a>Include in Build到底干了什么？</h3><p>勾选了Include in Build后，图集资源会被打进App包体里（不是AssetBundle包）。如果图集是AssetBundle包管理的，最好不要勾选它，会造成资源双份。至于哪些资源会双份，需要实验下看看。</p>
-<h3 id="禁用Include-in-Build-使用Late-Binding"><a href="#禁用Include-in-Build-使用Late-Binding" class="headerlink" title="禁用Include in Build,使用Late Binding"></a>禁用Include in Build,使用Late Binding</h3><ol>
-<li>只要精灵打包到任何精灵图集内，但精灵图集未绑定为默认图集（例如未选中“Include in build”选项），精灵便会在场景中不可见。</li>
-<li>用户可以监听回调 SpriteAtlas.atlasRequested。</li>
-<li>此委托方法将提供一个要绑定的图集标签和一个接受 SpriteAtlas 资源的 System.Action。用户应按任意方式（脚本引用、Resources.load、资源包）加载该资源，并将该资源提供给 System.Action。</li>
-</ol>
-<p>注意:</p>
-<ul>
-<li>SpriteAtlas.atlasRequested只会请求一次无论成功还是失败,所以要确保你的atlasRequested回调一定能返回正确的值</li>
-<li>当使用addressable异步加载spriteatlas的时候,也会触发SpriteAtlas.atlasRequested,这个时候内存中可能会存在两份资源的引用..记得释放其中的一份</li>
-</ul>
-<h3 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h3><ul>
-<li><a href="https://connect.unity.com/doc/Manual/SpriteAtlas" target="_blank" rel="noopener">https://connect.unity.com/doc/Manual/SpriteAtlas</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-01-spriteAtlas/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1458,7 +978,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1483,68 +1003,14 @@
       
           <h1 id="安装scoop前提"><a href="#安装scoop前提" class="headerlink" title="安装scoop前提"></a>安装scoop前提</h1><p>版本大于等于3的powershell</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; $psversiontable.psversion.major</span><br></pre></td></tr></table></figure>
-<p>确保您已允许PowerShell执行本地脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; set-executionpolicy remotesigned -scope currentuser</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#打开powershell,win+r,然后输入powershell</span><br><span class="line">#更改策略</span><br><span class="line">Set-ExecutionPolicy RemoteSigned -scope CurrentUser</span><br><span class="line"></span><br><span class="line">#安装</span><br><span class="line">iex (new-object net.webclient).downloadstring(&#39;https:&#x2F;&#x2F;get.scoop.sh&#39;)</span><br><span class="line"></span><br><span class="line">#安装git</span><br><span class="line">scoop install git</span><br><span class="line"></span><br><span class="line">#开启extras库</span><br><span class="line">scoop bucket add extras</span><br><span class="line"></span><br><span class="line">#开启java库</span><br><span class="line">scoop bucket add java</span><br><span class="line"></span><br><span class="line">#更新</span><br><span class="line">scoop update</span><br><span class="line"></span><br><span class="line">#查看安装软件列表</span><br><span class="line">scoop list</span><br><span class="line"></span><br><span class="line">#搜索某软件</span><br><span class="line">scoop search xxx</span><br><span class="line"></span><br><span class="line">#打开某软件官网</span><br><span class="line">scoop home xxx</span><br><span class="line"></span><br><span class="line">#查看某软件安装信息</span><br><span class="line">scoop info xxx</span><br><span class="line"></span><br><span class="line">#查看某软件执行命令位置</span><br><span class="line">scoop which xxx</span><br><span class="line"></span><br><span class="line">#查看某软件当前状态，是否有更新等信息</span><br><span class="line">scoop status xxx</span><br><span class="line"></span><br><span class="line">#更新某软件</span><br><span class="line">scoop update xxx</span><br><span class="line"></span><br><span class="line">#卸载某软件,以xxx为例</span><br><span class="line">scoop uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>这里是一个按照 Github score（由 Star 数量、Fork 数量和 App 数量综合决定的 Github score）排列的 bucket 列表：<a href="https://github.com/rasa/scoop-directory/blob/master/by-score.md" target="_blank" rel="noopener">Scoop buckets by Github score</a>。</p>
-<h1 id="安装scoop到自定义目录"><a href="#安装scoop到自定义目录" class="headerlink" title="安装scoop到自定义目录"></a>安装scoop到自定义目录</h1><p>如果重新安装系统.只需要将shime路径添加到环境变量path中<code>D:\Application\Scoop\shims</code></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set-executionpolicy</span> remotesigned <span class="literal">-scope</span> currentuser</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::User)+<span class="string">";D:\Application\Scoop\shims"</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::Machine)+<span class="string">";D:\Application\ScoopGlobal\shims"</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#重置应用以解决冲突,会重置环境变量,快捷方式等..</span></span><br><span class="line">scoop reset *</span><br><span class="line"><span class="comment">#检查潜在的问题..执行下看看使用scoop会有什么问题</span></span><br><span class="line">scoop checkup</span><br><span class="line"><span class="comment">#如果使用了aria2感觉慢的话可以关闭</span></span><br><span class="line">scoop config aria2<span class="literal">-enabled</span> false  </span><br><span class="line"><span class="comment">#下面是日常更新软件命令</span></span><br><span class="line">sudo scoop update * <span class="literal">-g</span> ; scoop update * ; sudo scoop cleanup * <span class="literal">-g</span> ; scoop cleanup *</span><br><span class="line"><span class="comment"># 查看 Scoop 还能直接识别哪些 bucket</span></span><br><span class="line">scoop bucket known</span><br></pre></td></tr></table></figure>
-<h3 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Invoke-Item</span> <span class="string">"~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Scoop Apps"</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>将Scoop安装到自定义目录</strong><br>假设目标目录是<code>D:\Application\Scoop</code>,在PowerShell命令控制台中运行：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br></pre></td></tr></table></figure>
-<p>将全局应用安装到自定义目录,假设目标目录是<code>D:\Application\ScoopGlobal</code>,在PowerShell命令控制台中运行：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>以我常用应用为例(可作为脚本文件,后缀ps1)</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###安装scoop并自定义安装路径</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#git,程序员必备,只有安装了git才能添加其他桶</span></span><br><span class="line">scoop install git;</span><br><span class="line"><span class="comment">#arias2 scoop 下载会用到</span></span><br><span class="line">scoop install aria2;</span><br><span class="line"><span class="comment">#7zip 一些app会用到</span></span><br><span class="line">scoop install <span class="number">7</span>zip</span><br><span class="line"><span class="comment">#scoop checkup提示装的软件</span></span><br><span class="line">scoop install wixtoolset</span><br><span class="line"></span><br><span class="line"><span class="comment">###添加桶</span></span><br><span class="line"><span class="comment">#scoop内置的桶</span></span><br><span class="line"><span class="comment">#scoop bucket known;</span></span><br><span class="line"></span><br><span class="line">scoop bucket add extras;</span><br><span class="line">scoop bucket add Java;</span><br><span class="line">scoop bucket add versions;</span><br><span class="line"><span class="comment">#一个还不错的</span></span><br><span class="line">scoop bucket add Ash258 <span class="string">'https://github.com/Ash258/scoop-Ash258.git'</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dodorz https://github.com/dodorz/scoop<span class="literal">-bucket</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dorado https://github.com/h404bi/dorado</span><br><span class="line"></span><br><span class="line"><span class="comment">### 添加代理</span></span><br><span class="line">scoop config proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">scoop config rm proxy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装全局应用</span></span><br><span class="line">scoop install apache <span class="literal">-g</span>;</span><br><span class="line">scoop install redis <span class="literal">-g</span>;</span><br><span class="line">scoop install mysql <span class="literal">-g</span>;</span><br><span class="line">scoop install nodejs <span class="literal">-g</span>;</span><br><span class="line"><span class="comment"># jdk最好使用8,否则android-sdk会有问题</span></span><br><span class="line">scoop install ojdkbuild8 <span class="literal">-g</span>; </span><br><span class="line">scoop install php <span class="literal">-g</span>;</span><br><span class="line"><span class="comment">#整合apache php</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://gist.githubusercontent.com/nilkesede/c98a275b80b6d373131df82eaba96c63/raw/apache-php-init.ps1'</span>)</span><br><span class="line"><span class="comment"># 或者手动修改apache配置</span></span><br><span class="line"><span class="comment">#LoadModule php7_module 'C:/Users/xxxxx/scoop/apps/php71/current/php7apache2_4.dll'</span></span><br><span class="line"><span class="comment">#AddHandler application/x-httpd-php .php</span></span><br><span class="line"><span class="comment">#PHPIniDir "C:\Users\xxxxx\scoop\apps\php71\current"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装APP</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#效率启动神器</span></span><br><span class="line">scoop install wox;</span><br><span class="line"><span class="comment">#文件检索</span></span><br><span class="line">scoop install everything;</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">scoop install bandizip;</span><br><span class="line"><span class="comment">#远程终端</span></span><br><span class="line">scoop install MobaXterm;</span><br><span class="line"><span class="comment">#桌面控制</span></span><br><span class="line">scoop install teamviewer;</span><br><span class="line"><span class="comment">#markdown编写</span></span><br><span class="line">scoop install typora;</span><br><span class="line"><span class="comment">#编辑器</span></span><br><span class="line">scoop install vscode;</span><br><span class="line"><span class="comment">#截图软件</span></span><br><span class="line">scoop install snipaste</span><br><span class="line"><span class="comment">#ditto 剪贴板</span></span><br><span class="line">scoop install ditto</span><br><span class="line"><span class="comment">#postman</span></span><br><span class="line">scoop install postman</span><br><span class="line"><span class="comment">#heidisql</span></span><br><span class="line">scoop install heidisql</span><br><span class="line"><span class="comment">#imageglass 图片浏览器</span></span><br><span class="line">scoop install imageglass</span><br><span class="line"><span class="comment">#quick look</span></span><br><span class="line">scoop install quicklook</span><br><span class="line"><span class="comment">#sharex</span></span><br><span class="line">scoop install sharex </span><br><span class="line"><span class="comment">#obs  录制视频或者直播</span></span><br><span class="line">scoop install obs<span class="literal">-studio</span></span><br><span class="line"><span class="comment"># 录像软件</span></span><br><span class="line">scoop install captura</span><br><span class="line"><span class="comment">#switchhosts</span></span><br><span class="line">scoop install switchhosts</span><br><span class="line"><span class="comment"># gradle</span></span><br><span class="line">scoop install gradle</span><br><span class="line"><span class="comment"># android-sdk</span></span><br><span class="line">scoop install android<span class="literal">-sdk</span></span><br><span class="line"><span class="comment"># 安装ndk 老版本下载https://developer.android.com/ndk/downloads/older_releases.html</span></span><br><span class="line"><span class="comment"># sdkmanager ndk-bundle</span></span><br><span class="line"><span class="comment"># shadowsocksr-csharp</span></span><br><span class="line">scoop install shadowsocksr<span class="literal">-csharp</span></span><br><span class="line"><span class="comment"># picpick </span></span><br><span class="line">scoop install picpick</span><br><span class="line"><span class="comment">#xmind8</span></span><br><span class="line">scoop install XMind2020</span><br><span class="line"><span class="comment"># android-studio</span></span><br><span class="line">scoop install android<span class="literal">-studio</span></span><br><span class="line"><span class="comment">#记住sourcetree的git最好使用内嵌版本</span></span><br><span class="line">scoop install sourcetree</span><br><span class="line"><span class="comment"># php的包工具</span></span><br><span class="line">scoop intstall composer</span><br><span class="line"><span class="comment"># 反向代理</span></span><br><span class="line">scoop install frp</span><br><span class="line"><span class="comment">#网易云音乐</span></span><br><span class="line">scoop install neteasemusic</span><br><span class="line"><span class="comment"># ftp工具</span></span><br><span class="line">scoop install filezilla </span><br><span class="line"><span class="comment"># pdf阅读工具</span></span><br><span class="line"> scoop install foxit<span class="literal">-reader</span></span><br><span class="line"><span class="comment"># 播放器</span></span><br><span class="line">scoop install potplayer </span><br><span class="line"><span class="comment"># draw工程图,uml工具</span></span><br><span class="line">scoop install draw.io</span><br><span class="line"><span class="comment"># 定时提醒休息工具</span></span><br><span class="line">scoop install workrave</span><br><span class="line"><span class="comment"># 投屏工具</span></span><br><span class="line">scoop install scrcpy </span><br><span class="line"><span class="comment"># 卸载工具</span></span><br><span class="line">scoop install geekuninstaller</span><br><span class="line"><span class="comment">#浏览器</span></span><br><span class="line">scoop install  firefox<span class="literal">-developer</span><span class="literal">-zh</span><span class="literal">-cn</span></span><br><span class="line">scoop install  googlechrome</span><br><span class="line"><span class="comment">#wechat</span></span><br><span class="line">scoop install wechat</span><br><span class="line"><span class="comment">#steam</span></span><br><span class="line">scoop install steam</span><br><span class="line"><span class="comment"># pwsh</span></span><br><span class="line">scoop install pwsh</span><br><span class="line"><span class="comment">#windows teraminal</span></span><br><span class="line">scoop install windows<span class="literal">-terminal</span></span><br><span class="line"><span class="comment"># 反编译 ilspy  https://github.com/sailro/Reflexil下载Reflexil将Reflexil.ILSpy.Plugin.dll直接扔到ilspy目录下即行</span></span><br><span class="line">scoop install ilspy</span><br><span class="line">scoop install dnspy</span><br><span class="line"><span class="comment">#win+x菜单编辑</span></span><br><span class="line">scoop install WinXMenuEditor   </span><br><span class="line"><span class="comment">#发送到菜单编辑</span></span><br><span class="line">scoop install SendToMenuEditor</span><br><span class="line"><span class="comment"># 上下文菜单</span></span><br><span class="line">scoop install EasyContextMenu</span><br><span class="line"><span class="comment"># 备份开始屏幕</span></span><br><span class="line">scoop install BackupStartMenuLayout</span><br><span class="line"><span class="comment">#定时关机</span></span><br><span class="line">scoop install kshutdown</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="apache"><a href="#apache" class="headerlink" title="apache"></a>apache</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo httpd -k install -n apache  </span><br><span class="line">start-service apache</span><br><span class="line">remove-service apache</span><br></pre></td></tr></table></figure>
-<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>文件路径<code>D:\Application\ScoopGlobal\apps\apache\current\conf\httpd.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Define SRVROOT &quot;D:\Application\ScoopGlobal\apps\apache\current&quot;</span><br><span class="line">ServerName localhost</span><br></pre></td></tr></table></figure>
-
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server --service-install D:\Application\ScoopGlobal\apps\redis\current\redis.windows-service.conf --loglevel verbose</span><br></pre></td></tr></table></figure>
-<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>注册MySQL服务,(因为scoop是低污染的,所以要自己做):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --install MySQL --defaults-file&#x3D;&quot;D:\Application\ScoopGlobal\apps\mysql\current\my.ini&quot;</span><br></pre></td></tr></table></figure>
-
-<p>注意mysql8密码可能认证有错误my.ini中需要设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="pwsh"><a href="#pwsh" class="headerlink" title="pwsh"></a>pwsh</h1><p>将pwsh添加到terminal中,配置默认路径:<code>C:\Users\zhepama\AppData\Local\Microsoft\Windows Terminal\settings.json</code></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This file was initially generated by Windows 终端(未打包) 1.0.200517002-release1.0</span></span><br><span class="line"><span class="comment">// It should still be usable in newer versions, but newer versions might have additional</span></span><br><span class="line"><span class="comment">// settings, help text, or changes that you will not see unless you clear this file</span></span><br><span class="line"><span class="comment">// and let us generate a new one for you.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// To view the default settings, hold "alt" while clicking on the "Settings" button.</span></span><br><span class="line"><span class="comment">// For documentation on these settings, see: https://aka.ms/terminal-documentation</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"https://aka.ms/terminal-profiles-schema"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"defaultProfile"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// You can add more global application settings here.</span></span><br><span class="line">  <span class="comment">// To learn more about global settings, visit https://aka.ms/terminal-global-settings</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, selections are automatically copied to your clipboard.</span></span><br><span class="line">  <span class="attr">"copyOnSelect"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, formatted data is also copied to your clipboard</span></span><br><span class="line">  <span class="attr">"copyFormatting"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// A profile specifies a command to execute paired with information about how it should look and feel.</span></span><br><span class="line">  <span class="comment">// Each one of them will appear in the 'New Tab' dropdown,</span></span><br><span class="line">  <span class="comment">//   and can be invoked from the commandline with `wt.exe -p xxx`</span></span><br><span class="line">  <span class="comment">// To learn more about profiles, visit https://aka.ms/terminal-profile-settings</span></span><br><span class="line">  <span class="attr">"profiles"</span>: &#123;</span><br><span class="line">    <span class="attr">"defaults"</span>: &#123;</span><br><span class="line">      <span class="comment">// Put settings here that you want to apply to all profiles.</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"list"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the powershell.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;61c54bbd-c2c6-5271-96e7-009a87ff44bf&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Windows PowerShell"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"powershell.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the cmd.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;0caa0dad-35be-5f56-a8ff-afceeeaa6101&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"命令提示符"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"cmd.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;b453ae62-4e3d-5e58-b989-0a998ec441b8&#125;"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Azure Cloud Shell"</span>,</span><br><span class="line">        <span class="attr">"source"</span>: <span class="string">"Windows.Terminal.Azure"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"pwsh"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"D:\\Application\\Scoop\\apps\\pwsh\\current\\pwsh.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"startingDirectory"</span>: <span class="string">"%USERPROFILE%"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom color schemes to this array.</span></span><br><span class="line">  <span class="comment">// To learn more about color schemes, visit https://aka.ms/terminal-color-schemes</span></span><br><span class="line">  <span class="attr">"schemes"</span>: [],</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom keybindings to this array.</span></span><br><span class="line">  <span class="comment">// To unbind a key combination from your defaults.json, set the command to "unbound".</span></span><br><span class="line">  <span class="comment">// To learn more about keybindings, visit https://aka.ms/terminal-keybindings</span></span><br><span class="line">  <span class="attr">"keybindings"</span>: [</span><br><span class="line">    <span class="comment">// Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.</span></span><br><span class="line">    <span class="comment">// These two lines additionally bind them to Ctrl+C and Ctrl+V.</span></span><br><span class="line">    <span class="comment">// To learn more about selection, visit https://aka.ms/terminal-selection</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"copy"</span>,</span><br><span class="line">        <span class="attr">"singleLine"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+c"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"paste"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+v"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Ctrl+Shift+F to open the search box</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"find"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+shift+f"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Alt+Shift+D to open a new pane.</span></span><br><span class="line">    <span class="comment">// - "split": "auto" makes this pane open in the direction that provides the most surface area.</span></span><br><span class="line">    <span class="comment">// - "splitMode": "duplicate" makes the new pane use the focused pane's profile.</span></span><br><span class="line">    <span class="comment">// To learn more about panes, visit https://aka.ms/terminal-panes</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"splitPane"</span>,</span><br><span class="line">        <span class="attr">"split"</span>: <span class="string">"auto"</span>,</span><br><span class="line">        <span class="attr">"splitMode"</span>: <span class="string">"duplicate"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"alt+shift+d"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-<h3 id="导出-Scoop-软件列表"><a href="#导出-Scoop-软件列表" class="headerlink" title="导出 Scoop 软件列表"></a>导出 Scoop 软件列表</h3><p>备份 Scoop 的方式为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop export &gt; scoop.txt</span><br></pre></td></tr></table></figure>
-
-<p>可以对 Scoop 的导出列表进行额外处理，以方便后续安装。使用 VSCode 打开 <code>scoop.txt</code> 文件，以正则表达式搜索：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(.*?) .*</span><br></pre></td></tr></table></figure>
-
-<p>并全部替换成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$1</span><br></pre></td></tr></table></figure>
-
-<p>注意正则式中包含空格，请完整复制。</p>
-<p><img src="../../assets/images/2019-08-20-scoop-use/03.jpg" alt="VSCode 中的正则式替换"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2019-08-20-scoop-use/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1594,7 +1060,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 13:47:10" itemprop="dateModified" datetime="2020-07-17T13:47:10+08:00">2020-07-17</time>
+                <time title="修改时间：2020-07-17 13:57:37" itemprop="dateModified" datetime="2020-07-17T13:57:37+08:00">2020-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1624,159 +1090,14 @@
 <li>Physics 2D Raycaster - 用于检测 2D 物体</li>
 <li>Physics Raycaster - 用于检测 3D 物体</li>
 </ul>
-<p>接下来，就来分析一下各个类型 Raycaster 的源码来看看其的工作流程。</p>
-<p>Raycast 在 Event System 流程中所处的位置大致如下图:</p>
-<p><img src="../../assets/images/2019-08-12-ugui-Raycasters/unity_event_system_raycaster.png" alt="unity_event_system_raycaster.png"></p>
-<h2 id="BaseRaycaster-类"><a href="#BaseRaycaster-类" class="headerlink" title="BaseRaycaster 类"></a>BaseRaycaster 类</h2><p>Unity Raycasters 中的三个 Raycaster 类都继承自 BaseRaycaster。首先就来看看 BaseRaycaster 类。</p>
-<p>BaseRaycaster 类很简单，它包含一个抽象方法 <code>Raycast</code>，定义如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract void Raycast(PointerEventData eventData, List&lt;RaycastResult&gt; resultAppendList);</span><br></pre></td></tr></table></figure>
-
-<p>这个方法供子类覆写以实现对不同类别的物体进行射线检测。BaseRaycaster 类还继承自 UIBehaviour 类，因此它还覆写了 <code>OnEnable</code> 和 <code>OnDisable</code> 方法，在 <code>OnEnable</code> 方法中向 RaycasterManager 类注册了自己，在 <code>OnDisable</code> 方法中从 RaycasterManager 类移除了自己的注册。</p>
-<p>另外该类中还包含了 eventCamera、sortOrderPriority、renderOrderPriority 等属性，在射线检测物体时会用到。</p>
-<h2 id="Physics-Raycaster"><a href="#Physics-Raycaster" class="headerlink" title="Physics Raycaster"></a>Physics Raycaster</h2><p>Physics Raycaster 用于检测场景中的 3D 物体对象。</p>
-<p>PhysicsRaycaster 类继承自 BaseRaycaster，既然是射线检测那么最重要的方法莫过于 <code>Raycast</code>，接下来就一起看看这个方法。</p>
-<p>在 <code>Raycast</code> 方法中，首先使用传入的 PointerEventData 参数调用 <code>ComputeRayAndDistance</code> 方法，计算得到从当前射线检测使用的 Camera 的近裁剪面处出发，穿过屏幕事件发生处位置的一条射线；这个方法还会计算一个射线检测使用的最大距离 <code>distanceToClipPlane</code>。</p>
-<p><code>ComputeRayAndDistance</code> 内部使用了 Camera 类的 <code>ScreenPointToRay</code> 方法将某点转换成一条射线，根据得到的射线的方向以及 Camera 的 farClipPlane 和 nearClipPlane 求得检测最大距离 <code>distanceToClipPlane</code>。具体代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void ComputeRayAndDistance(PointerEventData eventData, out Ray ray, out float distanceToClipPlane)</span><br><span class="line">&#123;</span><br><span class="line">    ray &#x3D; eventCamera.ScreenPointToRay(eventData.position);</span><br><span class="line">    float projectionDirection &#x3D; ray.direction.z;</span><br><span class="line">    &#x2F;&#x2F; 这里加了个保护，因为 projectionDirection 近似为 0 的时候不能被除，因此 distanceToClipPlane 取 Mathf.Infinity 无限大</span><br><span class="line">    distanceToClipPlane &#x3D; Mathf.Approximately(0.0f, projectionDirection) ? Mathf.Infinity : Mathf.Abs((eventCamera.farClipPlane - eventCamera.nearClipPlane) &#x2F; projectionDirection);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接下来就是进行射线检测了，代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var hits &#x3D; ReflectionMethodsCache.Singleton.raycast3DAll(ray, distanceToClipPlane, finalEventMask);</span><br></pre></td></tr></table></figure>
-
-<p>这里的 <code>ReflectionMethodsCache</code> 类里面缓存了一些通过反射得到的射线检测相关的类方法。在上面的代码中使用了 <code>raycast3DAll</code> 这个代理，最终执行的是 Physics 类的 <code>RaycastAll</code> 方法。传入的三个参数就是射线 ray，最大检测距离 distanceToClipPlane 以及需要检测的层 finalEventMask，返回结果就是检测成功得到的 RaycastHit 数组。第三个参数 finalEventMask 定义如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public int finalEventMask</span><br><span class="line">&#123;</span><br><span class="line">    get &#123; return (eventCamera !&#x3D; null) ? eventCamera.cullingMask &amp; m_EventMask : kNoEventMaskSet; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们知道，射线检测的时候可以设置哪些 layer 可以接收检测碰撞。上面定义的 finalEventMask 就是需要检测的 layer，如果当前 raycaster 所在的对象有 Camera 组件，那么 finalEventMask 就是摄像机设置的渲染的所有层(<code>eventCamera.cullingMask &amp; m_EventMask</code>)，否则就是默认所有的层(<code>int kNoEventMaskSet = -1</code>)都可以接收射线碰撞检测。</p>
-<p>然后对检测得到的 RaycastHit 数组按照 distance 由小到大排序。最后将这些射线检测结果依次拼装成 RaycastResult 并返回给 Event System，这里的 RaycastResult 中的 distance 就是 RaycastHit 的 distance(射线起点到射线碰撞点的距离)。</p>
-<h2 id="Physics2D-Raycaster"><a href="#Physics2D-Raycaster" class="headerlink" title="Physics2D Raycaster"></a>Physics2D Raycaster</h2><p>Physics2DRaycaster 类继承自 PhysicsRaycaster，主要就是 <code>Raycast</code> 方法中的一点点细小的区别。</p>
-<p>第一，在进行射线检测的时候，Physics2DRaycaster 中最后调用的是 Physics2D 的 <code>GetRayIntersectionAll</code> 方法。</p>
-<p>第二处同 PhysicsRaycaster 的不同之处是在返回构造 RaycastResult 时，填充的部分值不一样，包括以下几个:</p>
-<ul>
-<li>distance，这个值是摄像机到射线检测碰撞点的距离，而在 PhysicsRaycaster 中是 RaycastHit 的 <code>distance</code> 值(射线起点在近裁剪面发出到碰撞点的距离)。</li>
-<li>sortingLayer，这个值是当前对象 SpriteRenderer 组件中的 <code>sortingLayerID</code> 值，在 PhysicsRaycaster 为 0。</li>
-<li>sortingOrder，这个同样为当前对象 SpriteRenderer 组件中的 <code>sortingOrder</code> 值，在 PhysicsRaycaster 为 0。</li>
-</ul>
-<h2 id="Graphic-Raycaster"><a href="#Graphic-Raycaster" class="headerlink" title="Graphic Raycaster"></a>Graphic Raycaster</h2><p>Graphic Raycaster 用于射线检测 Canvas 中的 Graphic 对象物体，通常绑定在 Canvas 所在的对象身上。</p>
-<h3 id="属性或方法"><a href="#属性或方法" class="headerlink" title="属性或方法"></a>属性或方法</h3><p>GraphicRaycaster 类的成员属性很少，除了继承 BaseRaycaster 类的一些属性和方法外，它还拥有以下一些常用的属性或方法:</p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ignore Reversed Graphics</code></td>
-<td>射线检测时是否忽略背向的 Graphics</td>
-</tr>
-<tr>
-<td><code>Blocked Objects</code></td>
-<td>哪些类型的对象会阻挡 Graphic raycasts</td>
-</tr>
-<tr>
-<td><code>Blocking Mask</code></td>
-<td>哪些 Layer 会阻挡 Graphic raycasts(对 <code>Blocked Objects</code> 指定的对象生效)</td>
-</tr>
-</tbody></table>
-<p>不同于 PhysicsRaycaster 和 Physics2DRaycaster 类中直接使用父类的 <code>sortOrderPriority</code> 方法和 <code>renderOrderPriority</code>，GraphicRaycaster 覆写了这两个方法，并且当 Canvas 的 render mode 设置为 <code>RenderMode.ScreenSpaceOverlay</code> 时，上面两个方法分别返回 canvas 的 sortingOrder 以及 rootCanvas 的 renderOrder。</p>
-<p>对于 eventCamera 的 get 方法，如果 Canvas 的 render mode 设置为 <code>RenderMode.ScreenSpaceOverlay</code> 或者 <code>enderMode.ScreenSpaceCamera</code> 并且 Canvas 的 worldCamera 未设置时，返回 null，否则返回 Canvas 的 worldCamera 或者 Main Camera。</p>
-<h3 id="GraphicRaycaster-Raycast"><a href="#GraphicRaycaster-Raycast" class="headerlink" title="GraphicRaycaster.Raycast"></a>GraphicRaycaster.Raycast</h3><p>接下来就来到最重要的覆写的 <code>Raycast</code> 方法。</p>
-<p>首先调用 <code>GraphicRegistry.GetGraphicsForCanvas</code> 方法获取当前 Canvas 下所有的 Graphic(canvasGraphics，这些 Graphics 在进行射线检测的时候会用到)。</p>
-<p>紧接着就是 MultiDisplay 的一些检测，代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">int displayIndex;</span><br><span class="line">var currentEventCamera &#x3D; eventCamera;</span><br><span class="line">if (canvas.renderMode &#x3D;&#x3D; RenderMode.ScreenSpaceOverlay || currentEventCamera &#x3D;&#x3D; null)</span><br><span class="line">    displayIndex &#x3D; canvas.targetDisplay;</span><br><span class="line">else</span><br><span class="line">    displayIndex &#x3D; currentEventCamera.targetDisplay;</span><br><span class="line">var eventPosition &#x3D; Display.RelativeMouseAt(eventData.position);</span><br><span class="line">if (eventPosition !&#x3D; Vector3.zero)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 当前平台支持 MultiDisplay</span><br><span class="line">    int eventDisplayIndex &#x3D; (int)eventPosition.z;</span><br><span class="line">    if (eventDisplayIndex !&#x3D; displayIndex)</span><br><span class="line">        return;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 当前平台不支持 MultiDiplay</span><br><span class="line">    eventPosition &#x3D; eventData.position;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出，当平台支持 MultiDisplay 时，如果用户操作的不是当前的 Display，那么所有的其他 Display 上产生的事件都会被舍弃。</p>
-<p>然后将屏幕坐标转换到 Camera 视窗坐标下。如果 eventCamera 不为空，则使用 <code>Camera.ScreenToViewportPoint</code> 方法转换坐标，否则直接使用当前 Display 的宽高除以 eventPosition 转换为视窗坐标([0,1]之间)。转换后的坐标若超出 Cmera 的范围(0 - 1)，则舍弃该事件。</p>
-<h4 id="Blocked-Objects-和-Blocked-Mask-出场"><a href="#Blocked-Objects-和-Blocked-Mask-出场" class="headerlink" title="Blocked Objects 和 Blocked Mask 出场"></a>Blocked Objects 和 Blocked Mask 出场</h4><p>前面讲到 GraphicRaycaster 可以设置 Blocked Objects 和 Blocked Mask 来指定射线检测阻挡，下面一步就到了使用这两个属性来阻断射线检测部分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if (canvas.renderMode !&#x3D; RenderMode.ScreenSpaceOverlay &amp;&amp; blockingObjects !&#x3D; BlockingObjects.None)</span><br><span class="line">&#123;</span><br><span class="line">    float distanceToClipPlane</span><br><span class="line">    &#x2F;&#x2F; 计算 distanceToClipPlane...</span><br><span class="line">    if (blockingObjects &#x3D;&#x3D; BlockingObjects.ThreeD || blockingObjects &#x3D;&#x3D; BlockingObjects.All)</span><br><span class="line">    &#123;</span><br><span class="line">        if (ReflectionMethodsCache.Singleton.raycast3D !&#x3D; null)</span><br><span class="line">        &#123;</span><br><span class="line">            var hits &#x3D; ReflectionMethodsCache.Singleton.raycast3DAll(ray, distanceToClipPlane, (int)m_BlockingMask);</span><br><span class="line">            if (hits.Length &gt; 0)</span><br><span class="line">                hitDistance &#x3D; hits[0].distance;</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;如果 blockingObjects 包含 BlockingObjects.TwoD，使用 ReflectionMethodsCache.Singleton.getRayIntersectionAll 方法再次计算 hitDistance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当 Canvas renderMode 不为 <code>RenderMode.ScreenSpaceOverlay</code> 并且设置了 blockingObjects，此时就会 Blocked Objects 和 Blocked Mask 就会生效。</p>
-<ul>
-<li>如果 blockingObjects 包含了 <code>BlockingObjects.ThreeD</code> 那么则会使用 <code>ReflectionMethodsCache.Singleton.raycast3DAll</code> 方法计算 hitDistance(PhysicsRaycaster 中也使用的该方法进行射线检测)。</li>
-<li>如果 blockingObjects 也包含了 <code>BlockingObjects.TwoD</code>，那么会使用 <code>ReflectionMethodsCache.Singleton.getRayIntersectionAll</code> 方法(Physics2DRaycaster 射线检测使用)再计算 hitDistance。</li>
-</ul>
-<p>具体的计算过程大致是: 这上面的代码中 raycast3DAll 时指定了射线检测层 <code>m_BlockingMask</code>，这个参数就是自定义设定的 <code>Blocking Mask</code>，属于 block mask 的对象在这里就会就行射线检测，并得到最小的一个 hitDistance；<strong>后面对所有的 Graphics 进行射线检测时，如果检测结果 distance 大于 hitDistance，那么那个结果会被舍弃</strong>。如此一来，<code>Blocking Mask</code> 就起到了阻挡的作用，属于这个 layer 的所有对象的一旦被射线检测成功并得到 hitDistance，PhysicsRaycaster 最后的射线检测结果都只会包含这个 hitDistance 距离以内的对象。</p>
-<h4 id="GraphicRaycaster-类重载了-“真”-Raycast-方法"><a href="#GraphicRaycaster-类重载了-“真”-Raycast-方法" class="headerlink" title="GraphicRaycaster 类重载了 “真” Raycast 方法"></a>GraphicRaycaster 类重载了 “真” Raycast 方法</h4><p>终于可以进行真真切切的 Graphic Raycast 了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">private static void Raycast(Canvas canvas, Camera eventCamera, Vector2 pointerPosition, IList&lt;Graphic&gt; foundGraphics, List&lt;Graphic&gt; results)</span><br><span class="line">&#123;</span><br><span class="line">    int totalCount &#x3D; foundGraphics.Count;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; totalCount; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Graphic graphic &#x3D; foundGraphics[i];</span><br><span class="line">        &#x2F;&#x2F; depth 为 -1 说明没有被 canvas 处理(未被绘制)</span><br><span class="line">        &#x2F;&#x2F; raycastTarget 为 false 说明当前 graphic 不需要被射线检测</span><br><span class="line">        &#x2F;&#x2F; graphic.canvasRenderer.cull 为 true，忽略当前 graphic 的 CanvasRender 渲染的物体</span><br><span class="line">        if (graphic.depth &#x3D;&#x3D; -1 || !graphic.raycastTarget || graphic.canvasRenderer.cull)</span><br><span class="line">            continue;</span><br><span class="line">        &#x2F;&#x2F; 从指定的 eventCamera 计算 pointerPosition 是否在 graphic 的 Rectangle 区域内 </span><br><span class="line">        if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition, eventCamera))</span><br><span class="line">            continue;</span><br><span class="line">        if (graphic.Raycast(pointerPosition, eventCamera))</span><br><span class="line">        &#123;</span><br><span class="line">            s_SortedGraphics.Add(graphic);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    s_SortedGraphics.Sort((g1, g2) &#x3D;&gt; g2.depth.CompareTo(g1.depth));</span><br><span class="line">    &#x2F;&#x2F; return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在循环中对每一个 Graphic 首先进行了初步的筛选，满足条件的 Graphic 才会调用其 <code>Raycast</code> 方法，这里的条件筛选包括 deth、raycastTarget 设置、位置信息是否满足等。</p>
-<h4 id="Graphic-Raycast"><a href="#Graphic-Raycast" class="headerlink" title="Graphic.Raycast"></a>Graphic.Raycast</h4><p>对 Canvas 下所有的 graphic 遍历，满足条件则进行射线检测。Graphic 射线检测过程如下:</p>
-<p>整个检测过程是在一个循环中实现的，从当前 Graphic 节点开始不断向上<strong>递归</strong>，直至向上再没有节点或者节点绑定的组件中有被射线检测出来结果而返回。</p>
-<p>对于节点对象，首先获取其绑定的所有组件，依次<strong>遍历</strong>判断组件:</p>
-<ul>
-<li>当组件是 <code>Canvas</code> 并且其 overrideSorting 为 <code>true</code> 则指定: 若在当前节点绑定的一系列的组件中都未能成功唤起检测，则当前节点组件<strong>遍历</strong>结束后将跳出节点<strong>递归</strong>并默认返回 <code>true</code>。</li>
-<li>如果组件是实现了 <code>ICanvasRaycastFilter</code> 接口，则判断组件是否是 <code>CanvasGroup</code>。若是 <code>CanvasGroup</code> 且设置了 ignoreParentGroups 为 <code>true</code>，那么对于接下来的所有 CanvasGroup 组件将不会调用 <code>IsRaycastLocationValid</code> 方法检测；若 CanvasGroup 都未设置 <code>ignoreParentGroups</code>或者不包含 CanvasGroup 组件，则直接调用组件实现的 <code>IsRaycastLocationValid</code> 方法计算是否射线检测成功。</li>
-</ul>
-<p>从整个 Graphic.Raycast 检测过程可以看出，检测是自当前 graphic 节点开始，一旦检测到某个节点添加实现了 <code>ICanvasRaycastFilter</code> 接口且 <code>IsRaycastLocationValid</code> 方法返回 <code>false</code> 则此 graphic 检测失败并结束检测；否则还会继续向上递归检测父节点，当所有节点(绑定了 Canvas 组件并设置了 <code>Canvas.overrideSorting</code> 为 <code>true</code>的节点会截止此次检测)都射线检测成功或是不需要使用 <code>IsRaycastLocationValid</code> 方法进行检测，则此次 Graphic.Raycast 成功。</p>
-<h4 id="Graphic-Raycast-成功的对象深度排序"><a href="#Graphic-Raycast-成功的对象深度排序" class="headerlink" title="Graphic.Raycast 成功的对象深度排序"></a>Graphic.Raycast 成功的对象深度排序</h4><p>对所有射线检测成功的 graphics 按照深度 depth 从小到大排序。</p>
-<h4 id="Reversed-Graphics-过滤"><a href="#Reversed-Graphics-过滤" class="headerlink" title="Reversed Graphics 过滤"></a>Reversed Graphics 过滤</h4><p>最后对检测结果再过滤。如果设置了 <code>Ignore Reversed Graphics</code> 为 true，则将背向 Camera 的对象过滤掉，这里面又分为两种情况:</p>
-<ul>
-<li><p>Camera 为空，直接判断当前 Graphic 方向与正方向 <code>Vector3.forward</code> 是否相交，如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var dir &#x3D; go.transform.rotation * Vector3.forward;</span><br><span class="line">appendGraphic &#x3D; Vector3.Dot(Vector3.forward, dir) &gt; 0;</span><br></pre></td></tr></table></figure>
-
-<p>首先将 <code>Vector3.forward</code> 绕着当前 Graphic 的 rotation 旋转得到 Graphic 的正方向，然后通过点积判断 Graphic 正方向是否与默认正方向(没有 Camera 所以默认正方向为 <code>Vector3.forward</code>)相交。点积大于 0 则相交，说明当前 Graphic 可以加入射线加测结果中。</p>
-</li>
-<li><p>当 Camera 不为空，就使用 Camera 的正方向与 Graphic 的正方向比较是否相交。</p>
-</li>
-</ul>
-<h4 id="distance-检测是最终一道坎"><a href="#distance-检测是最终一道坎" class="headerlink" title="distance 检测是最终一道坎"></a>distance 检测是最终一道坎</h4><p><code>Ignore Reversed Graphics</code> 检测完，对结果进行 distance 计算:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">float distance &#x3D; 0;</span><br><span class="line">if (currentEventCamera &#x3D;&#x3D; null || canvas.renderMode &#x3D;&#x3D; RenderMode.ScreenSpaceOverlay)</span><br><span class="line">    distance &#x3D; 0;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    Transform trans &#x3D; go.transform;</span><br><span class="line">    Vector3 transForward &#x3D; trans.forward;</span><br><span class="line">    distance &#x3D; (Vector3.Dot(transForward, trans.position - currentEventCamera.transform.position) &#x2F; Vector3.Dot(transForward, ray.direction));</span><br><span class="line">    if (distance &lt; 0)</span><br><span class="line">        continue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Render Mode 为 <code>RenderMode.ScreenSpaceOverlay</code> 或者 Camera 为 null，distance 为 0；否则就计算 Graphic 和 Camera 之间的向量在 Graphic 正方向上的投影以及计算射线方向在 Graphic 正方向上的投影，两者相除就得到最终的 distance。</p>
-<p>如果 distance 小于 hitDistance(设置的 Blocked Objects 和 Blocked Mask 产生)，则结果通过最终的测试可被用作事件的接收者之一。</p>
-<h3 id="射线检测前后的一些操作"><a href="#射线检测前后的一些操作" class="headerlink" title="射线检测前后的一些操作"></a>射线检测前后的一些操作</h3><p>首先来看看这些 Raycaster 被唤起的部分，也就是最开始的流程图中的第三步。Input Module 中使用 Raycaster 处理射线检测，真正的 Raycaster 实施代码又回到了 EventSystem 类中的 <code>RaycastAll</code> 方法，具体代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void RaycastAll(PointerEventData eventData, List&lt;RaycastResult&gt; raycastResults)</span><br><span class="line">&#123;</span><br><span class="line">    raycastResults.Clear();</span><br><span class="line">    var modules &#x3D; RaycasterManager.GetRaycasters();</span><br><span class="line">    for (int i &#x3D; 0; i &lt; modules.Count; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        var module &#x3D; modules[i];</span><br><span class="line">        if (module &#x3D;&#x3D; null || !module.IsActive())</span><br><span class="line">            continue;</span><br><span class="line">        module.Raycast(eventData, raycastResults);</span><br><span class="line">    &#125;</span><br><span class="line">    raycastResults.Sort(s_RaycastComparer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>场景中可以存在一个或多个 Raycaster。当存在多个时，如果需要发起射线检测，那么每个处于 Active 状态的 Raycaster 都会工作，所有 Raycaster 检测得到的结果都会存放在 <code>raycastResults</code> 中(这些 RaycastResult 都是在各自射线检测器中根据 distance 从小到大排过序的)。方法最后使用自定义 Comparer 对所有的 RaycastResult 排序。<code>s_RaycastComparer</code> 有以下几种比较流程:</p>
-<ul>
-<li>两个 RaycastResult 检测所在的 Raycaster 不同</li>
-</ul>
-<p>首先比较两个对象的 Camera 的 depth。在渲染中，Camera depth 越小会越先渲染，越大越往后渲染，因此对于射线检测来说，Camera 的 depth 越大，它对应的物体应该先于 Camera depth 小的物体进行射线检测，检测得到的结果也应排在前面。代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (lhsEventCamera.depth &lt; rhsEventCamera.depth)</span><br><span class="line">    return 1;</span><br><span class="line">if (lhsEventCamera.depth &#x3D;&#x3D; rhsEventCamera.depth)</span><br><span class="line">    return 0;</span><br><span class="line">return -1;</span><br></pre></td></tr></table></figure>
-
-<p>当 Camera depth 相等的时候，使用 <code>sortOrderPriority</code> 进行比较。优先级数值越大，越先被射线检测选中，所以这里的 <code>CompareTo</code> 方法使用的是右边的参数去比较左边的参数，最终的结果就是按照从大到小(降序)的顺序排列。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return rhs.module.sortOrderPriority.CompareTo(lhs.module.sortOrderPriority);</span><br></pre></td></tr></table></figure>
-
-<p>在 PhysicsRaycaster 和 Physics2DRaycaster 类中没有覆写 <code>sortOrderPriority</code> 方法，因此都返回基类的 <code>int.MinValue</code>；但在 GraphicRaycaster 类中覆写了此方法，当对应的 Canvas 的 renderMode 设置为 <code>RenderMode.ScreenSpaceOverlay</code> 时，此时的 <code>sortOrderPriority</code> 返回 Canvas 的 sortingOrder(Sort Order越大越在上层)，否则同样也是返回基类设置的 <code>int.MinValue</code>，这是因为在 <code>RenderMode.ScreenSpaceOverlay</code> 模式下，所有的 distance 都将是 0。</p>
-<p>当 sortOrderPriority 相同，再使用 renderOrderPriority 比较。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return rhs.module.renderOrderPriority.CompareTo(lhs.module.renderOrderPriority);</span><br></pre></td></tr></table></figure>
-
-<p>renderOrderPriority 和 sortOrderPriority 类似，仅在 GraphicRaycaster 类中被覆写，也只有在 Canvas 的 renderMode 设置为 <code>RenderMode.ScreenSpaceOverlay</code> 时才返回 <code>canvas.rootCanvas.renderOrder</code>，这是因为 Canvas 在其他几种 renderMode 下，渲染的先后顺序都和距离摄像机的距离有关。所以 renderOrderPriority 比较也是按照从大到小的顺序得到最终的结果。</p>
-<ul>
-<li>同属于一个 Raycaster 检测得到，但是它们的 sortingLayer 不一样</li>
-</ul>
-<p>对于 PhysicsRaycaster 检测得到的对象，sortingLayer 都为 0。</p>
-<p>对于 Physics2DRaycaster 检测得到的对象，如果对象上挂载有 SpriteRenderer 组件，那么 sortingLayer 对应的 sortingLayerID，否则也为 0。</p>
-<p>对于 GraphicRaycaster 检测所得，sortingLayer 就是所在 Canvas 的 sortingLayerID。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var rid &#x3D; SortingLayer.GetLayerValueFromID(rhs.sortingLayer);</span><br><span class="line">var lid &#x3D; SortingLayer.GetLayerValueFromID(lhs.sortingLayer);</span><br><span class="line">return rid.CompareTo(lid);</span><br></pre></td></tr></table></figure>
-
-<p>通过 <code>SortingLayer.GetLayerValueFromID</code> 方法计算 sortingLayer 最终的 sorting layer 值，同样是按照降序排列，因此计算得到的 sorting layer 值越大越先排在前面。</p>
-<ul>
-<li>sortingLayer 也相同，使用 sortingOrder 比较</li>
-</ul>
-<p>sortingOrder 和 sortingLayer 类似，PhysicsRaycaster 检测得到的对象 sortingOrder 为 0；Physics2DRaycaster 检测得到的对象是 SpriteRenderer 中的 sortingOrder；GraphicRaycaster 检测所得是所在 Canvas 的 sortingOrder。最终 sortingOrder 越大的对象越排前面。代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return rhs.sortingOrder.CompareTo(lhs.sortingOrder);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>sortingOrder 相同，使用 depth 比较</li>
-</ul>
-<p>PhysicsRaycaster 和 Physics2DRaycaster 中 depth 都被设置为了 0；GraphicRaycaster 检测所得的对象的 depth 就是继承自 Graphic 类的对象所在的 Graphic 的 depth，即 Canvas 下所有 Graphic 深度遍历的顺序。比较同样也是按照降序进行的，因此越嵌套在靠近 Canvas 的对象越排在前面。</p>
-<ul>
-<li>depth 相同，使用 distance 比较</li>
-</ul>
-<p>PhysicsRaycaster 中的 distance 就是 RaycastHit 的 distance(射线起点到射线碰撞点的距离)。</p>
-<p>Physics2DRaycaster 类中返回的是 Camera 的位置和射线碰撞点之间的距离。</p>
-<p>GraphicRaycaster 类中 distance <a href="http://geomalgorithms.com/a06-_intersect-2.html" target="_blank" rel="noopener">计算</a>如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var go &#x3D; m_RaycastResults[index].gameObject;</span><br><span class="line">Transform trans &#x3D; go.transform;</span><br><span class="line">Vector3 transForward &#x3D; trans.forward;</span><br><span class="line">&#x2F;&#x2F; TODO why user DOT to caculate distance?</span><br><span class="line">distance &#x3D; Vector3.Dot(transForward, trans.position - currentEventCamera.transform.position) &#x2F; Vector3.Dot(transForward, ray.direction);</span><br></pre></td></tr></table></figure>
-
-<p>距离 distance 越小越靠前。</p>
-<ul>
-<li>最后如果上述情况都不能满足，使用 index 比较。先被射线检测到的对象排在前面。</li>
-</ul>
-<p>Raycaster 后段部分的流程: 取排过序的 RaycastResult 中第一个结果作为响应事件的输入事件的 pointerCurrentRaycast，根据它来在 Messaging System 中分发事件，大致代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取 Raycast 结果中对应的 GameObject</span><br><span class="line">var currentOverGo &#x3D; pointerEvent.pointerCurrentRaycast.gameObject;</span><br><span class="line">&#x2F;&#x2F; 分发事件</span><br><span class="line">ExecuteEvents.ExecuteHierarchy(currentOverGo, pointerEvent, ExecuteEvents.pointerDownHandler);</span><br></pre></td></tr></table></figure>
-
-<p>Raycaster 在 Event System 中的作用和流程基本就是上述的内容。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-08-12-ugui-Raycasters/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
