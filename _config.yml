@@ -113,16 +113,19 @@ theme_config:
   links:
     GODGODGAME: http://www.godgodgame.com
     IGIVEN: https://www.igiven.com
-  excerpt_description: true # 使用 front-matter 的 description 字段作为简介显示在博客列表页（当字段为空时显示完整博客），关闭
-  auto_excerpt:
-    enable: true # 自动摘录，开启，暂时没发现bug
-    length: 150
-  scroll_to_more: true
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
 
 # hexo-enhancer 
-## https://sulin.me/2019/Z726F8.html
+## https://github.com/sisyphsu/hexo-enhancer
 tags: Java,Golang,React,Vue,Unity,C#,NETCORE,游戏,地图,Redis,Linux,Win,GitHub,proxy,代理,brew,scoop,powershell,shell,windows,ugui,mesh,entitas,addressable,aoi,sync,同步,abp
+
+# hexo-excerpt
+## https://github.com/chekun/hexo-excerpt
+excerpt:
+  depth: 3
+  excerpt_excludes: []
+  more_excludes: []
+  hideWholePostExcerpts: true
