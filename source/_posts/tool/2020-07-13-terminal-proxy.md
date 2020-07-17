@@ -33,3 +33,12 @@ export ftp_proxy=127.0.0.1:1080
 export https_proxy=127.0.0.1:1080
 ```
 
+
+
+# GIT
+
+```
+git config --global https.proxy http://127.0.0.1:1080
+git config --global https.proxy http://127.0.0.1:1080
+```
+
