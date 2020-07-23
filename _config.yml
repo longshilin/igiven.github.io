@@ -127,6 +127,10 @@ theme_config:
     url: "https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g"
     rounded: true
     rotated: true
+  footer:
+    since: 2015
+    copyright: zhepama
+    powered: false
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
