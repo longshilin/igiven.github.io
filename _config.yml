@@ -184,3 +184,16 @@ cdn:
   onlypost: false
   url: //cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages
   img_url: //cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///
+
+# hexo-next-utteranc
+## https://github.com/theme-next/hexo-next-utteranc
+# Demo: https://utteranc.es/  http://trumandu.github.io/about/
+utteranc:
+  enable: true
+  repo: zhepama/igiven.github.io
+  pathname: pathname
+  # theme: github-light,github-dark,github-dark-orange
+  theme: github-light
+  cdn: https://utteranc.es/client.js
+  # If you want to modify priority, please config in **hexo**
+  #priority:
