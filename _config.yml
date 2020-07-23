@@ -118,7 +118,7 @@ theme_config:
     数据结构与算法: https://zhepama.github.io/C-Sharp-Playground/zh/
   post_edit:
     enable: true
-    url: https://github.com/zhepama/igiven.github.io/tree/master/source/ # Link for view source
+    url: https://github.com/zhepama/igiven.github.io/edit/master/source/ # Link for view source
   local_search:
     enable: true
   motion:
