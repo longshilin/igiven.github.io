@@ -9,3 +9,4 @@ igiven.github.io
 - hexo-generator-sitemap
 - hexo-generator-searchdb
 - hexo-generator-cdn
+- hexo-next-utteranc

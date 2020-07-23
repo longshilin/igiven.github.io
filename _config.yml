@@ -98,11 +98,11 @@ theme_config:
   scheme: Gemini
   menu:
     home: / || fa fa-home
-    about: /about/ || fa fa-user
-    tags: /tags/ || fa fa-tags
     categories: /categories/ || fa fa-th
-    archives: /archives/ || fa fa-archive
-    sitemap: /sitemap.xml || fa fa-sitemap
+    tags: /tags/ || fa fa-tags
+    about: /about/ || fa fa-user
+    留言: /guestbook/ || fa fa-sticky-note
+    #sitemap: /sitemap.xml || fa fa-sitemap
     RSS: /atom.xml || fa fa-rss
   menu_settings:
     icons: true
