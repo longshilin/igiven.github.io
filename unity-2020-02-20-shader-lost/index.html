@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/css/main.css">
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="自己写了个shader，并且是从代码里面来进行加载，编辑器中并没有引用。在编辑器中运行项目没有问题，但是当我发布到iso和android平台之后发现游戏中并不能找到我自己的shader，猜想是unity在打包过程中进行了一些优化，没有用到的shader不会被打到游戏包内。 我找到了2个解决办法 1.随意创建一个物体并添加使用了此shader的材质。并不推荐此方法，正确的方法应该是第二种。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110801448.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110915442.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110801448.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110915442.png">
 <meta property="article:published_time" content="2020-02-20T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T10:26:49.333Z">
+<meta property="article:modified_time" content="2020-07-23T11:40:41.687Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="游戏">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="UNITY">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110801448.png">
+<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-20-shader-lost/20180309110801448.png">
 
 <link rel="canonical" href="http://www.igiven.com/unity-2020-02-20-shader-lost/">
 
@@ -83,8 +83,8 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
-<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 19:40:41" itemprop="dateModified" datetime="2020-07-23T19:40:41+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,8 +272,8 @@
 <p>2.在GraphicsSettings中添加上此shader：</p>
 <p>选择Edit-&gt;ProjectSettings-&gt;Graphics （不同的unity版本可能有所不同，我的版本是5.6）</p>
 <p>将shader拖入到Always Included Shaders数组中：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-20-shader-lost/20180309110801448.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-20-shader-lost/20180309110915442.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-20-shader-lost/20180309110801448.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-20-shader-lost/20180309110915442.png" alt="img"></p>
 <p>这样我们重新打包之后，就可以正常找到shader了。</p>
 
     </div>
@@ -458,26 +458,26 @@
   </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/anime.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/utils.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/local-search.js"></script>
 
 
 

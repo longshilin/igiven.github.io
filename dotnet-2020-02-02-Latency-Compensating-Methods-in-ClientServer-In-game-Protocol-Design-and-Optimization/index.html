@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/css/main.css">
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -27,9 +27,9 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="1.综述第一人称角色网络游戏的设计是一项很有挑战性的工作。网络环境下的健壮性，是动作游戏能否成功的一个重要因素。另外，PC上面的开发者需要考虑到玩家层次不齐的机器配置以及网络状况，很多用户的硬件配置跟网络跟当前最好的配置跟网络有一定差距。 宽带网络的出现有利于在线游戏开发，但是开发者还是需要考虑网络延迟和其它网络特性。而且宽带网络在美国被广泛采用还需要一段时间，在世界上其它国家可能需要更长的一段时">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png">
 <meta property="article:published_time" content="2020-02-02T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T10:26:49.325Z">
+<meta property="article:modified_time" content="2020-07-23T11:40:41.683Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="C#">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="同步">
 <meta property="article:tag" content="游戏开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png">
+<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png">
 
 <link rel="canonical" href="http://www.igiven.com/dotnet-2020-02-02-Latency-Compensating-Methods-in-ClientServer-In-game-Protocol-Design-and-Optimization/">
 
@@ -83,8 +83,8 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
-<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 19:40:41" itemprop="dateModified" datetime="2020-07-23T19:40:41+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,7 +271,7 @@
 <p>我们应该提供给玩家良好的游戏。本篇文章讨论了如何提供给玩家顶尖的操作体验；介绍了很多在线动作游戏中采用的C/S架构背景。此外，我们还讨论了如何通过一个预测模型来掩饰延迟带来的影响。文章的最后描述了一个叫做延迟补偿的机制，弥补了因为网络质量不好带来的负面影响</p>
 <h1 id="2-C-S游戏的基本架构"><a href="#2-C-S游戏的基本架构" class="headerlink" title="2.C/S游戏的基本架构"></a>2.C/S游戏的基本架构</h1><p>网络上可玩的大部分动作游戏都是C/S结构游戏基础上修改完成的，比如半条命以及其修改版反恐精英、军团要塞，以及一些基于quake3引擎和虚幻引擎的游戏。这类游戏都有一个用来执行游戏逻辑的服务器以及连接到这个服务器的多个客户端。客户端仅仅是用来接收玩家的操作并发给服务器，服务器对这些操作作出响应，移动玩家周围物体，并将游戏世界的信息发给客户端显示出来。当然世界的游戏系统有更多组件，我们这样简化有利于分析预测和延迟补偿。</p>
 <p>基于这种考虑，典型的C/S游戏引擎通常看起来是这样的</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png" alt="General Client / Server Architecture"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-02-Latency_Compensating_Methods_in_ClientServer_In-game_Protocol_Design_and_Optimization/Lagcomp1.png" alt="General Client / Server Architecture"></p>
 <p>为了便于讨论，我们假定客户端跟服务器之间已经建立连接；客户端的每一帧循环如下：</p>
 <ol>
 <li><p>获取帧开始时间</p>
@@ -573,26 +573,26 @@
   </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/anime.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/utils.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/local-search.js"></script>
 
 
 

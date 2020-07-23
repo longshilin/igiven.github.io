@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/css/main.css">
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="Lock-Step 我们把游戏的前进分为一帧帧，这里的帧和游戏的渲染帧率并不是一个，只是借鉴了帧的概念，自定义的帧，我们称为turn。游戏的过程就是每一个turn不断向前推进，每一个玩家的turn推进速度一致。  每一帧只有当服务器集齐了所有玩家的操作指令，也就是输入确定了之后，才可以进行计算，进入下一个turn，否则就要等待最慢的玩家。之后再广播给所有的玩家。如此才能保证帧一致。  Lockst">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113303_rNd5_1859679.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/bucket.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-253646290632dd9ed3ca6453c4b754b5_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-5052de9e1c12b7e87d2f452b29fdef61_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-b666f214abd2a804e885237c5bcc119b_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-2f49a68d6fd54381d8e7bdf3ffdfb283_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-96bb5917e8a766ef79323613179f404d_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-1573d2a9eeec5b5d8e7e663a8e06f487_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-05fee97a51c743b54d8dca8074fe042f_1440w.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-c27132db564887adc282fe621f2357e3_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113303_rNd5_1859679.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/bucket.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-253646290632dd9ed3ca6453c4b754b5_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-5052de9e1c12b7e87d2f452b29fdef61_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-b666f214abd2a804e885237c5bcc119b_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-2f49a68d6fd54381d8e7bdf3ffdfb283_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-96bb5917e8a766ef79323613179f404d_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-1573d2a9eeec5b5d8e7e663a8e06f487_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-05fee97a51c743b54d8dca8074fe042f_1440w.jpg">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/v2-c27132db564887adc282fe621f2357e3_1440w.jpg">
 <meta property="article:published_time" content="2019-11-01T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T10:26:49.325Z">
+<meta property="article:modified_time" content="2020-07-23T11:40:41.679Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="游戏">
@@ -49,7 +49,7 @@
 <meta property="article:tag" content="同步">
 <meta property="article:tag" content="UNITY">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png">
+<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png">
 
 <link rel="canonical" href="http://www.igiven.com/dotnet-2019-11-01-lock-step/">
 
@@ -95,8 +95,8 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
-<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -255,7 +255,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 19:40:41" itemprop="dateModified" datetime="2020-07-23T19:40:41+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,15 +289,15 @@
 </li>
 </ol>
 <p>我们来看看具体的执行流程:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/113252_S4Vd_1859679.png" alt="img"></p>
 <p>上图中我们可以明显看到，这种囚徒模式的帧同步，在第二帧的时候，因为玩家1有延迟，而导致第二帧的同步时间发生延迟，从而导致所有玩家都在等待，出现卡顿现象</p>
 <h2 id="Bucket-Synchronization-乐观锁"><a href="#Bucket-Synchronization-乐观锁" class="headerlink" title="Bucket Synchronization(乐观锁)"></a>Bucket Synchronization(乐观锁)</h2><p>囚徒模式的帧同步，有一个致命的缺陷就是，若联网的玩家有一个网速慢了，势必会影响其他玩家的体验，因为服务器要等待所有输入达到之后再同步到所有的c端。另外如果中途有人掉线了，游戏就会无法继续或者掉线玩家无法重连，因为在严格的帧同步的情况下，中途加入游戏是从技术上来讲是非常困难的。因为你重新进来之后，你的初始状态和大家不一致，而且你的状态信息都是丢失状态的，比如，你的等级，随机种子，角色的属性信息等。 比如玩过早期的冰封王座都知道，一旦掉线基本这局就废了，需要重开，至于为何没有卡顿的现象，因为那时都是解决方案都是采用局域网的方式，所以基本是没有延迟问题的。</p>
 <p>后期为了解决这个问题，如今包括王者荣耀，服务器会保存玩家当场游戏的游戏指令以及状态信息，在玩家断线重连的时候，能够恢复到断线前的状态。不过这个还是无法解决帧同步的问题，因为严格的帧同步，是要等到所有玩家都输入之后，再去通知广播client更新，如果A服务器一直没有输入同步过来，大家是要等着的，那么如何解决这个问题？</p>
 <p>采用“定时不等待”的乐观方式在每次Interval时钟发生时固定将操作广播给所有用户，不依赖具体每个玩家是否有操作更新。如此帧率的时钟在由服务器控制，当客户端有操作的时候及时的发送服务器，然后服务端每秒钟20-50次向所有客户端发送更新消息。如下图:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/113303_rNd5_1859679.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/113303_rNd5_1859679.png" alt="img"></p>
 <p>上图中，我们看到服务器不会再等到搜集完所有用户输入再进行下一帧，而是按照固定频率来同步玩家的输入信息到每一个c端，如果有玩家网络延迟，服务器的帧步进是不会等待的，比如上图中，在第二帧的时候，玩家A的网速慢，那么他这个时候，会被网速快的玩家给秒了（其他游戏也差不多）。但是网速慢的玩家不会卡到快的玩家，只会感觉自己操作延迟而已。</p>
 <p>Bucket Synchronization 是 Lock-Step 的改良算法. 算法流程可以参考下图:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/bucket.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/bucket.png" alt="img"></p>
 <p>Bucket Synchronization 算法应用于网状网络, 网络中有一个 master 节点(也是 client).</p>
 <p>master 在启动之初, 会对所有 client 做网络对时, 计算网络包的超时时间.</p>
 <p>master 会设置一个 bucket 时间, 在每个 bucket 时间节点, master 执行收集到的所有 step 指令, 并将更新推送到所有的 client 上. (上图的例子是一个简化流程, 只有俩 client, 没有 master 推送)</p>
@@ -341,22 +341,22 @@
 <li><strong>游戏逻辑的快照（snapshot）</strong></li>
 </ul>
 <p>我们的逻辑之所以能回滚，都是基于对每一帧状态可以处理快照，存储下每一帧的状态，并可以回滚到任何一帧的状态。在<a href="https://link.zhihu.com/?target=http%3A//mauve.mizuumi.net/2012/07/05/understanding-fighting-game-networking/">Understanding Fighting Game Networking</a> 文章和<a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s/cOGn8-rHWLIxdDz-R3pXDg">守望先锋网络</a> 文章中，都一笔带过了快照的说明。他们说的快照，可能略有不同，但是思路，都是能保存下每一帧的状态。如果去处理快照（Understanding那篇文章做的是模拟器游戏，可以方便地以内存快照的方式来做），是一个难点，这也是我<a href="https://zhuanlan.zhihu.com/p/38280972" target="_blank" rel="noopener">前面文章</a>提到ECS在这个方式下的应用，云风的解释：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-253646290632dd9ed3ca6453c4b754b5_1440w.jpg" alt="img">云风博客截图，地址<a href="https://blog.codingnow.com/2017/06/overwatch_ecs.html" target="_blank" rel="noopener">https://blog.codingnow.com/2017/06/overwatch_ecs.html</a></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-253646290632dd9ed3ca6453c4b754b5_1440w.jpg" alt="img">云风博客截图，地址<a href="https://blog.codingnow.com/2017/06/overwatch_ecs.html" target="_blank" rel="noopener">https://blog.codingnow.com/2017/06/overwatch_ecs.html</a></p>
 <p>ECS是一个好的处理方式，并且我找到<a href="https://link.zhihu.com/?target=https%3A//www.kisence.com/2017/11/12/guan-yu-zheng-tong-bu-de-xie-xin-de/">一篇文章</a>，也这样做了（我看过他开源的demo，做得还不够好，应该还是demo阶段，不太像是一个成型的项目）。这篇文章的思路是很清晰的，并且也点到了一些实实在在的痛点，解决思路也基本是正确的，可以参看。</p>
 <p>这块，我做得比较早了，当时守望先锋的文章还没出，我的战斗也没有基于ECS，所以，在处理快照上，只有自己理顺逻辑来做了。</p>
 <p>我的思路是，通过一个回滚接口，需要数据回滚的部分，实现接口，各自处理自己的保存快照和回滚。就像我们序列化一个复杂的配置，每个配置各自序列化自己的部分，最终合并成一个序列化好的文件。</p>
 <p>首先，定义接口，和快照数据的reader和writer</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-5052de9e1c12b7e87d2f452b29fdef61_1440w.jpg" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-b666f214abd2a804e885237c5bcc119b_1440w.jpg" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-2f49a68d6fd54381d8e7bdf3ffdfb283_1440w.jpg" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-5052de9e1c12b7e87d2f452b29fdef61_1440w.jpg" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-b666f214abd2a804e885237c5bcc119b_1440w.jpg" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-2f49a68d6fd54381d8e7bdf3ffdfb283_1440w.jpg" alt="img"></p>
 <p>然后，就是每个模块，自己去处理自己的takeSnapshot和rollback，例如：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-96bb5917e8a766ef79323613179f404d_1440w.jpg" alt="img">简单的数值回滚</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-1573d2a9eeec5b5d8e7e663a8e06f487_1440w.jpg" alt="img">复制的列表回滚和调用子模块回滚</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-96bb5917e8a766ef79323613179f404d_1440w.jpg" alt="img">简单的数值回滚</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-1573d2a9eeec5b5d8e7e663a8e06f487_1440w.jpg" alt="img">复制的列表回滚和调用子模块回滚</p>
 <p>思路理顺以后，就可以很方便地处理了，注意write和read的顺序，注意处理好list，就解决了大部分问题。当然，在实现逻辑的过程中，时刻要注意，一个模块如何回滚（例如获取随机数也需要回滚）。</p>
 <p>有一个更简单的方式，就是给属性打Attribute，然后写通用的方法。例如，我早<strong>期的实现方案</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-05fee97a51c743b54d8dca8074fe042f_1440w.jpg" alt="img">给属性打标签</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-05fee97a51c743b54d8dca8074fe042f_1440w.jpg" alt="img">给属性打标签</p>
 <p>根据标签，通用的读写方法，通过反射来读写，就不需要每个模块自己去实现自己的方法了：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-c27132db564887adc282fe621f2357e3_1440w.jpg" alt="img">部分代码</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-01-lock-step/v2-c27132db564887adc282fe621f2357e3_1440w.jpg" alt="img">部分代码</p>
 <p>这种方法，能很好地解决大部分问题，甚至前面提到的<a href="https://link.zhihu.com/?target=https%3A//github.com/suzuke/TrueSync/tree/master/Assets/TrueSync/Engine/Math">Truesync</a>，也是用的这种方式来做。</p>
 <p>但是这种方法有个难以回避的问题，就是GC，因为基于反射，当我们调用field的GetValue和SetValue的时候，GC难以避免。并且，因为全自动，不方便处理一些特殊逻辑，调试优化也不方便，最后改成了现有的方式，虽然看起来笨重一些，但是可控性更强，我后续做的很多优化，都方便很多。</p>
 <p>关于快照，也有很多可以优化的点，无论是GC内存上的，还是运行效率上的，都需要优化好，否则，可能带来性能问题。这块优化，有空另辟文章再细谈吧。</p>
@@ -557,26 +557,26 @@
   </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/anime.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/utils.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/local-search.js"></script>
 
 
 

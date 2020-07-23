@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-07-23T10:26:49.329Z</updated>
+  <updated>2020-07-23T11:40:41.683Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -51,7 +51,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -86,7 +86,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -115,12 +115,12 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
       &lt;h1 id=&quot;快速开始&quot;&gt;&lt;a href=&quot;#快速开始&quot; class=&quot;headerlink&quot; title=&quot;快速开始&quot;&gt;&lt;/a&gt;快速开始&lt;/h1&gt;&lt;p&gt;如果你是一个前端项目，可以使用 &lt;code&gt;Node.js&lt;/code&gt; 的模板，点击 &lt;code&gt;Set up this workflow&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-11-github-actions/v2-93f521330d963d903561c0575d2d8fac_720w.jpg&quot; alt=&quot;v2-93f521330d963d903561c0575d2d8fac_720w&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-11-github-actions/v2-93f521330d963d903561c0575d2d8fac_720w.jpg&quot; alt=&quot;v2-93f521330d963d903561c0575d2d8fac_720w&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -149,11 +149,11 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200716181126415.png&quot; alt=&quot;image-20200716181126415&quot;&gt;&lt;/p&gt;
+      &lt;h1 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200716181126415.png&quot; alt=&quot;image-20200716181126415&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h1&gt;
     
     </summary>
@@ -181,7 +181,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -209,7 +209,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -239,7 +239,7 @@
     <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
     <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
     <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.333Z</updated>
+    <updated>2020-07-23T11:40:41.687Z</updated>
     
     <summary type="html">
     
@@ -273,7 +273,7 @@
     <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
     <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
     <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.333Z</updated>
+    <updated>2020-07-23T11:40:41.687Z</updated>
     
     <summary type="html">
     
@@ -312,7 +312,7 @@
     <link href="http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/"/>
     <id>http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -337,7 +337,7 @@
     <link href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/"/>
     <id>http://www.igiven.com/tool-2020-07-02-win10-start-menu/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -367,7 +367,7 @@
     <link href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/"/>
     <id>http://www.igiven.com/unity-2020-07-01-unity-coordinate/</id>
     <published>2020-07-01T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.333Z</updated>
+    <updated>2020-07-23T11:40:41.687Z</updated>
     
     <summary type="html">
     
@@ -399,7 +399,7 @@
     <link href="http://www.igiven.com/tool-2020-06-27-linux-github-slow/"/>
     <id>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</id>
     <published>2020-06-27T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -432,7 +432,7 @@
     <link href="http://www.igiven.com/tool-2020-06-26-blog-mail-sub/"/>
     <id>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</id>
     <published>2020-06-26T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -455,7 +455,7 @@
     <link href="http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/"/>
     <id>http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/</id>
     <published>2020-06-11T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -486,7 +486,7 @@
     <link href="http://www.igiven.com/dotnet-2020-05-29-abp-start/"/>
     <id>http://www.igiven.com/dotnet-2020-05-29-abp-start/</id>
     <published>2020-05-29T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -518,7 +518,7 @@
     <link href="http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/"/>
     <id>http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/</id>
     <published>2020-05-03T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -543,7 +543,7 @@
     <link href="http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/"/>
     <id>http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/</id>
     <published>2020-03-25T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.329Z</updated>
+    <updated>2020-07-23T11:40:41.683Z</updated>
     
     <summary type="html">
     
@@ -565,7 +565,7 @@
     <link href="http://www.igiven.com/unity-2020-03-04-unity-startup/"/>
     <id>http://www.igiven.com/unity-2020-03-04-unity-startup/</id>
     <published>2020-03-04T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.333Z</updated>
+    <updated>2020-07-23T11:40:41.687Z</updated>
     
     <summary type="html">
     
@@ -600,12 +600,12 @@
     <link href="http://www.igiven.com/unity-2020-03-01-unity-debug/"/>
     <id>http://www.igiven.com/unity-2020-03-01-unity-debug/</id>
     <published>2020-03-01T00:00:00.000Z</published>
-    <updated>2020-07-23T10:26:49.333Z</updated>
+    <updated>2020-07-23T11:40:41.687Z</updated>
     
     <summary type="html">
     
       &lt;h1 id=&quot;vs2019-调试unity失效&quot;&gt;&lt;a href=&quot;#vs2019-调试unity失效&quot; class=&quot;headerlink&quot; title=&quot;vs2019 调试unity失效&quot;&gt;&lt;/a&gt;vs2019 调试unity失效&lt;/h1&gt;&lt;p&gt;s怎么启动调试都无法关联到unity，后来发现自己应该是不小心把attach editor勾选掉了，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-01-unity-debug/v2-8a3a1f8d3c6ed7317f18e2ac89620a38_1440w.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-01-unity-debug/v2-8a3a1f8d3c6ed7317f18e2ac89620a38_1440w.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
     
     </summary>
     

@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/css/main.css">
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="对于垃圾收集（GC）, 我们需要考虑三件事情：哪些内存需要回收？如何判断是垃圾对象？垃圾回收算法有哪些？ 一、GC的工作区域1、不是GC的工作区域">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213112064-1445464345.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213518377-283931527.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213541943-2048983954.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621214050767-1145517463.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-mem/5b1933eb47c2a.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213112064-1445464345.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213518377-283931527.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621213541943-2048983954.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621214050767-1145517463.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-mem/5b1933eb47c2a.png">
 <meta property="article:published_time" content="2020-02-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T10:26:49.329Z">
+<meta property="article:modified_time" content="2020-07-23T11:40:41.683Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="C#">
@@ -43,7 +43,7 @@
 <meta property="article:tag" content="地图">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png">
+<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png">
 
 <link rel="canonical" href="http://www.igiven.com/dotnet-2020-02-11-gc/">
 
@@ -89,8 +89,8 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
-<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -249,7 +249,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 19:40:41" itemprop="dateModified" datetime="2020-07-23T19:40:41+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
 <p>  2)很难处理循环引用</p>
 <h4 id="2、可达性分析算法"><a href="#2、可达性分析算法" class="headerlink" title="2、可达性分析算法"></a>2、可达性分析算法</h4><p>   这种算法的基本思路是通过一系列名为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链相连时，就证明此对象是不可用的。</p>
 <p>Java语言是通过可达性分析算法来判断对象是否存活的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png" alt="img"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621212836385-64372595.png" alt="img"></p>
 <p> C#与Java中，<strong>GC采用的是GC Root 的链路可达性分析算法解决的GC标记问题</strong>。原理就是一个对象只要有GC Root引用，就不会释放</p>
 <p><strong>.NET中可以当作GC Root的对象有如下几种：</strong></p>
 <p>1、全局变量</p>
@@ -307,20 +307,20 @@
 <p>4、本地方法栈中JNI的引用的对象</p>
 <h2 id="三、垃圾回收算法"><a href="#三、垃圾回收算法" class="headerlink" title="三、垃圾回收算法"></a>三、垃圾回收算法</h2><h4 id="1、标记-清除算法"><a href="#1、标记-清除算法" class="headerlink" title="1、标记-清除算法"></a>1、标记-清除算法</h4><p>简单来说有两个步骤：标记、清除。</p>
 <p> (1). 标记阶段：找到所有可访问的对象，做个标记</p>
-<p> (2). 清除阶段：遍历堆，把未被标记的对象回收<br><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213112064-1445464345.png" alt="img"></p>
+<p> (2). 清除阶段：遍历堆，把未被标记的对象回收<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213112064-1445464345.png" alt="img"></p>
 <p> 缺 点</p>
 <p>  (1)因为涉及大量的内存遍历工作，所以执行性能较低，这也会导致“stop the world”时间较长，java程序吞吐量降低；</p>
 <p>  (2)对象被清除之后，被清除的对象留下内存的空缺位置会造成内存不连续，空间浪费。</p>
 <h4 id="2、标记整理-压缩-算法"><a href="#2、标记整理-压缩-算法" class="headerlink" title="2、标记整理(压缩)算法"></a><strong>2、标记整理(压缩)算法</strong></h4><p>标记-整理算法适合用于存活对象较多的场合，如老年代。它在标记-清除算法的基础上做了一些优化。</p>
 <p>   (1)、标记阶段：它的第一个阶段与标记/清除算法是一模一样的。</p>
-<p>   (2)、整理阶段：移动所有存活的对象，且按照内存地址次序依次排列，然后将末端内存地址以后的内存全部回收。<br><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213518377-283931527.png" alt="img"></p>
+<p>   (2)、整理阶段：移动所有存活的对象，且按照内存地址次序依次排列，然后将末端内存地址以后的内存全部回收。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213518377-283931527.png" alt="img"></p>
 <p>​    上图中可以看到，标记的存活对象将会被整理，按照内存地址依次排列，而未被标记的内存会被清理掉。如此一来，当我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可，这比维护一个空闲</p>
 <p>列表显然少了许多开销。</p>
 <p>优点</p>
 <p>   标记/整理算法不仅可以弥补标记/清除算法当中，内存区域分散的缺点，也消除了复制算法当中，内存减半的高额代价。</p>
 <p>缺点</p>
 <p>   标记/整理算法唯一的缺点就是效率也不高。不仅要标记所有存活对象，还要整理所有存活对象的引用地址。从效率上来说，标记/整理算法要低于复制算法。 </p>
-<h4 id="3、复制算法"><a href="#3、复制算法" class="headerlink" title="3、复制算法"></a>3、复制算法</h4><p>   复制算法简单来说就是把内存一分为二，但只使用其中一份，在垃圾回收时，将正在使用的那份内存中存活的对象复制到另一份空白的内存中，最后将正在使用的内存空间的对象清除，完成垃圾回收。<br><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213541943-2048983954.png" alt="img"></p>
+<h4 id="3、复制算法"><a href="#3、复制算法" class="headerlink" title="3、复制算法"></a>3、复制算法</h4><p>   复制算法简单来说就是把内存一分为二，但只使用其中一份，在垃圾回收时，将正在使用的那份内存中存活的对象复制到另一份空白的内存中，最后将正在使用的内存空间的对象清除，完成垃圾回收。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621213541943-2048983954.png" alt="img"></p>
 <p>优点<br>    复制算法使得每次都只对整个半区进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。<br>缺点<br>    复制算法的代价是将内存缩小为原来的一半，这个太要命了。</p>
 <p>注意（重要）</p>
 <p>​    现在的虚拟机使用复制算法来进行新生代的内存回收。因为在新生代中绝大多数的对象都是“朝生夕亡”，所以不需要将整个内存分为两个部分，而是分为三个部分，一块为Eden（伊面区）和两块较小的</p>
@@ -336,7 +336,7 @@
 <p>​    内存整齐度：复制算法=标记-整理算法&gt;标记-清除算法</p>
 <p>​    内存利用率：标记-整理算法=标记-清除算法&gt;复制算法</p>
 <h4 id="5、分代收集算法"><a href="#5、分代收集算法" class="headerlink" title="5、分代收集算法"></a>5、分代收集算法</h4><p>   首先这不是一种新算法，它是一种思想。现在使用的Java虚拟机并不是只是使用一种内存回收机制，而是分代收集的算法。就是将内存根据对象存活的周期划分为几块。一般是把堆分为新生代、和老年代。短命对</p>
-<p>象存放在新生代中，长命对象放在老年代中。<br><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621214050767-1145517463.png" alt="img"></p>
+<p>象存放在新生代中，长命对象放在老年代中。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-gc/1090617-20180621214050767-1145517463.png" alt="img"></p>
 <p>  这个图是我拷贝来的，但要记住java8以后，已经没有永久区了，之前永久区存放的东西基本上放到了元空间中。</p>
 <p>对于不同的代，采用不同的收集算法：</p>
 <p>​    新生代：由于存活的对象相对比较少，因此可以采用复制算法该算法效率比较快。</p>
@@ -344,7 +344,7 @@
 <h2 id="各平台GC算法"><a href="#各平台GC算法" class="headerlink" title="各平台GC算法"></a>各平台GC算法</h2><p>关于Mono和unity ，集成的是开源项目BOEHM ，BOEHM算法采用标记清除法,il2cpp也是实现了boehm算法</p>
 <h1 id="关于c-和java中的循环引用"><a href="#关于c-和java中的循环引用" class="headerlink" title="关于c#和java中的循环引用"></a>关于c#和java中的循环引用</h1><p>循环引用指的是A引用了B，而B又引用了A。在写代码的时候，都难免会这样写：地图引用了战斗单位，战斗单位又引用了地图。。</p>
 <p> 如图：（来源于国外大神的解释）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-mem/5b1933eb47c2a.png" alt="小议C#引用类型对象在循环引用时会不会内存泄漏"></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-11-mem/5b1933eb47c2a.png" alt="小议C#引用类型对象在循环引用时会不会内存泄漏"></p>
 <p>当A没有再被其他类引用，则A，B，C都应该被垃圾回收。如果判断该对象是否需要被回收的依据是基于引用计数的，那上面代码就会是这样：B被C和A引了，引用计数为2，C被B引了，引用计数为1，这样内存就泄露了。</p>
 <p>所以C#的GC并没有用引用计数。GC有一些“根”，对象都挂在上面。从“根”往其子结点进行遍历，就可以标注出哪些对象是被使用的。A对象没有被其他引用，A作为B，C的入口，所以A,B,C都变成了被回收的对象。</p>
 <p>只要是涉及到的对象不能从GC Roots<a href="https://droidyue.com/blog/2014/10/12/understanding-weakreference-in-java/" target="_blank" rel="noopener">强引用</a>可到达，垃圾回收器都会进行清理来释放内存。</p>
@@ -535,26 +535,26 @@
   </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/lib/anime.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/utils.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/js/local-search.js"></script>
 
 
 
