@@ -115,6 +115,7 @@ theme_config:
   links:
     GODGODGAME: http://www.godgodgame.com
     IGIVEN: https://www.igiven.com
+    数据结构与算法: https://zhepama.github.io/C-Sharp-Playground/zh/
   post_edit:
     enable: true
     url: https://github.com/zhepama/igiven.github.io/tree/master/source/ # Link for view source
@@ -176,7 +177,7 @@ search:
   format: html
 
 # hexo-img-cdn
-## https://github.com/zhepama/hexo-img-cdn
+## https://github.com/zhepama/hexo-generator-cdn
 ## 因为博客图片的url是类型../../assets/image.png之类的图片,所以cdnurl后面多了两个//使其可以正常访问
 cdn:
   enable: true
