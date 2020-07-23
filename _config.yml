@@ -122,10 +122,6 @@ theme_config:
     enable: true
   motion:
     enable: false
-  vendors:
-    anime: //cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js
-    fontawesome: //cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css
-    lazyload: //cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -185,5 +181,5 @@ search:
 cdn:
   enable: true
   onlypost: false
-  url: https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///
-
+  url: //cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages
+  img_url: //cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///

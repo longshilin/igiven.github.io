@@ -662,16 +662,6 @@ hexo-bunyan@^2.0.0:
     mv "~2"
     safe-json-stringify "~1"
 
-hexo-cdn-jsdelivr@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.npm.taobao.org/hexo-cdn-jsdelivr/download/hexo-cdn-jsdelivr-0.0.9.tgz#ef93c9b8e4b5b9973c566a6de5c6346705157e1d"
-  integrity sha1-75PJuOS1uZc8Vmpt5cY0ZwUVfh0=
-  dependencies:
-    hexo-fs "^3.1.0"
-    moment "^2.18.0"
-    nunjucks "^3.2.1"
-    url-join "^4.0.1"
-
 hexo-cli@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/hexo-cli/download/hexo-cli-3.1.0.tgz#a7414d4647333fe73762f86d77e5660659c0d05b"
@@ -752,6 +742,11 @@ hexo-generator-category@^1.0.0:
   dependencies:
     hexo-pagination "1.0.0"
 
+hexo-generator-cdn@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/hexo-generator-cdn/-/hexo-generator-cdn-1.0.0.tgz#c1e27db85acb362bbdf968a70ae821f0e68a17bb"
+  integrity sha512-oTHNRKk5xijGfQ3Wugc9k9m+wcre+9JwRzsYSj1jnAu9F1mJ4aw3MFBGx4D3n2PtNS/HuPQbhDhDU5IYP2Cymg==
+
 hexo-generator-feed@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/hexo-generator-feed/download/hexo-generator-feed-2.2.0.tgz#4b8b752a27d00525363e3449f18d063a92c13f0d"
@@ -796,18 +791,6 @@ hexo-i18n@^1.0.0:
   integrity sha1-eYP7OjE+kGFbhN2PqUanHEie9b0=
   dependencies:
     sprintf-js "^1.0.3"
-
-hexo-img-cdn@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/hexo-img-cdn/-/hexo-img-cdn-1.0.4.tgz#fca821bf9a659bb714f3a918b0534faa2fa28675"
-  integrity sha512-k7HVfnxHX3LKRxHDMTINoLjpZ2aR81bQ7GUEFb6rhTJfwTX07p3e6uFUPSb4yAlmdYiuzh7C7D+MFc2vKAXP4g==
-
-hexo-lazyload-image-cdn@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/hexo-lazyload-image-cdn/download/hexo-lazyload-image-cdn-2.0.1.tgz#70855eb9230483688f79fbacf22ba54388555fdd"
-  integrity sha1-cIVeuSMEg2iPefus8iulQ4hVX90=
-  dependencies:
-    uglify-js "^3.0.27"
 
 hexo-log@^1.0.0:
   version "1.0.0"
@@ -1179,7 +1162,7 @@ moment-timezone@^0.5.21, moment-timezone@^0.5.23:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.6, moment@^2.18.0, moment@^2.22.2:
+"moment@>= 2.9.0", moment@^2.10.6, moment@^2.22.2:
   version "2.27.0"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
   integrity sha1-i/9OPiaiNiIN/j423nVrbrqgEF0=
@@ -1275,7 +1258,7 @@ nth-check@^1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
-nunjucks@^3.0.0, nunjucks@^3.1.6, nunjucks@^3.2.1, nunjucks@^3.2.2:
+nunjucks@^3.0.0, nunjucks@^3.1.6, nunjucks@^3.2.2:
   version "3.2.2"
   resolved "https://registry.npm.taobao.org/nunjucks/download/nunjucks-3.2.2.tgz?cache=0&sync_timestamp=1595219927930&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnunjucks%2Fdownload%2Fnunjucks-3.2.2.tgz#45f915fef0f89fbab38c489dc85025f64859f466"
   integrity sha1-RfkV/vD4n7qzjEidyFAl9khZ9GY=
@@ -1732,11 +1715,6 @@ uglify-js@2.6.0:
     uglify-to-browserify "~1.0.0"
     yargs "~3.10.0"
 
-uglify-js@^3.0.27:
-  version "3.10.0"
-  resolved "https://registry.npm.taobao.org/uglify-js/download/uglify-js-3.10.0.tgz?cache=0&sync_timestamp=1592744803278&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuglify-js%2Fdownload%2Fuglify-js-3.10.0.tgz#397a7e6e31ce820bfd1cb55b804ee140c587a9e7"
-  integrity sha1-OXp+bjHOggv9HLVbgE7hQMWHqec=
-
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/uglify-to-browserify/download/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
@@ -1756,11 +1734,6 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/urix/download/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
-
-url-join@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npm.taobao.org/url-join/download/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
-  integrity sha1-tkLiGiZGgI/6F4xMX9o5hE4Szec=
 
 util-deprecate@^1.0.1:
   version "1.0.2"
