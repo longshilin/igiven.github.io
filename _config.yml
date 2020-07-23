@@ -102,6 +102,8 @@ theme_config:
     tags: /tags/ || fa fa-tags
     categories: /categories/ || fa fa-th
     archives: /archives/ || fa fa-archive
+    sitemap: /sitemap.xml || fa fa-sitemap
+    RSS: /atom.xml || fa fa-rss
   menu_settings:
     icons: true
     badges: true
@@ -113,6 +115,18 @@ theme_config:
   links:
     GODGODGAME: http://www.godgodgame.com
     IGIVEN: https://www.igiven.com
+  post_edit:
+    enable: true
+    url: https://github.com/zhepama/igiven.github.io/tree/master/source/ # Link for view source
+  local_search:
+    enable: true
+  motion:
+    enable: false
+  vendors:
+    anime: //cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js
+    fontawesome: //cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css
+    lazyload: //cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -129,3 +143,47 @@ excerpt:
   excerpt_excludes: []
   more_excludes: []
   hideWholePostExcerpts: true
+
+# hexo-generator-feed
+## https://github.com/hexojs/hexo-generator-feed
+feed:
+  # Generate both atom and rss2 feeds
+  type:
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss2.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+
+# hexo-generator-sitemap
+## https://github.com/hexojs/hexo-generator-sitemap
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+
+# hexo-generator-searchdb
+## https://github.com/next-theme/hexo-generator-searchdb
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# hexo-img-cdn
+## https://github.com/zhepama/hexo-img-cdn
+## 因为博客图片的url是类型../../assets/image.png之类的图片,所以cdnurl后面多了两个//使其可以正常访问
+cdn:
+  enable: true
+  onlypost: false
+  url: https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///
+
