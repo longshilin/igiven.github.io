@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="基本概念 Meshes 是Unity的主要图形基元。 它们定义对象的形状。 Materials 通过包含对所用纹理的引用、平铺信息、颜色色调等来定义表面应使用的渲染方式。材质的可用选项取决于材质使用的着色器。 Shaders 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。 Textures 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表">
@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="基本概念 Meshes 是Unity的主要图形基元。 它们定义对象的形状。 Materials 通过包含对所用纹理的引用、平铺信息、颜色色调等来定义表面应使用的渲染方式。材质的可用选项取决于材质使用的着色器。 Shaders 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。 Textures 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/201808082025438">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190805190859508.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190806210636364.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190806223230787.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190806223831570.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190806223841210.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/2019080622511158.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/20190806225353486.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/201808082025438">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190805190859508.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190806210636364.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190806223230787.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190806223831570.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190806223841210.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/2019080622511158.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/20190806225353486.png">
 <meta property="article:published_time" content="2020-07-03T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T05:42:05.490Z">
+<meta property="article:modified_time" content="2020-07-23T10:26:49.333Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="游戏">
@@ -46,7 +46,7 @@
 <meta property="article:tag" content="游戏开发">
 <meta property="article:tag" content="mesh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.igiven.com/assets/images/2020-07-03-unity-mesh/201808082025438">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-07-03-unity-mesh/201808082025438">
 
 <link rel="canonical" href="http://www.igiven.com/unity-2020-07-03-unity-mesh/">
 
@@ -92,10 +92,12 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  <div class="container">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -120,6 +122,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -154,11 +157,48 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -195,7 +235,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Mesh renderer 和 Mesh 和 Mesh Filter
+          Mesh renderer 和 Mesh 和 Mesh Filter<a href="https://github.com/zhepama/igiven.github.io/tree/master/source/_posts/unity/2020-07-03-unity-mesh.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -212,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 13:42:05" itemprop="dateModified" datetime="2020-07-23T13:42:05+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +281,7 @@
 <li><strong>Shaders</strong> 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。</li>
 <li><strong>Textures</strong> 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表面颜色时使用纹理。除了游戏对象表面的基本颜色（反照率）之外，纹理还可表示材质表面的许多其他方面，例如其反射率或粗糙度。</li>
 </ul>
-<h2 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h2><p><img src="../../assets/images/2020-07-03-unity-mesh/201808082025438" alt="这里写图片描述"></p>
+<h2 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h2><p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/201808082025438" alt="这里写图片描述"></p>
 <ul>
 <li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#Default" target="_blank" rel="noopener">Default</a></li>
 <li><a href="https://docs.unity3d.com/Manual/TextureTypes.html#NormalMap" target="_blank" rel="noopener">Normal Map</a> 法线贴图就是在原物体的凹凸表面的每个点上均作法线，通过RGB颜色通道来标记法线的方向，你可以把它理解成与原凹凸表面平行的另一个不同的表面，但实际上它又只是一个光滑的平面</li>
@@ -261,7 +301,7 @@
 <li>切线 (tangent) 切线是垂直于法线的一条向量，由于垂直于法线的向量有无数条，所以切线最终规定为由UV坐标来决定朝向。</li>
 </ul>
 <p>例如：左图利用三个点绘制了一个三角形，而右图则通过两个三角形得到了一个四边形：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190805190859508.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190805190859508.png" alt="img"></p>
 <p>注：这里需要注意的是，很明显从左图中给定的三个点，有两种方式可以得到三角图元，即</p>
 <ul>
 <li>顺时针旋转（也称左手螺旋）：p0-&gt;p1-&gt;p2</li>
@@ -280,7 +320,7 @@
 
 <p>没错，indices就是这么一回事，原来是vertices数组中，每三个顶点表示一个三角图元，现在是indices数组中，每三个整型表示一个图元。这些整形不存储真正的数据，<code>只有用到时才从vertices中取出，也就是所谓的索引了</code>。</p>
 <h1 id="SubMesh"><a href="#SubMesh" class="headerlink" title="SubMesh"></a>SubMesh</h1><p>面提到过，MeshRenderer负责对MeshFilter中的Mesh进行绘制，而绘制依赖于着色器，或者说着色器生成的材质（Material）。简单来说，材质具体描述了Mesh中的数据如何进行绘制。<br>Material只负责一个Mesh的一次绘制，但是现在有一个要求是，Mesh的不同部分，要求使用不同的材质。例如上面所绘制的四边形，两个三角面片要求绘制出不同的颜色。这个时候就需要使用SubMesh了。<br>从名字也能看出，SubMesh类似于Mesh，并且Mesh包含SubMesh。但是和Mesh不一样的是，SubMesh只有triangles信息，也就是说SubMesh使用自身的 triangles信息，索引找到 Mesh上的顶点信息（如vertices、 uv、normal等）后进行三角面片的绘制。它们的关系如下图所示：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806210636364.png" alt="在这里插入图片描述"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190806210636364.png" alt="在这里插入图片描述"></p>
 <p>这个设置的过程依赖于Mesh中的API是 SetTriangles，其函数原型为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> @parm triangles: 			SubMesh的triangles</span><br><span class="line"> @parm submesh: 			属于Mesh中的第几个submesh</span><br><span class="line"> @parm calculateBounds：	是否计算包围盒，默认为true。设置为false会使用当前存在的包围盒以减少CPU开销</span><br><span class="line"> @parm baseVertex：			triangles中每一个元素的偏移值，默认为0；</span><br><span class="line">*&#x2F;</span><br><span class="line">public void SetTriangles(int[] triangles, int submesh, bool calculateBounds &#x3D; true, int baseVertex &#x3D; 0);</span><br></pre></td></tr></table></figure>
 
@@ -288,14 +328,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Vector3[] vertices &#x3D; new Vector3[]&#123;</span><br><span class="line">	     new Vector3( 0, 0, 0 ),</span><br><span class="line">	     new Vector3( 0, 1, 0 ),</span><br><span class="line">	     new Vector3( 1, 0, 0 ),</span><br><span class="line">	     new Vector3( 1, 1, 0 ),</span><br><span class="line">	&#125;;</span><br><span class="line">	int[] subTriangles_0 &#x3D; new int[]&#123;</span><br><span class="line">		0, 1, 2</span><br><span class="line">	&#125;;</span><br><span class="line">	int[] subTriangles_1 &#x3D; new int[]&#123;</span><br><span class="line">		1, 3, 2</span><br><span class="line">	&#125;;</span><br><span class="line">	Mesh mesh &#x3D; new Mesh();</span><br><span class="line">	mesh.vertices &#x3D; vertices;</span><br><span class="line">	&#x2F;&#x2F; 告诉 Mesh它将会有两个SubMesh</span><br><span class="line">	mesh.subMeshCount &#x3D; 2;</span><br><span class="line">	mesh.SetTriangles( subTriangles_0 , 0 );</span><br><span class="line">	mesh.SetTriangles( subTriangles_1 , 1 );</span><br><span class="line">	&#x2F;&#x2F; 重新计算normal信息，不然后面的 material会不起作用</span><br><span class="line">	mesh.RecaculateNormals();</span><br><span class="line">	&#x2F;&#x2F; MeshFilter</span><br><span class="line">	MeshFilter meshFilter &#x3D; GetComponent&lt;MeshFilter&gt;();</span><br><span class="line">	if( meshFilter &#x3D;&#x3D; null ) meshFilter &#x3D; gameObject.AddComponent&lt;MeshFilter&gt;();</span><br><span class="line">	meshFilter.mesh &#x3D; mesh;</span><br><span class="line">	&#x2F;&#x2F; MeshRenderer</span><br><span class="line">	MeshRenderer meshRenderer &#x3D; GetComponent&lt;MeshRenderer&gt;();</span><br><span class="line">	if( meshRenderer &#x3D;&#x3D; null ) gameObject.AddComponent&lt;MeshRenderer&gt;();</span><br></pre></td></tr></table></figure>
 
 <p>将上述代码挂载到一个空节点上运行，可以得到以下结果：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223230787.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190806223230787.png" alt="img"></p>
 <p>嗯？！难不成笔者在骗人，这里明明只有一个三角面片。莫慌，之前不是说过，要求两个三角面片使用不同的材质吗？如果运行时，将MeshRenderer的Material的Size设为2的话，你会发现另外一个三角图元也出现了：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223831570.png" alt="img"></p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806223841210.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190806223831570.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190806223841210.png" alt="img"></p>
 <p>也就是说，有多少个SubMesh，就需要有多少个Material，并且它们的绘制关系是一一对应的。即第一个SubMesh使用第一个<br>Material绘制，第二个SubMesh使用第二个Material绘制，以此类推。为了验证这个，接下来创建两个默认的Material，将它们的Albedo分别设置为红色和绿色，接着运行时将这两个 Material赋给MeshRenderer，将会得到如下图所示的运行结果：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/2019080622511158.png" alt="在这里插入图片描述"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/2019080622511158.png" alt="在这里插入图片描述"></p>
 <p>另外，如果双击 MeshFilter的 Mesh属性，从下面的预览窗口，也能看到这个Mesh有两个SubMesh：</p>
-<p><img src="../../assets/images/2020-07-03-unity-mesh/20190806225353486.png" alt="在这里插入图片描述"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-03-unity-mesh/20190806225353486.png" alt="在这里插入图片描述"></p>
 <blockquote>
 <p>如何在unity显示线框图<br>选择场景视图在其工具栏左侧的显示模式。前三个选项是阴影线框和阴影线框。</p>
 </blockquote>
@@ -519,13 +559,9 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
 
 <script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
 
 
 <script src="/js/schemes/pisces.js"></script>
@@ -539,6 +575,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

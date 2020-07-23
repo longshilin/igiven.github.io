@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="性能分析： 所有尝试优化的操作都是从发现问题开始的，在谈论性能时，这是非常重要的。对一个应用进行性能分析，第一步是根据性能分析的结果，找出它的瓶颈。然后再优化项目中的用到的技术和资源的结构。 提示：本节性能分析中出现的方法名称，都是从unity5.3中提取的，方法名可能在以后的Unity版本中发生变化。">
@@ -27,12 +27,12 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="性能分析： 所有尝试优化的操作都是从发现问题开始的，在谈论性能时，这是非常重要的。对一个应用进行性能分析，第一步是根据性能分析的结果，找出它的瓶颈。然后再优化项目中的用到的技术和资源的结构。 提示：本节性能分析中出现的方法名称，都是从unity5.3中提取的，方法名可能在以后的Unity版本中发生变化。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-03-04-unity-startup/v2-5c6c95216621d4ab86b26636ff9a019a_720w.jpg">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-03-04-unity-startup/v2-ddde913f040c5de47824f8abaca2e978_720w.jpg">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-03-04-unity-startup/v2-05563390f8cb569523e89841537c0e8f_720w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-03-04-unity-startup/v2-5c6c95216621d4ab86b26636ff9a019a_720w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-03-04-unity-startup/v2-ddde913f040c5de47824f8abaca2e978_720w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-03-04-unity-startup/v2-05563390f8cb569523e89841537c0e8f_720w.jpg">
 <meta property="article:published_time" content="2020-03-04T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T05:42:05.490Z">
+<meta property="article:modified_time" content="2020-07-23T10:26:49.333Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="C#">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="UNITY">
 <meta property="article:tag" content="JS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.igiven.com/assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg">
 
 <link rel="canonical" href="http://www.igiven.com/unity-2020-03-04-unity-startup/">
 
@@ -88,10 +88,12 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  <div class="container">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -116,6 +118,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -150,11 +153,48 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -191,7 +231,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          unity启动运行脚本流程
+          unity启动运行脚本流程<a href="https://github.com/zhepama/igiven.github.io/tree/master/source/_posts/unity/2020-03-04-unity-startup.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -208,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 13:42:05" itemprop="dateModified" datetime="2020-07-23T13:42:05+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,14 +288,14 @@
 <p><strong>启动流程剖析：</strong></p>
 <p>当查看启动流程的时间时，有两个方法需要注意。在那些影响启动时间的配置文件、资源和工程代码中，这两个方法起着重要的作用。</p>
 <p>在不同的平台上，启动时间是不同的。在大多数平台上，Splash Image显示的时间，就是启动的时间。</p>
-<p><img src="../../assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-04-unity-startup/v2-e65aeff3106290ff9e3de0580ffa90ab_720w.jpg" alt="img"></p>
 <p>上面的截图来自于在iOS设备上运行的一个示例项目。在此平台的startUnity方法中，请注意UnityInitApplicationGraphics和UnityLoadApplication方法。</p>
 <p>UnityInitApplicationGraphics执行了大量的内部操作，例如设置图形设备和初始化许多Unity的内部系统。另外，为了初始化Resource系统，它必须加载Resource系统所包含下标的所有文件。每个名为“Resources”的文件夹中的每一个资源文件（注意：这只适用于项目“Assets”文件夹中名为“Resources”的文件夹，以及“Resources”文件夹中的所有子文件夹）都包含在Resource系统的数据中。因此，初始化Resource系统所需的时间与“Resource”文件夹中的文件数量至少呈线性关系。</p>
 <p>UnityLoadApplication包含加载和初始化第一个场景的方法。在项目中，这包括把需要在第一个场景里需要显示的所有数据进行反序列化和实例化。比如，编译着色器，上传贴图和实例化GameObjects。另外，第一个场景中，所有继承了MonoBehaviour脚本中的Awake方法都会在这个时候被回调。</p>
 <p>这些过程意味着，如果在项目的第一个场景中，在Awake方法中有长时间运行的代码，那么该代码就会增加项目的启动时间。为了避免这一问题，在Awake方法中不能放运行时间长的代码，或者把这些代码放到程序的其他其他生命周期里。</p>
 <p><strong>运行时流程分析：</strong></p>
 <p>在初始化启动之后的性能分析中，最主要的是PlayerLoop方法。这个是Unity的主循环，并且每一帧都会被执行一次。</p>
-<p><img src="../../assets/images/2020-03-04-unity-startup/v2-5c6c95216621d4ab86b26636ff9a019a_720w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-04-unity-startup/v2-5c6c95216621d4ab86b26636ff9a019a_720w.jpg" alt="img"></p>
 <p>上面的截图来自Unity5.4一个示例项目的性能分析。它展示了PlayerLoop中几个最有趣的方法。请注意，不同Unity版本之间，PlayerLoop中的方法名称可能有所不同。</p>
 <p>PlayerRender是运行在Unity渲染系统中的方法。它包括对象剔除，计算动态批次，向GPU提交绘制命令。任何的后处理效果（Image Effects）或基于渲染的脚本回调（比如OnWillRenderObject）也都在这里运行。通常来讲，在具有交互的项目中，这个方法也是最影响GPU性能的。</p>
 <p>BaseBehaviourManager调用了三个类型的CommonUpdate方法。它会调用当前场景中，挂在激活的物体上面的Monobehaviours里的特定方法。</p>
@@ -273,14 +313,14 @@
 <p>如果项目有用到2D物理系统。那么在Physics2DManager::FixedUpdate中也会出现类似的调用。</p>
 <p><strong>脚本方法剖析：</strong></p>
 <p>当脚本用IL2CPP编译跨平台编译时，找到包含ScriptingInvocation对象这行。这是Unity为了执行脚本代码，从内部代码过渡到运行时脚本的一个时间点（注意：从技术上讲，通过运行IL2CPP，C#和JS脚本也变成了本地代码。然而，这种编译的代码主要通过IL2CPP运行时框架执行方法，这跟手写的C++代码不太相似）。</p>
-<p><img src="../../assets/images/2020-03-04-unity-startup/v2-ddde913f040c5de47824f8abaca2e978_720w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-04-unity-startup/v2-ddde913f040c5de47824f8abaca2e978_720w.jpg" alt="img"></p>
 <p>上面的截图来自一个Unity5.4示例项目中的另一个的性能分析。RuntimeInvoker_Void这一行下面的所有方法都是C#脚本编译的，它们每帧都会被执行一次。</p>
 <p>分析报告阅读起来比较容易：每一个都是类名+“_”+方法名。在上图中，我们可以看到EventSysten.Update，PlayerShooting.Update和几个其他的Update方法，这些是大多数MonoBehaviours脚本中比较标准的Unity Update回调。</p>
 <p>展开这些方法，可以清楚的看到那些正在占用CPU的方法。其中也会包括项目中被用到的Unity API和C#类库的方法。</p>
 <p>上图的分析中，也显示了StandaloneInputModule.Process，这个方法会在每一帧都用射线穿过整个UI，为了检测是否有点击事件或者滑动事件触发。这个对性能的主要影响是需要遍历所有的UI元素，并且监测鼠标的位置是否在UI元素的边界内。</p>
 <p><strong>资源加载：</strong></p>
 <p>资源加载主要是通过SerializedFile::ReadObject方法来实现的。在对CPU性能分析时，就可以找到这个方法。SerializedFile::ReadObject通过Transfer方法，把文件的二进制数据关联到Unity的序列化系统。所有的Asset类型中，都能找到这个Transfer方法，比如Texttures，MonoBehaviours 和Particle Systems。</p>
-<p><img src="../../assets/images/2020-03-04-unity-startup/v2-05563390f8cb569523e89841537c0e8f_720w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-04-unity-startup/v2-05563390f8cb569523e89841537c0e8f_720w.jpg" alt="img"></p>
 <p>在上面的截图中，一个场景正在被加载。SerializedFile::ReadObject下面调用的不同Transfer方法表明了Unity正在读取并且反序列化场景中所有的Assets。</p>
 <p>通常，如果运行时遇到了性能问题，在加载资源时帧率下降，并且通过性能分析是由于SerializedFile::ReadObject这个方法造成的。请注意，在多数情况下，只有当通过SceneManager, Resources 或者 AssetBundle API进行同步加载资源时，SerializedFile::ReadObject才会出现在主线程里。</p>
 <p>避免出现这种性能问题，常规的做法是：你可以使用异步加载资源（这就把大量的ReadObject操作丢给了工作线程），或者提前加载好比较大的资源。</p>
@@ -486,13 +526,9 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
 
 <script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
 
 
 <script src="/js/schemes/pisces.js"></script>
@@ -506,6 +542,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

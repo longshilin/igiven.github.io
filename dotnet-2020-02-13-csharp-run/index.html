@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="用C#编写的源代码被编译为一种符合CLI规范的中间语言（IL）。IL代码与资源（例如位图和字符串）一起作为一种称为程序集的可执行文件存储在磁盘上，通常具有的扩展名为.exe（应用程序）或.dll（库）。程序集包含清单，它提供有关程序集的类型、版本、区域性和安全要求等信息。 执行C#程序时，程序集将加载到CLR中，它可能会根据清单中的信息执行不同的操作。然后，如果符合安全要求，CLR就会执行实时（J">
@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="用C#编写的源代码被编译为一种符合CLI规范的中间语言（IL）。IL代码与资源（例如位图和字符串）一起作为一种称为程序集的可执行文件存储在磁盘上，通常具有的扩展名为.exe（应用程序）或.dll（库）。程序集包含清单，它提供有关程序集的类型、版本、区域性和安全要求等信息。 执行C#程序时，程序集将加载到CLR中，它可能会根据清单中的信息执行不同的操作。然后，如果符合安全要求，CLR就会执行实时（J">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/094920_15170513.gif">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/v2-757e0e6e8813e7441cd758121e564729_1440w.jpg">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/884430-20160313213206835-2135598609.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/884430-20160313222148397-1732805152.png">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/884430-20160313222410850-1585024295.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/094920_15170513.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/v2-757e0e6e8813e7441cd758121e564729_1440w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/884430-20160313213206835-2135598609.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/884430-20160313222148397-1732805152.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/884430-20160313222410850-1585024295.png">
 <meta property="article:published_time" content="2020-02-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T05:42:05.486Z">
+<meta property="article:modified_time" content="2020-07-23T10:26:49.329Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="Win">
 <meta property="article:tag" content="windows">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="同步">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.igiven.com/assets/images/2020-02-13-csharp-run/094920_15170513.gif">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-13-csharp-run/094920_15170513.gif">
 
 <link rel="canonical" href="http://www.igiven.com/dotnet-2020-02-13-csharp-run/">
 
@@ -88,10 +88,12 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  <div class="container">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -116,6 +118,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -150,11 +153,48 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -191,7 +231,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          c#编译和运行启动原理
+          c#编译和运行启动原理<a href="https://github.com/zhepama/igiven.github.io/tree/master/source/_posts/dotnet/2020-02-13-csharp-run.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -208,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 13:42:05" itemprop="dateModified" datetime="2020-07-23T13:42:05+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,8 +273,8 @@
       
         <p>用C#编写的源代码被编译为一种符合CLI规范的中间语言（IL）。IL代码与资源（例如位图和字符串）一起作为一种称为程序集的可执行文件存储在磁盘上，通常具有的扩展名为.exe（应用程序）或.dll（库）。程序集包含清单，它提供有关程序集的类型、版本、区域性和安全要求等信息。</p>
 <p>执行C#程序时，程序集将加载到CLR中，它可能会根据清单中的信息执行不同的操作。然后，如果符合安全要求，CLR就会执行实时（JIT）编译以将IL代码转换为本机机器指令。CLR还提供与自动垃圾回收、异常处理和资源管理有关的其他服务。由CLR执行的代码有时会称为“托管代码”。</p>
-<p>[<img src="../../assets/images/2020-02-13-csharp-run/094920_15170513.gif" alt="什么是C#语言？作用有哪些？">]</p>
-<p><img src="../../assets/images/2020-02-13-csharp-run/v2-757e0e6e8813e7441cd758121e564729_1440w.jpg" alt="img"></p>
+<p>[<img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-13-csharp-run/094920_15170513.gif" alt="什么是C#语言？作用有哪些？">]</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-13-csharp-run/v2-757e0e6e8813e7441cd758121e564729_1440w.jpg" alt="img"></p>
 <h2 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h2><p><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/compiler-options/" target="_blank" rel="noopener">CSC.exe</a>是C＃编译器，可以编译您的C＃代码并生成可执行（.exe）文件，动态链接库（.dll）或代码模块（.netmodule）。</p>
 <p><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild" target="_blank" rel="noopener">MSBuild</a>是Microsoft Build Engine，可用于从Visual Studio生成<a href="https://docs.microsoft.com/zh-cn/visualstudio/ide/solutions-and-projects-in-visual-studio" target="_blank" rel="noopener">项目和解决方案</a> 。 此外，即使我编写了一些.cs文件和一个自定义项目文件（.xxproj）来构建它们，我们也可以使用msbuild.exe并使用<code>msbuild xxx.xxproj</code>类的命令来构建它们。 请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/walkthrough-creating-an-msbuild-project-file-from-scratch" target="_blank" rel="noopener">本文档</a> 。</p>
 <p><strong>它们之间的关系：</strong></p>
@@ -288,7 +328,7 @@
 <blockquote>
 <p>dll文件本质上和exe一样，只是少了入口函数。</p>
 </blockquote>
-<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313213206835-2135598609.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-13-csharp-run/884430-20160313213206835-2135598609.png" alt="img"></p>
 <p>MS-DOC MZ Header和MS-DOS Stub是为了兼容DOS系统存在的，目的是使这个exe在DOS下执行时弹出一个提示”This program cannot be run in DOS mode”。</p>
 <p>PE Header包含了这个文件的一些信息，如：文件创建日期，文件类型，Section的数量，Optional Header的大小等等。详细可以参考Winnt.h里的结构_IMAGE_FILE_HEADER。</p>
 <p>PE Optional Header则包含了文件的版本号以及重要的基地址和AddressOfEntryPoint（RVA-Relative Virtual Address)，这是程序执行的入口地址，双击exe后就从这里开始执行。对C#程序来说，这里指向的是.net的核心库MsCorEE.dll的_CorExeMain()函数。当然这是针对XP系统的，XP以后的系统，OS Loader已经可以判断出这个PE是否包含CLR头来决定是否运行MsCorEE.dll的_CorExeMain()函数。</p>
@@ -305,7 +345,7 @@
 <p>引用表包括程序集，类型和成员的引用，我们知道GC在回收内存时先默认认为所有对象都是垃圾，然后通过线程栈上的根（cpu寄存器，局部变量，参数，静态变量）找引用的对象，能找到的说明还在使用就去掉垃圾标记，这个表可以让GC在回收内存时方便从根找到所有引用。</p>
 <p>清单表主要是程序集，文件，资源的定义。</p>
 <p>现在来看看双击后是怎样运行的：</p>
-<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313222148397-1732805152.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-13-csharp-run/884430-20160313222148397-1732805152.png" alt="img"></p>
 <p>双击文件后OS Loader加载PE文件并解析，在PE Optional Header里找到基地址和RVA，通过这两个确定了程序的入口地址，这个地址指向MsCorEE.dll的_CorExeMain()，执行它。_CorExeMain()开始执行，选择加载合适版本的CLR，CLR开始运行，CLR运行时会分配一个连续的地址空间用作托管堆，并用一个指针NextObjPtr指到开始位置，下次分配内存时就从指针指的位置开始。</p>
 <p>CLR运行后从CLR头里找到应用程序入口标识，也就是Main()方法的MethodDefToken，通过这个标识在元数据表MethodDef里找到Main方法的偏移位置，这样就可以找到Main()的IL代码。</p>
 <p>CLR检查Main方法里面是否有没加载的类型，没有的话就加载进来并在托管堆上建一个类型对象，类型对象包含静态字段，方法，基类的引用。然后给类型的方法表里每个方法一个存根，存根是用于标识是否被JIT编译过。</p>
@@ -329,7 +369,7 @@
 
 
 
-<p><img src="../../assets/images/2020-02-13-csharp-run/884430-20160313222410850-1585024295.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-13-csharp-run/884430-20160313222410850-1585024295.png" alt="img"></p>
 <p><em>*图片不清楚可以放大看</em></p>
 <p>首先判断类型是否都加载，用到了int，bool，string，这些是在mscorlib.dll程序集的system命名空间下，所以先加载mscorlib.dll程序集，再把int，bool，string加到类型对象里。另外还有我们自己定义的Developer和People，也把类型对象创建好，另外也别忘了基类object，也要加载进来。（实际上还有double啊，这里就没画了）另外继承类的类型对象里面都有个字段指向基类，所以才能往上执行到基类方法表里的方法。</p>
 <p>局部变量都在线程栈上，Find()方法是静态方法，直接去People类型对象的方法表里去找，找到后看是否有存根标识，没有的话做JIT编译，有的话直接运行。</p>
@@ -528,13 +568,9 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
 
 <script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
 
 
 <script src="/js/schemes/pisces.js"></script>
@@ -548,6 +584,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

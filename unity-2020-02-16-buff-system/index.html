@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="内部运算1、是否包含技能效果？（提高&#x2F;降低 攻击 命中 闪避 移动速度 群体伤害 替换技能ID 等 ）2、是否包含阶段效果？（BUFF分为多个阶段，不同的阶段有不同的效果，比如影之哀伤）3、是否包含计时器？（持续时长计算、叠加时长计算 总之所有关于持续性时间的问题 都丢这里）4、是否包含计数器？（用来计算阶段、剩余生效次数、比如影之哀伤 LOL电刀）5、是否具备分类规则？（魔法效果 诅咒效果 中毒">
@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="内部运算1、是否包含技能效果？（提高&#x2F;降低 攻击 命中 闪避 移动速度 群体伤害 替换技能ID 等 ）2、是否包含阶段效果？（BUFF分为多个阶段，不同的阶段有不同的效果，比如影之哀伤）3、是否包含计时器？（持续时长计算、叠加时长计算 总之所有关于持续性时间的问题 都丢这里）4、是否包含计数器？（用来计算阶段、剩余生效次数、比如影之哀伤 LOL电刀）5、是否具备分类规则？（魔法效果 诅咒效果 中毒">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2020-02-16-buff-system/lol.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-16-buff-system/lol.gif">
 <meta property="article:published_time" content="2020-02-16T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T05:42:05.490Z">
+<meta property="article:modified_time" content="2020-07-23T10:26:49.333Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="游戏">
 <meta property="article:tag" content="同步">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.igiven.com/assets/images/2020-02-16-buff-system/lol.gif">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-02-16-buff-system/lol.gif">
 
 <link rel="canonical" href="http://www.igiven.com/unity-2020-02-16-buff-system/">
 
@@ -81,10 +81,12 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  <div class="container">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -109,6 +111,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -143,11 +146,48 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -184,7 +224,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          游戏buff系统设计
+          游戏buff系统设计<a href="https://github.com/zhepama/igiven.github.io/tree/master/source/_posts/unity/2020-02-16-buff-system.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -201,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 13:42:05" itemprop="dateModified" datetime="2020-07-23T13:42:05+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,7 +301,7 @@
 <p>　　强力攻击_昏迷，Occur携带者昏迷属性为true，Remove就不需要设置false了，因为他可能还有别的buff让他昏迷，但是Remove和Occur的时候都要重新计算一次属性状态就对了。说到这里，这个Buff互相堆叠又是很讨厌的逻辑，2个SS可以给同一个目标释放腐蚀术，产生2个，但是自己却只能对1个目标上1个，等等等等。</p>
 <p>　　人中吕布_技能恢复，OnCast的时候（事实上LoL应该只有OnHit，这也可以），判断不是普通攻击则回复生命。</p>
 <p>　　人中吕布_斩杀，OnHit判断目标生命比，决定是否造成999999伤害。</p>
-<p>其实如你楼下一层说的，这个机制的最大优势在于，它可以实现很多难以预料的功能，如果策划足够给力的话。<br>实际的经验是，一个项目中产生很多沟通问题的本质是，策划并不能归纳出自己想要什么，而程序员更不可能提早知道你想做什么，预判是一道鸿沟，无法跨越，因为我们都不是先知，而年轻的策划很多神奇的想法更是无法预判的，但如果放弃这些想法中的一些精化会非常可惜。因此在项目开发中尽可能去做一些能够更有“包容性”的设计，是非常重要的事情，这解决了后期的很多问题。<br>你可以发现我提倡的很多机制或者想法都具有“包容性”或者说“预判性”，包括Tag机制本身，很多年轻的策划或者程序并不能理解为什么明明我们可以用id数字分段做的事情非要想的如此复杂，但事实是当你需要把你的分段规则详细的说给后来的人知道的时候，你甚至需要花费几周时间，还未必能说清楚，更糟糕的是，也许你自己都忘了当初的约定。<br>Buff机制也是如此，它的优势在于程序员、包括策划自己并不需要一开始就知道我要具体做什么，但是我们可以先把框架搭起来或者说可以开始动手制作项目了，而后期灵感突发的时候，并不是非得“放到下一个项目”的。<br>而技能机制，在我看来反而只是一个辅助的体系，因为它只是一套简单的流程，作为一个入行的新人都应该轻松的完成他的开发，但是很多不太好的做法却是把技能的效果复杂化了，以至于程序员被误导，后期很难对技能维护。因此技能的效果，事实上就是Hp_Dmg（这么多年了我都用这个函数来造成伤害，因为名字很有趣），CreateBuffObj，CreateAoEObj，就是这么简单，一个技能的效果可以同时调用多条这样的功能，但只限于这样的功能。至于花哨的东西，就让Buff系统去完成。<br>因此这里还说了一个重点，对于策划来说，研发最大的技巧就是“拆”，如何把你的想法拆成最基础的元素，这样大家在实现的时候就不会有很多不必要的麻烦，在之后的debug中也会方便很多——比如我说的昏迷插法。一个优秀的程序员（至少我不是）他/她一定是把心思放在读书上，至少在学习计算机编程的时候他/她们非常棒，这也导致了他们不太可能像我们策划一样了解游戏，因此不应该把一些“难以理解”的东西拿来去塞给程序员做（事实上难以理解本身是因为它有太多的“专业名词”和超乎自然的地方，这也是游戏魅力所在），你也许没见过把“沉默”做成了“禁言”功能的程序员，他认为法师释放了一个沉默法术后，对方玩家就不能发送聊天内容了，因为被“沉默”了。<br>降低研发成本，从设计师角度来说主要还是沟通成本，现在已经成为了很多公司必须面对的课题了，明明一个简单到10小时能完成的逻辑，在很多公司居然能花费好几个人用好几十天去做，并且没能完成（因为策划总是在添加和改变想法，而程序员却陪太子读书了）。<br>“猴子”这个称呼并不适合一个200多斤的人<img src="../../assets/images/2020-02-16-buff-system/lol.gif" alt="img">，龙与地下城——欧美人眼中最强的生物和它的巢穴，都是字母D开头中间用and连接，它骨子里是一套分析世界的数学模型，骰子实现了世界上很多所谓运气的东西；猴与花果山，它应该是中国人的DND，猴象征着欧美人眼中的中国人，也是孙悟空的表现，花果山则是孙悟空的住所，Monkey and Mountain，前后2个M，就是巧妙的地方，15年前我想做一套中国人的DnD，但至今没法实现，很多原因导致我们在娱乐方面缺少类似骰子这样的基础文化。</p>
+<p>其实如你楼下一层说的，这个机制的最大优势在于，它可以实现很多难以预料的功能，如果策划足够给力的话。<br>实际的经验是，一个项目中产生很多沟通问题的本质是，策划并不能归纳出自己想要什么，而程序员更不可能提早知道你想做什么，预判是一道鸿沟，无法跨越，因为我们都不是先知，而年轻的策划很多神奇的想法更是无法预判的，但如果放弃这些想法中的一些精化会非常可惜。因此在项目开发中尽可能去做一些能够更有“包容性”的设计，是非常重要的事情，这解决了后期的很多问题。<br>你可以发现我提倡的很多机制或者想法都具有“包容性”或者说“预判性”，包括Tag机制本身，很多年轻的策划或者程序并不能理解为什么明明我们可以用id数字分段做的事情非要想的如此复杂，但事实是当你需要把你的分段规则详细的说给后来的人知道的时候，你甚至需要花费几周时间，还未必能说清楚，更糟糕的是，也许你自己都忘了当初的约定。<br>Buff机制也是如此，它的优势在于程序员、包括策划自己并不需要一开始就知道我要具体做什么，但是我们可以先把框架搭起来或者说可以开始动手制作项目了，而后期灵感突发的时候，并不是非得“放到下一个项目”的。<br>而技能机制，在我看来反而只是一个辅助的体系，因为它只是一套简单的流程，作为一个入行的新人都应该轻松的完成他的开发，但是很多不太好的做法却是把技能的效果复杂化了，以至于程序员被误导，后期很难对技能维护。因此技能的效果，事实上就是Hp_Dmg（这么多年了我都用这个函数来造成伤害，因为名字很有趣），CreateBuffObj，CreateAoEObj，就是这么简单，一个技能的效果可以同时调用多条这样的功能，但只限于这样的功能。至于花哨的东西，就让Buff系统去完成。<br>因此这里还说了一个重点，对于策划来说，研发最大的技巧就是“拆”，如何把你的想法拆成最基础的元素，这样大家在实现的时候就不会有很多不必要的麻烦，在之后的debug中也会方便很多——比如我说的昏迷插法。一个优秀的程序员（至少我不是）他/她一定是把心思放在读书上，至少在学习计算机编程的时候他/她们非常棒，这也导致了他们不太可能像我们策划一样了解游戏，因此不应该把一些“难以理解”的东西拿来去塞给程序员做（事实上难以理解本身是因为它有太多的“专业名词”和超乎自然的地方，这也是游戏魅力所在），你也许没见过把“沉默”做成了“禁言”功能的程序员，他认为法师释放了一个沉默法术后，对方玩家就不能发送聊天内容了，因为被“沉默”了。<br>降低研发成本，从设计师角度来说主要还是沟通成本，现在已经成为了很多公司必须面对的课题了，明明一个简单到10小时能完成的逻辑，在很多公司居然能花费好几个人用好几十天去做，并且没能完成（因为策划总是在添加和改变想法，而程序员却陪太子读书了）。<br>“猴子”这个称呼并不适合一个200多斤的人<img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-16-buff-system/lol.gif" alt="img">，龙与地下城——欧美人眼中最强的生物和它的巢穴，都是字母D开头中间用and连接，它骨子里是一套分析世界的数学模型，骰子实现了世界上很多所谓运气的东西；猴与花果山，它应该是中国人的DND，猴象征着欧美人眼中的中国人，也是孙悟空的表现，花果山则是孙悟空的住所，Monkey and Mountain，前后2个M，就是巧妙的地方，15年前我想做一套中国人的DnD，但至今没法实现，很多原因导致我们在娱乐方面缺少类似骰子这样的基础文化。</p>
 <p>相关链接</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/150812545" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/150812545</a></li>
@@ -448,13 +488,9 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
 
 <script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
 
 
 <script src="/js/schemes/pisces.js"></script>
@@ -468,6 +504,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

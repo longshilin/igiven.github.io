@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="常用命令 Get-PSDrive  Windows PowerShell 驱动器是一个数据存储位置，你可以像访问 Windows PowerShell 中的文件系统驱动器那样访问它。  Get-Alias 和   ls Alias:(驱动器)     列出所有alias  ls Env:(驱动器)    列出所有的环境变量  ls Variable:(驱动器) 和 Get-Variable 列出所">
@@ -27,9 +27,9 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="常用命令 Get-PSDrive  Windows PowerShell 驱动器是一个数据存储位置，你可以像访问 Windows PowerShell 中的文件系统驱动器那样访问它。  Get-Alias 和   ls Alias:(驱动器)     列出所有alias  ls Env:(驱动器)    列出所有的环境变量  ls Variable:(驱动器) 和 Get-Variable 列出所">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.igiven.com/assets/images/2019-08-10-powershell-command/image.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-08-10-powershell-command/image.png">
 <meta property="article:published_time" content="2019-08-10T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-23T05:42:05.486Z">
+<meta property="article:modified_time" content="2020-07-23T10:26:49.329Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="Win">
 <meta property="article:tag" content="shell">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="powershell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.igiven.com/assets/images/2019-08-10-powershell-command/image.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2019-08-10-powershell-command/image.png">
 
 <link rel="canonical" href="http://www.igiven.com/tool-2019-08-10-powershell-command/">
 
@@ -84,10 +84,12 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="IGiven" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="IGiven" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  <div class="container">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -112,6 +114,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -146,11 +149,48 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -187,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          powershell 常用命令
+          powershell 常用命令<a href="https://github.com/zhepama/igiven.github.io/tree/master/source/_posts/tool/2019-08-10-powershell-command.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -204,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 13:42:05" itemprop="dateModified" datetime="2020-07-23T13:42:05+08:00">2020-07-23</time>
+                <time title="修改时间：2020-07-23 18:26:49" itemprop="dateModified" datetime="2020-07-23T18:26:49+08:00">2020-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +298,7 @@
 <p>先编码执行一个复杂的命令:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Base64EncodedCommand</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> psCommmand = <span class="string">@"echo ""quoted value"" </span></span><br><span class="line"><span class="string">    echo ""Second Line""</span></span><br><span class="line"><span class="string">    pause"</span>;</span><br><span class="line">    <span class="keyword">var</span> psCommandBytes = System.Text.Encoding.Unicode.GetBytes(psCommmand);</span><br><span class="line">    <span class="keyword">var</span> psCommandBase64 = Convert.ToBase64String(psCommandBytes);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> startInfo = <span class="keyword">new</span> ProcessStartInfo()</span><br><span class="line">    &#123;</span><br><span class="line">        FileName = <span class="string">"powershell.exe"</span>,</span><br><span class="line">        Arguments = <span class="string">$"-NoProfile -ExecutionPolicy unrestricted -EncodedCommand <span class="subst">&#123;psCommandBase64&#125;</span>"</span>,</span><br><span class="line">        UseShellExecute = <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">    Process.Start(startInfo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用c-类调用powershell-命令"><a href="#使用c-类调用powershell-命令" class="headerlink" title="使用c#类调用powershell 命令"></a>使用c#类调用powershell 命令</h3><p><img src="../../assets/images/2019-08-10-powershell-command/image.png" alt="img"></p>
+<h3 id="使用c-类调用powershell-命令"><a href="#使用c-类调用powershell-命令" class="headerlink" title="使用c#类调用powershell 命令"></a>使用c#类调用powershell 命令</h3><p><img src="https://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-10-powershell-command/image.png" alt="img"></p>
 <p>接著我們在 Program.cs 檔案引用兩個命名空間如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">using System.Management.Automation;</span><br><span class="line">using System.Management.Automation.Runspaces;</span><br></pre></td></tr></table></figure>
 
@@ -455,13 +495,9 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
 
 <script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
 
 
 <script src="/js/schemes/pisces.js"></script>
@@ -475,6 +511,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
