@@ -174,139 +174,23 @@ public class TouchIgnore : MonoBehaviour, ICanvasRaycastFilter
 
 **事件阻止**
 
-阻止向下面传,只要在该对象加上一个事件处理起就可以了
+父子之间阻止向父级传递事件,只要在该对象加上一个EventTrigger起就可以了,代表这个事件已经被处理了.
 
 ```
  this.GameObject.GetOrAddComponent<EventTrigger>()
 ```
-
-
+比如一个案例,点击最顶级的遮罩(白色部分)窗口关闭,但是点击到窗口内部(红色部分)不做处理
+![image-20200727011714966](../../assets/images/2019-08-11-ugui-eventmanager/image-20200727011714966.png)
 
 **ugui事件和射线穿透的问题**
 
-UGUI的时候遇到了鼠标穿透的问题，就是说在UGUI和3D场景混合的情况下，点击UI区域同时也会 触发3D中物体的鼠标事件。比如下图中
+eventsystem也是向场景发送射线,然后找到**第一个**触碰的有**Raycast Target**的game object.然后在向这个gameobject的父级去找.
 
-![img](../../assets/images/2019-08-11-ugui-eventmanager/111933063635939.png)
+所有如果ui即使全屏了,但是没有设置Raycast Target,仍然会穿透ui.射线会检测到下面的立方体,如图:
 
-
-
-，EventSystem用做UI的事件处理，射线检测用做非UI碰撞的判断，但需要手动添加Collider。EventSystem使用了，GraphicRaycaster组件来检测UI元素的事件，其底层还是使用了射线来检测碰撞的。
-
-虽然UI组件勾选Raycast Target能够按照层级关系阻挡穿透，但其阻挡的是UI组件之间的射线穿透。GraphicRaycaster的源码中有 `var foundGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);`只会判断Graphic对象，这是UI元素的父类。
-
-那么，手动的射线就会有穿透UI的问题，所以我们需要一个能判断UI元素被点击的需求，看代码封装。
-
-```text
-      /// <summary>
-        /// Whether touch down or mouse button down over UI GameObject.
-        /// </summary>
-        public static bool IsClickDownOverUI()
-        {
-            #if UNITY_EDITOR
-            if (Input.GetMouseButtonDown(0))
-            #else
-            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
-            #endif
-            {
-                #if UNITY_EDITOR
-                if (EventSystem.current.IsPointerOverGameObject())
-                #else
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                #endif
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+![image-20200727010842873](../../assets/images/2019-08-11-ugui-eventmanager/image-20200727010842873.png)
 
 
-        /// <summary>
-        /// Whether touch up or mouse button up over UI GameObject.
-        /// </summary>
-        public static bool IsClickUpOverUI()
-        {
-            #if UNITY_EDITOR
-            if (Input.GetMouseButtonUp(0))
-            #else
-            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
-            #endif
-            {
-                #if UNITY_EDITOR
-                if (EventSystem.current.IsPointerOverGameObject())
-                #else
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                #endif
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-```
-
-- 这里给出了click down和up的分别判断。
-- 封装了鼠标和触摸的判断。
-- 函数返回true表明UI元素被点中。
-
-原理是，根据屏幕的点击，手动发射一条射线，然后获取碰撞的对象。
-
-```text
-      /// <summary>
-        /// Raycast a ray from touch up or mouse button up and test whether hit transform,
-        /// if hit transform return it or return null.
-        /// [isCheckHitUI] Whether check ray hit ui transform,
-        /// if hit ui just return null.
-        /// </summary>
-        public static Transform Raycast(bool isCheckHitUI = true)
-        {
-            #if UNITY_EDITOR
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (isCheckHitUI)
-                {
-                    if (EventSystem.current.IsPointerOverGameObject())
-                    {
-                        return null;
-                    }
-                }
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            #else
-            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                if (isCheckHitUI)
-                {
-                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    {
-                        return null;
-                    }
-                }
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            #endif
-
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
-                {
-                    // or hit.collider.transform;
-                    return hit.transform; 
-                }
-            }
-
-            return null;
-        }
-```
-
-- isCheckHitUI 表示UI是否会阻挡射线的选择，点中UI直接返回null。
-- Camera.main 代表的是拥有Tag MainCamera的Camera。
-- 封装了鼠标和触摸的操作。
-- 射线点中了带有Collider的非UI元素，就会返回其Transform。
-
-我们知道EventSystem也是可以处理Physics元素的，那么我们就可以放弃手动Raycast，转而让EventSystem统一处理。参见下方的eventsystem 处理Physics
 
 **事件和handler的连接触发方式**
 
