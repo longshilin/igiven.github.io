@@ -2586,6 +2586,41 @@
       </tags>
   </entry>
   <entry>
+    <title>使用 SSH 登陆谷歌云 root 或者 普通账户的方法</title>
+    <url>/tool-2020-01-02-google-clound-local-login/</url>
+    <content><![CDATA[<h1 id="使用普通用户登陆"><a href="#使用普通用户登陆" class="headerlink" title="使用普通用户登陆"></a>使用普通用户登陆</h1><h3 id="生成私钥"><a href="#生成私钥" class="headerlink" title="生成私钥"></a>生成私钥</h3><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112043711450.png" alt="image-20200112043711450"></p>
+<p>生成后可以把 Key comment 改为你想要的名称, 这样下面你在连接的时候可以使用比较熟悉的Username 作为登录名, 然后使用 Ctrl + C 把上面显示的那串 ssh-rsa.. 开头的公钥复制下来. 待会要用到这个.</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112043833424.png" alt="image-20200112043833424"></p>
+<p>然后保存好你的私钥和公钥到本地目录中..私钥是<code>本地</code>用的,公钥是<code>远程服务器</code>用的</p>
+<h1 id="添加公钥到谷歌云的实例中"><a href="#添加公钥到谷歌云的实例中" class="headerlink" title="添加公钥到谷歌云的实例中"></a>添加公钥到谷歌云的实例中</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112044032323.png" alt="image-20200112044032323"></p>
+<p>点击实例的名称进入实例的详情后. 进入页面后点击上方的修改, 然后拉到下方找到如下图的地方点击添加一项, 把刚刚复制的公钥粘贴进去, 记得, 正确的公钥是在结尾会有一个空格加上你的 Username , 例如: “…== qian” </p>
+<h1 id="使用SSH工具连接到实例"><a href="#使用SSH工具连接到实例" class="headerlink" title="使用SSH工具连接到实例"></a>使用SSH工具连接到实例</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112044256601.png" alt="image-20200112044256601"></p>
+<h1 id="使用-root-账户登陆和修改root密码"><a href="#使用-root-账户登陆和修改root密码" class="headerlink" title="使用 root 账户登陆和修改root密码"></a>使用 root 账户登陆和修改root密码</h1><h3 id="先选择从浏览器打开ssh连接服务器"><a href="#先选择从浏览器打开ssh连接服务器" class="headerlink" title="先选择从浏览器打开ssh连接服务器"></a>先选择从浏览器打开ssh连接服务器</h3><p><a href="https://ycb.hk/usr/uploads/2018/03/2557178057.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/2557178057.png" alt="img"></a><br>连接登录成功后，输入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo -i  #切换到root</span><br><span class="line">passwd   #修改密码</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://ycb.hk/usr/uploads/2018/03/2932129962.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/2932129962.png" alt="img"></a><br>然后会要求输入新密码，然后再重复一次密码，输入密码的时候不会显示出来，所以直接输入密码，然后回车，再然后重复输入密码回车。</p>
+<p>修改root密码完成</p>
+<h3 id="接着修改SSH配置文件-etc-ssh-sshd-config"><a href="#接着修改SSH配置文件-etc-ssh-sshd-config" class="headerlink" title="接着修改SSH配置文件/etc/ssh/sshd_config"></a>接着修改SSH配置文件/etc/ssh/sshd_config</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config #编辑文件</span><br></pre></td></tr></table></figure>
+
+<p>然后再输</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">i   #进入编辑模式</span><br></pre></td></tr></table></figure>
+
+<p>找到以下内容并修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes &#x2F;&#x2F;默认为no，需要开启root用户访问改为yes</span><br><span class="line">PasswordAuthentication yes &#x2F;&#x2F;默认为no，改为yes开启密码登陆</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://ycb.hk/usr/uploads/2018/03/3324977715.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/3324977715.png" alt="img"></a><br>修改完成后，再下按 esc 键，然后再输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:wq   #保存并退出</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://ycb.hk/usr/uploads/2018/03/1145294211.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/1145294211.png" alt="img"></a><br>最后重启下服务器即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reboot    #重启服务器</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS 下安装Shadowsocks 搭建ss</title>
     <url>/tool-2020-01-12-centosn-ss-install/</url>
     <content><![CDATA[<p>CentOS 7 开始默认使用<a href="https://en.wikipedia.org/wiki/Systemd" target="_blank" rel="noopener">Systemd</a>作为开启启动脚本的管理工具，<a href="https://github.com/shadowsocks/" target="_blank" rel="noopener">Shadowsocks</a>则是当前比较受欢迎的科学上网工具，本文将介绍如何在 CentOS 下安装和配置 Shadowsocks 服务。</p>
@@ -2677,126 +2712,6 @@
         <tag>C</tag>
         <tag>GitHub</tag>
         <tag>brew</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 SSH 登陆谷歌云 root 或者 普通账户的方法</title>
-    <url>/tool-2020-01-02-google-clound-local-login/</url>
-    <content><![CDATA[<h1 id="使用普通用户登陆"><a href="#使用普通用户登陆" class="headerlink" title="使用普通用户登陆"></a>使用普通用户登陆</h1><h3 id="生成私钥"><a href="#生成私钥" class="headerlink" title="生成私钥"></a>生成私钥</h3><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112043711450.png" alt="image-20200112043711450"></p>
-<p>生成后可以把 Key comment 改为你想要的名称, 这样下面你在连接的时候可以使用比较熟悉的Username 作为登录名, 然后使用 Ctrl + C 把上面显示的那串 ssh-rsa.. 开头的公钥复制下来. 待会要用到这个.</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112043833424.png" alt="image-20200112043833424"></p>
-<p>然后保存好你的私钥和公钥到本地目录中..私钥是<code>本地</code>用的,公钥是<code>远程服务器</code>用的</p>
-<h1 id="添加公钥到谷歌云的实例中"><a href="#添加公钥到谷歌云的实例中" class="headerlink" title="添加公钥到谷歌云的实例中"></a>添加公钥到谷歌云的实例中</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112044032323.png" alt="image-20200112044032323"></p>
-<p>点击实例的名称进入实例的详情后. 进入页面后点击上方的修改, 然后拉到下方找到如下图的地方点击添加一项, 把刚刚复制的公钥粘贴进去, 记得, 正确的公钥是在结尾会有一个空格加上你的 Username , 例如: “…== qian” </p>
-<h1 id="使用SSH工具连接到实例"><a href="#使用SSH工具连接到实例" class="headerlink" title="使用SSH工具连接到实例"></a>使用SSH工具连接到实例</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112044256601.png" alt="image-20200112044256601"></p>
-<h1 id="使用-root-账户登陆和修改root密码"><a href="#使用-root-账户登陆和修改root密码" class="headerlink" title="使用 root 账户登陆和修改root密码"></a>使用 root 账户登陆和修改root密码</h1><h3 id="先选择从浏览器打开ssh连接服务器"><a href="#先选择从浏览器打开ssh连接服务器" class="headerlink" title="先选择从浏览器打开ssh连接服务器"></a>先选择从浏览器打开ssh连接服务器</h3><p><a href="https://ycb.hk/usr/uploads/2018/03/2557178057.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/2557178057.png" alt="img"></a><br>连接登录成功后，输入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo -i  #切换到root</span><br><span class="line">passwd   #修改密码</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/2932129962.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/2932129962.png" alt="img"></a><br>然后会要求输入新密码，然后再重复一次密码，输入密码的时候不会显示出来，所以直接输入密码，然后回车，再然后重复输入密码回车。</p>
-<p>修改root密码完成</p>
-<h3 id="接着修改SSH配置文件-etc-ssh-sshd-config"><a href="#接着修改SSH配置文件-etc-ssh-sshd-config" class="headerlink" title="接着修改SSH配置文件/etc/ssh/sshd_config"></a>接着修改SSH配置文件/etc/ssh/sshd_config</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config #编辑文件</span><br></pre></td></tr></table></figure>
-
-<p>然后再输</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">i   #进入编辑模式</span><br></pre></td></tr></table></figure>
-
-<p>找到以下内容并修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes &#x2F;&#x2F;默认为no，需要开启root用户访问改为yes</span><br><span class="line">PasswordAuthentication yes &#x2F;&#x2F;默认为no，改为yes开启密码登陆</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/3324977715.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/3324977715.png" alt="img"></a><br>修改完成后，再下按 esc 键，然后再输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:wq   #保存并退出</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://ycb.hk/usr/uploads/2018/03/1145294211.png" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/1145294211.png" alt="img"></a><br>最后重启下服务器即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reboot    #重启服务器</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>tool</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Excel中以文本形式存储的数字</title>
-    <url>/tool-2020-02-06-excel-text-number/</url>
-    <content><![CDATA[<p>在一些特定情况下，单元格中会出现文本形式存储的数字，例如从其他地方复制粘贴过来，或者是较长的数字想要完全显示，设置为文本格式。如果是这样的单元格，在左上角就会有一个绿色小标记。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-7f8eb44c9239a43b4835c12ba326c2d9_720w.jpg" alt="img"></p>
-<p>针对不同需求的单元格，进行数据处理的方式也不同。例如有些数字，在后面是需要进行公式计算的，就可以将单元格从文本转化为普通的数字形式。选中需要修改的单元格，如果在一个区域的话可以选中全部的，然后点击右上角浮动的感叹号，在菜单里面选择“转换为数字”。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-b825acebee4b0d575dafcbbb9d85079e_720w.jpg" alt="img"></p>
-<p>这样一来，单元格格式就会变回常规，绿色小三角也会自动消失。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-6be2034cecf7128cfdd94adfe2b89d21_720w.jpg" alt="img"></p>
-<p>有时候数字较长，例如手机号，也不需要进行公式运算。但是有一个绿色标志，希望去掉，也是可以进行操作的。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-2b7e7de81faec0a733820a239dbff044_720w.jpg" alt="img"></p>
-<p>在菜单中选择“忽略错误”即可，这个绿色小三角就会消失了。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-2d84b687d6c420607a09f8dd93146b62_720w.jpg" alt="img"></p>
-<p>但要注意的是，双击编辑过这个单元格以后，还是会出现绿色小三角标记的错误提示的。</p>
-]]></content>
-      <categories>
-        <category>tool</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>protobuf序列化的一些问题</title>
-    <url>/tool-2020-03-25-protobuf-Empty-Collections/</url>
-    <content><![CDATA[<h3 id="Base-Derived-Classes"><a href="#Base-Derived-Classes" class="headerlink" title="Base / Derived Classes"></a>Base / Derived Classes</h3><p>Each derived class must have its base class marked with [ProtoInclude(<num>, typeof(ProtoBuff-Derived-Class))]. If not, all values will be NULL.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(100, typeof(HomeFolders))]</span><br><span class="line">[ProtoInclude(200, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  [ProtoMember(2)]</span><br><span class="line">  public int ProtoMember2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[ProtoContract]</span><br><span class="line">public class HomeFolders : Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember4 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[ProtoContract]</span><br><span class="line">public class PublicFolders : Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember5 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Avoid-duplicate-property-tags"><a href="#Avoid-duplicate-property-tags" class="headerlink" title="Avoid duplicate property tags"></a>Avoid duplicate property tags</h3><p>Using the same number for ProtoInclude and ProtoMember will generate an error about duplicate property tags. The example below is <strong>NOT</strong> correct.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(1, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>So you need to use a different number for ProtoInclude. Corrected example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(100, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Null-vs-Empty-Collections"><a href="#Null-vs-Empty-Collections" class="headerlink" title="Null vs. Empty Collections"></a>Null vs. Empty Collections</h3><p>ProtoBuf does not understand the difference between a collection (List, IEnumerable etc) being null versus empty (zero count). For example, if you put these objects into the cache,</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;int&gt; list1 &#x3D; new List&lt;int&gt;();</span><br><span class="line">List&lt;int&gt; list2 &#x3D; null;</span><br></pre></td></tr></table></figure>
-
-<p>after deserialization, both the lists will have the same value—that is NULL. There are two ways to solve this:</p>
-<ol>
-<li><p>Using a private field (we are using this):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoMember(12, OverwriteList &#x3D; true)]</span><br><span class="line">private List _publicFolders;</span><br><span class="line">public List publicFolders</span><br><span class="line">&#123;</span><br><span class="line">  get</span><br><span class="line">  &#123;</span><br><span class="line">    if (_publicFolders &#x3D;&#x3D; null)</span><br><span class="line">    &#123;</span><br><span class="line">      _publicFolders &#x3D; new List();</span><br><span class="line">    &#125;</span><br><span class="line">    return _publicFolders;</span><br><span class="line">  &#125;</span><br><span class="line">  set</span><br><span class="line">  &#123;</span><br><span class="line">    _publicFolders &#x3D; value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Using the OnDeserialized attribute:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoMember(2, OverwriteList &#x3D; true)]</span><br><span class="line">private PublicFolder[] publicFolders;</span><br><span class="line">[ProtoMember(3, OverwriteList &#x3D; true)]</span><br><span class="line">private PrivateFolder[] privateFolder;</span><br><span class="line">[ProtoMember(4, OverwriteList &#x3D; true)]</span><br><span class="line">private SecureFolder[] secureFolder;</span><br><span class="line"></span><br><span class="line">[OnDeserialized]</span><br><span class="line">private void HandleSerializationMismatch(StreamingContext context)</span><br><span class="line">&#123;</span><br><span class="line">  publicFolders &#x3D; publicFolders ?? new PublicFolders[0];</span><br><span class="line">  privateFolder &#x3D; privateFolder ?? new PrivateFolder[0];</span><br><span class="line">  secureFolder &#x3D; secureFolder ?? new SecureFolder[0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="Things-to-Remember"><a href="#Things-to-Remember" class="headerlink" title="Things to Remember"></a>Things to Remember</h3><p>ProtoBuf ignores properties if the class inherits from a collection and the Items property for that collection is null. Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Folders : List</span><br><span class="line">&#123;</span><br><span class="line">  public int value1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  public int value2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folders folders &#x3D; new Folders() &#123; value1 &#x3D; 5; value2 &#x3D; 6; &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>After deserialization, the value of the Folders object will be NULL, because the count of items on is 0.</p>
-<p>Classes that inherit from special collections are also not supported.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Folders : ReadOnlyCollection</span><br><span class="line">&#123;</span><br><span class="line">  public int value1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  public int value2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folders folders &#x3D; new Folders() &#123; value1 &#x3D; 5; value2 &#x3D; 6; &#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="AllowParseableTypes"><a href="#AllowParseableTypes" class="headerlink" title="AllowParseableTypes"></a>AllowParseableTypes</h3><p>AllowParseableTypes is a global switch that determines whether types with “.ToString()” and “Parse(string)” methods should be serialized as strings. We can use this setting for types that can’t be marked in the ProtoContract but can be parseable.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static ProtoBufClient()</span><br><span class="line">&#123;</span><br><span class="line">  RuntimeTypeModel.Default.AllowParseableTypes &#x3D; true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>For example, to solve the serialization problem with the Version type:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Serializable]</span><br><span class="line">[ProtoContract(SkipConstructor &#x3D; true)]</span><br><span class="line">[ProtoInclude(100, typeof(PrivateFolder))]</span><br><span class="line">[ProtoInclude(200, typeof(PublicFolder))]</span><br><span class="line">[ProtoInclude(300, typeof(SecureFolder))]</span><br><span class="line">public abstract class FolderBase : Folder</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  [ProtoMember(3)]</span><br><span class="line">  private string name;</span><br><span class="line">  [ProtoMember(4)]</span><br><span class="line">  private Owner owner;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>tool</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>为博客将 RSS 转为邮件订阅</title>
-    <url>/tool-2020-06-26-blog-mail-sub/</url>
-    <content><![CDATA[<p>RSSMailer | <a href="https://link.zhihu.com/?target=https%3A//rssmailer.app/">https://rssmailer.app/</a></p>
-<p>Tinyletter | <a href="https://link.zhihu.com/?target=https%3A//tinyletter.com/">tinyletter</a></p>
-<p>Mailchimp| <a href="https://mailchimp.com/" target="_blank" rel="noopener">https://mailchimp.com/</a></p>
-<p>相关推荐:</p>
-<pre><code>- https://zhuanlan.zhihu.com/p/111978933
-- https://zhuanlan.zhihu.com/p/119325491
-- https://sspai.com/post/60025</code></pre>]]></content>
-      <categories>
-        <category>tool</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -3525,6 +3440,91 @@
         <tag>游戏</tag>
         <tag>地图</tag>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Excel中以文本形式存储的数字</title>
+    <url>/tool-2020-02-06-excel-text-number/</url>
+    <content><![CDATA[<p>在一些特定情况下，单元格中会出现文本形式存储的数字，例如从其他地方复制粘贴过来，或者是较长的数字想要完全显示，设置为文本格式。如果是这样的单元格，在左上角就会有一个绿色小标记。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-7f8eb44c9239a43b4835c12ba326c2d9_720w.jpg" alt="img"></p>
+<p>针对不同需求的单元格，进行数据处理的方式也不同。例如有些数字，在后面是需要进行公式计算的，就可以将单元格从文本转化为普通的数字形式。选中需要修改的单元格，如果在一个区域的话可以选中全部的，然后点击右上角浮动的感叹号，在菜单里面选择“转换为数字”。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-b825acebee4b0d575dafcbbb9d85079e_720w.jpg" alt="img"></p>
+<p>这样一来，单元格格式就会变回常规，绿色小三角也会自动消失。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-6be2034cecf7128cfdd94adfe2b89d21_720w.jpg" alt="img"></p>
+<p>有时候数字较长，例如手机号，也不需要进行公式运算。但是有一个绿色标志，希望去掉，也是可以进行操作的。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-2b7e7de81faec0a733820a239dbff044_720w.jpg" alt="img"></p>
+<p>在菜单中选择“忽略错误”即可，这个绿色小三角就会消失了。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-06-excel/v2-2d84b687d6c420607a09f8dd93146b62_720w.jpg" alt="img"></p>
+<p>但要注意的是，双击编辑过这个单元格以后，还是会出现绿色小三角标记的错误提示的。</p>
+]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>protobuf序列化的一些问题</title>
+    <url>/tool-2020-03-25-protobuf-Empty-Collections/</url>
+    <content><![CDATA[<h3 id="Base-Derived-Classes"><a href="#Base-Derived-Classes" class="headerlink" title="Base / Derived Classes"></a>Base / Derived Classes</h3><p>Each derived class must have its base class marked with [ProtoInclude(<num>, typeof(ProtoBuff-Derived-Class))]. If not, all values will be NULL.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(100, typeof(HomeFolders))]</span><br><span class="line">[ProtoInclude(200, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  [ProtoMember(2)]</span><br><span class="line">  public int ProtoMember2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[ProtoContract]</span><br><span class="line">public class HomeFolders : Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember4 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[ProtoContract]</span><br><span class="line">public class PublicFolders : Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember5 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Avoid-duplicate-property-tags"><a href="#Avoid-duplicate-property-tags" class="headerlink" title="Avoid duplicate property tags"></a>Avoid duplicate property tags</h3><p>Using the same number for ProtoInclude and ProtoMember will generate an error about duplicate property tags. The example below is <strong>NOT</strong> correct.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(1, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So you need to use a different number for ProtoInclude. Corrected example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoContract]</span><br><span class="line">[ProtoInclude(100, typeof(PublicFolders))]</span><br><span class="line">public class Folders</span><br><span class="line">&#123;</span><br><span class="line">  [ProtoMember(1)]</span><br><span class="line">  public int ProtoMember1 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Null-vs-Empty-Collections"><a href="#Null-vs-Empty-Collections" class="headerlink" title="Null vs. Empty Collections"></a>Null vs. Empty Collections</h3><p>ProtoBuf does not understand the difference between a collection (List, IEnumerable etc) being null versus empty (zero count). For example, if you put these objects into the cache,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;int&gt; list1 &#x3D; new List&lt;int&gt;();</span><br><span class="line">List&lt;int&gt; list2 &#x3D; null;</span><br></pre></td></tr></table></figure>
+
+<p>after deserialization, both the lists will have the same value—that is NULL. There are two ways to solve this:</p>
+<ol>
+<li><p>Using a private field (we are using this):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoMember(12, OverwriteList &#x3D; true)]</span><br><span class="line">private List _publicFolders;</span><br><span class="line">public List publicFolders</span><br><span class="line">&#123;</span><br><span class="line">  get</span><br><span class="line">  &#123;</span><br><span class="line">    if (_publicFolders &#x3D;&#x3D; null)</span><br><span class="line">    &#123;</span><br><span class="line">      _publicFolders &#x3D; new List();</span><br><span class="line">    &#125;</span><br><span class="line">    return _publicFolders;</span><br><span class="line">  &#125;</span><br><span class="line">  set</span><br><span class="line">  &#123;</span><br><span class="line">    _publicFolders &#x3D; value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Using the OnDeserialized attribute:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ProtoMember(2, OverwriteList &#x3D; true)]</span><br><span class="line">private PublicFolder[] publicFolders;</span><br><span class="line">[ProtoMember(3, OverwriteList &#x3D; true)]</span><br><span class="line">private PrivateFolder[] privateFolder;</span><br><span class="line">[ProtoMember(4, OverwriteList &#x3D; true)]</span><br><span class="line">private SecureFolder[] secureFolder;</span><br><span class="line"></span><br><span class="line">[OnDeserialized]</span><br><span class="line">private void HandleSerializationMismatch(StreamingContext context)</span><br><span class="line">&#123;</span><br><span class="line">  publicFolders &#x3D; publicFolders ?? new PublicFolders[0];</span><br><span class="line">  privateFolder &#x3D; privateFolder ?? new PrivateFolder[0];</span><br><span class="line">  secureFolder &#x3D; secureFolder ?? new SecureFolder[0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Things-to-Remember"><a href="#Things-to-Remember" class="headerlink" title="Things to Remember"></a>Things to Remember</h3><p>ProtoBuf ignores properties if the class inherits from a collection and the Items property for that collection is null. Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Folders : List</span><br><span class="line">&#123;</span><br><span class="line">  public int value1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  public int value2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folders folders &#x3D; new Folders() &#123; value1 &#x3D; 5; value2 &#x3D; 6; &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>After deserialization, the value of the Folders object will be NULL, because the count of items on is 0.</p>
+<p>Classes that inherit from special collections are also not supported.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Folders : ReadOnlyCollection</span><br><span class="line">&#123;</span><br><span class="line">  public int value1 &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">  public int value2 &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folders folders &#x3D; new Folders() &#123; value1 &#x3D; 5; value2 &#x3D; 6; &#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AllowParseableTypes"><a href="#AllowParseableTypes" class="headerlink" title="AllowParseableTypes"></a>AllowParseableTypes</h3><p>AllowParseableTypes is a global switch that determines whether types with “.ToString()” and “Parse(string)” methods should be serialized as strings. We can use this setting for types that can’t be marked in the ProtoContract but can be parseable.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static ProtoBufClient()</span><br><span class="line">&#123;</span><br><span class="line">  RuntimeTypeModel.Default.AllowParseableTypes &#x3D; true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>For example, to solve the serialization problem with the Version type:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Serializable]</span><br><span class="line">[ProtoContract(SkipConstructor &#x3D; true)]</span><br><span class="line">[ProtoInclude(100, typeof(PrivateFolder))]</span><br><span class="line">[ProtoInclude(200, typeof(PublicFolder))]</span><br><span class="line">[ProtoInclude(300, typeof(SecureFolder))]</span><br><span class="line">public abstract class FolderBase : Folder</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  [ProtoMember(3)]</span><br><span class="line">  private string name;</span><br><span class="line">  [ProtoMember(4)]</span><br><span class="line">  private Owner owner;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>为博客将 RSS 转为邮件订阅</title>
+    <url>/tool-2020-06-26-blog-mail-sub/</url>
+    <content><![CDATA[<p>RSSMailer | <a href="https://link.zhihu.com/?target=https%3A//rssmailer.app/">https://rssmailer.app/</a></p>
+<p>Tinyletter | <a href="https://link.zhihu.com/?target=https%3A//tinyletter.com/">tinyletter</a></p>
+<p>Mailchimp| <a href="https://mailchimp.com/" target="_blank" rel="noopener">https://mailchimp.com/</a></p>
+<p>相关推荐:</p>
+<pre><code>- https://zhuanlan.zhihu.com/p/111978933
+- https://zhuanlan.zhihu.com/p/119325491
+- https://sspai.com/post/60025</code></pre>]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -4268,34 +4268,13 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line">public class TouchIgnore : MonoBehaviour, ICanvasRaycastFilter</span><br><span class="line">&#123;</span><br><span class="line">	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)</span><br><span class="line">	&#123;</span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>事件阻止</strong></p>
-<p>阻止向下面传,只要在该对象加上一个事件处理起就可以了</p>
+<p>父子之间阻止向父级传递事件,只要在该对象加上一个EventTrigger起就可以了,代表这个事件已经被处理了.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.GameObject.GetOrAddComponent&lt;EventTrigger&gt;()</span><br></pre></td></tr></table></figure>
-
-
-
+<p>比如一个案例,点击最顶级的遮罩(白色部分)窗口关闭,但是点击到窗口内部(红色部分)不做处理<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-11-ugui-eventmanager/image-20200727011714966.png" alt="image-20200727011714966"></p>
 <p><strong>ugui事件和射线穿透的问题</strong></p>
-<p>UGUI的时候遇到了鼠标穿透的问题，就是说在UGUI和3D场景混合的情况下，点击UI区域同时也会 触发3D中物体的鼠标事件。比如下图中</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-11-ugui-eventmanager/111933063635939.png" alt="img"></p>
-<p>，EventSystem用做UI的事件处理，射线检测用做非UI碰撞的判断，但需要手动添加Collider。EventSystem使用了，GraphicRaycaster组件来检测UI元素的事件，其底层还是使用了射线来检测碰撞的。</p>
-<p>虽然UI组件勾选Raycast Target能够按照层级关系阻挡穿透，但其阻挡的是UI组件之间的射线穿透。GraphicRaycaster的源码中有 <code>var foundGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);</code>只会判断Graphic对象，这是UI元素的父类。</p>
-<p>那么，手动的射线就会有穿透UI的问题，所以我们需要一个能判断UI元素被点击的需求，看代码封装。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Whether touch down or mouse button down over UI GameObject.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static bool IsClickDownOverUI()</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonDown(0))</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Began)</span><br><span class="line">      #endif</span><br><span class="line">      &#123;</span><br><span class="line">          #if UNITY_EDITOR</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">          #else</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">          #endif</span><br><span class="line">          &#123;</span><br><span class="line">              return true;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return false;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Whether touch up or mouse button up over UI GameObject.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static bool IsClickUpOverUI()</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonUp(0))</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Ended)</span><br><span class="line">      #endif</span><br><span class="line">      &#123;</span><br><span class="line">          #if UNITY_EDITOR</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">          #else</span><br><span class="line">          if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">          #endif</span><br><span class="line">          &#123;</span><br><span class="line">              return true;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return false;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这里给出了click down和up的分别判断。</li>
-<li>封装了鼠标和触摸的判断。</li>
-<li>函数返回true表明UI元素被点中。</li>
-</ul>
-<p>原理是，根据屏幕的点击，手动发射一条射线，然后获取碰撞的对象。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">  &#x2F;&#x2F;&#x2F; Raycast a ray from touch up or mouse button up and test whether hit transform,</span><br><span class="line">  &#x2F;&#x2F;&#x2F; if hit transform return it or return null.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; [isCheckHitUI] Whether check ray hit ui transform,</span><br><span class="line">  &#x2F;&#x2F;&#x2F; if hit ui just return null.</span><br><span class="line">  &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">  public static Transform Raycast(bool isCheckHitUI &#x3D; true)</span><br><span class="line">  &#123;</span><br><span class="line">      #if UNITY_EDITOR</span><br><span class="line">      if (Input.GetMouseButtonUp(0))</span><br><span class="line">      &#123;</span><br><span class="line">          if (isCheckHitUI)</span><br><span class="line">          &#123;</span><br><span class="line">              if (EventSystem.current.IsPointerOverGameObject())</span><br><span class="line">              &#123;</span><br><span class="line">                  return null;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">      #else</span><br><span class="line">      if (Input.touchCount &#x3D;&#x3D; 1 &amp;&amp; Input.GetTouch(0).phase &#x3D;&#x3D; TouchPhase.Ended)</span><br><span class="line">      &#123;</span><br><span class="line">          if (isCheckHitUI)</span><br><span class="line">          &#123;</span><br><span class="line">              if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))</span><br><span class="line">              &#123;</span><br><span class="line">                  return null;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.GetTouch(0).position);</span><br><span class="line">      #endif</span><br><span class="line"></span><br><span class="line">          RaycastHit hit;</span><br><span class="line"></span><br><span class="line">          if (Physics.Raycast(ray, out hit))</span><br><span class="line">          &#123;</span><br><span class="line">              &#x2F;&#x2F; or hit.collider.transform;</span><br><span class="line">              return hit.transform; </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return null;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>isCheckHitUI 表示UI是否会阻挡射线的选择，点中UI直接返回null。</li>
-<li>Camera.main 代表的是拥有Tag MainCamera的Camera。</li>
-<li>封装了鼠标和触摸的操作。</li>
-<li>射线点中了带有Collider的非UI元素，就会返回其Transform。</li>
-</ul>
-<p>我们知道EventSystem也是可以处理Physics元素的，那么我们就可以放弃手动Raycast，转而让EventSystem统一处理。参见下方的eventsystem 处理Physics</p>
+<p>eventsystem也是向场景发送射线,然后找到<strong>第一个</strong>触碰的有<strong>Raycast Target</strong>的game object.然后在向这个gameobject的父级去找.</p>
+<p>所有如果ui即使全屏了,但是没有设置Raycast Target,仍然会穿透ui.射线会检测到下面的立方体,如图:</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-11-ugui-eventmanager/image-20200727010842873.png" alt="image-20200727010842873"></p>
 <p><strong>事件和handler的连接触发方式</strong></p>
 <ol>
 <li><p>对于某些ui组件，可以直接设置其对自己产生的事件的handler，如button的onpointerclick</p>
