@@ -172,6 +172,16 @@ public class TouchIgnore : MonoBehaviour, ICanvasRaycastFilter
 }
 ```
 
+**事件阻止**
+
+阻止向下面传,只要在该对象加上一个事件处理起就可以了
+
+```
+ this.GameObject.GetOrAddComponent<EventTrigger>()
+```
+
+
+
 **ugui事件和射线穿透的问题**
 
 UGUI的时候遇到了鼠标穿透的问题，就是说在UGUI和3D场景混合的情况下，点击UI区域同时也会 触发3D中物体的鼠标事件。比如下图中

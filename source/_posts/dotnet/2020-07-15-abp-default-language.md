@@ -55,6 +55,8 @@ c=’en-UK’|uic=’en-US’
 ![image-20200719113919074](../../assets/images/2020-07-15-abp-default-language/image-20200719113919074.png)
 不同的浏览器默认语言不同,chrome浏览器可以再语言里设置
 
+![img](../../assets/images/2020-07-15-abp-default-language/c83d70cf3bc79f3d3ec73c6db4a1cd11728b294d.png)
+
 ## Cultures
 
 - `SupportedCultures` 的 [CultureInfo](https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(v=vs.110).aspx) 对象决定了和文化相关的函数，如日期，时间，数字和货币格式的结果。同时决定了文字如何排序，大小写转换以及字符串比较。参考[CultureInfo.CurrentCulture](https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.currentculture(v=vs.110).aspx) 获取更多关于服务器如何获取文化的信息。
