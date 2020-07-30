@@ -2270,6 +2270,14 @@
 
 
 
+<h1 id="自制bucket"><a href="#自制bucket" class="headerlink" title="自制bucket"></a>自制bucket</h1><p>最佳方式是使用模板 <a href="https://github.com/Ash258/GenericBucket" target="_blank" rel="noopener">https://github.com/Ash258/GenericBucket</a></p>
+<h3 id="如何解压exe的程序"><a href="#如何解压exe的程序" class="headerlink" title="如何解压exe的程序"></a>如何解压exe的程序</h3><p>首先下载的时候后面加上#/dl.7z类似的后缀..然后scoop保存的时候.会把他存在7z格式的文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;architecture&quot;: &#123;</span><br><span class="line">    &quot;64bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-64.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;BE14DE68FDBFB3663F57B6B28E8B0CC90AE876DD06CA899839BEB9377FE21436&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;32bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-32.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;9C437170019E8AFC82B64A5475E349602E03A9493DD6AC6CACF58FDFD75762DD&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>例如上面旧会被存在scoop/cache/wnr#1.17.1#https_github.com_RoderickQiu_wnr_releases_download_v1.17.1_wnr-1.17.1-Setup-64.exe_dl.7z</p>
+<p>然后旧可以解压了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;installer&quot;: &#123;</span><br><span class="line">    &quot;script&quot;: [</span><br><span class="line">        &quot;Expand-7zipArchive -Path (Join-Path $dir &#39;$PLUGINSDIR\\*.7z&#39;) -DestinationPath $dir&quot;,</span><br><span class="line">        &quot;Remove-Item -Path (Join-Path $dir &#39;$PLUGINSDIR&#39;) -Recurse&quot;,</span><br><span class="line">        &quot;Remove-Item \&quot;$dir\\Uninstall wnr.exe\&quot;&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
 
 
 
