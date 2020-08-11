@@ -185,7 +185,7 @@ Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪�
 
 1.  Could not produce class with ID 91 - iOS   https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/  https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305  https://www.cnblogs.com/zhaoqingqing/p/6080075.html
 2. odin  新建一个场景把一些scriptobject拖到场景中扫描一下
-3. protobuf   `**Unable to resolve MapDecorator constructor**.`  同时注意不要用属性{get;set;}..如果Dictionary的key为int也会出这个问题..未找到解决办法 ,用class代替
+3. protobuf   `**Unable to resolve MapDecorator constructor**.`  同时注意不要用属性{get;set;}..如果是Dictionary也会出这个问题..未找到解决办法 ,用class代替
 
 F:\GouYuJian\GYJClient\Library\com.unity.addressables\aa\Android\link.xml
 

@@ -2,7 +2,7 @@
 title : "protobuf序列化的一些问题"
 ---
 
-### Base / Derived Classes
+# Base / Derived Classes
 
 Each derived class must have its base class marked with [ProtoInclude(<num>, typeof(ProtoBuff-Derived-Class))]. If not, all values will be NULL.
 
@@ -34,7 +34,7 @@ public class PublicFolders : Folders
 }
 ```
 
-### Avoid duplicate property tags
+# Avoid duplicate property tags
 
 Using the same number for ProtoInclude and ProtoMember will generate an error about duplicate property tags. The example below is **NOT** correct.
 
@@ -60,7 +60,7 @@ public class Folders
 }
 ```
 
-### Null vs. Empty Collections
+# Null vs. Empty Collections
 
 ProtoBuf does not understand the difference between a collection (List, IEnumerable etc) being null versus empty (zero count). For example, if you put these objects into the cache,
 
@@ -112,7 +112,7 @@ after deserialization, both the lists will have the same value—that is NULL. T
    }
    ```
 
-### Things to Remember
+# Things to Remember
 
 ProtoBuf ignores properties if the class inherits from a collection and the Items property for that collection is null. Example:
 
@@ -142,7 +142,7 @@ public class Folders : ReadOnlyCollection
 Folders folders = new Folders() { value1 = 5; value2 = 6; };
 ```
 
-### AllowParseableTypes
+# AllowParseableTypes
 
 AllowParseableTypes is a global switch that determines whether types with “.ToString()” and “Parse(string)” methods should be serialized as strings. We can use this setting for types that can’t be marked in the ProtoContract but can be parseable.
 
@@ -174,3 +174,161 @@ public abstract class FolderBase : Folder
 }
 ```
 
+# Protobuf-net Generics on Unity3D IL2CPP.
+
+```
+public class CustomCollectionBase<TCollection, TElement, TKey>
+{
+	protected TCollection _collection;
+
+	protected SortedDictionary<TKey, bool> _removed;
+
+	public CustomCollectionBase(TCollection collection)
+	{
+		_collection = collection;
+	}
+
+	protected byte[] _cBytes;
+
+	protected byte[] _rBytes;
+
+	protected void __PreSerialize()
+	{
+		using (MemoryStream stream = new MemoryStream())
+		{
+			Serializer.Serialize(stream, this._collection);
+			this._cBytes = stream.ToArray();
+		}
+
+		using (MemoryStream stream = new MemoryStream())
+		{
+			Serializer.Serialize(stream, this._removed);
+			this._rBytes = stream.ToArray();
+		}
+	}
+
+	protected void __PostDeserialize()
+	{
+		using (MemoryStream stream = new MemoryStream(this._cBytes))
+		{
+			this._collection = Serializer.Deserialize<TCollection>(stream);
+		}
+
+		using (MemoryStream stream = new MemoryStream(this._rBytes))
+		{
+			this._removed = Serializer.Deserialize<SortedDictionary<TKey, bool>>(stream);
+		}
+	}
+}
+
+[ProtoContract]
+public class CustomList<TElement> : CustomCollectionBase<List<TElement>, TElement, int>
+{
+	public CustomList() : base( new List<TElement>())
+	{
+	}
+
+	[ProtoMember(1)]
+	private byte[] _cProto
+	{
+		get { return base._cBytes; }
+		set { base._cBytes = value; }
+	}
+
+	[ProtoMember(2)]
+	private byte[] _rProto
+	{
+		get { return base._rBytes; }
+		set { base._rBytes = value; }
+	}
+
+	[ProtoBeforeSerialization]
+	private void __PreSerialize()
+	{
+		base.__PreSerialize();
+	}
+
+	[ProtoAfterDeserialization]
+	private void __PostDeserialize()
+	{
+		base.__PostDeserialize();
+	}
+}
+
+[ProtoContract]
+public class CustomIntDictionary<TElement> : CustomCollectionBase<Dictionary<int, TElement>, TElement, int>
+{
+	public CustomIntDictionary() : base(new Dictionary<int, TElement>())
+	{
+	}
+
+	[ProtoMember(1)]
+	private byte[] _cProto
+	{
+		get { return base._cBytes; }
+		set { base._cBytes = value; }
+	}
+
+	[ProtoMember(2)]
+	private byte[] _rProto
+	{
+		get { return base._rBytes; }
+		set { base._rBytes = value; }
+	}
+
+	[ProtoBeforeSerialization]
+	private void __PreSerialize()
+	{
+		base.__PreSerialize();
+	}
+
+	[ProtoAfterDeserialization]
+	private void __PostDeserialize()
+	{
+		base.__PostDeserialize();
+	}
+}
+
+[ProtoContract]
+public class CustomStringDictionary<TElement> : CustomCollectionBase<Dictionary<string, TElement>, TElement, string>
+{
+	public CustomStringDictionary() : base(new Dictionary<string, TElement>())
+	{
+	}
+
+	[ProtoMember(1)]
+	private byte[] _cProto
+	{
+		get { return base._cBytes; }
+		set { base._cBytes = value; }
+	}
+
+	[ProtoMember(2)]
+	private byte[] _rProto
+	{
+		get { return base._rBytes; }
+		set { base._rBytes = value; }
+	}
+
+	[ProtoBeforeSerialization]
+	private void __PreSerialize()
+	{
+		base.__PreSerialize();
+	}
+
+	[ProtoAfterDeserialization]
+	private void __PostDeserialize()
+	{
+		base.__PostDeserialize();
+	}
+}
+```
+
+So basically there are two methods that are defined.
+
+1. __PreSerialize – Converts the collection in to a byte array which becomes the proto member.
+2. __PostDeserialize – Converts the byte array back to the collection.
+
+We can completely avoid defining run time types for this generic type. Instead of protobuf-net being responsible of creating the type, we create the type by ourselves using the same protobuf Serializer.
+
+This kind of technique can be used for other generic types as well. Please comment your ideas about this approach.
