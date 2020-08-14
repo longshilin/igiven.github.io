@@ -15,8 +15,25 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>一个不专业的程序员,写着专业的博客</description>
-    <pubDate>Tue, 11 Aug 2020 10:27:31 GMT</pubDate>
+    <pubDate>Fri, 14 Aug 2020 02:49:26 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Orleans 最佳实践</title>
+      <link>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</link>
+      <guid>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</guid>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;内容来自于微软的官方文档 &lt;a href=&quot;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Scenarios-amp-General-Fit&quot;&gt;&lt;a href=&quot;#Scenarios-amp-General-Fit&quot; class=&quot;headerlink&quot; title=&quot;Scenarios &amp;amp; General Fit&quot;&gt;&lt;/a&gt;Scenarios &amp;amp; General Fit&lt;/h2&gt;
+      
+      </description>
+      
+      
+      <comments>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>abp默认语言规则</title>
@@ -353,22 +370,6 @@
       
       
       <comments>http://www.igiven.com/unity-2020-03-04-unity-startup/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Unity的调试相关</title>
-      <link>http://www.igiven.com/unity-2020-03-01-unity-debug/</link>
-      <guid>http://www.igiven.com/unity-2020-03-01-unity-debug/</guid>
-      <pubDate>Sun, 01 Mar 2020 00:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;vs2019-调试unity失效&quot;&gt;&lt;a href=&quot;#vs2019-调试unity失效&quot; class=&quot;headerlink&quot; title=&quot;vs2019 调试unity失效&quot;&gt;&lt;/a&gt;vs2019 调试unity失效&lt;/h1&gt;&lt;p&gt;s怎么启动调试都无法关联到unity，后来发现自己应该是不小心把attach editor勾选掉了，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-03-01-unity-debug/v2-8a3a1f8d3c6ed7317f18e2ac89620a38_1440w.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
-      
-      </description>
-      
-      
-      <comments>http://www.igiven.com/unity-2020-03-01-unity-debug/#disqus_thread</comments>
     </item>
     
   </channel>
