@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-08-15T05:53:42.373Z</updated>
+  <updated>2020-08-16T02:23:10.425Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -17,17 +17,46 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>c#特性参数</title>
+    <link href="http://www.igiven.com/dotnet-2020-08-10-param-attribute/"/>
+    <id>http://www.igiven.com/dotnet-2020-08-10-param-attribute/</id>
+    <published>2020-08-10T00:00:00.000Z</published>
+    <updated>2020-08-16T02:23:10.425Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;可以通过反射获取这些特性然后做处理&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+    
+      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
+    
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Orleans 最佳实践</title>
     <link href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/"/>
     <id>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</id>
     <published>2020-08-09T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;内容来自于微软的官方文档 &lt;a href=&quot;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Scenarios-amp-General-Fit&quot;&gt;&lt;a href=&quot;#Scenarios-amp-General-Fit&quot; class=&quot;headerlink&quot; title=&quot;Scenarios &amp;amp; General Fit&quot;&gt;&lt;/a&gt;Scenarios &amp;amp; General Fit&lt;/h2&gt;
+      &lt;h1 id=&quot;重入&quot;&gt;&lt;a href=&quot;#重入&quot; class=&quot;headerlink&quot; title=&quot;重入&quot;&gt;&lt;/a&gt;重入&lt;/h1&gt;&lt;p&gt;grain激活体是单线程的，默认情况下，激活体会自始至终地处理完成每个请求后，才会处理下一个请求。&lt;br&gt;可重入的激活体，可以在上一个请求尚未完成处理的情况下，开始执行另一个请求。执行仍然限于单个线程，因此激活体仍然一次执行一个回合，并且每个回合仅代表激活体的一个请求执行。&lt;br&gt;可重入的grain代码永远不会并行运行多段grain代码（grain代码的执行将始终是单线程的），但是，可重入的grain可能会看到不同请求交错执行的代码。也就是说，来自不同请求的延续回合，是交错执行的。&lt;/p&gt;
+&lt;p&gt;因为访问grain一般是需要跨服务器的，所以可重入是很有必要的。。&lt;/p&gt;
     
     </summary>
     
@@ -39,8 +68,6 @@
     
       <category term="GitHub" scheme="http://www.igiven.com/tags/GitHub/"/>
     
-      <category term="sync" scheme="http://www.igiven.com/tags/sync/"/>
-    
   </entry>
   
   <entry>
@@ -48,7 +75,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -78,7 +105,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -113,7 +140,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -142,7 +169,7 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -176,7 +203,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -208,7 +235,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -236,7 +263,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -266,7 +293,7 @@
     <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
     <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
     <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.377Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -300,7 +327,7 @@
     <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
     <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
     <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.377Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -339,7 +366,7 @@
     <link href="http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/"/>
     <id>http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -364,7 +391,7 @@
     <link href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/"/>
     <id>http://www.igiven.com/tool-2020-07-02-win10-start-menu/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -394,7 +421,7 @@
     <link href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/"/>
     <id>http://www.igiven.com/unity-2020-07-01-unity-coordinate/</id>
     <published>2020-07-01T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.377Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -426,7 +453,7 @@
     <link href="http://www.igiven.com/tool-2020-06-27-linux-github-slow/"/>
     <id>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</id>
     <published>2020-06-27T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -459,7 +486,7 @@
     <link href="http://www.igiven.com/tool-2020-06-26-blog-mail-sub/"/>
     <id>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</id>
     <published>2020-06-26T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -482,7 +509,7 @@
     <link href="http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/"/>
     <id>http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/</id>
     <published>2020-06-11T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -513,7 +540,7 @@
     <link href="http://www.igiven.com/dotnet-2020-05-29-abp-start/"/>
     <id>http://www.igiven.com/dotnet-2020-05-29-abp-start/</id>
     <published>2020-05-29T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -545,7 +572,7 @@
     <link href="http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/"/>
     <id>http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/</id>
     <published>2020-05-03T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.425Z</updated>
     
     <summary type="html">
     
@@ -570,7 +597,7 @@
     <link href="http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/"/>
     <id>http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/</id>
     <published>2020-03-25T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.373Z</updated>
+    <updated>2020-08-16T02:23:10.429Z</updated>
     
     <summary type="html">
     
@@ -588,41 +615,6 @@
       <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
     
       <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>unity启动运行脚本流程</title>
-    <link href="http://www.igiven.com/unity-2020-03-04-unity-startup/"/>
-    <id>http://www.igiven.com/unity-2020-03-04-unity-startup/</id>
-    <published>2020-03-04T00:00:00.000Z</published>
-    <updated>2020-08-15T05:53:42.377Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;性能分析：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;所有尝试优化的操作都是从发现问题开始的，在谈论性能时，这是非常重要的。对一个应用进行性能分析，第一步是根据性能分析的结果，找出它的瓶颈。然后再优化项目中的用到的技术和资源的结构。&lt;/p&gt;
-&lt;p&gt;提示：本节性能分析中出现的方法名称，都是从unity5.3中提取的，方法名可能在以后的Unity版本中发生变化。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="游戏" scheme="http://www.igiven.com/tags/%E6%B8%B8%E6%88%8F/"/>
-    
-      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
-    
-      <category term="同步" scheme="http://www.igiven.com/tags/%E5%90%8C%E6%AD%A5/"/>
-    
-      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
-    
-      <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
     
   </entry>
   

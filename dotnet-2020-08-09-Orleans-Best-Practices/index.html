@@ -20,19 +20,18 @@
     var CONFIG = {"hostname":"www.igiven.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="内容来自于微软的官方文档 https:&#x2F;&#x2F;www.microsoft.com&#x2F;en-us&#x2F;research&#x2F;wp-content&#x2F;uploads&#x2F;2016&#x2F;02&#x2F;Orleans20Best20Practices.pdf https:&#x2F;&#x2F;dotnet.github.io&#x2F;orleans&#x2F;Documentation&#x2F;resources&#x2F;Best_Practices.html Scenarios &amp;am">
+  <meta name="description" content="重入grain激活体是单线程的，默认情况下，激活体会自始至终地处理完成每个请求后，才会处理下一个请求。可重入的激活体，可以在上一个请求尚未完成处理的情况下，开始执行另一个请求。执行仍然限于单个线程，因此激活体仍然一次执行一个回合，并且每个回合仅代表激活体的一个请求执行。可重入的grain代码永远不会并行运行多段grain代码（grain代码的执行将始终是单线程的），但是，可重入的grain可能会看">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Orleans 最佳实践">
 <meta property="og:url" content="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/index.html">
 <meta property="og:site_name" content="IGiven">
-<meta property="og:description" content="内容来自于微软的官方文档 https:&#x2F;&#x2F;www.microsoft.com&#x2F;en-us&#x2F;research&#x2F;wp-content&#x2F;uploads&#x2F;2016&#x2F;02&#x2F;Orleans20Best20Practices.pdf https:&#x2F;&#x2F;dotnet.github.io&#x2F;orleans&#x2F;Documentation&#x2F;resources&#x2F;Best_Practices.html Scenarios &amp;am">
+<meta property="og:description" content="重入grain激活体是单线程的，默认情况下，激活体会自始至终地处理完成每个请求后，才会处理下一个请求。可重入的激活体，可以在上一个请求尚未完成处理的情况下，开始执行另一个请求。执行仍然限于单个线程，因此激活体仍然一次执行一个回合，并且每个回合仅代表激活体的一个请求执行。可重入的grain代码永远不会并行运行多段grain代码（grain代码的执行将始终是单线程的），但是，可重入的grain可能会看">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-09T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-15T05:53:42.373Z">
+<meta property="article:modified_time" content="2020-08-16T02:23:10.425Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="GitHub">
-<meta property="article:tag" content="sync">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/">
@@ -126,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">84</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -239,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-15 13:53:42" itemprop="dateModified" datetime="2020-08-15T13:53:42+08:00">2020-08-15</time>
+                <time title="修改时间：2020-08-16 10:23:10" itemprop="dateModified" datetime="2020-08-16T10:23:10+08:00">2020-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,88 +261,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>内容来自于微软的官方文档 <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf" target="_blank" rel="noopener">https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans20Best20Practices.pdf</a></p>
-<p><a href="https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html" target="_blank" rel="noopener">https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html</a></p>
-<h2 id="Scenarios-amp-General-Fit"><a href="#Scenarios-amp-General-Fit" class="headerlink" title="Scenarios &amp; General Fit"></a>Scenarios &amp; General Fit</h2><h3 id="什么时候我们需要试试看Orleans"><a href="#什么时候我们需要试试看Orleans" class="headerlink" title="什么时候我们需要试试看Orleans"></a>什么时候我们需要试试看Orleans</h3><ul>
-<li>拥有大量（成百上千万的）低耦合的实体</li>
-<li>实体足够小到可以在单一线程上完成工作</li>
-<li>以“请求–响应”或“启动–监测–完成”的交互方式工作的</li>
-<li>需要或可能需要在不止一台服务器上协同工作（集群）</li>
-<li>一次只需要在几个实体之间进行协调工作，而不需要整体的协调工作。</li>
-<li>在不同事件使用不同的实体。（视具体情况）</li>
-</ul>
-<h3 id="不适用于以下情况"><a href="#不适用于以下情况" class="headerlink" title="不适用于以下情况"></a>不适用于以下情况</h3><ul>
-<li>实体需要直接去访问彼此的内存。</li>
-<li>数量少，但是单体庞大的、需要在多线程下工作的实体</li>
-<li>需要整体的协调和一致性</li>
-<li>长期一直运行的操作、批处理或SIMD（视具体情况）</li>
-</ul>
-<hr>
-<h2 id="设计Grains"><a href="#设计Grains" class="headerlink" title="设计Grains"></a>设计Grains</h2><ul>
-<li><strong>Actor 并不是平时理解的Object , 尽管它们非常相似。</strong></li>
-<li>低耦合、基本独立<ul>
-<li>独立于其他的Grains去封装和管理它们的状态。</li>
-<li>可以单独出故障（自闭可以，但不要影响其他Grains继续工作）</li>
-</ul>
-</li>
-<li>避免Grains之间有频繁的交流<ul>
-<li>消息传递相较于直接访问内存的方式，性能开销的代价要大得多</li>
-<li>如果两个Grains之间一直有频繁的互调用，也许应该考虑是不是应该把它两设计合并成一个Grains</li>
-<li>要考虑参数的尺寸和复杂度，以及序列化问题。<ul>
-<li>有时候，重发一个二进制消息并反序列化两次的开销是比较小的。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>避免Grains的瓶颈<ul>
-<li>单一的调度者、登记处或监测器</li>
-<li>如果有必要的话，进行分段的聚合</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="实现Grains-——-异步"><a href="#实现Grains-——-异步" class="headerlink" title="实现Grains —— 异步"></a>实现Grains —— 异步</h2><ul>
-<li>一切都应该是异步的（TPL），不要有堵塞线程的操作</li>
-<li>最佳的实践机制是 async/await</li>
-</ul>
-<h4 id="经典案例："><a href="#经典案例：" class="headerlink" title="经典案例："></a>经典案例：</h4><p>返<strong>回一个具体的值</strong>：</p>
-<p>return Task.FromResult(value);</p>
-<p><strong>返回一个同类型的Task</strong></p>
-<p>return foo.Bar();</p>
-<p><strong>await 一个 Task之后继续执行点什么</strong></p>
-<p>var x = await bar.Foo();<br>var y = DoSomething(x);<br>return y;</p>
-<p><strong>Fan-out</strong>:</p>
-<p>var tasks = new List();<br>foreach(var grain in grains)<br>tasks.Add(grain.Foo());<br>await Task.WhenAll(tasks);<br>DoMore();</p>
-<hr>
-<h2 id="实现Grains"><a href="#实现Grains" class="headerlink" title="实现Grains"></a>实现Grains</h2><p><strong>什么时候使用</strong><code>**[StatelessWorker]**</code></p>
-<ul>
-<li>功能操作： 解码、解压缩，然后转发处理</li>
-<li>多次激活，并且总是在本地的</li>
-<li>比如：良好的分段聚合（首先在本地，不在Silo中）</li>
-</ul>
-<p><strong>默认情况下，Grains是不可以重入的（意思应该是不可以递归）</strong></p>
-<ul>
-<li>在调用周期中会出现死锁， 比如调用自身</li>
-<li>死锁会因为超时而自动中止。</li>
-<li>使用<code>[Reentrant]</code>属性（attribute）来使一个Grain类可重入。</li>
-<li>重入将依然是单线程下的，但是可能会交叉。</li>
-<li>处理交叉问题容易出错。</li>
-</ul>
-<p><strong>继承</strong></p>
-<ul>
-<li>继承一个Grain的接口（interface）是简单的</li>
-<li>当多个Grain类继承了相同的接口时，可能需要消除歧义。</li>
-<li>Grain类的继承是有限的<ul>
-<li>持久化声明会中断继承</li>
-</ul>
-</li>
-</ul>
-<p><strong>泛型是被支持的</strong></p>
-<hr>
-<h2 id="关于Grains持久化的概述"><a href="#关于Grains持久化的概述" class="headerlink" title="关于Grains持久化的概述"></a>关于Grains持久化的概述</h2><p>Orleans的Grain的状态持久化API被设计用来提供易于使用的可扩展的存储功能。</p>
-<h3 id="Grain的状态持久化"><a href="#Grain的状态持久化" class="headerlink" title="Grain的状态持久化"></a>Grain的状态持久化</h3><ul>
-<li>定义一个接口（<code>interface</code>）继承自<code>Orleans.IGrainState</code>, 并在该接口中包含Grain里需要持久化的字段。</li>
-<li>Grain类需要继承 <code>GrainBase&lt;T&gt;</code> 并在Grain的基础类中添加强类型State字段</li>
+        <h1 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h1><p>grain激活体是单线程的，默认情况下，激活体会自始至终地处理完成每个请求后，才会处理下一个请求。<br>可重入的激活体，可以在上一个请求尚未完成处理的情况下，开始执行另一个请求。执行仍然限于单个线程，因此激活体仍然一次执行一个回合，并且每个回合仅代表激活体的一个请求执行。<br>可重入的grain代码永远不会并行运行多段grain代码（grain代码的执行将始终是单线程的），但是，可重入的grain可能会看到不同请求交错执行的代码。也就是说，来自不同请求的延续回合，是交错执行的。</p>
+<p>因为访问grain一般是需要跨服务器的，所以可重入是很有必要的。。</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
+<li><a href="https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html" target="_blank" rel="noopener">https://dotnet.github.io/orleans/Documentation/resources/Best_Practices.html</a></li>
 </ul>
 
     </div>
@@ -356,7 +277,6 @@
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"># C</a>
               <a href="/tags/GitHub/" rel="tag"># GitHub</a>
-              <a href="/tags/sync/" rel="tag"># sync</a>
           </div>
 
         
@@ -368,7 +288,10 @@
     <a href="/dotnet-2020-07-15-abp-default-language/" rel="prev" title="abp默认语言规则">
       <i class="fa fa-chevron-left"></i> abp默认语言规则
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/dotnet-2020-08-10-param-attribute/" rel="next" title="c#特性参数">
+      c#特性参数 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -434,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scenarios-amp-General-Fit"><span class="nav-number">1.</span> <span class="nav-text">Scenarios &amp; General Fit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候我们需要试试看Orleans"><span class="nav-number">1.1.</span> <span class="nav-text">什么时候我们需要试试看Orleans</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不适用于以下情况"><span class="nav-number">1.2.</span> <span class="nav-text">不适用于以下情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计Grains"><span class="nav-number">2.</span> <span class="nav-text">设计Grains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现Grains-——-异步"><span class="nav-number">3.</span> <span class="nav-text">实现Grains —— 异步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#经典案例："><span class="nav-number">3.0.1.</span> <span class="nav-text">经典案例：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现Grains"><span class="nav-number">4.</span> <span class="nav-text">实现Grains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Grains持久化的概述"><span class="nav-number">5.</span> <span class="nav-text">关于Grains持久化的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grain的状态持久化"><span class="nav-number">5.1.</span> <span class="nav-text">Grain的状态持久化</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重入"><span class="nav-number">1.</span> <span class="nav-text">重入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关链接"><span class="nav-number">2.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -450,7 +373,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
