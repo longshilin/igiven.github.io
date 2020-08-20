@@ -229,6 +229,199 @@ jobs:
 
 ```
 
+# dotFx
+
+https://dotnet.github.io/docfx/tutorial/docfx_getting_started.html
+
+```
+name: docfx build
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      # Check out the branch that triggered this workflow to the 'source' subdirectory
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: dev
+          path: source
+      - name: install DocFX
+        run: "& choco install docfx -y"
+      # Run a build
+      - name: Build docs
+        run: "& docfx ./docfx.json"
+        working-directory: ./source
+      # Check out gh-pages branch to the 'docs' subdirectory
+      - name: Checkout docs
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: docs
+      # Sync the site
+      - name: Clear docs repo
+        run: Get-ChildItem -Force -Exclude .git | ForEach-Object { Remove-Item -Recurse -Verbose -Force $_ }
+        working-directory: ./docs
+      - name: Sync new content
+        run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/source/_site/*" "$env:GITHUB_WORKSPACE/docs"
+        working-directory: ./docs
+        # update docs
+      - name: Commit to gh-pages and push
+        run: |
+          $ErrorActionPreference = "Continue"
+          git add -A
+          git diff HEAD --exit-code
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No changes to commit!"
+          } else {
+            git config --global user.name "github-actions-docfx[bot]"
+            git config --global user.email "weihanli@outlook.com"
+            git commit -m "Updated docs from commit $env:GITHUB_SHA on $env:GITHUB_REF"
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git push origin gh-pages
+          }
+        working-directory: ./docs
+```
+
+
+
+# Hexo
+
+```
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Hexo 
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - name: 迁出main
+      uses: actions/checkout@v2
+      with: 
+        path: main
+        submodules: 'recursive'
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: 安装hexo
+      run : |
+        npm install -g hexo-cli
+  
+    - name: 生成博客
+      run : |
+        cd main
+        npm install
+        hexo clean
+        hexo generate
+      
+    - name: 迁出gh-pages
+      uses: actions/checkout@v2
+      with:
+        path: gh-pages
+        ref: gh-pages
+        
+    - name: 部署到gh-pages
+      env:
+        TZ: Asia/Shanghai
+      run: |
+        cp -rf main/public/* gh-pages
+        cd gh-pages
+        git config --global user.name "zhepama"
+        git config --global user.email "zhepama@gmail.com"
+        git add .
+        git commit -m "Auto Delopy at `date +"%Y-%m-%d %H:%M"`"
+        git push origin gh-pages
+        
+```
+
+# gitbook
+
+```
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: GitBook
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.18.2]
+
+    steps:
+    - name: 迁出main
+      uses: actions/checkout@v2
+      with: 
+        path: main
+        submodules: 'recursive'
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: 安装gitbook
+      run : |
+        npm install -g gitbook-cli
+  
+    - name: 生成书籍
+      run : |
+        cd main/Docs
+        gitbook install
+        gitbook build
+      
+    - name: 迁出gh-pages
+      uses: actions/checkout@v2
+      with:
+        path: gh-pages
+        ref: gh-pages
+        
+    - name: 部署到gh-pages
+      env:
+        TZ: Asia/Shanghai
+      run: |
+        cp -rf main/Docs/_book/* gh-pages
+        cd gh-pages
+        git config --global user.name "zhepama"
+        git config --global user.email "zhepama@gmail.com"
+        git add .
+        git commit -m "Auto Delopy at `date +"%Y-%m-%d %H:%M"`"
+        git push origin gh-pages
+```
+
+
+
+
 
 # 市场
 
