@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-08-20T05:54:28.935Z</updated>
+  <updated>2020-08-21T19:29:05.457Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -17,11 +17,68 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Kestrel源码分析</title>
+    <link href="http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/"/>
+    <id>http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/</id>
+    <published>2020-08-15T00:00:00.000Z</published>
+    <updated>2020-08-21T19:29:05.457Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Kestrel是&lt;a href=&quot;https://link.zhihu.com/?target=http%3A//ASP.NET&quot;&gt;http://ASP.NET&lt;/a&gt; Core框架内置的默认Web Server 什么是Web Server? 根据&lt;a href=&quot;https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Web_server&quot;&gt;维基百科&lt;/a&gt;的定义: Web Server是可以处理来自客户端的HTTP协议请求并返回网页的软件或硬件。 因此Kestrel的主要功能就是接收来自网络客户端的HTTP请求，并根据请求返回对应的网页（数据也是一种网页）。&lt;/p&gt;
+&lt;h2 id=&quot;定义-IServer、IHttpApplication-lt-TContext-gt&quot;&gt;&lt;a href=&quot;#定义-IServer、IHttpApplication-lt-TContext-gt&quot; class=&quot;headerlink&quot; title=&quot;定义 - IServer、IHttpApplication&amp;lt;TContext&amp;gt;&quot;&gt;&lt;/a&gt;定义 - &lt;code&gt;IServer&lt;/code&gt;、&lt;code&gt;IHttpApplication&amp;lt;TContext&amp;gt;&lt;/code&gt;&lt;/h2&gt;&lt;hr&gt;
+    
+    </summary>
+    
+    
+      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
+    
+    
+      <category term="NETCORE" scheme="http://www.igiven.com/tags/NETCORE/"/>
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="GitHub" scheme="http://www.igiven.com/tags/GitHub/"/>
+    
+      <category term="sync" scheme="http://www.igiven.com/tags/sync/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>.NET Core 获取 HttpContext.Current 以及 AsyncLocal 与 ThreadLocal</title>
+    <link href="http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/"/>
+    <id>http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/</id>
+    <published>2020-08-11T00:00:00.000Z</published>
+    <updated>2020-08-21T19:29:05.457Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在 DotNetCore 当中不再像 MVC5 那样可以通过 &lt;code&gt;HttpContext.Current&lt;/code&gt; 来获取到当前请求的上下文。&lt;/p&gt;
+&lt;p&gt;不过微软提供了一个 IHttpContextAccessor 来让我们访问当前请求的 Http 上下文，其定义&lt;br&gt;如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;namespace Microsoft.AspNetCore.Http&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	public interface IHttpContextAccessor&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    HttpContext HttpContext &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
+    
+    
+      <category term="NETCORE" scheme="http://www.igiven.com/tags/NETCORE/"/>
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="sync" scheme="http://www.igiven.com/tags/sync/"/>
+    
+      <category term="同步" scheme="http://www.igiven.com/tags/%E5%90%8C%E6%AD%A5/"/>
+    
+  </entry>
+  
+  <entry>
     <title>c#特性参数</title>
     <link href="http://www.igiven.com/dotnet-2020-08-10-param-attribute/"/>
     <id>http://www.igiven.com/dotnet-2020-08-10-param-attribute/</id>
     <published>2020-08-10T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -51,7 +108,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/"/>
     <id>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</id>
     <published>2020-08-09T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -77,7 +134,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -107,7 +164,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -142,7 +199,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -171,7 +228,7 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -207,7 +264,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -239,7 +296,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -267,7 +324,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -297,7 +354,7 @@
     <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
     <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
     <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.939Z</updated>
+    <updated>2020-08-21T19:29:05.465Z</updated>
     
     <summary type="html">
     
@@ -331,7 +388,7 @@
     <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
     <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
     <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.939Z</updated>
+    <updated>2020-08-21T19:29:05.465Z</updated>
     
     <summary type="html">
     
@@ -370,7 +427,7 @@
     <link href="http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/"/>
     <id>http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -395,7 +452,7 @@
     <link href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/"/>
     <id>http://www.igiven.com/tool-2020-07-02-win10-start-menu/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -425,7 +482,7 @@
     <link href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/"/>
     <id>http://www.igiven.com/unity-2020-07-01-unity-coordinate/</id>
     <published>2020-07-01T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.939Z</updated>
+    <updated>2020-08-21T19:29:05.465Z</updated>
     
     <summary type="html">
     
@@ -457,7 +514,7 @@
     <link href="http://www.igiven.com/tool-2020-06-27-linux-github-slow/"/>
     <id>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</id>
     <published>2020-06-27T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -490,7 +547,7 @@
     <link href="http://www.igiven.com/tool-2020-06-26-blog-mail-sub/"/>
     <id>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</id>
     <published>2020-06-26T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.461Z</updated>
     
     <summary type="html">
     
@@ -513,7 +570,7 @@
     <link href="http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/"/>
     <id>http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/</id>
     <published>2020-06-11T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -544,7 +601,7 @@
     <link href="http://www.igiven.com/dotnet-2020-05-29-abp-start/"/>
     <id>http://www.igiven.com/dotnet-2020-05-29-abp-start/</id>
     <published>2020-05-29T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
+    <updated>2020-08-21T19:29:05.457Z</updated>
     
     <summary type="html">
     
@@ -568,57 +625,6 @@
       <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
     
       <category term="abp" scheme="http://www.igiven.com/tags/abp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何有效的养成一个习惯</title>
-    <link href="http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/"/>
-    <id>http://www.igiven.com/essay-2020-05-03-yang-cheng-yi-ge-xi-guan/</id>
-    <published>2020-05-03T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;养成习惯的要点&quot;&gt;&lt;a href=&quot;#养成习惯的要点&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="essay" scheme="http://www.igiven.com/categories/essay/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>protobuf序列化的一些问题</title>
-    <link href="http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/"/>
-    <id>http://www.igiven.com/tool-2020-03-25-protobuf-Empty-Collections/</id>
-    <published>2020-03-25T00:00:00.000Z</published>
-    <updated>2020-08-20T05:54:28.935Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Base-Derived-Classes&quot;&gt;&lt;a href=&quot;#Base-Derived-Classes&quot; class=&quot;headerlink&quot; title=&quot;Base / Derived Classes&quot;&gt;&lt;/a&gt;Base / Derived Classes&lt;/h1&gt;&lt;p&gt;Each derived class must have its base class marked with [ProtoInclude(&lt;num&gt;, typeof(ProtoBuff-Derived-Class))]. If not, all values will be NULL.&lt;/num&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[ProtoContract]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ProtoInclude(100, typeof(HomeFolders))]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ProtoInclude(200, typeof(PublicFolders))]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class Folders&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [ProtoMember(1)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  public int ProtoMember1 &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [ProtoMember(2)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  public int ProtoMember2 &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ProtoContract]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class HomeFolders : Folders&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [ProtoMember(1)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  public int ProtoMember4 &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ProtoContract]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class PublicFolders : Folders&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [ProtoMember(1)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  public int ProtoMember5 &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="tool" scheme="http://www.igiven.com/categories/tool/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
-    
-      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
     
   </entry>
   

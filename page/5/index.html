@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-Latency-Compensating-rtt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-02-Latency-Compensating-rtt/" class="post-title-link" itemprop="url">延迟补偿和对时的相关总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-02T08:00:00+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>国内的网络游戏多是客户端/服务器方式，而对于游戏实时性要求比较高的网游，如 果采用客户端发送时间包给服务器，服务器校验后再下发给客户端表现的话，网络延时 和抖动都会恶化游戏体验。对于客户端和服务器的同步问题， 一般有两种算法解决：</p>
+<p>① 、客户端和服务器之间进行对时后，客户端发送数据包给服务器，服务器根据收 到的客户端数据包先后进行排序，先到达的服务器端的事件包被判定为先发生，后到达 服务器的事件包被判定为后发生。在此情况下，往往网络延时较大的客户端先发送了游 戏事件包，但由于网络延时和抖动的影响，后到达服务器，而被判定为后发生时间，这 样对该客户端就不公平了。</p>
+<p>② 、客户端和服务器进行对时后，客户端预测服务器收到客户端数据包的时间，并 把该时间写入数据包中发送给服务器，在网络抖动比较大的情况下，这种情况可以保证一定的公平性。但是还是出现了上述的情况，网络延时大的数据包预测的到达时间也就 更晚，依然会出现先发生的事件被服务器判定为后发生，同样不能保证游戏的公平性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-Latency-Compensating-rtt/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-Latency-Compensating-Methods-in-ClientServer-In-game-Protocol-Design-and-Optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-02-Latency-Compensating-Methods-in-ClientServer-In-game-Protocol-Design-and-Optimization/" class="post-title-link" itemprop="url">延迟补偿在C/S架构游戏协议设计和优化中的应用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-02T08:00:00+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-综述"><a href="#1-综述" class="headerlink" title="1.综述"></a>1.综述</h1><p>第一人称角色网络游戏的设计是一项很有挑战性的工作。网络环境下的健壮性，是动作游戏能否成功的一个重要因素。另外，PC上面的开发者需要考虑到玩家层次不齐的机器配置以及网络状况，很多用户的硬件配置跟网络跟当前最好的配置跟网络有一定差距。</p>
+<p>宽带网络的出现有利于在线游戏开发，但是开发者还是需要考虑网络延迟和其它网络特性。而且宽带网络在美国被广泛采用还需要一段时间，在世界上其它国家可能需要更长的一段时间。另外，很多宽带网络质量很差，用户虽然偶尔能够享受到高带宽，但更多的时候他们不得不面对高延迟和高丢包率。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-Latency-Compensating-Methods-in-ClientServer-In-game-Protocol-Design-and-Optimization/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-Source-Multiplayer-Networking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +406,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,7 +489,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -406,7 +571,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -488,7 +653,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -570,7 +735,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -662,7 +827,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -745,7 +910,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -834,7 +999,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -867,171 +1032,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/unity-2020-01-13-unity-attack-detection/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-01-12-centosn-ss-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/tool-2020-01-12-centosn-ss-install/" class="post-title-link" itemprop="url">CentOS 下安装Shadowsocks 搭建ss</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-12 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-12T08:00:00+08:00">2020-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>CentOS 7 开始默认使用<a href="https://en.wikipedia.org/wiki/Systemd" target="_blank" rel="noopener">Systemd</a>作为开启启动脚本的管理工具，<a href="https://github.com/shadowsocks/" target="_blank" rel="noopener">Shadowsocks</a>则是当前比较受欢迎的科学上网工具，本文将介绍如何在 CentOS 下安装和配置 Shadowsocks 服务。</p>
-<h2 id="安装-pip"><a href="#安装-pip" class="headerlink" title="安装 pip"></a>安装 pip</h2><p><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">pip</a>是 python 的包管理工具。在本文中将使用 python 版本的 shadowsocks，此版本的 shadowsocks 已发布到 pip 上，因此我们需要通过 pip 命令来安装。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tool-2020-01-12-centosn-ss-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-01-12-Collision-detection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/unity-2020-01-12-Collision-detection/" class="post-title-link" itemprop="url">常见的2D碰撞检测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-12 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-12T08:00:00+08:00">2020-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“碰乜鬼嘢啊，碰走晒我滴靓牌”。想到“碰”就自然联想到了“麻将”这一伟大发明。当然除了“碰”，洗牌的时候也充满了各种『碰撞』。</p>
-<p>好了，不废话。直入主题——碰撞检测。</p>
-<p>在 2D 环境下，常见的碰撞检测方法如下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/unity-2020-01-12-Collision-detection/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1122,7 +1122,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

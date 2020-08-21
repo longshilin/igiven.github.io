@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,273 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-09-02-unity-reference-dll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-09-02-unity-reference-dll/" class="post-title-link" itemprop="url">unity的宏以及添加net框架中未引用的dll</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-02 08:00:00" itemprop="dateCreated datePublished" datetime="2019-09-02T08:00:00+08:00">2019-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="unity默认的-defind宏变量"><a href="#unity默认的-defind宏变量" class="headerlink" title="unity默认的#defind宏变量"></a>unity默认的#defind宏变量</h1><table>
+<thead>
+<tr>
+<th align="left"><strong>Property:</strong></th>
+<th align="left"><strong>Function:</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>UNITY_EDITOR</strong></td>
+<td align="left">#define directive for calling Unity Editor scripts from your game code.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_EDITOR_WIN</strong></td>
+<td align="left">#define directive for Editor code on Windows.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_EDITOR_OSX</strong></td>
+<td align="left">#define directive for Editor code on Mac OS X.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_STANDALONE_OSX</strong></td>
+<td align="left">#define directive for compiling/executing code specifically for Mac OS X (including Universal, PPC and Intel architectures).</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_STANDALONE_WIN</strong></td>
+<td align="left">#define directive for compiling/executing code specifically for Windows standalone applications.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_STANDALONE_LINUX</strong></td>
+<td align="left">#define directive for compiling/executing code specifically for Linux standalone applications.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_STANDALONE</strong></td>
+<td align="left">#define directive for compiling/executing code for any standalone platform (Mac OS X, Windows or Linux).</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WII</strong></td>
+<td align="left">#define directive for compiling/executing code for the Wii console.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_IOS</strong></td>
+<td align="left">#define directive for compiling/executing code for the iOS platform.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_IPHONE</strong></td>
+<td align="left">Deprecated. Use <strong>UNITY_IOS</strong> instead.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_ANDROID</strong></td>
+<td align="left">#define directive for the Android platform.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_PS4</strong></td>
+<td align="left">#define directive for running <strong>PlayStation 4</strong>  code.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_XBOXONE</strong></td>
+<td align="left">#define directive for executing <strong>Xbox One</strong>  code.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_TIZEN</strong></td>
+<td align="left">#define directive for the Tizen platform.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_TVOS</strong></td>
+<td align="left">#define directive for the Apple TV platform.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WSA</strong></td>
+<td align="left">#define directive for <strong>Universal Windows Platform</strong> . Additionally, <strong>NETFX_CORE</strong> is defined when compiling C# files against .NET Core and using .NET <strong>scripting backend</strong> .</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WSA_10_0</strong></td>
+<td align="left">#define directive for Universal Windows Platform. Additionally <strong>WINDOWS_UWP</strong> is defined when compiling C# files against .NET Core.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WINRT</strong></td>
+<td align="left">Same as <strong>UNITY_WSA</strong>.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WINRT_10_0</strong></td>
+<td align="left">Equivalent to <strong>UNITY_WSA_10_0</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_WEBGL</strong></td>
+<td align="left">#define directive for <strong>WebGL</strong> .</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_FACEBOOK</strong></td>
+<td align="left">#define directive for the Facebook platform (WebGL or Windows standalone).</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_ADS</strong></td>
+<td align="left">#define directive for calling Unity Ads methods from your game code. Version 5.2 and above.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_ANALYTICS</strong></td>
+<td align="left">#define directive for calling Unity <strong>Analytics</strong>  methods from your game code. Version 5.2 and above.</td>
+</tr>
+<tr>
+<td align="left"><strong>UNITY_ASSERTIONS</strong></td>
+<td align="left">#define directive for assertions control process.</td>
+</tr>
+</tbody></table>
+<h2 id="在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择"><a href="#在-NET-4-x-和-NET-Standard-2-0-配置文件之间进行选择" class="headerlink" title="在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择"></a>在 .NET 4.x 和 .NET Standard 2.0 配置文件之间进行选择</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-02-unity-reference-dll/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-09-01-addressable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2019-09-01-addressable/" class="post-title-link" itemprop="url">关于addressable那些事</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2019-09-01T08:00:00+08:00">2019-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在本文中将详细的描述Addressable对于内存的管理，如果正确的卸载资源</p>
+<h2 id="镜像资源的加载与卸载"><a href="#镜像资源的加载与卸载" class="headerlink" title="镜像资源的加载与卸载"></a>镜像资源的加载与卸载</h2><p>Addressables是否能够正确的清理内存主要的取决于是否正确的进行镜像资源的加载与卸载，而如何做到这点又取决于加载的资源的类型与使用加载的方法。<code>Addressables.Release</code>方法可以接受加载到的对象，也可以接受加载时返回的操作句柄(<code>AsyncOperationHandle</code>).比如，进行场景创建时，加载后返回一个<code>AsyncOperationHandle&lt;SceneInstance&gt;</code>，你可以通过返回的句柄或者<code>handle.Result</code>(在这种情况下返回的Result为<code>SceneInstance</code>对象)进行场景的的释放。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2019-09-01-addressable/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-09-01-spriteAtlas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +508,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +590,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -405,7 +672,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -492,7 +759,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -574,7 +841,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -656,7 +923,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -762,7 +1029,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -844,7 +1111,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -873,175 +1140,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/unity-2019-08-09-unity2d-shipei/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-08-07-sourcetree-git-password/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/tool-2019-08-07-sourcetree-git-password/" class="post-title-link" itemprop="url">scourcetree  总是需要输入密码</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-08-07 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-07T08:00:00+08:00">2019-08-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Git密钥存储相关"><a href="#Git密钥存储相关" class="headerlink" title="Git密钥存储相关"></a>Git密钥存储相关</h2><p>幸运的是，Git 拥有一个凭证系统来处理这个事情。 下面有一些 Git 的选项：</p>
-<ul>
-<li>默认所有都不缓存。 每一次连接都会询问你的用户名和密码。</li>
-<li>“cache” 模式会将凭证存放在内存中一段时间。 密码永远不会被存储在磁盘中，并且在15分钟后从内存中清除。</li>
-<li>“store” 模式会将凭证用明文的形式存放在磁盘中，并且永不过期。 这意味着除非你修改了你在 Git 服务器上的密码，否则你永远不需要再次输入你的凭证信息。 这种方式的缺点是你的密码是用明文的方式存放在你的 home 目录下。</li>
-<li>如果你使用的是 Mac，Git 还有一种 “osxkeychain” 模式，它会将凭证缓存到你系统用户的钥匙串中。 这种方式将凭证存放在磁盘中，并且永不过期，但是是被加密的，这种加密方式与存放 HTTPS 凭证以及 Safari 的自动填写是相同的。</li>
-<li>如果你使用的是 Windows，你可以安装一个叫做 “winstore” 的辅助工具。 这和上面说的 “osxkeychain” 十分类似，但是是使用 Windows Credential Store 来控制敏感信息。 可以在 <a href="https://gitcredentialstore.codeplex.com/" target="_blank" rel="noopener">https://gitcredentialstore.codeplex.com</a> 下载。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tool-2019-08-07-sourcetree-git-password/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2019-06-24-shell-folders-are-displayed-with-the-standard-folder-icon-in-windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/tool-2019-06-24-shell-folders-are-displayed-with-the-standard-folder-icon-in-windows/" class="post-title-link" itemprop="url">windows特殊目录修复</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-24 08:00:00" itemprop="dateCreated datePublished" datetime="2019-06-24T08:00:00+08:00">2019-06-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 13:54:28" itemprop="dateModified" datetime="2020-08-20T13:54:28+08:00">2020-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Desktop-ini-Contents-for-Various-Shell-Folders"><a href="#Desktop-ini-Contents-for-Various-Shell-Folders" class="headerlink" title="Desktop.ini Contents for Various Shell Folders"></a>Desktop.ini Contents for Various Shell Folders</h2><h3 id="For-Windows-7"><a href="#For-Windows-7" class="headerlink" title="For Windows 7"></a>For Windows 7</h3><p><strong>Contacts</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tool-2019-06-24-shell-folders-are-displayed-with-the-standard-folder-icon-in-windows/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1132,7 +1230,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
