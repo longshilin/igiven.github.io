@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">89</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,182 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-01-13-brew/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2020-01-13-brew/" class="post-title-link" itemprop="url">mac下brew 使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-13 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-13T08:00:00+08:00">2020-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="将brew装在非系统盘"><a href="#将brew装在非系统盘" class="headerlink" title="将brew装在非系统盘"></a>将brew装在非系统盘</h3><ul>
+<li><p><code>Command-R</code> 重新安装您在 Mac 上安装过的最新 macOS，但不会升级到更高的版本。 </p>
+</li>
+<li><p><code>Option-Command-R</code> 升级到与您的 Mac 兼容的最新 macOS。 </p>
+</li>
+<li><p><code>Shift-Option-Command-R</code> 需要安装 <a href="https://link.zhihu.com/?target=https%3A//support.apple.com/zh-cn/HT201260">macOS Sierra 10.12.4</a> 或更高版本重新安装 Mac 随附的 macOS 或仍有提供的最接近版本。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">禁用安全工具,使/usr/<span class="built_in">local</span>可以挂载到非系统盘,需要进入安全模式执行</span></span><br><span class="line">csrutil disable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 挂载非系统盘到/usr/<span class="built_in">local</span></span></span><br><span class="line">vi /etc/fstab</span><br><span class="line">UUID=BA245166-9FB3-4D88-98E3-147559D0B531 /usr/local apfs rw,auto,nobrowse</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置环境变量HOMEBREW_TEMP需要和brew在同一个硬盘</span></span><br><span class="line">vi ~/.bash_profile</span><br><span class="line">export PATH="/usr/local/bin:$PATH"</span><br><span class="line">export HOMEBREW_TEMP=/usr/local/temp</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-01-13-brew/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-01-13-unity-attack-detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-01-13-unity-attack-detection/" class="post-title-link" itemprop="url">unity攻击范围检测</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-13 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-13T08:00:00+08:00">2020-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="扇形攻击"><a href="#扇形攻击" class="headerlink" title="扇形攻击"></a>扇形攻击</h1><p>其实这个分为两部分，</p>
+<ul>
+<li><p>是在扇形距离范围内（也就是不考虑角度，其实是圆形范围内）Vector3.Distance(a, b);计算距离</p>
+</li>
+<li><p>是扇形角度范围内</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-01-13-unity-attack-detection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-01-12-centosn-ss-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +417,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +499,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -406,7 +582,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -488,7 +664,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -571,7 +747,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -653,7 +829,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -734,7 +910,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -816,7 +992,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
+                <time title="修改时间：2020-08-24 16:26:31" itemprop="dateModified" datetime="2020-08-24T16:26:31+08:00">2020-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -846,171 +1022,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/dotnet-2019-12-01-datetimeoffset/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2019-11-15-unity-proxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/unity-2019-11-15-unity-proxy/" class="post-title-link" itemprop="url">unity使用代理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-15 08:00:00" itemprop="dateCreated datePublished" datetime="2019-11-15T08:00:00+08:00">2019-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Unity的AssetStore下载package的时候经常抽风，而且开了代理工具的全局代理依然无效。</p>
-<p>检索网络后得知，这是因为它下载的时候不检测IE代理设置，而是取环境变量中HTTPS_proxy和HTTP_proxy的值，所以添加这两个变量并指定其为你的代理服务地址就可以了。</p>
-<p>具体步骤：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/unity-2019-11-15-unity-proxy/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2019-11-05-quartz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/dotnet-2019-11-05-quartz/" class="post-title-link" itemprop="url">Creating a Quartz.NET hosted service with ASP.NET Core</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-05 08:00:00" itemprop="dateCreated datePublished" datetime="2019-11-05T08:00:00+08:00">2019-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 03:29:05" itemprop="dateModified" datetime="2020-08-22T03:29:05+08:00">2020-08-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>In this post I describe how to run Quartz.NET jobs using an <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-2.2" target="_blank" rel="noopener">ASP.NET Core hosted service</a>. I show how to create a simple <code>IJob</code>, a custom <code>IJobFactory</code>, and a <code>QuartzHostedService</code> that runs jobs while your application is running. I’ll also touch on some of the issues to aware of, namely of using scoped services inside singleton classes.</p>
-<h2 id="Introduction-what-is-Quartz-NET"><a href="#Introduction-what-is-Quartz-NET" class="headerlink" title="Introduction - what is Quartz.NET?"></a>Introduction - what is Quartz.NET?<a href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/#introduction-what-is-quartz-net-" target="_blank" rel="noopener"><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-11-05-quartz/icons-link.svg" alt="img"></a></h2><p>As per <a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">their website</a>:</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/dotnet-2019-11-05-quartz/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1101,7 +1112,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-08-21T19:29:05.457Z</updated>
+  <updated>2020-08-24T08:26:31.048Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -17,11 +17,60 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>IOptions、IOptionsMonitor以及IOptionsSnapshot</title>
+    <link href="http://www.igiven.com/dotnet-2020-08-17-netcore-options/"/>
+    <id>http://www.igiven.com/dotnet-2020-08-17-netcore-options/</id>
+    <published>2020-08-17T00:00:00.000Z</published>
+    <updated>2020-08-24T08:26:31.048Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;ASP.NET Core引入了Options模式，使用类来表示相关的设置组。简单的来说，就是用强类型的类来表达配置项，这带来了很多好处。&lt;br&gt;初学者会发现这个框架有3个主要的面向消费者的接口：IOptions&lt;toptions&gt;、IOptionsMonitor&lt;toptions&gt;以及IOptionsSnapshot&lt;toptions&gt;。&lt;br&gt;这三个接口初看起来很类似，所以很容易引起困惑，什么场景下该用哪个接口呢？&lt;/toptions&gt;&lt;/toptions&gt;&lt;/toptions&gt;&lt;/p&gt;
+&lt;h1 id=&quot;示例&quot;&gt;&lt;a href=&quot;#示例&quot; class=&quot;headerlink&quot; title=&quot;示例&quot;&gt;&lt;/a&gt;示例&lt;/h1&gt;
+    
+    </summary>
+    
+    
+      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
+    
+    
+      <category term="NETCORE" scheme="http://www.igiven.com/tags/NETCORE/"/>
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ConcurrentDictionary并发字典</title>
+    <link href="http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/"/>
+    <id>http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/</id>
+    <published>2020-08-16T00:00:00.000Z</published>
+    <updated>2020-08-24T08:26:31.048Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ConcurrentDictionary主要用于要从多个线程（或异步任务）修改字典的情景中。如果来自单个线程，则可以根据需要使用尽可能多的代码使用标准Dictionary；）&lt;/p&gt;
+&lt;p&gt;如果您查看ConcurrentDictionary上的方法，则会发现一些有趣的方法，例如TryAdd，TryGetValue，TryUpdate和TryRemove。&lt;/p&gt;
+&lt;p&gt;例如，若使用普通的Dictionary类时可能会看到下面的代码&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
+    
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kestrel源码分析</title>
     <link href="http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/"/>
     <id>http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/</id>
     <published>2020-08-15T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -49,7 +98,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/"/>
     <id>http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/</id>
     <published>2020-08-11T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -78,7 +127,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-10-param-attribute/"/>
     <id>http://www.igiven.com/dotnet-2020-08-10-param-attribute/</id>
     <published>2020-08-10T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -108,7 +157,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/"/>
     <id>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</id>
     <published>2020-08-09T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -134,7 +183,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -164,7 +213,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -199,7 +248,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -228,7 +277,7 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -264,7 +313,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -296,7 +345,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -324,7 +373,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -354,7 +403,7 @@
     <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
     <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
     <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.465Z</updated>
+    <updated>2020-08-24T08:26:31.056Z</updated>
     
     <summary type="html">
     
@@ -388,7 +437,7 @@
     <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
     <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
     <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.465Z</updated>
+    <updated>2020-08-24T08:26:31.056Z</updated>
     
     <summary type="html">
     
@@ -427,7 +476,7 @@
     <link href="http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/"/>
     <id>http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.048Z</updated>
     
     <summary type="html">
     
@@ -452,7 +501,7 @@
     <link href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/"/>
     <id>http://www.igiven.com/tool-2020-07-02-win10-start-menu/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -482,7 +531,7 @@
     <link href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/"/>
     <id>http://www.igiven.com/unity-2020-07-01-unity-coordinate/</id>
     <published>2020-07-01T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.465Z</updated>
+    <updated>2020-08-24T08:26:31.056Z</updated>
     
     <summary type="html">
     
@@ -514,7 +563,7 @@
     <link href="http://www.igiven.com/tool-2020-06-27-linux-github-slow/"/>
     <id>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</id>
     <published>2020-06-27T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -547,7 +596,7 @@
     <link href="http://www.igiven.com/tool-2020-06-26-blog-mail-sub/"/>
     <id>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</id>
     <published>2020-06-26T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.461Z</updated>
+    <updated>2020-08-24T08:26:31.052Z</updated>
     
     <summary type="html">
     
@@ -562,69 +611,6 @@
     
     
       <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IdentityServer使用指南</title>
-    <link href="http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/"/>
-    <id>http://www.igiven.com/dotnet-2020-06-11-IdentityServer-use/</id>
-    <published>2020-06-11T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;DotHass.Lobby.Domain\IdentityServer\IdentityServerDataSeedContributor.cs 中 CreateClientsAsync()&lt;/p&gt;
-&lt;p&gt;会在dataseed的时候生成默认数据&lt;/p&gt;
-&lt;p&gt;When I try to send a HTTPS POST request from a desktop (Servers are in production environment) the following message is displayed inside the console :&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
-    
-    
-      <category term="Win" scheme="http://www.igiven.com/tags/Win/"/>
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="sync" scheme="http://www.igiven.com/tags/sync/"/>
-    
-      <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
-    
-      <category term="abp" scheme="http://www.igiven.com/tags/abp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>abp新建项目指南</title>
-    <link href="http://www.igiven.com/dotnet-2020-05-29-abp-start/"/>
-    <id>http://www.igiven.com/dotnet-2020-05-29-abp-start/</id>
-    <published>2020-05-29T00:00:00.000Z</published>
-    <updated>2020-08-21T19:29:05.457Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;替换数据库为mysql&quot;&gt;&lt;a href=&quot;#替换数据库为mysql&quot; class=&quot;headerlink&quot; title=&quot;替换数据库为mysql&quot;&gt;&lt;/a&gt;替换数据库为mysql&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;替换mysql,Dothass.Blog.EntityFrameworkCore项目中   &lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;PackageReference Include&amp;#x3D;&amp;quot;Volo.Abp.EntityFrameworkCore.MySQL&amp;quot; Version&amp;#x3D;&amp;quot;2.8.0&amp;quot; &amp;#x2F;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="dotnet" scheme="http://www.igiven.com/categories/dotnet/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="sync" scheme="http://www.igiven.com/tags/sync/"/>
-    
-      <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
-    
-      <category term="abp" scheme="http://www.igiven.com/tags/abp/"/>
     
   </entry>
   
