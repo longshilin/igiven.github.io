@@ -15,8 +15,44 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>一个不专业的程序员,写着专业的博客</description>
-    <pubDate>Mon, 24 Aug 2020 08:26:31 GMT</pubDate>
+    <pubDate>Fri, 28 Aug 2020 11:50:27 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>发现nuget包太占用C盘，怎么办？</title>
+      <link>http://www.igiven.com/tool-2020-08-30-nuget-is-big/</link>
+      <guid>http://www.igiven.com/tool-2020-08-30-nuget-is-big/</guid>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;如何发现的？&quot;&gt;&lt;a href=&quot;#如何发现的？&quot; class=&quot;headerlink&quot; title=&quot;如何发现的？&quot;&gt;&lt;/a&gt;如何发现的？&lt;/h1&gt;&lt;h4 id=&quot;查看C盘存储&quot;&gt;&lt;a href=&quot;#查看C盘存储&quot; class=&quot;headerlink&quot; title=&quot;查看C盘存储&quot;&gt;&lt;/a&gt;查看C盘存储&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;打开所有设置-&amp;gt;系统-&amp;gt;存储-&amp;gt;选择C盘&lt;br&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-8ce825574a3c0e8b.png&quot; alt=&quot;image.png&quot;&gt;&lt;/li&gt;
+&lt;li&gt;查看C盘使用情况，可以查看“其他”中情况&lt;br&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-b854451afc8d311b.png&quot; alt=&quot;image.png&quot;&gt;&lt;/li&gt;
+&lt;li&gt;发现.nuget文件夹占用的空间很大，这是由于VS的默认nuget包路径：C:\Users{UserName}.nuget\packages&lt;/li&gt;
+&lt;/ol&gt;
+      
+      </description>
+      
+      
+      <comments>http://www.igiven.com/tool-2020-08-30-nuget-is-big/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Notch Solution</title>
+      <link>http://www.igiven.com/unity-2020-08-29-Notch-Solution/</link>
+      <guid>http://www.igiven.com/unity-2020-08-29-Notch-Solution/</guid>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Screen.safeArea会返回移动平台安全区的Rect。例如，iPhoneX（2436x1125px）横屏时，Screen.safeArea返回的值为Rect（132，63，2172，1062）。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-29-Notch-Solution/v2-2381f8819f70e7cd357662188e2616b6_720w.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;适配思路：以界面为单位，打开界面时，获取当前设备的safeArea，调整界面的锚点，进行适配。以下利用SafeArea.cs脚本，对当前window进行适配。主要考虑三种情况：&lt;/p&gt;
+      
+      </description>
+      
+      
+      <comments>http://www.igiven.com/unity-2020-08-29-Notch-Solution/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>IOptions、IOptionsMonitor以及IOptionsSnapshot</title>
@@ -334,40 +370,6 @@
       
       
       <comments>http://www.igiven.com/unity-2020-07-01-unity-coordinate/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>github下载代码的速度太慢</title>
-      <link>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</link>
-      <guid>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</guid>
-      <pubDate>Sat, 27 Jun 2020 00:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;作为程序员，最大的同性交友网站估计是大家的标配了，常常会苦恼于git clone某个项目的时候速度太慢，看着控制台那几K十一二K的速度，吐血！！&lt;/p&gt;
-&lt;p&gt;原因很简单：github的&lt;a href=&quot;https://cloud.tencent.com/product/cdn?from=10680&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;CDN&lt;/a&gt;被高高的墙屏蔽所致了。 所以解决方案也很简单，就是手动把 cdn 和IP地址绑定一下。&lt;/p&gt;
-&lt;h2 id=&quot;1、获取github地址&quot;&gt;&lt;a href=&quot;#1、获取github地址&quot; class=&quot;headerlink&quot; title=&quot;1、获取github地址&quot;&gt;&lt;/a&gt;1、获取github地址&lt;/h2&gt;
-      
-      </description>
-      
-      
-      <comments>http://www.igiven.com/tool-2020-06-27-linux-github-slow/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>为博客将 RSS 转为邮件订阅</title>
-      <link>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</link>
-      <guid>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</guid>
-      <pubDate>Fri, 26 Jun 2020 00:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;RSSMailer | &lt;a href=&quot;https://link.zhihu.com/?target=https%3A//rssmailer.app/&quot;&gt;https://rssmailer.app/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Tinyletter | &lt;a href=&quot;https://link.zhihu.com/?target=https%3A//tinyletter.com/&quot;&gt;tinyletter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Mailchimp| &lt;a href=&quot;https://mailchimp.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mailchimp.com/&lt;/a&gt;&lt;/p&gt;
-      
-      </description>
-      
-      
-      <comments>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/#disqus_thread</comments>
     </item>
     
   </channel>

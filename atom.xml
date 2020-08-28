@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-08-24T08:26:31.048Z</updated>
+  <updated>2020-08-28T11:50:27.174Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -17,11 +17,77 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>发现nuget包太占用C盘，怎么办？</title>
+    <link href="http://www.igiven.com/tool-2020-08-30-nuget-is-big/"/>
+    <id>http://www.igiven.com/tool-2020-08-30-nuget-is-big/</id>
+    <published>2020-08-30T00:00:00.000Z</published>
+    <updated>2020-08-28T11:50:27.174Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;如何发现的？&quot;&gt;&lt;a href=&quot;#如何发现的？&quot; class=&quot;headerlink&quot; title=&quot;如何发现的？&quot;&gt;&lt;/a&gt;如何发现的？&lt;/h1&gt;&lt;h4 id=&quot;查看C盘存储&quot;&gt;&lt;a href=&quot;#查看C盘存储&quot; class=&quot;headerlink&quot; title=&quot;查看C盘存储&quot;&gt;&lt;/a&gt;查看C盘存储&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;打开所有设置-&amp;gt;系统-&amp;gt;存储-&amp;gt;选择C盘&lt;br&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-8ce825574a3c0e8b.png&quot; alt=&quot;image.png&quot;&gt;&lt;/li&gt;
+&lt;li&gt;查看C盘使用情况，可以查看“其他”中情况&lt;br&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-b854451afc8d311b.png&quot; alt=&quot;image.png&quot;&gt;&lt;/li&gt;
+&lt;li&gt;发现.nuget文件夹占用的空间很大，这是由于VS的默认nuget包路径：C:\Users{UserName}.nuget\packages&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="tool" scheme="http://www.igiven.com/categories/tool/"/>
+    
+    
+      <category term="Linux" scheme="http://www.igiven.com/tags/Linux/"/>
+    
+      <category term="Win" scheme="http://www.igiven.com/tags/Win/"/>
+    
+      <category term="windows" scheme="http://www.igiven.com/tags/windows/"/>
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="JS" scheme="http://www.igiven.com/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Notch Solution</title>
+    <link href="http://www.igiven.com/unity-2020-08-29-Notch-Solution/"/>
+    <id>http://www.igiven.com/unity-2020-08-29-Notch-Solution/</id>
+    <published>2020-08-29T00:00:00.000Z</published>
+    <updated>2020-08-28T11:50:27.174Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Screen.safeArea会返回移动平台安全区的Rect。例如，iPhoneX（2436x1125px）横屏时，Screen.safeArea返回的值为Rect（132，63，2172，1062）。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-29-Notch-Solution/v2-2381f8819f70e7cd357662188e2616b6_720w.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;适配思路：以界面为单位，打开界面时，获取当前设备的safeArea，调整界面的锚点，进行适配。以下利用SafeArea.cs脚本，对当前window进行适配。主要考虑三种情况：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
+    
+    
+      <category term="Win" scheme="http://www.igiven.com/tags/Win/"/>
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="GitHub" scheme="http://www.igiven.com/tags/GitHub/"/>
+    
+      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
+    
+      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
+    
+      <category term="ugui" scheme="http://www.igiven.com/tags/ugui/"/>
+    
+  </entry>
+  
+  <entry>
     <title>IOptions、IOptionsMonitor以及IOptionsSnapshot</title>
     <link href="http://www.igiven.com/dotnet-2020-08-17-netcore-options/"/>
     <id>http://www.igiven.com/dotnet-2020-08-17-netcore-options/</id>
     <published>2020-08-17T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -47,7 +113,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/"/>
     <id>http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/</id>
     <published>2020-08-16T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -70,7 +136,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/"/>
     <id>http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/</id>
     <published>2020-08-15T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -98,7 +164,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/"/>
     <id>http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/</id>
     <published>2020-08-11T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -127,7 +193,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-10-param-attribute/"/>
     <id>http://www.igiven.com/dotnet-2020-08-10-param-attribute/</id>
     <published>2020-08-10T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -157,7 +223,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/"/>
     <id>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</id>
     <published>2020-08-09T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -183,7 +249,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -213,7 +279,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -248,7 +314,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -277,7 +343,7 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -313,7 +379,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -345,7 +411,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -373,7 +439,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.170Z</updated>
     
     <summary type="html">
     
@@ -403,7 +469,7 @@
     <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
     <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
     <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.056Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -437,7 +503,7 @@
     <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
     <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
     <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.056Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -476,7 +542,7 @@
     <link href="http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/"/>
     <id>http://www.igiven.com/essay-2020-07-02-zao-qi-mo-fa/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.048Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -501,7 +567,7 @@
     <link href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/"/>
     <id>http://www.igiven.com/tool-2020-07-02-win10-start-menu/</id>
     <published>2020-07-02T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -531,7 +597,7 @@
     <link href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/"/>
     <id>http://www.igiven.com/unity-2020-07-01-unity-coordinate/</id>
     <published>2020-07-01T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.056Z</updated>
+    <updated>2020-08-28T11:50:27.174Z</updated>
     
     <summary type="html">
     
@@ -555,62 +621,6 @@
       <category term="Java" scheme="http://www.igiven.com/tags/Java/"/>
     
       <category term="游戏开发" scheme="http://www.igiven.com/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>github下载代码的速度太慢</title>
-    <link href="http://www.igiven.com/tool-2020-06-27-linux-github-slow/"/>
-    <id>http://www.igiven.com/tool-2020-06-27-linux-github-slow/</id>
-    <published>2020-06-27T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;作为程序员，最大的同性交友网站估计是大家的标配了，常常会苦恼于git clone某个项目的时候速度太慢，看着控制台那几K十一二K的速度，吐血！！&lt;/p&gt;
-&lt;p&gt;原因很简单：github的&lt;a href=&quot;https://cloud.tencent.com/product/cdn?from=10680&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;CDN&lt;/a&gt;被高高的墙屏蔽所致了。 所以解决方案也很简单，就是手动把 cdn 和IP地址绑定一下。&lt;/p&gt;
-&lt;h2 id=&quot;1、获取github地址&quot;&gt;&lt;a href=&quot;#1、获取github地址&quot; class=&quot;headerlink&quot; title=&quot;1、获取github地址&quot;&gt;&lt;/a&gt;1、获取github地址&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="tool" scheme="http://www.igiven.com/categories/tool/"/>
-    
-    
-      <category term="Linux" scheme="http://www.igiven.com/tags/Linux/"/>
-    
-      <category term="Win" scheme="http://www.igiven.com/tags/Win/"/>
-    
-      <category term="windows" scheme="http://www.igiven.com/tags/windows/"/>
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="GitHub" scheme="http://www.igiven.com/tags/GitHub/"/>
-    
-      <category term="Java" scheme="http://www.igiven.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为博客将 RSS 转为邮件订阅</title>
-    <link href="http://www.igiven.com/tool-2020-06-26-blog-mail-sub/"/>
-    <id>http://www.igiven.com/tool-2020-06-26-blog-mail-sub/</id>
-    <published>2020-06-26T00:00:00.000Z</published>
-    <updated>2020-08-24T08:26:31.052Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;RSSMailer | &lt;a href=&quot;https://link.zhihu.com/?target=https%3A//rssmailer.app/&quot;&gt;https://rssmailer.app/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Tinyletter | &lt;a href=&quot;https://link.zhihu.com/?target=https%3A//tinyletter.com/&quot;&gt;tinyletter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Mailchimp| &lt;a href=&quot;https://mailchimp.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mailchimp.com/&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="tool" scheme="http://www.igiven.com/categories/tool/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
     
   </entry>
   
