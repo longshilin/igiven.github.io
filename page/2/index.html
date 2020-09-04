@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">91</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">93</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,173 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-07-15-abp-default-language/" class="post-title-link" itemprop="url">abp默认语言规则</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-15 08:00:00" itemprop="dateCreated datePublished" datetime="2020-07-15T08:00:00+08:00">2020-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="abp默认语言规则"><a href="#abp默认语言规则" class="headerlink" title="abp默认语言规则"></a>abp默认语言规则</h1><p>abp是依托与aspnetcore的.我们先来看看aspnetcore是怎么实现的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">services.Configure&lt;RequestLocalizationOptions&gt;(options &#x3D;&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        var supportedCultures &#x3D; new List&lt;CultureInfo&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            new CultureInfo(&quot;en-US&quot;),</span><br><span class="line">            new CultureInfo(&quot;en&quot;),</span><br><span class="line">            new CultureInfo(&quot;fr-FR&quot;),</span><br><span class="line">            new CultureInfo(&quot;fr&quot;)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        options.DefaultRequestCulture &#x3D; new RequestCulture(&quot;en-US&quot;);</span><br><span class="line">        options.SupportedCultures &#x3D; supportedCultures;</span><br><span class="line">        options.SupportedUICultures &#x3D; supportedCultures;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;中间件</span><br><span class="line">    app.UseRequestLocalization();</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-07-15-abp-default-language/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tool-2020-07-13-terminal-proxy/" class="post-title-link" itemprop="url">终端下设置代理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 08:00:00" itemprop="dateCreated datePublished" datetime="2020-07-13T08:00:00+08:00">2020-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cmd"><a href="#cmd" class="headerlink" title="cmd"></a>cmd</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmd命令行:(不用socks5)(临时设置)(也可放置环境变量)</span><br><span class="line">set http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:1080</span><br><span class="line">set https_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tool-2020-07-13-terminal-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-07-12-hexo-github/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +408,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -326,7 +493,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -408,7 +575,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -490,7 +657,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -572,7 +739,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -654,7 +821,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -742,7 +909,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -829,7 +996,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -862,170 +1029,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/essay-2020-07-02-zao-qi-mo-fa/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-07-02-win10-start-menu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/tool-2020-07-02-win10-start-menu/" class="post-title-link" itemprop="url">win10开始菜单添加软件以及备份和恢复</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-07-02T08:00:00+08:00">2020-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="添加应用到开始屏幕"><a href="#添加应用到开始屏幕" class="headerlink" title="添加应用到开始屏幕"></a>添加应用到开始屏幕</h1><p>右键默认就有添加到开始屏幕</p>
-<h1 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tool-2020-07-02-win10-start-menu/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-07-01-unity-coordinate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/unity-2020-07-01-unity-coordinate/" class="post-title-link" itemprop="url">unity的坐标体系</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-01 08:00:00" itemprop="dateCreated datePublished" datetime="2020-07-01T08:00:00+08:00">2020-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>刚开始接触 Unity3D 的时候，经常会被 Unity 中各种坐标系搞得昏头转向不知所措，毕竟是一个 3D 兼 2D 游戏开发殷勤，还要把 3D 作品最终发布到 2D 的桌面或者手机系统中，所以熟悉掌握 Unity3D 中的坐标系是非产重要的。</p>
-<p>其实如果仅仅只有 3D 坐标系还是很简单的，就目前来说我们所见过的三维建模软件或者游戏开发软件所用的坐标系分两种：左手坐标系和右手坐标系。怎么区别呢？大家看下图就知道了：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/unity-2020-07-01-unity-coordinate/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1116,7 +1119,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

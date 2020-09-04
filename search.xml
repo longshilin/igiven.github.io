@@ -1739,7 +1739,7 @@
       </tags>
   </entry>
   <entry>
-    <title>IdentityServer使用指南</title>
+    <title>dotnet-2020-06-11-IdentityServer-use</title>
     <url>/dotnet-2020-06-11-IdentityServer-use/</url>
     <content><![CDATA[<p>DotHass.Lobby.Domain\IdentityServer\IdentityServerDataSeedContributor.cs 中 CreateClientsAsync()</p>
 <p>会在dataseed的时候生成默认数据</p>
@@ -1773,6 +1773,11 @@
 
 
 
+<h1 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">System.InvalidOperationException: IDX20803: Unable to obtain configuration from: &#39;[PII is hidden. For more details, see https:&#x2F;&#x2F;aka.ms&#x2F;IdentityModel&#x2F;PII.]&#39;.</span><br><span class="line"> ---&gt; System.IO.IOException: IDX20804: Unable to retrieve document from: &#39;[PII is hidden. For more details, see https:&#x2F;&#x2F;aka.ms&#x2F;IdentityModel&#x2F;PII.]&#39;.</span><br><span class="line"> ---&gt; System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.</span><br><span class="line"> ---&gt; System.Security.Authentication.AuthenticationException: The remote certificate is invalid according to the validation procedure.</span><br><span class="line">   at System.Net.Security.SslStream.StartSendAuthResetSignal(ProtocolToken message, AsyncProtocolRequest asyncRequest, ExceptionDispatchInfo exception)</span><br><span class="line">   at System.Net.Security.SslStream.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)</span><br><span class="line">   at System.Net.Security.SslStream.StartSendBlob(Byte[] incoming, Int32 count, AsyncProtocolRequest asyncRequest)</span><br><span class="line">   at System.Net.Security.SslStream.ProcessReceivedBlob(Byte[] buffer, Int32 count, AsyncProtocolRequest asyncRequest)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出来这些问题是和SSL证书有关，经过排查，发现IdentityServer4配置中：使用了<strong>IP:PORT</strong>的形式配置的授权地址，但是SSL证书是以域名形式申请的，这就造成了SSL证书不能验证通过。</p>
+<p>解决方法：<strong>将授权地址配置为域名:端口的形式</strong>，完美解决上述问题。注意域名为SSL证书申请时用到的域名。</p>
+<p>localhost使用的是开发证书,也是类似域名,127.0.0.1也是有问题的</p>
 ]]></content>
       <categories>
         <category>dotnet</category>
@@ -2449,7 +2454,7 @@
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>以我常用应用为例(可作为脚本文件,后缀ps1)</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">###安装scoop并自定义安装路径</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#git,程序员必备,只有安装了git才能添加其他桶</span></span><br><span class="line">scoop install git;</span><br><span class="line"><span class="comment">#arias2 scoop 下载会用到</span></span><br><span class="line">scoop install aria2;</span><br><span class="line"><span class="comment">#7zip 一些app会用到</span></span><br><span class="line">scoop install <span class="number">7</span>zip</span><br><span class="line"><span class="comment">#scoop checkup提示装的软件</span></span><br><span class="line">scoop install wixtoolset</span><br><span class="line"></span><br><span class="line"><span class="comment">###添加桶</span></span><br><span class="line"><span class="comment">#scoop内置的桶</span></span><br><span class="line"><span class="comment">#scoop bucket known;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### D:\Application\Scoop\buckets,如果发现bucket中有错误可以检查并删除</span></span><br><span class="line">scoop bucket add extras;</span><br><span class="line">scoop bucket add Java;</span><br><span class="line">scoop bucket add versions;</span><br><span class="line"><span class="comment">#一个还不错的</span></span><br><span class="line">scoop bucket add Ash258 <span class="string">'https://github.com/Ash258/scoop-Ash258.git'</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dodorz https://github.com/dodorz/scoop<span class="literal">-bucket</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dorado https://github.com/h404bi/dorado</span><br><span class="line"></span><br><span class="line"><span class="comment">### 添加代理</span></span><br><span class="line">scoop config proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">scoop config rm proxy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装全局应用</span></span><br><span class="line">scoop install apache <span class="literal">-g</span>;</span><br><span class="line">scoop install redis <span class="literal">-g</span>;</span><br><span class="line">scoop install mysql <span class="literal">-g</span>;</span><br><span class="line"><span class="comment"># jdk最好使用8,否则android-sdk会有问题</span></span><br><span class="line">scoop install ojdkbuild8 <span class="literal">-g</span>; </span><br><span class="line">scoop install php <span class="literal">-g</span>;</span><br><span class="line"><span class="comment">#整合apache php</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://gist.githubusercontent.com/nilkesede/c98a275b80b6d373131df82eaba96c63/raw/apache-php-init.ps1'</span>)</span><br><span class="line"><span class="comment"># 或者手动修改apache配置</span></span><br><span class="line"><span class="comment">#LoadModule php7_module 'C:/Users/xxxxx/scoop/apps/php71/current/php7apache2_4.dll'</span></span><br><span class="line"><span class="comment">#AddHandler application/x-httpd-php .php</span></span><br><span class="line"><span class="comment">#PHPIniDir "C:\Users\xxxxx\scoop\apps\php71\current"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装APP</span></span><br><span class="line"><span class="comment">#使用nvm安装nodejs  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/</span></span><br><span class="line">scoop install nvm</span><br><span class="line">nvm list available</span><br><span class="line">nvm install <span class="number">12.18</span>.<span class="number">2</span></span><br><span class="line"><span class="comment">#效率启动神器</span></span><br><span class="line">scoop install wox;</span><br><span class="line"><span class="comment">#文件检索</span></span><br><span class="line">scoop install everything;</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">scoop install bandizip;</span><br><span class="line"><span class="comment">#远程终端</span></span><br><span class="line">scoop install MobaXterm;</span><br><span class="line"><span class="comment">#桌面控制</span></span><br><span class="line">scoop install teamviewer;</span><br><span class="line"><span class="comment">#markdown编写</span></span><br><span class="line">scoop install typora;</span><br><span class="line"><span class="comment">#编辑器 注意使用vscode-portable,这样data文件夹就会持久化在scoop,而不是c盘用户目录</span></span><br><span class="line"><span class="comment">#From "$env:USERPROFILE\.vscode\extensions" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\extensions"</span></span><br><span class="line"><span class="comment">#From "$env:APPDATA\Code" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\user-data"</span></span><br><span class="line">scoop install vscode<span class="literal">-portable</span>;</span><br><span class="line"><span class="comment">#ditto 剪贴板</span></span><br><span class="line">scoop install ditto</span><br><span class="line"><span class="comment">#postman</span></span><br><span class="line">scoop install postman</span><br><span class="line"><span class="comment">#heidisql</span></span><br><span class="line">scoop install heidisql</span><br><span class="line"><span class="comment">#imageglass 图片浏览器</span></span><br><span class="line">scoop install imageglass</span><br><span class="line"><span class="comment">#quick look</span></span><br><span class="line">scoop install quicklook</span><br><span class="line"><span class="comment">#obs  录制视频或者直播</span></span><br><span class="line">scoop install obs<span class="literal">-studio</span></span><br><span class="line"><span class="comment"># 录像软件</span></span><br><span class="line">scoop install captura</span><br><span class="line"><span class="comment">#switchhosts</span></span><br><span class="line">scoop install switchhosts</span><br><span class="line"><span class="comment"># gradle</span></span><br><span class="line">scoop install gradle</span><br><span class="line"><span class="comment"># android-sdk</span></span><br><span class="line">scoop install android<span class="literal">-sdk</span></span><br><span class="line"><span class="comment"># 安装ndk 老版本下载https://developer.android.com/ndk/downloads/older_releases.html</span></span><br><span class="line"><span class="comment"># sdkmanager ndk-bundle</span></span><br><span class="line"><span class="comment"># shadowsocksr-csharp</span></span><br><span class="line">scoop install shadowsocksr<span class="literal">-csharp</span></span><br><span class="line"><span class="comment"># 截图软件</span></span><br><span class="line">scoop install picpick</span><br><span class="line">scoop install snipaste</span><br><span class="line">scoop install sharex </span><br><span class="line">scoop install lightshot</span><br><span class="line"><span class="comment">#xmind8</span></span><br><span class="line">scoop install XMind2020</span><br><span class="line"><span class="comment"># android-studio</span></span><br><span class="line">scoop install android<span class="literal">-studio</span></span><br><span class="line"><span class="comment">#记住sourcetree的git最好使用内嵌版本</span></span><br><span class="line">scoop install sourcetree</span><br><span class="line"><span class="comment"># php的包工具</span></span><br><span class="line">scoop intstall composer</span><br><span class="line"><span class="comment"># 反向代理</span></span><br><span class="line">scoop install frp</span><br><span class="line"><span class="comment">#网易云音乐</span></span><br><span class="line">scoop install neteasemusic</span><br><span class="line"><span class="comment"># ftp工具</span></span><br><span class="line">scoop install filezilla </span><br><span class="line"><span class="comment"># pdf阅读工具</span></span><br><span class="line"> scoop install foxit<span class="literal">-reader</span></span><br><span class="line"><span class="comment"># 播放器</span></span><br><span class="line">scoop install potplayer </span><br><span class="line"><span class="comment"># draw工程图,uml工具</span></span><br><span class="line">scoop install draw.io</span><br><span class="line"><span class="comment"># 定时提醒休息工具</span></span><br><span class="line">scoop install workrave</span><br><span class="line">scoop install stretchly</span><br><span class="line"><span class="comment"># 投屏工具</span></span><br><span class="line">scoop install scrcpy </span><br><span class="line"><span class="comment"># 卸载工具</span></span><br><span class="line">scoop install geekuninstaller</span><br><span class="line"><span class="comment">#浏览器</span></span><br><span class="line">scoop install  firefox<span class="literal">-developer</span><span class="literal">-zh</span><span class="literal">-cn</span></span><br><span class="line">scoop install  googlechrome</span><br><span class="line"><span class="comment">#wechat</span></span><br><span class="line">scoop install wechat</span><br><span class="line"><span class="comment">#steam</span></span><br><span class="line">scoop install steam</span><br><span class="line"><span class="comment"># pwsh</span></span><br><span class="line">scoop install pwsh</span><br><span class="line"><span class="comment">#windows teraminal</span></span><br><span class="line">scoop install windows<span class="literal">-terminal</span></span><br><span class="line"><span class="comment"># 反编译 ilspy  https://github.com/sailro/Reflexil下载Reflexil将Reflexil.ILSpy.Plugin.dll直接扔到ilspy目录下即行</span></span><br><span class="line">scoop install ilspy</span><br><span class="line">scoop install dnspy</span><br><span class="line"><span class="comment">#win+x菜单编辑</span></span><br><span class="line">scoop install WinXMenuEditor   </span><br><span class="line"><span class="comment">#发送到菜单编辑</span></span><br><span class="line">scoop install SendToMenuEditor</span><br><span class="line"><span class="comment"># 上下文菜单</span></span><br><span class="line">scoop install EasyContextMenu</span><br><span class="line"><span class="comment"># 备份开始屏幕</span></span><br><span class="line">scoop install BackupStartMenuLayout</span><br><span class="line"><span class="comment">#定时关机</span></span><br><span class="line">scoop install kshutdown</span><br><span class="line"><span class="comment"># 创建可启动U盘的工具  https://www.ventoy.net/cn/index.html</span></span><br><span class="line">scoop install ventoy</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">###安装scoop并自定义安装路径</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#git,程序员必备,只有安装了git才能添加其他桶</span></span><br><span class="line">scoop install git;</span><br><span class="line"><span class="comment">#arias2 scoop 下载会用到</span></span><br><span class="line">scoop install aria2;</span><br><span class="line"><span class="comment">#7zip 一些app会用到</span></span><br><span class="line">scoop install <span class="number">7</span>zip</span><br><span class="line"><span class="comment">#scoop checkup提示装的软件</span></span><br><span class="line">scoop install wixtoolset</span><br><span class="line"></span><br><span class="line"><span class="comment">###添加桶</span></span><br><span class="line"><span class="comment">#scoop内置的桶</span></span><br><span class="line"><span class="comment">#scoop bucket known;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### D:\Application\Scoop\buckets,如果发现bucket中有错误可以检查并删除</span></span><br><span class="line">scoop bucket add extras;</span><br><span class="line">scoop bucket add Java;</span><br><span class="line">scoop bucket add versions;</span><br><span class="line"><span class="comment">#一个还不错的</span></span><br><span class="line">scoop bucket add Ash258 <span class="string">'https://github.com/Ash258/scoop-Ash258.git'</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dodorz https://github.com/dodorz/scoop<span class="literal">-bucket</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dorado https://github.com/h404bi/dorado</span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add Hass https://github.com/zhepama/Scoop<span class="literal">-Hass</span></span><br><span class="line"><span class="comment">### 添加代理</span></span><br><span class="line">scoop config proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">scoop config rm proxy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装全局应用</span></span><br><span class="line">scoop install apache <span class="literal">-g</span>;</span><br><span class="line">scoop install redis <span class="literal">-g</span>;</span><br><span class="line">scoop install mysql <span class="literal">-g</span>;</span><br><span class="line"><span class="comment"># jdk最好使用8,否则android-sdk会有问题</span></span><br><span class="line">scoop install ojdkbuild8 <span class="literal">-g</span>; </span><br><span class="line">scoop install php <span class="literal">-g</span>;</span><br><span class="line"><span class="comment">#整合apache php</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://gist.githubusercontent.com/nilkesede/c98a275b80b6d373131df82eaba96c63/raw/apache-php-init.ps1'</span>)</span><br><span class="line"><span class="comment"># 或者手动修改apache配置</span></span><br><span class="line"><span class="comment">#LoadModule php7_module 'C:/Users/xxxxx/scoop/apps/php71/current/php7apache2_4.dll'</span></span><br><span class="line"><span class="comment">#AddHandler application/x-httpd-php .php</span></span><br><span class="line"><span class="comment">#PHPIniDir "C:\Users\xxxxx\scoop\apps\php71\current"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装APP</span></span><br><span class="line"><span class="comment">#使用nvm安装nodejs  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/</span></span><br><span class="line">scoop install nvm</span><br><span class="line">nvm list available</span><br><span class="line">nvm install <span class="number">12.18</span>.<span class="number">2</span></span><br><span class="line"><span class="comment">#效率启动神器</span></span><br><span class="line">scoop install wox;</span><br><span class="line"><span class="comment">#文件检索</span></span><br><span class="line">scoop install everything;</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">scoop install bandizip;</span><br><span class="line"><span class="comment">#远程终端</span></span><br><span class="line">scoop install MobaXterm;</span><br><span class="line"><span class="comment">#桌面控制</span></span><br><span class="line">scoop install teamviewer;</span><br><span class="line"><span class="comment">#markdown编写</span></span><br><span class="line">scoop install typora;</span><br><span class="line"><span class="comment">#编辑器 注意使用vscode-portable,这样data文件夹就会持久化在scoop,而不是c盘用户目录</span></span><br><span class="line"><span class="comment">#From "$env:USERPROFILE\.vscode\extensions" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\extensions"</span></span><br><span class="line"><span class="comment">#From "$env:APPDATA\Code" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\user-data"</span></span><br><span class="line">scoop install vscode<span class="literal">-portable</span>;</span><br><span class="line"><span class="comment">#ditto 剪贴板</span></span><br><span class="line">scoop install ditto</span><br><span class="line"><span class="comment">#postman</span></span><br><span class="line">scoop install postman</span><br><span class="line"><span class="comment">#heidisql</span></span><br><span class="line">scoop install heidisql</span><br><span class="line"><span class="comment">#imageglass 图片浏览器</span></span><br><span class="line">scoop install imageglass</span><br><span class="line"><span class="comment">#quick look</span></span><br><span class="line">scoop install quicklook</span><br><span class="line"><span class="comment">#obs  录制视频或者直播</span></span><br><span class="line">scoop install obs<span class="literal">-studio</span></span><br><span class="line"><span class="comment"># 录像软件</span></span><br><span class="line">scoop install captura</span><br><span class="line"><span class="comment">#switchhosts</span></span><br><span class="line">scoop install switchhosts</span><br><span class="line"><span class="comment"># gradle</span></span><br><span class="line">scoop install gradle</span><br><span class="line"><span class="comment"># android-sdk</span></span><br><span class="line">scoop install android<span class="literal">-sdk</span></span><br><span class="line"><span class="comment"># 安装ndk 老版本下载https://developer.android.com/ndk/downloads/older_releases.html</span></span><br><span class="line"><span class="comment"># sdkmanager ndk-bundle</span></span><br><span class="line"><span class="comment"># shadowsocksr-csharp</span></span><br><span class="line">scoop install shadowsocksr<span class="literal">-csharp</span></span><br><span class="line"><span class="comment"># 截图软件</span></span><br><span class="line">scoop install picpick</span><br><span class="line">scoop install snipaste</span><br><span class="line">scoop install sharex </span><br><span class="line">scoop install lightshot</span><br><span class="line"><span class="comment">#xmind8</span></span><br><span class="line">scoop install XMind2020</span><br><span class="line"><span class="comment"># android-studio</span></span><br><span class="line">scoop install android<span class="literal">-studio</span></span><br><span class="line"><span class="comment">#记住sourcetree的git最好使用内嵌版本</span></span><br><span class="line">scoop install sourcetree</span><br><span class="line"><span class="comment"># php的包工具</span></span><br><span class="line">scoop intstall composer</span><br><span class="line"><span class="comment"># 反向代理</span></span><br><span class="line">scoop install frp</span><br><span class="line"><span class="comment">#网易云音乐</span></span><br><span class="line">scoop install neteasemusic</span><br><span class="line"><span class="comment"># ftp工具</span></span><br><span class="line">scoop install filezilla </span><br><span class="line"><span class="comment"># pdf阅读工具</span></span><br><span class="line"> scoop install foxit<span class="literal">-reader</span></span><br><span class="line"><span class="comment"># 播放器</span></span><br><span class="line">scoop install potplayer </span><br><span class="line"><span class="comment"># draw工程图,uml工具</span></span><br><span class="line">scoop install draw.io</span><br><span class="line"><span class="comment"># 定时提醒休息工具</span></span><br><span class="line">scoop install workrave</span><br><span class="line">scoop install stretchly</span><br><span class="line"><span class="comment"># 投屏工具</span></span><br><span class="line">scoop install scrcpy </span><br><span class="line"><span class="comment"># 卸载工具</span></span><br><span class="line">scoop install geekuninstaller</span><br><span class="line"><span class="comment">#浏览器</span></span><br><span class="line">scoop install  firefox<span class="literal">-developer</span><span class="literal">-zh</span><span class="literal">-cn</span></span><br><span class="line">scoop install  googlechrome</span><br><span class="line"><span class="comment">#wechat</span></span><br><span class="line">scoop install wechat</span><br><span class="line"><span class="comment">#steam</span></span><br><span class="line">scoop install steam</span><br><span class="line"><span class="comment"># pwsh</span></span><br><span class="line">scoop install pwsh</span><br><span class="line"><span class="comment">#windows teraminal</span></span><br><span class="line">scoop install windows<span class="literal">-terminal</span></span><br><span class="line"><span class="comment"># 反编译 ilspy  https://github.com/sailro/Reflexil下载Reflexil将Reflexil.ILSpy.Plugin.dll直接扔到ilspy目录下即行</span></span><br><span class="line">scoop install ilspy</span><br><span class="line">scoop install dnspy</span><br><span class="line"><span class="comment">#win+x菜单编辑</span></span><br><span class="line">scoop install WinXMenuEditor   </span><br><span class="line"><span class="comment">#发送到菜单编辑</span></span><br><span class="line">scoop install SendToMenuEditor</span><br><span class="line"><span class="comment"># 上下文菜单</span></span><br><span class="line">scoop install EasyContextMenu</span><br><span class="line"><span class="comment"># 备份开始屏幕</span></span><br><span class="line">scoop install BackupStartMenuLayout</span><br><span class="line"><span class="comment">#定时关机</span></span><br><span class="line">scoop install kshutdown</span><br><span class="line"><span class="comment"># 创建可启动U盘的工具  https://www.ventoy.net/cn/index.html</span></span><br><span class="line">scoop install ventoy</span><br></pre></td></tr></table></figure>
 
 
 
@@ -2483,10 +2488,7 @@
 
 
 
-
-
-
-
+<p>安装脚本都是执行在Scoop\apps\wnr\versions下面</p>
 <h3 id="导出-Scoop-软件列表"><a href="#导出-Scoop-软件列表" class="headerlink" title="导出 Scoop 软件列表"></a>导出 Scoop 软件列表</h3><p>备份 Scoop 的方式为：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">scoop export &gt; scoop.txt</span><br></pre></td></tr></table></figure>
 
@@ -4108,7 +4110,7 @@
 </li>
 <li><p>mono的gc和.net的gc是不同的,il2cpp运行时实现了自己的垃圾回收(Boehm-Demers-Weiser garbage collector)</p>
 </li>
-<li><p>编译和运行时两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理</p>
+<li><p>编译和运行时是两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理</p>
 <p>Note that the <strong>.rsp</strong> file needs to match the compiler being invoked. For example:</p>
 <ul>
 <li>when targeting the .NET 3.5 Equivalent (deprecated) scripting runtime version, <strong>mcs</strong> is used with <code>mcs.rsp</code>, and</li>
@@ -4162,32 +4164,42 @@
 <p>我们的IL2CPP研发组有很强烈的“测试优先”意识。我们时常使用“Test Driven Design”方法，在没有进行足够全面的测试的情况下，几乎不会进行代码的合并工作。这个策略用在IL2CPP项目上非常的棒。我们现在所面对的大部分bug并不是意想不到的行为产生的，而是由意想不到的特殊情况产生的。（例如在一个32位的索引数组中使用了64位的指针从而导致C++编译器失败）面对这种类型的bug我们可以快速的并且很自信的进行修正。</p>
 <p>有了社区的帮助，我们非常努力的让IL2CPP既快又稳定。顺便说一句，如果你对我刚才说的这些有兴趣，我们正在招人（嗯…..我只是这么一说）</p>
 <h2 id="好戏连台"><a href="#好戏连台" class="headerlink" title="好戏连台"></a>好戏连台</h2><p>关于IL2CPP我们还有很多可以说的。下一次我们会深入到il2cpp.exe代码生成的细节中。看看对于C++编译器来说，由il2cpp.exe生成的代码会是个什么样子。</p>
-<h1 id="iOS-IL2CPP打包注意事项"><a href="#iOS-IL2CPP打包注意事项" class="headerlink" title="iOS IL2CPP打包注意事项"></a>iOS IL2CPP打包注意事项</h1><p>鉴于IL2CPP的特殊性，实际在iOS的发布中可能会遇到一些问题，在这里给大家介绍几个iOS发布时可能会遇到的问题。</p>
-<p>IL2CPP和mono的最大区别就是不能在运行时动态生成代码和类型，所以这就要求必须在编译时就完全确定需要用到的类型。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
-<li>il2cpp  没有使用的字段都不会被编译..</li>
-<li>json反序列化的时候get,set不能被使用,il2cpp 在运行时会剥离去除Get属性，你需要在工程中添加一个 link.xml告诉编译器不要优化掉Get属性</li>
-<li>不要用dynamic关键字</li>
-<li>注意泛型实例和泛型方法,可能会被裁剪..这个时候建立一个函数.手动调用下即可.<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">参见</a></li>
-</ul>
-<h2 id="类型裁剪"><a href="#类型裁剪" class="headerlink" title="类型裁剪"></a>类型裁剪</h2><p>IL2CPP在打包时会自动对Unity工程的DLL进行裁剪，将代码中没有引用到的类型裁剪掉，以达到减小发布后ipa包的尺寸的目的。然而在实际使用过程中，很多类型有可能会被意外剪裁掉，造成运行时抛出找不到某个类型的异常。特别是通过反射等方式在编译时无法得知的函数调用，在运行时都很有可能遇到问题。</p>
-<p>Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪裁掉的。具体做法就是在Unity工程的Assets目录中建立一个叫link.xml的XML文件，然后按照下面的格式指定你需要保留的类型：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">linker</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"UnityEngine"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"Assembly-CSharp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">namespace</span> <span class="attr">fullname</span>=<span class="string">"MyGame.Utils"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span> <span class="attr">fullname</span>=<span class="string">"MyGame.SomeClass"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">assembly</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">linker</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<h1 id="IL2CPP-脚本限制"><a href="#IL2CPP-脚本限制" class="headerlink" title="IL2CPP 脚本限制"></a>IL2CPP 脚本限制</h1><h2 id="System-Reflection-Emit"><a href="#System-Reflection-Emit" class="headerlink" title="System.Reflection.Emit"></a>System.Reflection.Emit</h2><p>AOT 平台无法实现 <code>System.Reflection.Emit</code> 命名空间中的任何方法。<code>System.Reflection</code> 的其余部分是可接受的，只要编译器可以推断通过反射使用的代码需要在运行时存在。</p>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>AOT 平台可能会由于使用了反射而遇到序列化和反序列化问题。如果仅通过反射将某个类型或方法作为序列化或反序列化的一部分使用，则 AOT 编译器无法检测到需要为该类型或方法生成代码。</p>
+<p>这是我们常遇到的问题..一个是scriptobject的asset,一个是网络协议都是序列化数据</p>
 <ol>
-<li>Could not produce class with ID 91 - iOS   <a href="https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/" target="_blank" rel="noopener">https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/</a>  <a href="https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305</a>  <a href="https://www.cnblogs.com/zhaoqingqing/p/6080075.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/6080075.html</a></li>
-<li>odin  新建一个场景把一些scriptobject拖到场景中扫描一下</li>
-<li>protobuf   <code>**Unable to resolve MapDecorator constructor**.</code>  同时注意不要用属性{get;set;}..如果是Dictionary也会出这个问题..未找到解决办法 ,用class代替</li>
+<li>odin,最佳模式新建一个aot场景,将需要的scriptobject放在该场景.或者声明序列化字段</li>
 </ol>
-<p>F:\GouYuJian\GYJClient\Library\com.unity.addressables\aa\Android\link.xml</p>
-<p><a href="http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/" target="_blank" rel="noopener">http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/</a></p>
-<ol start="4">
-<li>System.MissingMethodException: Default constructor not found for type ServerReconciliation…这个是没有被明显的引用添加到link.xml中ServerReconciliation<a href="https://docs.unity3d.com/Manual/ManagedCodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ManagedCodeStripping.html</a></li>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class OdinAOTSetting : Sirenix.OdinInspector.SerializedMonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    public List&lt;ScriptableObject&gt; Configs;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    public UnityEngine.Color Color;</span><br><span class="line"></span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    public CityMapLandType CityMapLandType;</span><br><span class="line"></span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, InventoryItemConfig&gt; InventoryItemConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, LootTableConfig&gt; LootTableConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, MerchantConfig&gt; MerchantConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, LandConfig&gt; LandConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, MapConfig&gt; MapConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;long, NPCConfig&gt; NPCConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;long, QuestConfig&gt; QuestConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;string, RedeemCodeConfig&gt; RedeemCodeConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, BuffConfig&gt; BuffConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, ProjectileConfig&gt; ProjectileConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;int, SkillConfig&gt; SkillConfigs;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;string, AttrAsset&gt; AttrAssets;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;string, StatAsset&gt; StatAssets;</span><br><span class="line">    [NonSerialized, OdinSerialize]</span><br><span class="line">    Dictionary&lt;string, StatusEffectAsset&gt; StatusEffectAssets;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>网络协议Json,使用字段,而不是使用属性(get,set),il2cpp 在运行时会剥离去除Get属性，</p>
+</li>
+<li><p>网络协议protobuf,虽然protobuf本身是支持Dictionary的,但是aot就不能使用了..未找到解决办法 ,用class代替</p>
+</li>
 </ol>
-<h2 id="泛型实例"><a href="#泛型实例" class="headerlink" title="泛型实例"></a>泛型实例</h2><p>每个泛型实例实际上都是一个独立的类型，<code>List&lt;A&gt;</code> 和 <code>List&lt;B&gt;</code>是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。</p>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>每个泛型实例实际上都是一个独立的类型，<code>List&lt;A&gt;</code> 和 <code>List&lt;B&gt;</code>是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。</p>
 <p>在ILRuntime中解决这个问题有两种方式，一个是使用CLR绑定，把用到的泛型实例都进行CLR绑定。另外一个方式是在Unity主工程中，建立一个类，然后在里面定义用到的那些泛型实例的public变量。这两种方式都可以告诉IL2CPP保留这个类型的代码供运行中使用。</p>
 <p>因此建议大家在实际开发中，尽量使用热更DLL内部的类作为泛型参数，因为DLL内部的类型都是ILTypeInstance，只需处理一个就行了。此外如果泛型模版类就是在DLL里定义的的话，那就完全不需要进行任何处理。</p>
 <h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p>跟泛型实例一样，<code>foo.Bar&lt;TypeA&gt;</code> 和<code>foo.Bar&lt;TypeB&gt;</code>是两个完全不同的方法，需要在主工程中显式调用过，IL2CPP才能够完整保留，因此需要尽量避免在热更DLL中调用Unity主工程的泛型方法。如果在iOS上实际运行遇到报错，可以尝试在Unity的主工程中随便写一个static的方法，然后对这个泛型方法调用一下即可，这个方法无需被调用，只是用来告诉IL2CPP我们需要这个方法</p>
+<h2 id="AnimatorController-等"><a href="#AnimatorController-等" class="headerlink" title="AnimatorController 等"></a>AnimatorController 等</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">错误信息#</span><br><span class="line">Could not produce class with ID #</span><br><span class="line">Could not produce class with ID XXX.</span><br><span class="line">This could be caused by a class being stripped from the build even though it is needed. Try disabling &#39;Strip Engine Code&#39; in Player Settings.:&lt;LoadWWWIEnumerator&gt;c__Iterator99:MoveNext()</span><br></pre></td></tr></table></figure>
+
+<p>如果提示的ID的是Editor的，比如 AnimatorController(ID 91)属于Editor包里的，不能用link.xm加回来，可以在<strong>Resource</strong>下建一个空的prefab,在上面挂一个AnimatorController，打包时留下这个prefab就可以确保这个类不被strip掉了。</p>
+<p><strong>参考 :</strong></p>
+<ul>
+<li><a href="https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/" target="_blank" rel="noopener">Could not produce class with ID 91 - iOS - Unity Forum</a></li>
+<li><a href="https://docs.unity3d.com/cn/2020.2/Manual/ClassIDReference.html" target="_blank" rel="noopener">YAML 类 ID 参考 - Unity 手册 (unity3d.com)</a></li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>不要用dynamic关键字</li>
+<li>没有使用的字段都不会被编译..</li>
+</ul>
+<h1 id="托管代码剥离"><a href="#托管代码剥离" class="headerlink" title="托管代码剥离"></a>托管代码剥离</h1><p>IL2CPP在打包时会自动对Unity工程的DLL进行裁剪，将代码中没有引用到的类型裁剪掉，以达到减小发布后ipa包的尺寸的目的。然而在实际使用过程中，很多类型有可能会被意外剪裁掉，造成运行时抛出找不到某个类型的异常。特别是通过反射等方式在编译时无法得知的函数调用，在运行时都很有可能遇到问题。</p>
+<p>Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪裁掉的。具体做法就是在Unity工程的Assets目录中建立一个叫link.xml的XML文件，然后按照下面的格式指定你需要保留的类型：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">linker</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"UnityEngine"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">assembly</span> <span class="attr">fullname</span>=<span class="string">"Assembly-CSharp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">namespace</span> <span class="attr">fullname</span>=<span class="string">"MyGame.Utils"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span> <span class="attr">fullname</span>=<span class="string">"MyGame.SomeClass"</span> <span class="attr">preserve</span>=<span class="string">"all"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">assembly</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">linker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="IL2CPP限制"><a href="#IL2CPP限制" class="headerlink" title="IL2CPP限制"></a>IL2CPP限制</h2><p>将游戏导出到 iOS 等平台时，Unity 将使用其 IL2CPP 引擎将 IL“转换”为 C++ 代码，然后使用目标平台的本机编译器进行编译。 在此方案中，有几个不支持的 .NET 功能，例如反射的部分内容和使用 <code>dynamic</code> 关键字。 虽然可在自己的代码中使用这些功能，但使用第三方 DLL 和 SDK 时可能会遇到问题，这些 DLL 和 SDK 并非使用 Unity 和 IL2CPP 编写。 有关此主题的详细信息，请参阅 Unity 站点上的<a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">脚本限制</a>文档。</p>
 <p>此外，如之前 Json.NET 示例中所述，Unity 将尝试在 IL2CPP 导出过程中裁剪掉未使用的代码。 虽然这通常不是问题，但对于使用反射的库，它可能会意外地删除在导出时无法确定是否被调用而在运行时可能被调用的属性或方法。 若要解决这些问题，请添加一个 link.xml 文件到项目中，该文件中包含的程序集和命名空间列表不会执行裁剪过程。 有关完整详细信息，请参阅<a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">有关字节码裁剪的 Unity 文档</a>。</p>
 <h2 id="编译速度优化"><a href="#编译速度优化" class="headerlink" title="编译速度优化"></a>编译速度优化</h2><ol>
@@ -4200,8 +4212,6 @@
 <li><a href="https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html</a></li>
 <li><a href="https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html</a></li>
 <li><a href="https://docs.unity3d.com/Manual/ScriptingRestrictions.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/ScriptingRestrictions.html</a></li>
-<li><a href="http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/" target="_blank" rel="noopener">http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/</a></li>
-<li><a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/PlatformDependentCompilation.html</a></li>
 <li><a href="https://www.jianshu.com/p/7cfcb7b0cfe7" target="_blank" rel="noopener">https://www.jianshu.com/p/7cfcb7b0cfe7</a></li>
 <li><a href="https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/" target="_blank" rel="noopener">https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/</a></li>
 </ul>
@@ -4218,7 +4228,6 @@
         <tag>Unity</tag>
         <tag>UNITY</tag>
         <tag>JS</tag>
-        <tag>addressable</tag>
       </tags>
   </entry>
   <entry>
@@ -5000,8 +5009,8 @@
         <tag>C</tag>
         <tag>Unity</tag>
         <tag>UNITY</tag>
-        <tag>addressable</tag>
         <tag>ugui</tag>
+        <tag>addressable</tag>
       </tags>
   </entry>
   <entry>
@@ -7197,6 +7206,101 @@
         <tag>Unity</tag>
         <tag>UNITY</tag>
         <tag>ugui</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>unity 项目dll检查</title>
+    <url>/unity-2020-08-30-unity-dll-check/</url>
+    <content><![CDATA[<p>全部的<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-12-13.png" alt="Snipaste_2020-08-30_02-12-13"></p>
+<p>shared模块+contract模块+Odin模块+Json模块+dothassunity模块<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-16-34--noentity-no-p.png" alt="Snipaste_2020-08-30_02-16-34--noentity-no-p"></p>
+<p>shared模块+contract模块+Odin模块+Json模块<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity.png" alt="Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity"></p>
+<p>shared模块+contract模块+Odin模块<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json.png" alt="Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json"></p>
+<p>shared模块+contract模块<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json-no-odin.png" alt="Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json-no-odin"></p>
+<p>只有shared模块</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json-no-odin-no-contract.png" alt="Snipaste_2020-08-30_02-16-34--noentity-no-p-no-dothassunity-no-json-no-odin-no-contract"></p>
+<p>空项目<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-unity-dll-check/none.png" alt="none"></p>
+<p>我们看到包含了form等模块</p>
+<p><a href="https://stackoverflow.com/questions/39161798/can-i-remove-system-windows-forms-dll-referenced-by-protobuf-net" target="_blank" rel="noopener">c# - Can I remove System.Windows.Forms.dll referenced by protobuf-net - Stack Overflow (stackoverflow.com)</a></p>
+<p>不过不用担心,使用il2cpp都会被切割</p>
+]]></content>
+      <categories>
+        <category>unity</category>
+      </categories>
+      <tags>
+        <tag>Win</tag>
+        <tag>windows</tag>
+        <tag>C</tag>
+        <tag>C#</tag>
+        <tag>Unity</tag>
+        <tag>UNITY</tag>
+        <tag>JS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UNITY的垂直同步和帧率</title>
+    <url>/unity-2020-09-05-unity-vSyncCount/</url>
+    <content><![CDATA[<h1 id="垂直同步"><a href="#垂直同步" class="headerlink" title="垂直同步"></a>垂直同步</h1><p>在显示一帧画面时，显卡先从显示缓冲取数据刷新到显示器存储器上，然后，显示器从左上到右下，逐行显示到屏幕上。</p>
+<p>显示器每画完一行发出一个水平同步信号，画完所有行发出一个垂直同步信号。</p>
+<p>若显示器刷新率是75，那么发出一个垂直同步信号后会等待1/75秒，然后重新执行上述步骤。</p>
+<p>游戏中的开启垂直同步，意思是指显卡等待到一个垂直同步信号后才开始工作，向显示缓冲绘制数据。</p>
+<p>如果我们选择等待垂直同步信号（也就是我们平时所说的垂直同步打开），那么在游戏中或许强劲的显卡迅速的绘制完一屏的图像，但是没有垂直同步信号的到达，显卡无法绘制下一屏，只有等75单位的信号到达，才可以绘制。这样FPS自然要受到操作系统刷新率运行值的制约。</p>
+<p>   而如果我们选择不等待垂直同步信号（也就是我们平时所说的关闭垂直同步），那么游戏中作完一屏画面，显卡和显示器无需等待垂直同步信号就可以开始下一屏图像的绘制，自然可以完全发挥显卡的实力。但是不要忘记，正是因为垂直同步的存在，才能使得游戏进程和显示器刷新率同步，使得画面更加平滑和稳定。取消了垂直同步信号，固然可以换来更快的速度，但是在图像的连续性上势必打折扣。这也正是很多朋友抱怨关闭垂直后发现画面不连续的理论原因。</p>
+<p>开启垂直同步时</p>
+<p>　　若游戏的实际显示帧速大于60，显卡就可以在显示器等待的1/60内完成绘制，显示一个无撕裂的画面。此时，游戏的帧速被限制为60。</p>
+<p>　　若游戏的实际显示帧速小于60，显卡无法在在显示器等待的1/60内完成绘制，假如游戏帧速50，那么显卡每2个显示器帧才向显示器刷新一次数据，此时，游戏帧速掉为30。</p>
+<p>关闭垂直同步时</p>
+<p>　　若游戏的实际显示帧速大于60，显卡刷新显示缓冲的速度比显示器快，出现跳帧以及撕裂。</p>
+<p> （1）画面撕裂</p>
+<p>  假设游戏中有一面黑白相间的栅栏墙高速向左运动，显示器设定的刷新率是100Hz，游戏运行速度为200FPS，则显示器扫描第1帧图像至屏幕垂直方向中点时，显卡已经将第2帧图像送了过来，由于栅栏墙高速向左运动，第2帧图像已经左移了一段距离，最终显示的图像如图（图01）。</p>
+<table>
+<thead>
+<tr>
+<th><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-05-unity-vSyncCount/1520729748.JPG" alt="获得完美游戏效果解析显卡垂直同步设置(2)"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图1</td>
+</tr>
+</tbody></table>
+<p>  CS 1.5、Quake等大多数PC游戏在关闭垂直同步后都会有这种现象产生。如果你的电脑上装有CS 1.5游戏，不妨自己证实一下：关闭垂直同步后进入游戏，按下键盘上的左箭头”←”让视角匀速转动，是不是看到了”画面撕裂”的现象？打开垂直同步后做相同的测试，画面是不是清爽了许多？</p>
+<p>  （2）跳帧</p>
+<p>  假如显示器设定的刷新率是80Hz，显卡以100FPS循环显示0-9数字，那么，在开始的0.1秒内，显卡显示了10个数字而显示器只刷新了8次，最终你看到的图像很可能是这样的：（表格如图02）<br>可见，由于显示器刷新率跟不上游戏的FPS，只能舍弃一部分画面，这种现象表现在游戏里就是跳帧。鬼武者3等一些移植到PC上的游戏在关闭垂直同步时通常会出现这种问题。</p>
+<table>
+<thead>
+<tr>
+<th><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-05-unity-vSyncCount/1536901270.JPG" alt="获得完美游戏效果解析显卡垂直同步设置(2)"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图2</td>
+</tr>
+</tbody></table>
+<p>  通过以上的了解，我们认识到，要想在游戏中获得更好的画质，垂直同步一定要开！正是由于垂直同步的存在，游戏才会有完整、稳速、不跳帧的画面。套用一句广告语来说：”自从开了垂直同步后，画不破了，帧不跳了，头也不眩晕了。”</p>
+<h1 id="省电发热优化"><a href="#省电发热优化" class="headerlink" title="省电发热优化"></a>省电发热优化</h1><p>如果你的游戏跑到60帧,手机很热..这个时候首先想到的是降低帧率,</p>
+<p>安卓上:</p>
+<pre><code>1. [QualitySettings](https://docs.unity3d.com/2020.2/Documentation/ScriptReference/QualitySettings.html).vSyncCount = 0 关闭垂直同步..手动设置帧率..    Application.targetFrameRate = 30;  注意这样可能出现跳帧
+ 2. [QualitySettings](https://docs.unity3d.com/2020.2/Documentation/ScriptReference/QualitySettings.html).vSyncCount = 1 这个时候 Application.targetFrameRate无效...每帧等待垂直同步
+ 3. [QualitySettings](https://docs.unity3d.com/2020.2/Documentation/ScriptReference/QualitySettings.html).vSyncCount = 2 这个时候 Application.targetFrameRate无效...每一秒内等待垂直同步??不好翻译..大概意思是如果平台的默认渲染速率是每秒60帧，而vSyncCount设置为2，则游戏将以每秒30帧为目标。</code></pre><p>iOS:</p>
+<p>iOS忽略<a href="https://docs.unity3d.com/2020.2/Documentation/ScriptReference/QualitySettings.html" target="_blank" rel="noopener">QualitySettings</a>.vSyncCount,ios是根据vblank(垂直同步)显示帧(如果有的话)..他的意思就是如果ios的垂直同步是每秒60帧…在刷新垂直同步的时候,如果存在显卡的帧的时候则会显示帧..不存在.则不显示…所以 Application.targetFrameRate是起作用的</p>
+<p>以上仅参考文档推测…未进行验证….如有意外概不负责</p>
+<ul>
+<li><p><a href="https://docs.unity3d.com/2020.2/Documentation/ScriptReference/Application-targetFrameRate.html" target="_blank" rel="noopener">Unity - Scripting API: Application.targetFrameRate (unity3d.com)</a></p>
+</li>
+<li><p><a href="https://docs.unity3d.com/2020.2/Documentation/ScriptReference/QualitySettings-vSyncCount.html" target="_blank" rel="noopener">Unity - Scripting API: QualitySettings.vSyncCount (unity3d.com)</a></p>
+</li>
+</ul>
+<p>-</p>
+]]></content>
+      <categories>
+        <category>unity</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>游戏</tag>
+        <tag>Unity</tag>
+        <tag>sync</tag>
+        <tag>同步</tag>
+        <tag>UNITY</tag>
       </tags>
   </entry>
 </search>

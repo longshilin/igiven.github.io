@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">91</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">93</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-20-shader-lost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-20-shader-lost/" class="post-title-link" itemprop="url">unity 移动平台打包丢失shader的问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-20 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-20T08:00:00+08:00">2020-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>自己写了个shader，并且是从代码里面来进行加载，编辑器中并没有引用。在编辑器中运行项目没有问题，但是当我发布到iso和android平台之后发现游戏中并不能找到我自己的shader，猜想是unity在打包过程中进行了一些优化，没有用到的shader不会被打到游戏包内。</p>
+<p>我找到了2个解决办法</p>
+<p>1.随意创建一个物体并添加使用了此shader的材质。并不推荐此方法，正确的方法应该是第二种。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-02-20-shader-lost/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-19-UnderstandingAutomaticMemoryManagement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/unity-2020-02-19-UnderstandingAutomaticMemoryManagement/" class="post-title-link" itemprop="url">理解自动内存管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-19 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-19T08:00:00+08:00">2020-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>当创建对象、字符串或数组时，存储它所需的内存将从称为堆的中央池中分配。当项目不再使用时，它曾经占用的内存可以被回收并用于别的东西。在过去，通常由程序员通过适当的函数调用明确地分配和释放这些堆内存块。如今，像Unity的Mono引擎这样的运行时系统会自动为您管理内存。自动内存管理需要比显式分配/释放更少的编码工作，并大大降低内存泄漏（内存被分配但从未随后释放的情况）的可能性。</p>
+<h2 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h2><p>当调用一个函数时，它的参数值将被复制到一个保留特定调用的内存区域。只占用几个字节的数据类型可以非常快速方便地复制。然而，对象、字符串和数组要大得多，如果这些类型的数据被定期复制，那将是非常低效的。幸运的是，这是不必要的；大项目的实际存储空间是从堆中分配的，一个小的“指针”值用来记住它的位置。从那时起，只有指针在参数传递过程中需要被复制。只要运行时系统能够定位指针标识的项，就可以经常使用数据的一个副本。<br>在参数传递期间直接存储和复制的类型称为值类型。这些包括整数，浮点数，布尔和Unity的结构类型（例如Color和Vector3）。分配在堆上然后通过指针访问的类型称为引用类型，因为存储在变量中的值仅仅是“引用”到真实数据。引用类型的示例包括对象，字符串和数组。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/unity-2020-02-19-UnderstandingAutomaticMemoryManagement/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/unity-2020-02-18-BestPracticeUnderstandingPerformanceInUnity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +406,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,7 +489,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,7 +572,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -490,7 +655,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -573,7 +738,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -656,7 +821,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -739,7 +904,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -821,7 +986,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -850,171 +1015,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/dotnet-2020-02-10-Icloneable/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-09-room-elo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/dotnet-2020-02-09-room-elo/" class="post-title-link" itemprop="url">游戏的匹配机制ELO</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-09 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-09T08:00:00+08:00">2020-02-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.jianshu.com/p/edc5d341956a" target="_blank" rel="noopener">https://www.jianshu.com/p/edc5d341956a</a></p>
-<p><a href="https://blog.csdn.net/weixin_30876945/article/details/98079738?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task" target="_blank" rel="noopener">https://blog.csdn.net/weixin_30876945/article/details/98079738?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
-<p><a href="https://blog.csdn.net/yekoufeng/article/details/80573857?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task" target="_blank" rel="noopener">https://blog.csdn.net/yekoufeng/article/details/80573857?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/dotnet-2020-02-09-room-elo/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-07-aoi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/dotnet-2020-02-07-aoi/" class="post-title-link" itemprop="url">地图的aoi</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-07 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T08:00:00+08:00">2020-02-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="为什么要进行视野管理？"><a href="#为什么要进行视野管理？" class="headerlink" title="为什么要进行视野管理？"></a>为什么要进行视野管理？</h2><p>1.如果不进行视野管理，流量上来看，假设平均每秒5个移动包（80字节），1个技能包（160字节），单人每秒多少？500kb。</p>
-<p>2.客户端表现来看，客户端受屏幕大小影响，离得远的玩家看不见，没有必要发给客户端。客户端性能所限，玩家多，放各种 技能，当然会看。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/dotnet-2020-02-07-aoi/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1105,7 +1105,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

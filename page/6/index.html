@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">91</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">93</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -210,6 +210,170 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-net-sync-client-side-prediction-and-server-reconciliation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-02-net-sync-client-side-prediction-and-server-reconciliation/" class="post-title-link" itemprop="url">快节奏多人游戏同步(2)-客户端预测与服务器校对</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-02T08:00:00+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在第一篇文章中，我们介绍了一种权威服务器的C-S模型，在这种模型中，客户端只将输入发送到服务器中，当收到来自服务器的游戏状态更新的时候再将结果渲染出来。</p>
+<p>单纯地依赖这种模型会导致玩家输入命令和画面更新之间的延迟感，比如，当玩家按下向右的按钮，然后玩家等了半秒钟才开始移动，因为首先客户端需要把输入传给服务器，然后服务器处理了出入之后计算出新的游戏状态，然后再将新的游戏状态传回给客户端。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-net-sync-client-side-prediction-and-server-reconciliation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-net-sync-entity-interpolation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
+      <meta itemprop="name" content="zhepama">
+      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IGiven">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/dotnet-2020-02-02-net-sync-entity-interpolation/" class="post-title-link" itemprop="url">快节奏多人游戏同步(3)-Entity插值</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-02-02T08:00:00+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在本系列的「第一篇文章」中，我们介绍了关于权威服务器及其反作弊特性，然而仅仅是最简单的实现可能会导致关于可玩性和响应速度的问题。在「第二篇文章」中，我们提出了「客户端预测」的方案来克服这个困难。</p>
+<p>以上两篇文章事实上介绍的是一种在连接到有传输延迟的远程权威服务器的状况下，可以让玩家像单机游戏一样流畅的控制角色移动的一种概念和技术。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/dotnet-2020-02-02-net-sync-entity-interpolation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-02-02-net-sync-lag-compensation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +405,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -333,7 +497,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -416,7 +580,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -505,7 +669,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -592,7 +756,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -674,7 +838,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -757,7 +921,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -839,7 +1003,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
+                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -868,169 +1032,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/dotnet-2020-01-06-dll-load/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/dotnet-2020-01-05-big-little-endian/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/dotnet-2020-01-05-big-little-endian/" class="post-title-link" itemprop="url">大小端字节序(Big Endian和Little Endian)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-05 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-05T08:00:00+08:00">2020-01-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet/" itemprop="url" rel="index"><span itemprop="name">dotnet</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="那么何为字节序（Endia）呢？"><a href="#那么何为字节序（Endia）呢？" class="headerlink" title="那么何为字节序（Endia）呢？"></a>那么何为字节序（Endia）呢？</h1><p>Big Endian是指低地址存放最高有效字节（MSB），而Little Endian则是低地址存放最低有效字节（LSB）。</p>
-<p><strong>大端模式</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/dotnet-2020-01-05-big-little-endian/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.igiven.com/tool-2020-01-02-google-clound-local-login/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://secure.gravatar.com/avatar/0930091f05ac4d1044c02dbd3d619cfe?s=80&d=identicon&r=g">
-      <meta itemprop="name" content="zhepama">
-      <meta itemprop="description" content="一个不专业的程序员,写着专业的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IGiven">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/tool-2020-01-02-google-clound-local-login/" class="post-title-link" itemprop="url">使用 SSH 登陆谷歌云 root 或者 普通账户的方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-02 08:00:00" itemprop="dateCreated datePublished" datetime="2020-01-02T08:00:00+08:00">2020-01-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 19:50:27" itemprop="dateModified" datetime="2020-08-28T19:50:27+08:00">2020-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index"><span itemprop="name">tool</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用普通用户登陆"><a href="#使用普通用户登陆" class="headerlink" title="使用普通用户登陆"></a>使用普通用户登陆</h1><h3 id="生成私钥"><a href="#生成私钥" class="headerlink" title="生成私钥"></a>生成私钥</h3><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-01-02-google-clound-local-login/image-20200112043711450.png" alt="image-20200112043711450"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tool-2020-01-02-google-clound-local-login/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1121,7 +1122,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
