@@ -1,5 +1,5 @@
 ---
-title : "IdentityServer使用指南"
+stitle : "IdentityServer使用指南"
 ---
 
 DotHass.Lobby.Domain\IdentityServer\IdentityServerDataSeedContributor.cs 中 CreateClientsAsync()
@@ -144,3 +144,23 @@ appsettings.Development.json
 
 
 
+# 错误
+
+```
+System.InvalidOperationException: IDX20803: Unable to obtain configuration from: '[PII is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+ ---> System.IO.IOException: IDX20804: Unable to retrieve document from: '[PII is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+ ---> System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+ ---> System.Security.Authentication.AuthenticationException: The remote certificate is invalid according to the validation procedure.
+   at System.Net.Security.SslStream.StartSendAuthResetSignal(ProtocolToken message, AsyncProtocolRequest asyncRequest, ExceptionDispatchInfo exception)
+   at System.Net.Security.SslStream.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.StartSendBlob(Byte[] incoming, Int32 count, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.ProcessReceivedBlob(Byte[] buffer, Int32 count, AsyncProtocolRequest asyncRequest)
+```
+
+可以看出来这些问题是和SSL证书有关，经过排查，发现IdentityServer4配置中：使用了**IP:PORT**的形式配置的授权地址，但是SSL证书是以域名形式申请的，这就造成了SSL证书不能验证通过。
+
+解决方法：**将授权地址配置为域名:端口的形式**，完美解决上述问题。注意域名为SSL证书申请时用到的域名。
+
+
+
+localhost使用的是开发证书,也是类似域名,127.0.0.1也是有问题的

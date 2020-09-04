@@ -10,7 +10,7 @@ title:  "Unity的il2cpp"
 
 2. mono的gc和.net的gc是不同的,il2cpp运行时实现了自己的垃圾回收(Boehm-Demers-Weiser garbage collector)
 
-3. 编译和运行时两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理
+3. 编译和运行时是两个阶段,可以用csc.exe编译然后运行在mono上, .NET 4.x可以使用就是这个原理
 
    Note that the **.rsp** file needs to match the compiler being invoked. For example:
 
@@ -155,21 +155,115 @@ il2cpp.exe工具可以接收一个由IL程序集组成的列表。在上面这�
 
 
 
-# iOS IL2CPP打包注意事项
+#  IL2CPP 脚本限制
 
-鉴于IL2CPP的特殊性，实际在iOS的发布中可能会遇到一些问题，在这里给大家介绍几个iOS发布时可能会遇到的问题。
+## System.Reflection.Emit
 
-IL2CPP和mono的最大区别就是不能在运行时动态生成代码和类型，所以这就要求必须在编译时就完全确定需要用到的类型。
+AOT 平台无法实现 `System.Reflection.Emit` 命名空间中的任何方法。`System.Reflection` 的其余部分是可接受的，只要编译器可以推断通过反射使用的代码需要在运行时存在。
 
-## 注意事项
+## 序列化
 
-- il2cpp  没有使用的字段都不会被编译..
-- json反序列化的时候get,set不能被使用,il2cpp 在运行时会剥离去除Get属性，你需要在工程中添加一个 link.xml告诉编译器不要优化掉Get属性
+AOT 平台可能会由于使用了反射而遇到序列化和反序列化问题。如果仅通过反射将某个类型或方法作为序列化或反序列化的一部分使用，则 AOT 编译器无法检测到需要为该类型或方法生成代码。
+
+这是我们常遇到的问题..一个是scriptobject的asset,一个是网络协议都是序列化数据
+
+1. odin,最佳模式新建一个aot场景,将需要的scriptobject放在该场景.或者声明序列化字段
+
+```
+public class OdinAOTSetting : Sirenix.OdinInspector.SerializedMonoBehaviour
+{
+
+    public List<ScriptableObject> Configs;
+
+
+    [NonSerialized, OdinSerialize]
+    public UnityEngine.Color Color;
+
+    [NonSerialized, OdinSerialize]
+    public CityMapLandType CityMapLandType;
+
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, InventoryItemConfig> InventoryItemConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, LootTableConfig> LootTableConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, MerchantConfig> MerchantConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, LandConfig> LandConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, MapConfig> MapConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<long, NPCConfig> NPCConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<long, QuestConfig> QuestConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<string, RedeemCodeConfig> RedeemCodeConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, BuffConfig> BuffConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, ProjectileConfig> ProjectileConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<int, SkillConfig> SkillConfigs;
+    [NonSerialized, OdinSerialize]
+    Dictionary<string, AttrAsset> AttrAssets;
+    [NonSerialized, OdinSerialize]
+    Dictionary<string, StatAsset> StatAssets;
+    [NonSerialized, OdinSerialize]
+    Dictionary<string, StatusEffectAsset> StatusEffectAssets;
+}
+```
+
+2. 网络协议Json,使用字段,而不是使用属性(get,set),il2cpp 在运行时会剥离去除Get属性，
+
+3. 网络协议protobuf,虽然protobuf本身是支持Dictionary的,但是aot就不能使用了..未找到解决办法 ,用class代替
+
+   
+
+## 泛型
+
+每个泛型实例实际上都是一个独立的类型，`List<A>` 和 `List<B>`是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。
+
+在ILRuntime中解决这个问题有两种方式，一个是使用CLR绑定，把用到的泛型实例都进行CLR绑定。另外一个方式是在Unity主工程中，建立一个类，然后在里面定义用到的那些泛型实例的public变量。这两种方式都可以告诉IL2CPP保留这个类型的代码供运行中使用。
+
+因此建议大家在实际开发中，尽量使用热更DLL内部的类作为泛型参数，因为DLL内部的类型都是ILTypeInstance，只需处理一个就行了。此外如果泛型模版类就是在DLL里定义的的话，那就完全不需要进行任何处理。
+
+### 泛型方法
+
+跟泛型实例一样，`foo.Bar<TypeA>` 和`foo.Bar<TypeB>`是两个完全不同的方法，需要在主工程中显式调用过，IL2CPP才能够完整保留，因此需要尽量避免在热更DLL中调用Unity主工程的泛型方法。如果在iOS上实际运行遇到报错，可以尝试在Unity的主工程中随便写一个static的方法，然后对这个泛型方法调用一下即可，这个方法无需被调用，只是用来告诉IL2CPP我们需要这个方法
+
+
+
+
+
+## AnimatorController 等
+
+```
+错误信息#
+Could not produce class with ID #
+Could not produce class with ID XXX.
+This could be caused by a class being stripped from the build even though it is needed. Try disabling 'Strip Engine Code' in Player Settings.:<LoadWWWIEnumerator>c__Iterator99:MoveNext()
+```
+
+如果提示的ID的是Editor的，比如 AnimatorController(ID 91)属于Editor包里的，不能用link.xm加回来，可以在**Resource**下建一个空的prefab,在上面挂一个AnimatorController，打包时留下这个prefab就可以确保这个类不被strip掉了。
+
+**参考 :**
+
+- [Could not produce class with ID 91 - iOS - Unity Forum](https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/)
+- [YAML 类 ID 参考 - Unity 手册 (unity3d.com)](https://docs.unity3d.com/cn/2020.2/Manual/ClassIDReference.html)
+
+
+
+##  其他
+
 - 不要用dynamic关键字
-- 注意泛型实例和泛型方法,可能会被裁剪..这个时候建立一个函数.手动调用下即可.[参见](https://docs.unity3d.com/Manual/ScriptingRestrictions.html)
+- 没有使用的字段都不会被编译..
 
-类型裁剪
---------
+
+
+
+
+
+# 托管代码剥离
 IL2CPP在打包时会自动对Unity工程的DLL进行裁剪，将代码中没有引用到的类型裁剪掉，以达到减小发布后ipa包的尺寸的目的。然而在实际使用过程中，很多类型有可能会被意外剪裁掉，造成运行时抛出找不到某个类型的异常。特别是通过反射等方式在编译时无法得知的函数调用，在运行时都很有可能遇到问题。
 
 Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪裁掉的。具体做法就是在Unity工程的Assets目录中建立一个叫link.xml的XML文件，然后按照下面的格式指定你需要保留的类型：
@@ -183,28 +277,7 @@ Unity提供了一个方式来告诉Unity引擎，哪些类型是不能够被剪�
 </linker>
 ```
 
-1.  Could not produce class with ID 91 - iOS   https://forum.unity.com/threads/could-not-produce-class-with-id-91-ios.267548/  https://docs.unity3d.com/Manual/ClassIDReference.html?_ga=2.247344388.1426750911.1591144361-844881506.1584838305  https://www.cnblogs.com/zhaoqingqing/p/6080075.html
-2. odin  新建一个场景把一些scriptobject拖到场景中扫描一下
-3. protobuf   `**Unable to resolve MapDecorator constructor**.`  同时注意不要用属性{get;set;}..如果是Dictionary也会出这个问题..未找到解决办法 ,用class代替
 
-F:\GouYuJian\GYJClient\Library\com.unity.addressables\aa\Android\link.xml
-
-http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/
-
-4.  System.MissingMethodException: Default constructor not found for type ServerReconciliation...这个是没有被明显的引用添加到link.xml中ServerReconciliationhttps://docs.unity3d.com/Manual/ManagedCodeStripping.html
-
-泛型实例
----------
-
-每个泛型实例实际上都是一个独立的类型，`List<A>` 和 `List<B>`是两个完全没有关系的类型，这意味着，如果在运行时无法通过JIT来创建新类型的话，代码中没有直接使用过的泛型实例都会在运行时出现问题。
-
-在ILRuntime中解决这个问题有两种方式，一个是使用CLR绑定，把用到的泛型实例都进行CLR绑定。另外一个方式是在Unity主工程中，建立一个类，然后在里面定义用到的那些泛型实例的public变量。这两种方式都可以告诉IL2CPP保留这个类型的代码供运行中使用。
-
-因此建议大家在实际开发中，尽量使用热更DLL内部的类作为泛型参数，因为DLL内部的类型都是ILTypeInstance，只需处理一个就行了。此外如果泛型模版类就是在DLL里定义的的话，那就完全不需要进行任何处理。
-
-### 泛型方法
-
-跟泛型实例一样，`foo.Bar<TypeA>` 和`foo.Bar<TypeB>`是两个完全不同的方法，需要在主工程中显式调用过，IL2CPP才能够完整保留，因此需要尽量避免在热更DLL中调用Unity主工程的泛型方法。如果在iOS上实际运行遇到报错，可以尝试在Unity的主工程中随便写一个static的方法，然后对这个泛型方法调用一下即可，这个方法无需被调用，只是用来告诉IL2CPP我们需要这个方法
 
 ## IL2CPP限制
 
@@ -224,8 +297,6 @@ http://www.dishanphilips.com/protobuf-net-generics-on-unity3d-il2cpp/
 - https://docs.unity3d.com/Manual/IL2CPP-OptimizingBuildTimes.html
 - https://docs.unity3d.com/Manual/IL2CPP-BytecodeStripping.html
 - https://docs.unity3d.com/Manual/ScriptingRestrictions.html
-- http://ravenw.com/blog/2011/11/08/limitations-of-mono-with-full-aot/
-- https://docs.unity3d.com/Manual/PlatformDependentCompilation.html
 - https://www.jianshu.com/p/7cfcb7b0cfe7
 - https://blogs.unity3d.com/cn/2015/05/06/an-introduction-to-ilcpp-internals/
 
