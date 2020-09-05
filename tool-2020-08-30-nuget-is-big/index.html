@@ -27,10 +27,10 @@
 <meta property="og:site_name" content="IGiven">
 <meta property="og:description" content="如何发现的？查看C盘存储 打开所有设置-&gt;系统-&gt;存储-&gt;选择C盘 查看C盘使用情况，可以查看“其他”中情况 发现.nuget文件夹占用的空间很大，这是由于VS的默认nuget包路径：C:\Users{UserName}.nuget\packages">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/Untitled/7777310-8ce825574a3c0e8b.png">
-<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/Untitled/7777310-b854451afc8d311b.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-08-30-nuget-is-big/7777310-8ce825574a3c0e8b.png">
+<meta property="og:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-08-30-nuget-is-big/7777310-b854451afc8d311b.png">
 <meta property="article:published_time" content="2020-08-30T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-04T13:10:47.104Z">
+<meta property="article:modified_time" content="2020-09-05T11:59:22.378Z">
 <meta property="article:author" content="zhepama">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Win">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="JS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/Untitled/7777310-8ce825574a3c0e8b.png">
+<meta name="twitter:image" content="http://cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages/assets/images/2020-08-30-nuget-is-big/7777310-8ce825574a3c0e8b.png">
 
 <link rel="canonical" href="http://www.igiven.com/tool-2020-08-30-nuget-is-big/">
 
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">93</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">94</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-04 21:10:47" itemprop="dateModified" datetime="2020-09-04T21:10:47+08:00">2020-09-04</time>
+                <time title="修改时间：2020-09-05 19:59:22" itemprop="dateModified" datetime="2020-09-05T19:59:22+08:00">2020-09-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,17 +268,17 @@
 
       
         <h1 id="如何发现的？"><a href="#如何发现的？" class="headerlink" title="如何发现的？"></a>如何发现的？</h1><h4 id="查看C盘存储"><a href="#查看C盘存储" class="headerlink" title="查看C盘存储"></a>查看C盘存储</h4><ol>
-<li>打开所有设置-&gt;系统-&gt;存储-&gt;选择C盘<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-8ce825574a3c0e8b.png" alt="image.png"></li>
-<li>查看C盘使用情况，可以查看“其他”中情况<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/Untitled/7777310-b854451afc8d311b.png" alt="image.png"></li>
+<li>打开所有设置-&gt;系统-&gt;存储-&gt;选择C盘<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-nuget-is-big/7777310-8ce825574a3c0e8b.png" alt="image.png"></li>
+<li>查看C盘使用情况，可以查看“其他”中情况<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-08-30-nuget-is-big/7777310-b854451afc8d311b.png" alt="image.png"></li>
 <li>发现.nuget文件夹占用的空间很大，这是由于VS的默认nuget包路径：C:\Users{UserName}.nuget\packages</li>
 </ol>
 <h1 id="如何解决？"><a href="#如何解决？" class="headerlink" title="如何解决？"></a>如何解决？</h1><p>NuGet 的行为由一个或多个 NuGet.Config (XML) 文件（可存在于项目范围、用户范围和计算机范围的级别）中的累积设置驱动。</p>
 <ol>
 <li><p>在解决方案文件夹中，设置应用于子文件夹中的所有项目。 请注意，如果配置文件位于项目文件夹中，则对该项目没有任何影响</p>
 </li>
-<li><p>设置应用于所有操作，但可被任何项目级的设置替代。Windows：<code>%appdata%\NuGet\NuGet.Config</code><br>Mac/Linux：<code>~/.config/NuGet/NuGet.Config</code> 或 <code>~/.nuget/NuGet/NuGet.Config</code></p>
+<li><p>设置应用于所有操作，但可被任何项目级的设置替代。Windows：<code>%appdata%\NuGet\NuGet.Config</code><br> Mac/Linux：<code>~/.config/NuGet/NuGet.Config</code> 或 <code>~/.nuget/NuGet/NuGet.Config</code></p>
 </li>
-<li><p>设置虽然适用于计算机上的所有操作，但会被任何用户级或项目级设置覆盖。Windows：<code>%ProgramFiles(x86)%\NuGet\Config</code>Windows: <code>%ProgramFiles(x86)%\NuGet\Config</code><br>Mac/Linux：<code>$XDG_DATA_HOME</code>。 Mac/Linux: <code>$XDG_DATA_HOME</code>. 如果 <code>$XDG_DATA_HOME</code> 的值是 null 或为空，将使用 <code>~/.local/share</code> 或 <code>/usr/local/share</code>（因 OS 版本而异）</p>
+<li><p>设置虽然适用于计算机上的所有操作，但会被任何用户级或项目级设置覆盖。Windows：<code>%ProgramFiles(x86)%\NuGet\Config</code>Windows: <code>%ProgramFiles(x86)%\NuGet\Config</code><br> Mac/Linux：<code>$XDG_DATA_HOME</code>。 Mac/Linux: <code>$XDG_DATA_HOME</code>. 如果 <code>$XDG_DATA_HOME</code> 的值是 null 或为空，将使用 <code>~/.local/share</code> 或 <code>/usr/local/share</code>（因 OS 版本而异）</p>
 </li>
 </ol>
 <p>发现占用空间资源比较大的时用户级别的nuget包..我们只要把这个文件夹移动到其他驱动器就可以.</p>
@@ -320,8 +320,8 @@
       <i class="fa fa-chevron-left"></i> unity 项目dll检查
     </a></div>
       <div class="post-nav-item">
-    <a href="/unity-2020-09-05-unity-vSyncCount/" rel="next" title="UNITY的垂直同步和帧率">
-      UNITY的垂直同步和帧率 <i class="fa fa-chevron-right"></i>
+    <a href="/tool-2020-09-03-ps-ronghe-pics/" rel="next" title="如何用蒙版将两个图过渡融合">
+      如何用蒙版将两个图过渡融合 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -404,7 +404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">94</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
