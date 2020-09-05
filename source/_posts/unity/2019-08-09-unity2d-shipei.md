@@ -93,6 +93,19 @@ title:  "关于unity的适配问题"
 
 
 
+使用:
+
+```
+                    //0.3盖住半个单位的地形
+                    var pos = CameraUtils.WorldToCanvasPosition(this.mainCamera, new Vector3(boardRoot.position.x, boardRoot.position.y, boardRoot.position.z), rect);
+                    var perUnit = rect.sizeDelta.y / (2f * this.uiCamera.orthographicSize);
+                    (notification.Body as RectTransform).offsetMax = new Vector2(0, -(this.uiCamera.orthographicSize - pos.y) * perUnit);
+```
+
+
+
+
+
 # UGUI的适配
 
 锚点是解决ui控件在canvas里面位置的问题.而Canvas Scaler主要是设置canvas(ui控件)显示的大小(缩放)问题

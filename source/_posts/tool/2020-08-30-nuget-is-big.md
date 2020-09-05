@@ -7,9 +7,9 @@ title : "发现nuget包太占用C盘，怎么办？"
 #### 查看C盘存储
 
 1. 打开所有设置->系统->存储->选择C盘
-   ![image.png](../../assets/images/Untitled/7777310-8ce825574a3c0e8b.png)
+   ![image.png](../../assets/images/2020-08-30-nuget-is-big/7777310-8ce825574a3c0e8b.png)
 2. 查看C盘使用情况，可以查看“其他”中情况
-   ![image.png](../../assets/images/Untitled/7777310-b854451afc8d311b.png)
+   ![image.png](../../assets/images/2020-08-30-nuget-is-big/7777310-b854451afc8d311b.png)
 3. 发现.nuget文件夹占用的空间很大，这是由于VS的默认nuget包路径：C:\Users{UserName}.nuget\packages
 
 # 如何解决？
@@ -19,10 +19,10 @@ NuGet 的行为由一个或多个 NuGet.Config (XML) 文件（可存在于项目
 1. 在解决方案文件夹中，设置应用于子文件夹中的所有项目。 请注意，如果配置文件位于项目文件夹中，则对该项目没有任何影响
 
 2. 设置应用于所有操作，但可被任何项目级的设置替代。Windows：`%appdata%\NuGet\NuGet.Config`
-  Mac/Linux：`~/.config/NuGet/NuGet.Config` 或 `~/.nuget/NuGet/NuGet.Config`
+    Mac/Linux：`~/.config/NuGet/NuGet.Config` 或 `~/.nuget/NuGet/NuGet.Config`
 
 3. 设置虽然适用于计算机上的所有操作，但会被任何用户级或项目级设置覆盖。Windows：`%ProgramFiles(x86)%\NuGet\Config`Windows: `%ProgramFiles(x86)%\NuGet\Config`
-  Mac/Linux：`$XDG_DATA_HOME`。 Mac/Linux: `$XDG_DATA_HOME`. 如果 `$XDG_DATA_HOME` 的值是 null 或为空，将使用 `~/.local/share` 或 `/usr/local/share`（因 OS 版本而异）
+    Mac/Linux：`$XDG_DATA_HOME`。 Mac/Linux: `$XDG_DATA_HOME`. 如果 `$XDG_DATA_HOME` 的值是 null 或为空，将使用 `~/.local/share` 或 `/usr/local/share`（因 OS 版本而异）
 
   
 
