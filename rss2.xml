@@ -15,8 +15,40 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>一个不专业的程序员,写着专业的博客</description>
-    <pubDate>Sat, 05 Sep 2020 11:59:22 GMT</pubDate>
+    <pubDate>Wed, 09 Sep 2020 09:53:06 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>堆栈内存Stack和堆内存Heap</title>
+      <link>http://www.igiven.com/unity-2020-09-11-stack-heap/</link>
+      <guid>http://www.igiven.com/unity-2020-09-11-stack-heap/</guid>
+      <pubDate>Fri, 11 Sep 2020 00:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;堆与栈：有什么不同？&quot;&gt;&lt;a href=&quot;#堆与栈：有什么不同？&quot; class=&quot;headerlink&quot; title=&quot;堆与栈：有什么不同？&quot;&gt;&lt;/a&gt;堆与栈：有什么不同？&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;栈&lt;/strong&gt;，或多或少负责跟踪正在程序中运行的代码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;堆&lt;/strong&gt;，或多或少负责跟踪程序对象或数据。&lt;/p&gt;
+      
+      </description>
+      
+      
+      <comments>http://www.igiven.com/unity-2020-09-11-stack-heap/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>UNITY性能优化流程</title>
+      <link>http://www.igiven.com/unity-2020-09-10-optimizing-for-performance/</link>
+      <guid>http://www.igiven.com/unity-2020-09-10-optimizing-for-performance/</guid>
+      <pubDate>Thu, 10 Sep 2020 00:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;资源检查&quot;&gt;&lt;a href=&quot;#资源检查&quot; class=&quot;headerlink&quot; title=&quot;资源检查&quot;&gt;&lt;/a&gt;资源检查&lt;/h1&gt;&lt;p&gt;首先第一部分.我们要注意在平时工作中需要注意哪些地方养成一套流程规范.避免出现已经被总结出来的问题&lt;/p&gt;
+&lt;h2 id=&quot;代码&quot;&gt;&lt;a href=&quot;#代码&quot; class=&quot;headerlink&quot; title=&quot;代码&quot;&gt;&lt;/a&gt;代码&lt;/h2&gt;
+      
+      </description>
+      
+      
+      <comments>http://www.igiven.com/unity-2020-09-10-optimizing-for-performance/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>UNITY的垂直同步和帧率</title>
@@ -324,49 +356,6 @@
       
       
       <comments>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>unity Render Pipeline</title>
-      <link>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</link>
-      <guid>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</guid>
-      <pubDate>Sat, 04 Jul 2020 00:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Unity官方API中说的渲染管线(Render Pipeline)有三种&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Built-in Render Pipeline(URP):内置渲染管线，自定义选项有限&lt;/li&gt;
-&lt;li&gt;Universal Render Pipeline (URP)，可编程的轻量级(通用)渲染管线，前身是Lightweight Render Pipeline简称LWPR，在Unity2019.3版本中正式应用。&lt;/li&gt;
-&lt;li&gt;High Definition Render Pipeline (HDRP) 可编程的高保真的渲染管线，有硬件要求&lt;/li&gt;
-&lt;li&gt;sciprttable Render Pipeline (SRP) 名词，是一种实现可编程管线的一种方法(即通过C#代码，调用API来自己定义渲染顺序，相机工作方式顺序，光照特性等很多渲染相关的东西)，通过这种方法写出来的代码文件称之为SRP。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;相关链接&lt;/p&gt;
-      
-      </description>
-      
-      
-      <comments>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Mesh renderer 和 Mesh 和 Mesh Filter</title>
-      <link>http://www.igiven.com/unity-2020-07-03-unity-mesh/</link>
-      <guid>http://www.igiven.com/unity-2020-07-03-unity-mesh/</guid>
-      <pubDate>Fri, 03 Jul 2020 00:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Meshes&lt;/strong&gt; 是Unity的主要图形基元。 它们定义对象的形状。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Materials&lt;/strong&gt; 通过包含对所用纹理的引用、平铺信息、颜色色调等来定义表面应使用的渲染方式。材质的可用选项取决于材质使用的着色器。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Shaders&lt;/strong&gt; 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Textures&lt;/strong&gt; 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表面颜色时使用纹理。除了游戏对象表面的基本颜色（反照率）之外，纹理还可表示材质表面的许多其他方面，例如其反射率或粗糙度。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;Texture&quot;&gt;&lt;a href=&quot;#Texture&quot; class=&quot;headerlink&quot; title=&quot;Texture&quot;&gt;&lt;/a&gt;Texture&lt;/h2&gt;
-      
-      </description>
-      
-      
-      <comments>http://www.igiven.com/unity-2020-07-03-unity-mesh/#disqus_thread</comments>
     </item>
     
   </channel>

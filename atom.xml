@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.igiven.com/"/>
-  <updated>2020-09-05T11:59:22.382Z</updated>
+  <updated>2020-09-09T09:53:06.757Z</updated>
   <id>http://www.igiven.com/</id>
   
   <author>
@@ -17,11 +17,69 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>堆栈内存Stack和堆内存Heap</title>
+    <link href="http://www.igiven.com/unity-2020-09-11-stack-heap/"/>
+    <id>http://www.igiven.com/unity-2020-09-11-stack-heap/</id>
+    <published>2020-09-11T00:00:00.000Z</published>
+    <updated>2020-09-09T09:53:06.757Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;堆与栈：有什么不同？&quot;&gt;&lt;a href=&quot;#堆与栈：有什么不同？&quot; class=&quot;headerlink&quot; title=&quot;堆与栈：有什么不同？&quot;&gt;&lt;/a&gt;堆与栈：有什么不同？&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;栈&lt;/strong&gt;，或多或少负责跟踪正在程序中运行的代码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;堆&lt;/strong&gt;，或多或少负责跟踪程序对象或数据。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
+    
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UNITY性能优化流程</title>
+    <link href="http://www.igiven.com/unity-2020-09-10-optimizing-for-performance/"/>
+    <id>http://www.igiven.com/unity-2020-09-10-optimizing-for-performance/</id>
+    <published>2020-09-10T00:00:00.000Z</published>
+    <updated>2020-09-09T09:53:06.757Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;资源检查&quot;&gt;&lt;a href=&quot;#资源检查&quot; class=&quot;headerlink&quot; title=&quot;资源检查&quot;&gt;&lt;/a&gt;资源检查&lt;/h1&gt;&lt;p&gt;首先第一部分.我们要注意在平时工作中需要注意哪些地方养成一套流程规范.避免出现已经被总结出来的问题&lt;/p&gt;
+&lt;h2 id=&quot;代码&quot;&gt;&lt;a href=&quot;#代码&quot; class=&quot;headerlink&quot; title=&quot;代码&quot;&gt;&lt;/a&gt;代码&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
+    
+    
+      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
+    
+      <category term="游戏" scheme="http://www.igiven.com/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
+    
+      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
+    
+      <category term="ugui" scheme="http://www.igiven.com/tags/ugui/"/>
+    
+      <category term="mesh" scheme="http://www.igiven.com/tags/mesh/"/>
+    
+  </entry>
+  
+  <entry>
     <title>UNITY的垂直同步和帧率</title>
     <link href="http://www.igiven.com/unity-2020-09-05-unity-vSyncCount/"/>
     <id>http://www.igiven.com/unity-2020-09-05-unity-vSyncCount/</id>
     <published>2020-09-05T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.382Z</updated>
+    <updated>2020-09-09T09:53:06.757Z</updated>
     
     <summary type="html">
     
@@ -53,7 +111,7 @@
     <link href="http://www.igiven.com/tool-2020-09-03-ps-ronghe-pics/"/>
     <id>http://www.igiven.com/tool-2020-09-03-ps-ronghe-pics/</id>
     <published>2020-09-03T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -76,7 +134,7 @@
     <link href="http://www.igiven.com/tool-2020-08-30-nuget-is-big/"/>
     <id>http://www.igiven.com/tool-2020-08-30-nuget-is-big/</id>
     <published>2020-08-30T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -109,7 +167,7 @@
     <link href="http://www.igiven.com/unity-2020-08-30-unity-dll-check/"/>
     <id>http://www.igiven.com/unity-2020-08-30-unity-dll-check/</id>
     <published>2020-08-30T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.382Z</updated>
+    <updated>2020-09-09T09:53:06.757Z</updated>
     
     <summary type="html">
     
@@ -144,7 +202,7 @@
     <link href="http://www.igiven.com/unity-2020-08-29-Notch-Solution/"/>
     <id>http://www.igiven.com/unity-2020-08-29-Notch-Solution/</id>
     <published>2020-08-29T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.382Z</updated>
+    <updated>2020-09-09T09:53:06.757Z</updated>
     
     <summary type="html">
     
@@ -177,7 +235,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-17-netcore-options/"/>
     <id>http://www.igiven.com/dotnet-2020-08-17-netcore-options/</id>
     <published>2020-08-17T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -203,7 +261,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/"/>
     <id>http://www.igiven.com/dotnet-2020-08-16-ConcurrentDictionary/</id>
     <published>2020-08-16T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -226,7 +284,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/"/>
     <id>http://www.igiven.com/dotnet-2020-08-15-Kestrel-source-code/</id>
     <published>2020-08-15T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -254,7 +312,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/"/>
     <id>http://www.igiven.com/dotnet-2020-08-11-httpcontextaccessor-asynclocal/</id>
     <published>2020-08-11T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -283,7 +341,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-10-param-attribute/"/>
     <id>http://www.igiven.com/dotnet-2020-08-10-param-attribute/</id>
     <published>2020-08-10T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -313,7 +371,7 @@
     <link href="http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/"/>
     <id>http://www.igiven.com/dotnet-2020-08-09-Orleans-Best-Practices/</id>
     <published>2020-08-09T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -339,7 +397,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-15-abp-default-language/"/>
     <id>http://www.igiven.com/dotnet-2020-07-15-abp-default-language/</id>
     <published>2020-07-15T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -369,7 +427,7 @@
     <link href="http://www.igiven.com/tool-2020-07-13-terminal-proxy/"/>
     <id>http://www.igiven.com/tool-2020-07-13-terminal-proxy/</id>
     <published>2020-07-13T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -404,7 +462,7 @@
     <link href="http://www.igiven.com/tool-2020-07-12-hexo-github/"/>
     <id>http://www.igiven.com/tool-2020-07-12-hexo-github/</id>
     <published>2020-07-12T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -433,7 +491,7 @@
     <link href="http://www.igiven.com/tool-2020-07-11-github-actions/"/>
     <id>http://www.igiven.com/tool-2020-07-11-github-actions/</id>
     <published>2020-07-11T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -469,7 +527,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-10-abp-doc/"/>
     <id>http://www.igiven.com/dotnet-2020-07-10-abp-doc/</id>
     <published>2020-07-10T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -501,7 +559,7 @@
     <link href="http://www.igiven.com/tool-2020-07-06-gitbook-use/"/>
     <id>http://www.igiven.com/tool-2020-07-06-gitbook-use/</id>
     <published>2020-07-06T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.378Z</updated>
+    <updated>2020-09-09T09:53:06.753Z</updated>
     
     <summary type="html">
     
@@ -529,7 +587,7 @@
     <link href="http://www.igiven.com/dotnet-2020-07-05-abp-database-user/"/>
     <id>http://www.igiven.com/dotnet-2020-07-05-abp-database-user/</id>
     <published>2020-07-05T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.374Z</updated>
+    <updated>2020-09-09T09:53:06.749Z</updated>
     
     <summary type="html">
     
@@ -551,79 +609,6 @@
       <category term="同步" scheme="http://www.igiven.com/tags/%E5%90%8C%E6%AD%A5/"/>
     
       <category term="abp" scheme="http://www.igiven.com/tags/abp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>unity Render Pipeline</title>
-    <link href="http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/"/>
-    <id>http://www.igiven.com/unity-2020-07-04-unity-render-pipeline/</id>
-    <published>2020-07-04T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.382Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Unity官方API中说的渲染管线(Render Pipeline)有三种&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Built-in Render Pipeline(URP):内置渲染管线，自定义选项有限&lt;/li&gt;
-&lt;li&gt;Universal Render Pipeline (URP)，可编程的轻量级(通用)渲染管线，前身是Lightweight Render Pipeline简称LWPR，在Unity2019.3版本中正式应用。&lt;/li&gt;
-&lt;li&gt;High Definition Render Pipeline (HDRP) 可编程的高保真的渲染管线，有硬件要求&lt;/li&gt;
-&lt;li&gt;sciprttable Render Pipeline (SRP) 名词，是一种实现可编程管线的一种方法(即通过C#代码，调用API来自己定义渲染顺序，相机工作方式顺序，光照特性等很多渲染相关的东西)，通过这种方法写出来的代码文件称之为SRP。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;相关链接&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="C#" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
-    
-      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mesh renderer 和 Mesh 和 Mesh Filter</title>
-    <link href="http://www.igiven.com/unity-2020-07-03-unity-mesh/"/>
-    <id>http://www.igiven.com/unity-2020-07-03-unity-mesh/</id>
-    <published>2020-07-03T00:00:00.000Z</published>
-    <updated>2020-09-05T11:59:22.382Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Meshes&lt;/strong&gt; 是Unity的主要图形基元。 它们定义对象的形状。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Materials&lt;/strong&gt; 通过包含对所用纹理的引用、平铺信息、颜色色调等来定义表面应使用的渲染方式。材质的可用选项取决于材质使用的着色器。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Shaders&lt;/strong&gt; 是一些包含数学计算和算法的小脚本，根据光照输入和材质配置来计算每个像素渲染的颜色。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Textures&lt;/strong&gt; 是位图图像。材质可包含对纹理的引用，因此材质的着色器可在计算游戏对象的表面颜色时使用纹理。除了游戏对象表面的基本颜色（反照率）之外，纹理还可表示材质表面的许多其他方面，例如其反射率或粗糙度。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;Texture&quot;&gt;&lt;a href=&quot;#Texture&quot; class=&quot;headerlink&quot; title=&quot;Texture&quot;&gt;&lt;/a&gt;Texture&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="unity" scheme="http://www.igiven.com/categories/unity/"/>
-    
-    
-      <category term="C" scheme="http://www.igiven.com/tags/C/"/>
-    
-      <category term="游戏" scheme="http://www.igiven.com/tags/%E6%B8%B8%E6%88%8F/"/>
-    
-      <category term="GitHub" scheme="http://www.igiven.com/tags/GitHub/"/>
-    
-      <category term="Unity" scheme="http://www.igiven.com/tags/Unity/"/>
-    
-      <category term="UNITY" scheme="http://www.igiven.com/tags/UNITY/"/>
-    
-      <category term="游戏开发" scheme="http://www.igiven.com/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="mesh" scheme="http://www.igiven.com/tags/mesh/"/>
     
   </entry>
   

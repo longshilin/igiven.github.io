@@ -1046,40 +1046,6 @@
       </tags>
   </entry>
   <entry>
-    <title>orleans的部署模式</title>
-    <url>/dotnet-2020-02-03-orleans-Deployment/</url>
-    <content><![CDATA[<h1 id="蓝绿部署（Blue-Green-Deployment）"><a href="#蓝绿部署（Blue-Green-Deployment）" class="headerlink" title="蓝绿部署（Blue/Green Deployment）"></a>蓝绿部署（Blue/Green Deployment）</h1><p>过去的 10 年里，很多公司都在使用蓝绿部署（发布）来实现热部署，这种部署方式具有安全、可靠的特点。蓝绿部署虽然算不上“ Sliver Bullet”，但确实很实用。<br>蓝绿部署是最常见的一种0 downtime部署的方式，是一种以可预测的方式发布应用的技术，目的是减少发布过程中服务停止的时间。蓝绿部署原理上很简单，就是通过冗余来解决问题。通常生产环境需要两组配置（蓝绿配置），一组是active的生产环境的配置（绿配置），一组是inactive的配置（蓝绿配置）。用户访问的时候，只会让用户访问active的服务器集群。在绿色环境（active）运行当前生产环境中的应用，也就是旧版本应用version1。当你想要升级到version2 ，在蓝色环境（inactive）中进行操作，即部署新版本应用，并进行测试。如果测试没问题，就可以把负载均衡器／反向代理／路由指向蓝色环境了。随后需要监测新版本应用，也就是version2 是否有故障和异常。如果运行良好，就可以删除version1 使用的资源。如果运行出现了问题，可以通过负载均衡器指向快速回滚到绿色环境。<br>蓝绿部署的优点：<br>这种方式的好处在你可以始终很放心的去部署inactive环境，如果出错并不影响生产环境的服务，如果切换后出现问题，也可以在非常短的时间内把再做一次切换，就完成了回滚。而且同时在线的只有一个版本。蓝绿部署无需停机，并且风险较小。<br>(1) 部署版本1的应用（一开始的状态），所有外部请求的流量都打到这个版本上。<br>(2) 部署版本2的应用，版本2的代码与版本1不同(新功能、Bug修复等)。<br>(3) 将流量从版本1切换到版本2。<br>(4) 如版本2测试正常，就删除版本1正在使用的资源（例如实例），从此正式用版本2。<br>从过程不难发现，在部署的过程中，应用始终在线。并且，新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响。这样风险很小，并且，只要老版本的资源不被删除，理论上，可以在任何时间回滚到老版本。<br>蓝绿部署的弱点：<br>使用蓝绿部署需要注意的一些细节包括：<br>1、当切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果数据库后端无法处理，会是一个比较麻烦的问题。<br>2、有可能会出现需要同时处理“微服务架构应用”和“传统架构应用”的情况，如果在蓝绿部署中协调不好这两者，还是有可能导致服务停止；<br>3、需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>4、蓝绿部署需要有基础设施支持。<br>5、在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6、另外，这种方式不好的地方还在于冗余产生的额外维护、配置的成本，以及服务器本身运行的开销。<br>蓝绿部署适用的场景：<br>1、不停止老版本，额外搞一套新版本，等测试发现新版本OK后，删除老版本。<br>2、蓝绿发布是一种用于升级与更新的发布策略，部署的最小维度是容器，而发布的最小维度是应用。<br>3、蓝绿发布对于增量升级有比较好的支持，但是对于涉及数据表结构变更等等不可逆转的升级，并不完全合适用蓝绿发布来实现，需要结合一些业务的逻辑以及数据迁移与回滚的策略才可以完全满足需求。</p>
-<h1 id="滚动发布（rolling-update）"><a href="#滚动发布（rolling-update）" class="headerlink" title="滚动发布（rolling update）"></a>滚动发布（rolling update）</h1><p>滚动发布，一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的20%进行升级。<br>这种方式也有很多缺点，例如：<br>(1) 没有一个确定OK的环境。使用蓝绿部署，我们能够清晰地知道老版本是OK的，而使用滚动发布，我们无法确定。<br>(2) 修改了现有的环境。<br>(3) 如果需要回滚，很困难。举个例子，在某一次发布中，我们需要更新100个实例，每次更新10个实例，每次部署需要5分钟。当滚动发布到第80个实例时，发现了问题，需要回滚。此时，脾气不好的程序猿很可能想掀桌子，因为回滚是一个痛苦，并且漫长的过程。<br>(4) 有的时候，我们还可能对系统进行动态伸缩，如果部署期间，系统自动扩容/缩容了，我们还需判断到底哪个节点使用的是哪个代码。尽管有一些自动化的运维工具，但是依然令人心惊胆战。<br>并不是说滚动发布不好，滚动发布也有它非常合适的场景。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-03-orleans-Deployment/20190516171224267.png" alt="img"></p>
-<h1 id="orleans支持-蓝绿部署模型以及滚动部署模型"><a href="#orleans支持-蓝绿部署模型以及滚动部署模型" class="headerlink" title="orleans支持 蓝绿部署模型以及滚动部署模型"></a>orleans支持 <em>蓝绿部署模型<em>以及</em>滚动部署模型</em></h1><ul>
-<li><p>ClusterId：这是Orleans集群的唯一ID。使用此ID的所有客户端和Silo将能够直接相互通信。但是，您可以选择ClusterId对不同的部署使用不同的名称。</p>
-</li>
-<li><p>ServiceId：这是您的应用程序的唯一ID，将由某些提供程序（例如持久性提供程序）使用。此ID应该保持稳定，并且在整个部署中都不应更改。</p>
-</li>
-</ul>
-<p>Orleans has both <code>ClusterId</code> &amp; <code>ServiceId</code> to support the <em>blue/green deployment model</em>.</p>
-<p>In this model, each deployment slot will have a distinct <code>ClusterId</code> (eg, the values could be “blue-slot” &amp; “green-slot”) but they will always have the same <code>ServiceId</code> (eg, “my-service”). The “blue-slot” silos will only talk to other “blue-slot” silos.</p>
-<p><em>However</em> <strong>Grain A</strong> in the blue cluster and <strong>Grain A</strong> in the green cluster will still share the same storage - if they are both active then one will see a conflict when writing to the state if the other activation has already written it.</p>
-<p>This allows for the state in the database to remain consistent when multiple clusters are active (which is usually a short period of time - during the upgrade).</p>
-<p>If you do not use blue/green deployments then you can set <code>ClusterId</code> &amp; <code>ServiceId</code> to the same value.</p>
-<p>To say this in a different way:</p>
-<ul>
-<li><code>ClusterId</code> + <code>ServiceId</code> are used for cluster membership</li>
-<li><code>ServiceId</code> is used for storage</li>
-</ul>
-<p><a href="https://github.com/dotnet/orleans/issues/5696#issuecomment-503595998" target="_blank" rel="noopener">https://github.com/dotnet/orleans/issues/5696#issuecomment-503595998</a></p>
-]]></content>
-      <categories>
-        <category>dotnet</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>GitHub</tag>
-        <tag>同步</tag>
-        <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一致性hash算法</title>
     <url>/dotnet-2020-02-06-Consistent-Hash/</url>
     <content><![CDATA[<h1 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h1><p><code>负载均衡</code>和<code>分布式场景</code></p>
@@ -1701,6 +1667,40 @@
       </tags>
   </entry>
   <entry>
+    <title>orleans的部署模式</title>
+    <url>/dotnet-2020-02-03-orleans-Deployment/</url>
+    <content><![CDATA[<h1 id="蓝绿部署（Blue-Green-Deployment）"><a href="#蓝绿部署（Blue-Green-Deployment）" class="headerlink" title="蓝绿部署（Blue/Green Deployment）"></a>蓝绿部署（Blue/Green Deployment）</h1><p>过去的 10 年里，很多公司都在使用蓝绿部署（发布）来实现热部署，这种部署方式具有安全、可靠的特点。蓝绿部署虽然算不上“ Sliver Bullet”，但确实很实用。<br>蓝绿部署是最常见的一种0 downtime部署的方式，是一种以可预测的方式发布应用的技术，目的是减少发布过程中服务停止的时间。蓝绿部署原理上很简单，就是通过冗余来解决问题。通常生产环境需要两组配置（蓝绿配置），一组是active的生产环境的配置（绿配置），一组是inactive的配置（蓝绿配置）。用户访问的时候，只会让用户访问active的服务器集群。在绿色环境（active）运行当前生产环境中的应用，也就是旧版本应用version1。当你想要升级到version2 ，在蓝色环境（inactive）中进行操作，即部署新版本应用，并进行测试。如果测试没问题，就可以把负载均衡器／反向代理／路由指向蓝色环境了。随后需要监测新版本应用，也就是version2 是否有故障和异常。如果运行良好，就可以删除version1 使用的资源。如果运行出现了问题，可以通过负载均衡器指向快速回滚到绿色环境。<br>蓝绿部署的优点：<br>这种方式的好处在你可以始终很放心的去部署inactive环境，如果出错并不影响生产环境的服务，如果切换后出现问题，也可以在非常短的时间内把再做一次切换，就完成了回滚。而且同时在线的只有一个版本。蓝绿部署无需停机，并且风险较小。<br>(1) 部署版本1的应用（一开始的状态），所有外部请求的流量都打到这个版本上。<br>(2) 部署版本2的应用，版本2的代码与版本1不同(新功能、Bug修复等)。<br>(3) 将流量从版本1切换到版本2。<br>(4) 如版本2测试正常，就删除版本1正在使用的资源（例如实例），从此正式用版本2。<br>从过程不难发现，在部署的过程中，应用始终在线。并且，新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响。这样风险很小，并且，只要老版本的资源不被删除，理论上，可以在任何时间回滚到老版本。<br>蓝绿部署的弱点：<br>使用蓝绿部署需要注意的一些细节包括：<br>1、当切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果数据库后端无法处理，会是一个比较麻烦的问题。<br>2、有可能会出现需要同时处理“微服务架构应用”和“传统架构应用”的情况，如果在蓝绿部署中协调不好这两者，还是有可能导致服务停止；<br>3、需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>4、蓝绿部署需要有基础设施支持。<br>5、在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6、另外，这种方式不好的地方还在于冗余产生的额外维护、配置的成本，以及服务器本身运行的开销。<br>蓝绿部署适用的场景：<br>1、不停止老版本，额外搞一套新版本，等测试发现新版本OK后，删除老版本。<br>2、蓝绿发布是一种用于升级与更新的发布策略，部署的最小维度是容器，而发布的最小维度是应用。<br>3、蓝绿发布对于增量升级有比较好的支持，但是对于涉及数据表结构变更等等不可逆转的升级，并不完全合适用蓝绿发布来实现，需要结合一些业务的逻辑以及数据迁移与回滚的策略才可以完全满足需求。</p>
+<h1 id="滚动发布（rolling-update）"><a href="#滚动发布（rolling-update）" class="headerlink" title="滚动发布（rolling update）"></a>滚动发布（rolling update）</h1><p>滚动发布，一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的20%进行升级。<br>这种方式也有很多缺点，例如：<br>(1) 没有一个确定OK的环境。使用蓝绿部署，我们能够清晰地知道老版本是OK的，而使用滚动发布，我们无法确定。<br>(2) 修改了现有的环境。<br>(3) 如果需要回滚，很困难。举个例子，在某一次发布中，我们需要更新100个实例，每次更新10个实例，每次部署需要5分钟。当滚动发布到第80个实例时，发现了问题，需要回滚。此时，脾气不好的程序猿很可能想掀桌子，因为回滚是一个痛苦，并且漫长的过程。<br>(4) 有的时候，我们还可能对系统进行动态伸缩，如果部署期间，系统自动扩容/缩容了，我们还需判断到底哪个节点使用的是哪个代码。尽管有一些自动化的运维工具，但是依然令人心惊胆战。<br>并不是说滚动发布不好，滚动发布也有它非常合适的场景。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-02-03-orleans-Deployment/20190516171224267.png" alt="img"></p>
+<h1 id="orleans支持-蓝绿部署模型以及滚动部署模型"><a href="#orleans支持-蓝绿部署模型以及滚动部署模型" class="headerlink" title="orleans支持 蓝绿部署模型以及滚动部署模型"></a>orleans支持 <em>蓝绿部署模型<em>以及</em>滚动部署模型</em></h1><ul>
+<li><p>ClusterId：这是Orleans集群的唯一ID。使用此ID的所有客户端和Silo将能够直接相互通信。但是，您可以选择ClusterId对不同的部署使用不同的名称。</p>
+</li>
+<li><p>ServiceId：这是您的应用程序的唯一ID，将由某些提供程序（例如持久性提供程序）使用。此ID应该保持稳定，并且在整个部署中都不应更改。</p>
+</li>
+</ul>
+<p>Orleans has both <code>ClusterId</code> &amp; <code>ServiceId</code> to support the <em>blue/green deployment model</em>.</p>
+<p>In this model, each deployment slot will have a distinct <code>ClusterId</code> (eg, the values could be “blue-slot” &amp; “green-slot”) but they will always have the same <code>ServiceId</code> (eg, “my-service”). The “blue-slot” silos will only talk to other “blue-slot” silos.</p>
+<p><em>However</em> <strong>Grain A</strong> in the blue cluster and <strong>Grain A</strong> in the green cluster will still share the same storage - if they are both active then one will see a conflict when writing to the state if the other activation has already written it.</p>
+<p>This allows for the state in the database to remain consistent when multiple clusters are active (which is usually a short period of time - during the upgrade).</p>
+<p>If you do not use blue/green deployments then you can set <code>ClusterId</code> &amp; <code>ServiceId</code> to the same value.</p>
+<p>To say this in a different way:</p>
+<ul>
+<li><code>ClusterId</code> + <code>ServiceId</code> are used for cluster membership</li>
+<li><code>ServiceId</code> is used for storage</li>
+</ul>
+<p><a href="https://github.com/dotnet/orleans/issues/5696#issuecomment-503595998" target="_blank" rel="noopener">https://github.com/dotnet/orleans/issues/5696#issuecomment-503595998</a></p>
+]]></content>
+      <categories>
+        <category>dotnet</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>GitHub</tag>
+        <tag>同步</tag>
+        <tag>代理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>abp新建项目指南</title>
     <url>/dotnet-2020-05-29-abp-start/</url>
     <content><![CDATA[<h1 id="替换数据库为mysql"><a href="#替换数据库为mysql" class="headerlink" title="替换数据库为mysql"></a>替换数据库为mysql</h1><ol>
@@ -1791,6 +1791,52 @@
       </tags>
   </entry>
   <entry>
+    <title>abp的dOC模块使用</title>
+    <url>/dotnet-2020-07-10-abp-doc/</url>
+    <content><![CDATA[<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200716181126415.png" alt="image-20200716181126415"></p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>abp 使用拉的方式从github直接请求,然后存储到数据库作为缓存</p>
+<p>注意开发环境下,他会从github直接拉取而不会经过数据库缓存,所以会很慢</p>
+<h1 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h1><p>当你写完书的时候.打个tag,然后把tag的版本号填入上方的..最新版本的分支名称即可</p>
+<h1 id="关于多语言"><a href="#关于多语言" class="headerlink" title="关于多语言"></a>关于多语言</h1><p>注意多语言abp使用了缓存..所以如果你更改了docs-langs.json,需要重启服务器,或者清空缓存</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Languages&quot;:[</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;DisplayName&quot; : &quot;English&quot;,</span><br><span class="line">        &quot;Code&quot; : &quot;en&quot;,</span><br><span class="line">        &quot;IsDefault&quot;: false</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;DisplayName&quot; : &quot;简体中文&quot;,</span><br><span class="line">        &quot;Code&quot; : &quot;zh&quot;,</span><br><span class="line">        &quot;IsDefault&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="关于参数-doc-params"><a href="#关于参数-doc-params" class="headerlink" title="关于参数[doc-params]"></a>关于参数[doc-params]</h1><p>abp使用了scriban文本模板语言引擎.</p>
+<p><a href="https://github.com/lunet-io/scriban" target="_blank" rel="noopener">https://github.com/lunet-io/scriban</a></p>
+<p>具体的示例参见:</p>
+<ul>
+<li><a href="https://docs.abp.io/zh-Hans/abp/latest/Getting-Started?UI=MVC&amp;DB=EF&amp;Tiered=No" target="_blank" rel="noopener">https://docs.abp.io/zh-Hans/abp/latest/Getting-Started?UI=MVC&amp;DB=EF&amp;Tiered=No</a></li>
+<li><a href="https://github.com/abpframework/abp/blob/master/docs/zh-Hans/Getting-Started.md" target="_blank" rel="noopener">https://github.com/abpframework/abp/blob/master/docs/zh-Hans/Getting-Started.md</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;parameters&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;UI&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;UI&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;MVC&quot;: &quot;MVC &#x2F; Razor Pages&quot;,</span><br><span class="line">        &quot;NG&quot;: &quot;Angular&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;DB&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;Database&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;EF&quot;: &quot;Entity Framework Core&quot;,</span><br><span class="line">        &quot;Mongo&quot;: &quot;MongoDB&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Tiered&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;Tiered&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;No&quot;: &quot;Not Tiered&quot;,</span><br><span class="line">        &quot;Yes&quot;: &quot;Tiered&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>markdow中使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;[doc-params]</span><br><span class="line">&#123;</span><br><span class="line">    &quot;UI&quot;: [&quot;MVC&quot;,&quot;NG&quot;],</span><br><span class="line">    &quot;DB&quot;: [&quot;EF&quot;, &quot;Mongo&quot;],</span><br><span class="line">    &quot;Tiered&quot;: [&quot;Yes&quot;, &quot;No&quot;]</span><br><span class="line">&#125;</span><br><span class="line">本教程介绍了如何创建一个新的&#123;&#123;if UI &#x3D;&#x3D; &quot;MVC&quot;&#125;&#125; ASP.NET Core MVC web &#123;&#123;else if UI &#x3D;&#x3D; &quot;NG&quot;&#125;&#125; Angular &#123;&#123;end&#125;&#125;. 配置并运行它.</span><br></pre></td></tr></table></figure>
+
+<p>生成的html</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200718164036943.png" alt="image-20200718164036943"></p>
+<p>当切换ui的值后的显示,我们看到字符发生了改变</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200718164137023.png" alt="image-20200718164137023"></p>
+<h1 id="关于-doc-template"><a href="#关于-doc-template" class="headerlink" title="关于[doc-template]"></a>关于[doc-template]</h1><p>还没看到如何用</p>
+<h1 id="404"><a href="#404" class="headerlink" title="404"></a>404</h1><p>因为访问github如果超时就会出现404.</p>
+<p>所以建议控制台设置代理然后运行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$env:http_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">$env:https_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">dotnet run .\IG.Www.Web.csproj</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>dotnet</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>GitHub</tag>
+        <tag>代理</tag>
+        <tag>JS</tag>
+        <tag>abp</tag>
+        <tag>proxy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于abp的用户的一些问题</title>
     <url>/dotnet-2020-07-05-abp-database-user/</url>
     <content><![CDATA[<h1 id="数据迁移上下文"><a href="#数据迁移上下文" class="headerlink" title="数据迁移上下文"></a>数据迁移上下文</h1><p>abp的dbcontext是分成两种的,一个是程序运行的dbcontext,一个是数据迁移的dbcontext</p>
@@ -1859,52 +1905,6 @@
         <tag>sync</tag>
         <tag>同步</tag>
         <tag>abp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>abp的dOC模块使用</title>
-    <url>/dotnet-2020-07-10-abp-doc/</url>
-    <content><![CDATA[<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200716181126415.png" alt="image-20200716181126415"></p>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>abp 使用拉的方式从github直接请求,然后存储到数据库作为缓存</p>
-<p>注意开发环境下,他会从github直接拉取而不会经过数据库缓存,所以会很慢</p>
-<h1 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h1><p>当你写完书的时候.打个tag,然后把tag的版本号填入上方的..最新版本的分支名称即可</p>
-<h1 id="关于多语言"><a href="#关于多语言" class="headerlink" title="关于多语言"></a>关于多语言</h1><p>注意多语言abp使用了缓存..所以如果你更改了docs-langs.json,需要重启服务器,或者清空缓存</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Languages&quot;:[</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;DisplayName&quot; : &quot;English&quot;,</span><br><span class="line">        &quot;Code&quot; : &quot;en&quot;,</span><br><span class="line">        &quot;IsDefault&quot;: false</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;DisplayName&quot; : &quot;简体中文&quot;,</span><br><span class="line">        &quot;Code&quot; : &quot;zh&quot;,</span><br><span class="line">        &quot;IsDefault&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="关于参数-doc-params"><a href="#关于参数-doc-params" class="headerlink" title="关于参数[doc-params]"></a>关于参数[doc-params]</h1><p>abp使用了scriban文本模板语言引擎.</p>
-<p><a href="https://github.com/lunet-io/scriban" target="_blank" rel="noopener">https://github.com/lunet-io/scriban</a></p>
-<p>具体的示例参见:</p>
-<ul>
-<li><a href="https://docs.abp.io/zh-Hans/abp/latest/Getting-Started?UI=MVC&amp;DB=EF&amp;Tiered=No" target="_blank" rel="noopener">https://docs.abp.io/zh-Hans/abp/latest/Getting-Started?UI=MVC&amp;DB=EF&amp;Tiered=No</a></li>
-<li><a href="https://github.com/abpframework/abp/blob/master/docs/zh-Hans/Getting-Started.md" target="_blank" rel="noopener">https://github.com/abpframework/abp/blob/master/docs/zh-Hans/Getting-Started.md</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;parameters&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;UI&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;UI&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;MVC&quot;: &quot;MVC &#x2F; Razor Pages&quot;,</span><br><span class="line">        &quot;NG&quot;: &quot;Angular&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;DB&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;Database&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;EF&quot;: &quot;Entity Framework Core&quot;,</span><br><span class="line">        &quot;Mongo&quot;: &quot;MongoDB&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Tiered&quot;,</span><br><span class="line">      &quot;displayName&quot;: &quot;Tiered&quot;,</span><br><span class="line">      &quot;values&quot;: &#123;</span><br><span class="line">        &quot;No&quot;: &quot;Not Tiered&quot;,</span><br><span class="line">        &quot;Yes&quot;: &quot;Tiered&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>markdow中使用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;[doc-params]</span><br><span class="line">&#123;</span><br><span class="line">    &quot;UI&quot;: [&quot;MVC&quot;,&quot;NG&quot;],</span><br><span class="line">    &quot;DB&quot;: [&quot;EF&quot;, &quot;Mongo&quot;],</span><br><span class="line">    &quot;Tiered&quot;: [&quot;Yes&quot;, &quot;No&quot;]</span><br><span class="line">&#125;</span><br><span class="line">本教程介绍了如何创建一个新的&#123;&#123;if UI &#x3D;&#x3D; &quot;MVC&quot;&#125;&#125; ASP.NET Core MVC web &#123;&#123;else if UI &#x3D;&#x3D; &quot;NG&quot;&#125;&#125; Angular &#123;&#123;end&#125;&#125;. 配置并运行它.</span><br></pre></td></tr></table></figure>
-
-<p>生成的html</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200718164036943.png" alt="image-20200718164036943"></p>
-<p>当切换ui的值后的显示,我们看到字符发生了改变</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-07-10-abp-doc/image-20200718164137023.png" alt="image-20200718164137023"></p>
-<h1 id="关于-doc-template"><a href="#关于-doc-template" class="headerlink" title="关于[doc-template]"></a>关于[doc-template]</h1><p>还没看到如何用</p>
-<h1 id="404"><a href="#404" class="headerlink" title="404"></a>404</h1><p>因为访问github如果超时就会出现404.</p>
-<p>所以建议控制台设置代理然后运行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$env:http_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">$env:https_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:1080&quot;</span><br><span class="line">dotnet run .\IG.Www.Web.csproj</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>dotnet</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>GitHub</tag>
-        <tag>代理</tag>
-        <tag>JS</tag>
-        <tag>abp</tag>
-        <tag>proxy</tag>
       </tags>
   </entry>
   <entry>
@@ -2430,24 +2430,94 @@
       </tags>
   </entry>
   <entry>
-    <title>使用配置文件来管理NuGet包版本F</title>
-    <url>/tool-2019-09-02-nuget-manager/</url>
-    <content><![CDATA[<p>先创建一个文件<code>Directory.Build.props</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Project&gt;</span><br><span class="line">    &lt;PropertyGroup&gt;</span><br><span class="line">        &lt;NuGet-Kritner-SolarProjection&gt;1.0.2&lt;&#x2F;NuGet-Kritner-SolarProjection&gt;</span><br><span class="line">    &lt;&#x2F;PropertyGroup&gt;</span><br><span class="line">&lt;&#x2F;Project&gt;</span><br></pre></td></tr></table></figure>
+    <title>scoop的使用</title>
+    <url>/tool-2019-08-20-scoop-use/</url>
+    <content><![CDATA[<h1 id="安装scoop前提"><a href="#安装scoop前提" class="headerlink" title="安装scoop前提"></a>安装scoop前提</h1><p>版本大于等于3的powershell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; $psversiontable.psversion.major</span><br></pre></td></tr></table></figure>
+<p>确保您已允许PowerShell执行本地脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; set-executionpolicy remotesigned -scope currentuser</span><br></pre></td></tr></table></figure>
 
-<p>然后修改你的项目文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;ItemGroup&gt;</span><br><span class="line">  &lt;PackageReference Include&#x3D;&quot;Kritner.SolarProjection&quot; Version&#x3D;&quot;$(NuGet-Kritner-SolarProjection)&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;ItemGroup&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files" target="_blank" rel="noopener">包的版本号</a></li>
-<li><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/customize-your-build?view=vs-2019" target="_blank" rel="noopener">Directory.Build.props的说明</a></li>
-</ul>
+
+
+
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#打开powershell,win+r,然后输入powershell</span><br><span class="line">#更改策略</span><br><span class="line">Set-ExecutionPolicy RemoteSigned -scope CurrentUser</span><br><span class="line"></span><br><span class="line">#安装</span><br><span class="line">iex (new-object net.webclient).downloadstring(&#39;https:&#x2F;&#x2F;get.scoop.sh&#39;)</span><br><span class="line"></span><br><span class="line">#安装git</span><br><span class="line">scoop install git</span><br><span class="line"></span><br><span class="line">#开启extras库</span><br><span class="line">scoop bucket add extras</span><br><span class="line"></span><br><span class="line">#开启java库</span><br><span class="line">scoop bucket add java</span><br><span class="line"></span><br><span class="line">#更新</span><br><span class="line">scoop update</span><br><span class="line"></span><br><span class="line">#查看安装软件列表</span><br><span class="line">scoop list</span><br><span class="line"></span><br><span class="line">#搜索某软件</span><br><span class="line">scoop search xxx</span><br><span class="line"></span><br><span class="line">#打开某软件官网</span><br><span class="line">scoop home xxx</span><br><span class="line"></span><br><span class="line">#查看某软件安装信息</span><br><span class="line">scoop info xxx</span><br><span class="line"></span><br><span class="line">#查看某软件执行命令位置</span><br><span class="line">scoop which xxx</span><br><span class="line"></span><br><span class="line">#查看某软件当前状态，是否有更新等信息</span><br><span class="line">scoop status xxx</span><br><span class="line"></span><br><span class="line">#更新某软件</span><br><span class="line">scoop update xxx</span><br><span class="line"></span><br><span class="line">#卸载某软件,以xxx为例</span><br><span class="line">scoop uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>这里是一个按照 Github score（由 Star 数量、Fork 数量和 App 数量综合决定的 Github score）排列的 bucket 列表：<a href="https://github.com/rasa/scoop-directory/blob/master/by-score.md" target="_blank" rel="noopener">Scoop buckets by Github score</a>。</p>
+<h1 id="安装scoop到自定义目录"><a href="#安装scoop到自定义目录" class="headerlink" title="安装scoop到自定义目录"></a>安装scoop到自定义目录</h1><p>如果重新安装系统.只需要将shime路径添加到环境变量path中<code>D:\Application\Scoop\shims</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set-executionpolicy</span> remotesigned <span class="literal">-scope</span> currentuser</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::User)+<span class="string">";D:\Application\Scoop\shims"</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::Machine)+<span class="string">";D:\Application\ScoopGlobal\shims"</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#重置应用以解决冲突,会重置环境变量,快捷方式等..</span></span><br><span class="line">scoop reset *</span><br><span class="line"><span class="comment">#检查潜在的问题..执行下看看使用scoop会有什么问题</span></span><br><span class="line">scoop checkup</span><br><span class="line"><span class="comment">#如果使用了aria2感觉慢的话可以关闭</span></span><br><span class="line">scoop config aria2<span class="literal">-enabled</span> false  </span><br><span class="line"><span class="comment">#下面是日常更新软件命令</span></span><br><span class="line">sudo scoop update * <span class="literal">-g</span> ; scoop update * ; sudo scoop cleanup * <span class="literal">-g</span> ; scoop cleanup *</span><br><span class="line"><span class="comment"># 查看 Scoop 还能直接识别哪些 bucket</span></span><br><span class="line">scoop bucket known</span><br></pre></td></tr></table></figure>
+<h3 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Invoke-Item</span> <span class="string">"~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Scoop Apps"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>将Scoop安装到自定义目录</strong><br>假设目标目录是<code>D:\Application\Scoop</code>,在PowerShell命令控制台中运行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br></pre></td></tr></table></figure>
+<p>将全局应用安装到自定义目录,假设目标目录是<code>D:\Application\ScoopGlobal</code>,在PowerShell命令控制台中运行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>以我常用应用为例(可作为脚本文件,后缀ps1)</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">###安装scoop并自定义安装路径</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#git,程序员必备,只有安装了git才能添加其他桶</span></span><br><span class="line">scoop install git;</span><br><span class="line"><span class="comment">#arias2 scoop 下载会用到</span></span><br><span class="line">scoop install aria2;</span><br><span class="line"><span class="comment">#7zip 一些app会用到</span></span><br><span class="line">scoop install <span class="number">7</span>zip</span><br><span class="line"><span class="comment">#scoop checkup提示装的软件</span></span><br><span class="line">scoop install wixtoolset</span><br><span class="line"></span><br><span class="line"><span class="comment">###添加桶</span></span><br><span class="line"><span class="comment">#scoop内置的桶</span></span><br><span class="line"><span class="comment">#scoop bucket known;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### D:\Application\Scoop\buckets,如果发现bucket中有错误可以检查并删除</span></span><br><span class="line">scoop bucket add extras;</span><br><span class="line">scoop bucket add Java;</span><br><span class="line">scoop bucket add versions;</span><br><span class="line"><span class="comment">#一个还不错的</span></span><br><span class="line">scoop bucket add Ash258 <span class="string">'https://github.com/Ash258/scoop-Ash258.git'</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dodorz https://github.com/dodorz/scoop<span class="literal">-bucket</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dorado https://github.com/h404bi/dorado</span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add Hass https://github.com/zhepama/Scoop<span class="literal">-Hass</span></span><br><span class="line"><span class="comment">### 添加代理</span></span><br><span class="line">scoop config proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">scoop config rm proxy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装全局应用</span></span><br><span class="line">scoop install apache <span class="literal">-g</span>;</span><br><span class="line">scoop install redis <span class="literal">-g</span>;</span><br><span class="line">scoop install mysql <span class="literal">-g</span>;</span><br><span class="line"><span class="comment"># jdk最好使用8,否则android-sdk会有问题</span></span><br><span class="line">scoop install ojdkbuild8 <span class="literal">-g</span>; </span><br><span class="line">scoop install php <span class="literal">-g</span>;</span><br><span class="line"><span class="comment">#整合apache php</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://gist.githubusercontent.com/nilkesede/c98a275b80b6d373131df82eaba96c63/raw/apache-php-init.ps1'</span>)</span><br><span class="line"><span class="comment"># 或者手动修改apache配置</span></span><br><span class="line"><span class="comment">#LoadModule php7_module 'C:/Users/xxxxx/scoop/apps/php71/current/php7apache2_4.dll'</span></span><br><span class="line"><span class="comment">#AddHandler application/x-httpd-php .php</span></span><br><span class="line"><span class="comment">#PHPIniDir "C:\Users\xxxxx\scoop\apps\php71\current"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装APP</span></span><br><span class="line"><span class="comment">#使用nvm安装nodejs  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/</span></span><br><span class="line">scoop install nvm</span><br><span class="line">nvm list available</span><br><span class="line">nvm install <span class="number">12.18</span>.<span class="number">2</span></span><br><span class="line"><span class="comment">#效率启动神器</span></span><br><span class="line">scoop install wox;</span><br><span class="line"><span class="comment">#文件检索</span></span><br><span class="line">scoop install everything;</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">scoop install bandizip;</span><br><span class="line"><span class="comment">#远程终端</span></span><br><span class="line">scoop install MobaXterm;</span><br><span class="line"><span class="comment">#桌面控制</span></span><br><span class="line">scoop install teamviewer;</span><br><span class="line"><span class="comment">#markdown编写</span></span><br><span class="line">scoop install typora;</span><br><span class="line"><span class="comment">#编辑器 注意使用vscode-portable,这样data文件夹就会持久化在scoop,而不是c盘用户目录</span></span><br><span class="line"><span class="comment">#From "$env:USERPROFILE\.vscode\extensions" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\extensions"</span></span><br><span class="line"><span class="comment">#From "$env:APPDATA\Code" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\user-data"</span></span><br><span class="line">scoop install vscode<span class="literal">-portable</span>;</span><br><span class="line"><span class="comment">#ditto 剪贴板</span></span><br><span class="line">scoop install ditto</span><br><span class="line"><span class="comment">#postman</span></span><br><span class="line">scoop install postman</span><br><span class="line"><span class="comment">#heidisql</span></span><br><span class="line">scoop install heidisql</span><br><span class="line"><span class="comment">#imageglass 图片浏览器</span></span><br><span class="line">scoop install imageglass</span><br><span class="line"><span class="comment">#quick look</span></span><br><span class="line">scoop install quicklook</span><br><span class="line"><span class="comment">#obs  录制视频或者直播</span></span><br><span class="line">scoop install obs<span class="literal">-studio</span></span><br><span class="line"><span class="comment"># 录像软件</span></span><br><span class="line">scoop install captura</span><br><span class="line"><span class="comment">#switchhosts</span></span><br><span class="line">scoop install switchhosts</span><br><span class="line"><span class="comment"># gradle</span></span><br><span class="line">scoop install gradle</span><br><span class="line"><span class="comment"># android-sdk</span></span><br><span class="line">scoop install android<span class="literal">-sdk</span></span><br><span class="line"><span class="comment"># 安装ndk 老版本下载https://developer.android.com/ndk/downloads/older_releases.html</span></span><br><span class="line"><span class="comment"># sdkmanager ndk-bundle</span></span><br><span class="line"><span class="comment"># shadowsocksr-csharp</span></span><br><span class="line">scoop install shadowsocksr<span class="literal">-csharp</span></span><br><span class="line"><span class="comment"># 截图软件</span></span><br><span class="line">scoop install picpick</span><br><span class="line">scoop install snipaste</span><br><span class="line">scoop install sharex </span><br><span class="line">scoop install lightshot</span><br><span class="line"><span class="comment">#xmind8</span></span><br><span class="line">scoop install XMind2020</span><br><span class="line"><span class="comment"># android-studio</span></span><br><span class="line">scoop install android<span class="literal">-studio</span></span><br><span class="line"><span class="comment">#记住sourcetree的git最好使用内嵌版本</span></span><br><span class="line">scoop install sourcetree</span><br><span class="line"><span class="comment"># php的包工具</span></span><br><span class="line">scoop intstall composer</span><br><span class="line"><span class="comment"># 反向代理</span></span><br><span class="line">scoop install frp</span><br><span class="line"><span class="comment">#网易云音乐</span></span><br><span class="line">scoop install neteasemusic</span><br><span class="line"><span class="comment"># ftp工具</span></span><br><span class="line">scoop install filezilla </span><br><span class="line"><span class="comment"># pdf阅读工具</span></span><br><span class="line"> scoop install foxit<span class="literal">-reader</span></span><br><span class="line"><span class="comment"># 播放器</span></span><br><span class="line">scoop install potplayer </span><br><span class="line"><span class="comment"># draw工程图,uml工具</span></span><br><span class="line">scoop install draw.io</span><br><span class="line"><span class="comment"># 定时提醒休息工具</span></span><br><span class="line">scoop install workrave</span><br><span class="line">scoop install stretchly</span><br><span class="line"><span class="comment"># 投屏工具</span></span><br><span class="line">scoop install scrcpy </span><br><span class="line"><span class="comment"># 卸载工具</span></span><br><span class="line">scoop install geekuninstaller</span><br><span class="line"><span class="comment">#浏览器</span></span><br><span class="line">scoop install  firefox<span class="literal">-developer</span><span class="literal">-zh</span><span class="literal">-cn</span></span><br><span class="line">scoop install  googlechrome</span><br><span class="line"><span class="comment">#wechat</span></span><br><span class="line">scoop install wechat</span><br><span class="line"><span class="comment">#steam</span></span><br><span class="line">scoop install steam</span><br><span class="line"><span class="comment"># pwsh</span></span><br><span class="line">scoop install pwsh</span><br><span class="line"><span class="comment">#windows teraminal</span></span><br><span class="line">scoop install windows<span class="literal">-terminal</span></span><br><span class="line"><span class="comment"># 反编译 ilspy  https://github.com/sailro/Reflexil下载Reflexil将Reflexil.ILSpy.Plugin.dll直接扔到ilspy目录下即行</span></span><br><span class="line">scoop install ilspy</span><br><span class="line">scoop install dnspy</span><br><span class="line"><span class="comment">#win+x菜单编辑</span></span><br><span class="line">scoop install WinXMenuEditor   </span><br><span class="line"><span class="comment">#发送到菜单编辑</span></span><br><span class="line">scoop install SendToMenuEditor</span><br><span class="line"><span class="comment"># 上下文菜单</span></span><br><span class="line">scoop install EasyContextMenu</span><br><span class="line"><span class="comment"># 备份开始屏幕</span></span><br><span class="line">scoop install BackupStartMenuLayout</span><br><span class="line"><span class="comment">#定时关机</span></span><br><span class="line">scoop install kshutdown</span><br><span class="line"><span class="comment"># 创建可启动U盘的工具  https://www.ventoy.net/cn/index.html</span></span><br><span class="line">scoop install ventoy</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="apache"><a href="#apache" class="headerlink" title="apache"></a>apache</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo httpd -k install -n apache  </span><br><span class="line">start-service apache</span><br><span class="line">remove-service apache</span><br></pre></td></tr></table></figure>
+<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>文件路径<code>D:\Application\ScoopGlobal\apps\apache\current\conf\httpd.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Define SRVROOT &quot;D:\Application\ScoopGlobal\apps\apache\current&quot;</span><br><span class="line">ServerName localhost</span><br></pre></td></tr></table></figure>
+
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">redis-server --service-install D:\Application\ScoopGlobal\apps\redis\current\redis.windows-service.conf --loglevel verbose</span><br></pre></td></tr></table></figure>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>注册MySQL服务,(因为scoop是低污染的,所以要自己做):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqld --install MySQL --defaults-file&#x3D;&quot;D:\Application\ScoopGlobal\apps\mysql\current\my.ini&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意mysql8密码可能认证有错误my.ini中需要设置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="pwsh"><a href="#pwsh" class="headerlink" title="pwsh"></a>pwsh</h1><p>将pwsh添加到terminal中,配置默认路径:<code>C:\Users\zhepama\AppData\Local\Microsoft\Windows Terminal\settings.json</code></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This file was initially generated by Windows 终端(未打包) 1.0.200517002-release1.0</span></span><br><span class="line"><span class="comment">// It should still be usable in newer versions, but newer versions might have additional</span></span><br><span class="line"><span class="comment">// settings, help text, or changes that you will not see unless you clear this file</span></span><br><span class="line"><span class="comment">// and let us generate a new one for you.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// To view the default settings, hold "alt" while clicking on the "Settings" button.</span></span><br><span class="line"><span class="comment">// For documentation on these settings, see: https://aka.ms/terminal-documentation</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"https://aka.ms/terminal-profiles-schema"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"defaultProfile"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// You can add more global application settings here.</span></span><br><span class="line">  <span class="comment">// To learn more about global settings, visit https://aka.ms/terminal-global-settings</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, selections are automatically copied to your clipboard.</span></span><br><span class="line">  <span class="attr">"copyOnSelect"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, formatted data is also copied to your clipboard</span></span><br><span class="line">  <span class="attr">"copyFormatting"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// A profile specifies a command to execute paired with information about how it should look and feel.</span></span><br><span class="line">  <span class="comment">// Each one of them will appear in the 'New Tab' dropdown,</span></span><br><span class="line">  <span class="comment">//   and can be invoked from the commandline with `wt.exe -p xxx`</span></span><br><span class="line">  <span class="comment">// To learn more about profiles, visit https://aka.ms/terminal-profile-settings</span></span><br><span class="line">  <span class="attr">"profiles"</span>: &#123;</span><br><span class="line">    <span class="attr">"defaults"</span>: &#123;</span><br><span class="line">      <span class="comment">// Put settings here that you want to apply to all profiles.</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"list"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the powershell.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;61c54bbd-c2c6-5271-96e7-009a87ff44bf&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Windows PowerShell"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"powershell.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the cmd.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;0caa0dad-35be-5f56-a8ff-afceeeaa6101&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"命令提示符"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"cmd.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;b453ae62-4e3d-5e58-b989-0a998ec441b8&#125;"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Azure Cloud Shell"</span>,</span><br><span class="line">        <span class="attr">"source"</span>: <span class="string">"Windows.Terminal.Azure"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"pwsh"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"D:\\Application\\Scoop\\apps\\pwsh\\current\\pwsh.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"startingDirectory"</span>: <span class="string">"%USERPROFILE%"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom color schemes to this array.</span></span><br><span class="line">  <span class="comment">// To learn more about color schemes, visit https://aka.ms/terminal-color-schemes</span></span><br><span class="line">  <span class="attr">"schemes"</span>: [],</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom keybindings to this array.</span></span><br><span class="line">  <span class="comment">// To unbind a key combination from your defaults.json, set the command to "unbound".</span></span><br><span class="line">  <span class="comment">// To learn more about keybindings, visit https://aka.ms/terminal-keybindings</span></span><br><span class="line">  <span class="attr">"keybindings"</span>: [</span><br><span class="line">    <span class="comment">// Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.</span></span><br><span class="line">    <span class="comment">// These two lines additionally bind them to Ctrl+C and Ctrl+V.</span></span><br><span class="line">    <span class="comment">// To learn more about selection, visit https://aka.ms/terminal-selection</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"copy"</span>,</span><br><span class="line">        <span class="attr">"singleLine"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+c"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"paste"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+v"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Ctrl+Shift+F to open the search box</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"find"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+shift+f"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Alt+Shift+D to open a new pane.</span></span><br><span class="line">    <span class="comment">// - "split": "auto" makes this pane open in the direction that provides the most surface area.</span></span><br><span class="line">    <span class="comment">// - "splitMode": "duplicate" makes the new pane use the focused pane's profile.</span></span><br><span class="line">    <span class="comment">// To learn more about panes, visit https://aka.ms/terminal-panes</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"splitPane"</span>,</span><br><span class="line">        <span class="attr">"split"</span>: <span class="string">"auto"</span>,</span><br><span class="line">        <span class="attr">"splitMode"</span>: <span class="string">"duplicate"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"alt+shift+d"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="自制bucket"><a href="#自制bucket" class="headerlink" title="自制bucket"></a>自制bucket</h1><p>最佳方式是使用模板 <a href="https://github.com/Ash258/GenericBucket" target="_blank" rel="noopener">https://github.com/Ash258/GenericBucket</a></p>
+<h3 id="如何解压exe的程序"><a href="#如何解压exe的程序" class="headerlink" title="如何解压exe的程序"></a>如何解压exe的程序</h3><p>首先下载的时候后面加上#/dl.7z类似的后缀..然后scoop保存的时候.会把他存在7z格式的文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;architecture&quot;: &#123;</span><br><span class="line">    &quot;64bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-64.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;BE14DE68FDBFB3663F57B6B28E8B0CC90AE876DD06CA899839BEB9377FE21436&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;32bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-32.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;9C437170019E8AFC82B64A5475E349602E03A9493DD6AC6CACF58FDFD75762DD&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>例如上面旧会被存在scoop/cache/wnr#1.17.1#https_github.com_RoderickQiu_wnr_releases_download_v1.17.1_wnr-1.17.1-Setup-64.exe_dl.7z</p>
+<p>然后旧可以解压了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;installer&quot;: &#123;</span><br><span class="line">    &quot;script&quot;: [</span><br><span class="line">        &quot;Expand-7zipArchive -Path (Join-Path $dir &#39;$PLUGINSDIR\\*.7z&#39;) -DestinationPath $dir&quot;,</span><br><span class="line">        &quot;Remove-Item -Path (Join-Path $dir &#39;$PLUGINSDIR&#39;) -Recurse&quot;,</span><br><span class="line">        &quot;Remove-Item \&quot;$dir\\Uninstall wnr.exe\&quot;&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+<p>安装脚本都是执行在Scoop\apps\wnr\versions下面</p>
+<h3 id="导出-Scoop-软件列表"><a href="#导出-Scoop-软件列表" class="headerlink" title="导出 Scoop 软件列表"></a>导出 Scoop 软件列表</h3><p>备份 Scoop 的方式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">scoop export &gt; scoop.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以对 Scoop 的导出列表进行额外处理，以方便后续安装。使用 VSCode 打开 <code>scoop.txt</code> 文件，以正则表达式搜索：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(.*?) .*</span><br></pre></td></tr></table></figure>
+
+<p>并全部替换成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$1</span><br></pre></td></tr></table></figure>
+
+<p>注意正则式中包含空格，请完整复制。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-20-scoop-use/03.jpg" alt="VSCode 中的正则式替换"></p>
 ]]></content>
       <categories>
         <category>tool</category>
       </categories>
       <tags>
+        <tag>Win</tag>
+        <tag>shell</tag>
+        <tag>windows</tag>
         <tag>C</tag>
+        <tag>GitHub</tag>
+        <tag>Java</tag>
+        <tag>代理</tag>
+        <tag>PHP</tag>
+        <tag>Redis</tag>
+        <tag>JS</tag>
+        <tag>proxy</tag>
+        <tag>powershell</tag>
+        <tag>scoop</tag>
       </tags>
   </entry>
   <entry>
@@ -2708,94 +2778,24 @@
       </tags>
   </entry>
   <entry>
-    <title>scoop的使用</title>
-    <url>/tool-2019-08-20-scoop-use/</url>
-    <content><![CDATA[<h1 id="安装scoop前提"><a href="#安装scoop前提" class="headerlink" title="安装scoop前提"></a>安装scoop前提</h1><p>版本大于等于3的powershell</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; $psversiontable.psversion.major</span><br></pre></td></tr></table></figure>
-<p>确保您已允许PowerShell执行本地脚本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; set-executionpolicy remotesigned -scope currentuser</span><br></pre></td></tr></table></figure>
+    <title>使用配置文件来管理NuGet包版本F</title>
+    <url>/tool-2019-09-02-nuget-manager/</url>
+    <content><![CDATA[<p>先创建一个文件<code>Directory.Build.props</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Project&gt;</span><br><span class="line">    &lt;PropertyGroup&gt;</span><br><span class="line">        &lt;NuGet-Kritner-SolarProjection&gt;1.0.2&lt;&#x2F;NuGet-Kritner-SolarProjection&gt;</span><br><span class="line">    &lt;&#x2F;PropertyGroup&gt;</span><br><span class="line">&lt;&#x2F;Project&gt;</span><br></pre></td></tr></table></figure>
 
+<p>然后修改你的项目文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;ItemGroup&gt;</span><br><span class="line">  &lt;PackageReference Include&#x3D;&quot;Kritner.SolarProjection&quot; Version&#x3D;&quot;$(NuGet-Kritner-SolarProjection)&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;ItemGroup&gt;</span><br></pre></td></tr></table></figure>
 
-
-
-
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#打开powershell,win+r,然后输入powershell</span><br><span class="line">#更改策略</span><br><span class="line">Set-ExecutionPolicy RemoteSigned -scope CurrentUser</span><br><span class="line"></span><br><span class="line">#安装</span><br><span class="line">iex (new-object net.webclient).downloadstring(&#39;https:&#x2F;&#x2F;get.scoop.sh&#39;)</span><br><span class="line"></span><br><span class="line">#安装git</span><br><span class="line">scoop install git</span><br><span class="line"></span><br><span class="line">#开启extras库</span><br><span class="line">scoop bucket add extras</span><br><span class="line"></span><br><span class="line">#开启java库</span><br><span class="line">scoop bucket add java</span><br><span class="line"></span><br><span class="line">#更新</span><br><span class="line">scoop update</span><br><span class="line"></span><br><span class="line">#查看安装软件列表</span><br><span class="line">scoop list</span><br><span class="line"></span><br><span class="line">#搜索某软件</span><br><span class="line">scoop search xxx</span><br><span class="line"></span><br><span class="line">#打开某软件官网</span><br><span class="line">scoop home xxx</span><br><span class="line"></span><br><span class="line">#查看某软件安装信息</span><br><span class="line">scoop info xxx</span><br><span class="line"></span><br><span class="line">#查看某软件执行命令位置</span><br><span class="line">scoop which xxx</span><br><span class="line"></span><br><span class="line">#查看某软件当前状态，是否有更新等信息</span><br><span class="line">scoop status xxx</span><br><span class="line"></span><br><span class="line">#更新某软件</span><br><span class="line">scoop update xxx</span><br><span class="line"></span><br><span class="line">#卸载某软件,以xxx为例</span><br><span class="line">scoop uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>这里是一个按照 Github score（由 Star 数量、Fork 数量和 App 数量综合决定的 Github score）排列的 bucket 列表：<a href="https://github.com/rasa/scoop-directory/blob/master/by-score.md" target="_blank" rel="noopener">Scoop buckets by Github score</a>。</p>
-<h1 id="安装scoop到自定义目录"><a href="#安装scoop到自定义目录" class="headerlink" title="安装scoop到自定义目录"></a>安装scoop到自定义目录</h1><p>如果重新安装系统.只需要将shime路径添加到环境变量path中<code>D:\Application\Scoop\shims</code></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set-executionpolicy</span> remotesigned <span class="literal">-scope</span> currentuser</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::User)+<span class="string">";D:\Application\Scoop\shims"</span>,<span class="string">'User'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.Environment</span>]::GetEnvironmentVariable(<span class="string">'Path'</span>,[<span class="type">System.EnvironmentVariableTarget</span>]::Machine)+<span class="string">";D:\Application\ScoopGlobal\shims"</span>,<span class="string">'Machine'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#重置应用以解决冲突,会重置环境变量,快捷方式等..</span></span><br><span class="line">scoop reset *</span><br><span class="line"><span class="comment">#检查潜在的问题..执行下看看使用scoop会有什么问题</span></span><br><span class="line">scoop checkup</span><br><span class="line"><span class="comment">#如果使用了aria2感觉慢的话可以关闭</span></span><br><span class="line">scoop config aria2<span class="literal">-enabled</span> false  </span><br><span class="line"><span class="comment">#下面是日常更新软件命令</span></span><br><span class="line">sudo scoop update * <span class="literal">-g</span> ; scoop update * ; sudo scoop cleanup * <span class="literal">-g</span> ; scoop cleanup *</span><br><span class="line"><span class="comment"># 查看 Scoop 还能直接识别哪些 bucket</span></span><br><span class="line">scoop bucket known</span><br></pre></td></tr></table></figure>
-<h3 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Invoke-Item</span> <span class="string">"~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Scoop Apps"</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>将Scoop安装到自定义目录</strong><br>假设目标目录是<code>D:\Application\Scoop</code>,在PowerShell命令控制台中运行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br></pre></td></tr></table></figure>
-<p>将全局应用安装到自定义目录,假设目标目录是<code>D:\Application\ScoopGlobal</code>,在PowerShell命令控制台中运行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>以我常用应用为例(可作为脚本文件,后缀ps1)</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">###安装scoop并自定义安装路径</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP'</span>,<span class="string">'D:\Application\Scoop'</span>,<span class="string">'User'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">'D:\Application\Scoop'</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://get.scoop.sh'</span>)</span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">'SCOOP_GLOBAL'</span>,<span class="string">'D:\Application\ScoopGlobal'</span>,<span class="string">'Machine'</span>)</span><br><span class="line"><span class="variable">$env:SCOOP_GLOBAL</span>=<span class="string">'D:\Application\ScoopGlobal'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#git,程序员必备,只有安装了git才能添加其他桶</span></span><br><span class="line">scoop install git;</span><br><span class="line"><span class="comment">#arias2 scoop 下载会用到</span></span><br><span class="line">scoop install aria2;</span><br><span class="line"><span class="comment">#7zip 一些app会用到</span></span><br><span class="line">scoop install <span class="number">7</span>zip</span><br><span class="line"><span class="comment">#scoop checkup提示装的软件</span></span><br><span class="line">scoop install wixtoolset</span><br><span class="line"></span><br><span class="line"><span class="comment">###添加桶</span></span><br><span class="line"><span class="comment">#scoop内置的桶</span></span><br><span class="line"><span class="comment">#scoop bucket known;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### D:\Application\Scoop\buckets,如果发现bucket中有错误可以检查并删除</span></span><br><span class="line">scoop bucket add extras;</span><br><span class="line">scoop bucket add Java;</span><br><span class="line">scoop bucket add versions;</span><br><span class="line"><span class="comment">#一个还不错的</span></span><br><span class="line">scoop bucket add Ash258 <span class="string">'https://github.com/Ash258/scoop-Ash258.git'</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dodorz https://github.com/dodorz/scoop<span class="literal">-bucket</span></span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add dorado https://github.com/h404bi/dorado</span><br><span class="line"><span class="comment">#一个还不错的桶</span></span><br><span class="line">scoop bucket add Hass https://github.com/zhepama/Scoop<span class="literal">-Hass</span></span><br><span class="line"><span class="comment">### 添加代理</span></span><br><span class="line">scoop config proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">scoop config rm proxy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装全局应用</span></span><br><span class="line">scoop install apache <span class="literal">-g</span>;</span><br><span class="line">scoop install redis <span class="literal">-g</span>;</span><br><span class="line">scoop install mysql <span class="literal">-g</span>;</span><br><span class="line"><span class="comment"># jdk最好使用8,否则android-sdk会有问题</span></span><br><span class="line">scoop install ojdkbuild8 <span class="literal">-g</span>; </span><br><span class="line">scoop install php <span class="literal">-g</span>;</span><br><span class="line"><span class="comment">#整合apache php</span></span><br><span class="line">iex (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">'https://gist.githubusercontent.com/nilkesede/c98a275b80b6d373131df82eaba96c63/raw/apache-php-init.ps1'</span>)</span><br><span class="line"><span class="comment"># 或者手动修改apache配置</span></span><br><span class="line"><span class="comment">#LoadModule php7_module 'C:/Users/xxxxx/scoop/apps/php71/current/php7apache2_4.dll'</span></span><br><span class="line"><span class="comment">#AddHandler application/x-httpd-php .php</span></span><br><span class="line"><span class="comment">#PHPIniDir "C:\Users\xxxxx\scoop\apps\php71\current"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装APP</span></span><br><span class="line"><span class="comment">#使用nvm安装nodejs  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/</span></span><br><span class="line">scoop install nvm</span><br><span class="line">nvm list available</span><br><span class="line">nvm install <span class="number">12.18</span>.<span class="number">2</span></span><br><span class="line"><span class="comment">#效率启动神器</span></span><br><span class="line">scoop install wox;</span><br><span class="line"><span class="comment">#文件检索</span></span><br><span class="line">scoop install everything;</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">scoop install bandizip;</span><br><span class="line"><span class="comment">#远程终端</span></span><br><span class="line">scoop install MobaXterm;</span><br><span class="line"><span class="comment">#桌面控制</span></span><br><span class="line">scoop install teamviewer;</span><br><span class="line"><span class="comment">#markdown编写</span></span><br><span class="line">scoop install typora;</span><br><span class="line"><span class="comment">#编辑器 注意使用vscode-portable,这样data文件夹就会持久化在scoop,而不是c盘用户目录</span></span><br><span class="line"><span class="comment">#From "$env:USERPROFILE\.vscode\extensions" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\extensions"</span></span><br><span class="line"><span class="comment">#From "$env:APPDATA\Code" to "$env:USERPROFILE\scoop\persist\vscode-portable\data\user-data"</span></span><br><span class="line">scoop install vscode<span class="literal">-portable</span>;</span><br><span class="line"><span class="comment">#ditto 剪贴板</span></span><br><span class="line">scoop install ditto</span><br><span class="line"><span class="comment">#postman</span></span><br><span class="line">scoop install postman</span><br><span class="line"><span class="comment">#heidisql</span></span><br><span class="line">scoop install heidisql</span><br><span class="line"><span class="comment">#imageglass 图片浏览器</span></span><br><span class="line">scoop install imageglass</span><br><span class="line"><span class="comment">#quick look</span></span><br><span class="line">scoop install quicklook</span><br><span class="line"><span class="comment">#obs  录制视频或者直播</span></span><br><span class="line">scoop install obs<span class="literal">-studio</span></span><br><span class="line"><span class="comment"># 录像软件</span></span><br><span class="line">scoop install captura</span><br><span class="line"><span class="comment">#switchhosts</span></span><br><span class="line">scoop install switchhosts</span><br><span class="line"><span class="comment"># gradle</span></span><br><span class="line">scoop install gradle</span><br><span class="line"><span class="comment"># android-sdk</span></span><br><span class="line">scoop install android<span class="literal">-sdk</span></span><br><span class="line"><span class="comment"># 安装ndk 老版本下载https://developer.android.com/ndk/downloads/older_releases.html</span></span><br><span class="line"><span class="comment"># sdkmanager ndk-bundle</span></span><br><span class="line"><span class="comment"># shadowsocksr-csharp</span></span><br><span class="line">scoop install shadowsocksr<span class="literal">-csharp</span></span><br><span class="line"><span class="comment"># 截图软件</span></span><br><span class="line">scoop install picpick</span><br><span class="line">scoop install snipaste</span><br><span class="line">scoop install sharex </span><br><span class="line">scoop install lightshot</span><br><span class="line"><span class="comment">#xmind8</span></span><br><span class="line">scoop install XMind2020</span><br><span class="line"><span class="comment"># android-studio</span></span><br><span class="line">scoop install android<span class="literal">-studio</span></span><br><span class="line"><span class="comment">#记住sourcetree的git最好使用内嵌版本</span></span><br><span class="line">scoop install sourcetree</span><br><span class="line"><span class="comment"># php的包工具</span></span><br><span class="line">scoop intstall composer</span><br><span class="line"><span class="comment"># 反向代理</span></span><br><span class="line">scoop install frp</span><br><span class="line"><span class="comment">#网易云音乐</span></span><br><span class="line">scoop install neteasemusic</span><br><span class="line"><span class="comment"># ftp工具</span></span><br><span class="line">scoop install filezilla </span><br><span class="line"><span class="comment"># pdf阅读工具</span></span><br><span class="line"> scoop install foxit<span class="literal">-reader</span></span><br><span class="line"><span class="comment"># 播放器</span></span><br><span class="line">scoop install potplayer </span><br><span class="line"><span class="comment"># draw工程图,uml工具</span></span><br><span class="line">scoop install draw.io</span><br><span class="line"><span class="comment"># 定时提醒休息工具</span></span><br><span class="line">scoop install workrave</span><br><span class="line">scoop install stretchly</span><br><span class="line"><span class="comment"># 投屏工具</span></span><br><span class="line">scoop install scrcpy </span><br><span class="line"><span class="comment"># 卸载工具</span></span><br><span class="line">scoop install geekuninstaller</span><br><span class="line"><span class="comment">#浏览器</span></span><br><span class="line">scoop install  firefox<span class="literal">-developer</span><span class="literal">-zh</span><span class="literal">-cn</span></span><br><span class="line">scoop install  googlechrome</span><br><span class="line"><span class="comment">#wechat</span></span><br><span class="line">scoop install wechat</span><br><span class="line"><span class="comment">#steam</span></span><br><span class="line">scoop install steam</span><br><span class="line"><span class="comment"># pwsh</span></span><br><span class="line">scoop install pwsh</span><br><span class="line"><span class="comment">#windows teraminal</span></span><br><span class="line">scoop install windows<span class="literal">-terminal</span></span><br><span class="line"><span class="comment"># 反编译 ilspy  https://github.com/sailro/Reflexil下载Reflexil将Reflexil.ILSpy.Plugin.dll直接扔到ilspy目录下即行</span></span><br><span class="line">scoop install ilspy</span><br><span class="line">scoop install dnspy</span><br><span class="line"><span class="comment">#win+x菜单编辑</span></span><br><span class="line">scoop install WinXMenuEditor   </span><br><span class="line"><span class="comment">#发送到菜单编辑</span></span><br><span class="line">scoop install SendToMenuEditor</span><br><span class="line"><span class="comment"># 上下文菜单</span></span><br><span class="line">scoop install EasyContextMenu</span><br><span class="line"><span class="comment"># 备份开始屏幕</span></span><br><span class="line">scoop install BackupStartMenuLayout</span><br><span class="line"><span class="comment">#定时关机</span></span><br><span class="line">scoop install kshutdown</span><br><span class="line"><span class="comment"># 创建可启动U盘的工具  https://www.ventoy.net/cn/index.html</span></span><br><span class="line">scoop install ventoy</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="apache"><a href="#apache" class="headerlink" title="apache"></a>apache</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo httpd -k install -n apache  </span><br><span class="line">start-service apache</span><br><span class="line">remove-service apache</span><br></pre></td></tr></table></figure>
-<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>文件路径<code>D:\Application\ScoopGlobal\apps\apache\current\conf\httpd.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Define SRVROOT &quot;D:\Application\ScoopGlobal\apps\apache\current&quot;</span><br><span class="line">ServerName localhost</span><br></pre></td></tr></table></figure>
-
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">redis-server --service-install D:\Application\ScoopGlobal\apps\redis\current\redis.windows-service.conf --loglevel verbose</span><br></pre></td></tr></table></figure>
-<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>注册MySQL服务,(因为scoop是低污染的,所以要自己做):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqld --install MySQL --defaults-file&#x3D;&quot;D:\Application\ScoopGlobal\apps\mysql\current\my.ini&quot;</span><br></pre></td></tr></table></figure>
-
-<p>注意mysql8密码可能认证有错误my.ini中需要设置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="pwsh"><a href="#pwsh" class="headerlink" title="pwsh"></a>pwsh</h1><p>将pwsh添加到terminal中,配置默认路径:<code>C:\Users\zhepama\AppData\Local\Microsoft\Windows Terminal\settings.json</code></p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This file was initially generated by Windows 终端(未打包) 1.0.200517002-release1.0</span></span><br><span class="line"><span class="comment">// It should still be usable in newer versions, but newer versions might have additional</span></span><br><span class="line"><span class="comment">// settings, help text, or changes that you will not see unless you clear this file</span></span><br><span class="line"><span class="comment">// and let us generate a new one for you.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// To view the default settings, hold "alt" while clicking on the "Settings" button.</span></span><br><span class="line"><span class="comment">// For documentation on these settings, see: https://aka.ms/terminal-documentation</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"https://aka.ms/terminal-profiles-schema"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"defaultProfile"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// You can add more global application settings here.</span></span><br><span class="line">  <span class="comment">// To learn more about global settings, visit https://aka.ms/terminal-global-settings</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, selections are automatically copied to your clipboard.</span></span><br><span class="line">  <span class="attr">"copyOnSelect"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If enabled, formatted data is also copied to your clipboard</span></span><br><span class="line">  <span class="attr">"copyFormatting"</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// A profile specifies a command to execute paired with information about how it should look and feel.</span></span><br><span class="line">  <span class="comment">// Each one of them will appear in the 'New Tab' dropdown,</span></span><br><span class="line">  <span class="comment">//   and can be invoked from the commandline with `wt.exe -p xxx`</span></span><br><span class="line">  <span class="comment">// To learn more about profiles, visit https://aka.ms/terminal-profile-settings</span></span><br><span class="line">  <span class="attr">"profiles"</span>: &#123;</span><br><span class="line">    <span class="attr">"defaults"</span>: &#123;</span><br><span class="line">      <span class="comment">// Put settings here that you want to apply to all profiles.</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"list"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the powershell.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;61c54bbd-c2c6-5271-96e7-009a87ff44bf&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Windows PowerShell"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"powershell.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Make changes here to the cmd.exe profile.</span></span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;0caa0dad-35be-5f56-a8ff-afceeeaa6101&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"命令提示符"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"cmd.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;b453ae62-4e3d-5e58-b989-0a998ec441b8&#125;"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Azure Cloud Shell"</span>,</span><br><span class="line">        <span class="attr">"source"</span>: <span class="string">"Windows.Terminal.Azure"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"guid"</span>: <span class="string">"&#123;90cbdc15-f4fe-49d2-a245-ec066b70845f&#125;"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"pwsh"</span>,</span><br><span class="line">        <span class="attr">"commandline"</span>: <span class="string">"D:\\Application\\Scoop\\apps\\pwsh\\current\\pwsh.exe"</span>,</span><br><span class="line">        <span class="attr">"hidden"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"startingDirectory"</span>: <span class="string">"%USERPROFILE%"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom color schemes to this array.</span></span><br><span class="line">  <span class="comment">// To learn more about color schemes, visit https://aka.ms/terminal-color-schemes</span></span><br><span class="line">  <span class="attr">"schemes"</span>: [],</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add custom keybindings to this array.</span></span><br><span class="line">  <span class="comment">// To unbind a key combination from your defaults.json, set the command to "unbound".</span></span><br><span class="line">  <span class="comment">// To learn more about keybindings, visit https://aka.ms/terminal-keybindings</span></span><br><span class="line">  <span class="attr">"keybindings"</span>: [</span><br><span class="line">    <span class="comment">// Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.</span></span><br><span class="line">    <span class="comment">// These two lines additionally bind them to Ctrl+C and Ctrl+V.</span></span><br><span class="line">    <span class="comment">// To learn more about selection, visit https://aka.ms/terminal-selection</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"copy"</span>,</span><br><span class="line">        <span class="attr">"singleLine"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+c"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"paste"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+v"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Ctrl+Shift+F to open the search box</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"find"</span>,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"ctrl+shift+f"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Press Alt+Shift+D to open a new pane.</span></span><br><span class="line">    <span class="comment">// - "split": "auto" makes this pane open in the direction that provides the most surface area.</span></span><br><span class="line">    <span class="comment">// - "splitMode": "duplicate" makes the new pane use the focused pane's profile.</span></span><br><span class="line">    <span class="comment">// To learn more about panes, visit https://aka.ms/terminal-panes</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"command"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"splitPane"</span>,</span><br><span class="line">        <span class="attr">"split"</span>: <span class="string">"auto"</span>,</span><br><span class="line">        <span class="attr">"splitMode"</span>: <span class="string">"duplicate"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"keys"</span>: <span class="string">"alt+shift+d"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="自制bucket"><a href="#自制bucket" class="headerlink" title="自制bucket"></a>自制bucket</h1><p>最佳方式是使用模板 <a href="https://github.com/Ash258/GenericBucket" target="_blank" rel="noopener">https://github.com/Ash258/GenericBucket</a></p>
-<h3 id="如何解压exe的程序"><a href="#如何解压exe的程序" class="headerlink" title="如何解压exe的程序"></a>如何解压exe的程序</h3><p>首先下载的时候后面加上#/dl.7z类似的后缀..然后scoop保存的时候.会把他存在7z格式的文件夹</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;architecture&quot;: &#123;</span><br><span class="line">    &quot;64bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-64.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;BE14DE68FDBFB3663F57B6B28E8B0CC90AE876DD06CA899839BEB9377FE21436&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;32bit&quot;: &#123;</span><br><span class="line">        &quot;url&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;RoderickQiu&#x2F;wnr&#x2F;releases&#x2F;download&#x2F;v1.17.1&#x2F;wnr-1.17.1-Setup-32.exe#&#x2F;dl.7z&quot;,</span><br><span class="line">        &quot;hash&quot;: &quot;9C437170019E8AFC82B64A5475E349602E03A9493DD6AC6CACF58FDFD75762DD&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-<p>例如上面旧会被存在scoop/cache/wnr#1.17.1#https_github.com_RoderickQiu_wnr_releases_download_v1.17.1_wnr-1.17.1-Setup-64.exe_dl.7z</p>
-<p>然后旧可以解压了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;installer&quot;: &#123;</span><br><span class="line">    &quot;script&quot;: [</span><br><span class="line">        &quot;Expand-7zipArchive -Path (Join-Path $dir &#39;$PLUGINSDIR\\*.7z&#39;) -DestinationPath $dir&quot;,</span><br><span class="line">        &quot;Remove-Item -Path (Join-Path $dir &#39;$PLUGINSDIR&#39;) -Recurse&quot;,</span><br><span class="line">        &quot;Remove-Item \&quot;$dir\\Uninstall wnr.exe\&quot;&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-
-
-<p>安装脚本都是执行在Scoop\apps\wnr\versions下面</p>
-<h3 id="导出-Scoop-软件列表"><a href="#导出-Scoop-软件列表" class="headerlink" title="导出 Scoop 软件列表"></a>导出 Scoop 软件列表</h3><p>备份 Scoop 的方式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">scoop export &gt; scoop.txt</span><br></pre></td></tr></table></figure>
-
-<p>可以对 Scoop 的导出列表进行额外处理，以方便后续安装。使用 VSCode 打开 <code>scoop.txt</code> 文件，以正则表达式搜索：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(.*?) .*</span><br></pre></td></tr></table></figure>
-
-<p>并全部替换成：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$1</span><br></pre></td></tr></table></figure>
-
-<p>注意正则式中包含空格，请完整复制。</p>
-<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2019-08-20-scoop-use/03.jpg" alt="VSCode 中的正则式替换"></p>
+<h3 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h3><ul>
+<li><a href="https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files" target="_blank" rel="noopener">包的版本号</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/customize-your-build?view=vs-2019" target="_blank" rel="noopener">Directory.Build.props的说明</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>tool</category>
       </categories>
       <tags>
-        <tag>Win</tag>
-        <tag>shell</tag>
-        <tag>windows</tag>
         <tag>C</tag>
-        <tag>GitHub</tag>
-        <tag>Java</tag>
-        <tag>代理</tag>
-        <tag>PHP</tag>
-        <tag>Redis</tag>
-        <tag>JS</tag>
-        <tag>proxy</tag>
-        <tag>powershell</tag>
-        <tag>scoop</tag>
       </tags>
   </entry>
   <entry>
@@ -6507,6 +6507,58 @@
       </tags>
   </entry>
   <entry>
+    <title>理解自动内存管理</title>
+    <url>/unity-2020-02-19-UnderstandingAutomaticMemoryManagement/</url>
+    <content><![CDATA[<p>当创建对象、字符串或数组时，存储它所需的内存将从称为堆的中央池中分配。当项目不再使用时，它曾经占用的内存可以被回收并用于别的东西。在过去，通常由程序员通过适当的函数调用明确地分配和释放这些堆内存块。如今，像Unity的Mono引擎这样的运行时系统会自动为您管理内存。自动内存管理需要比显式分配/释放更少的编码工作，并大大降低内存泄漏（内存被分配但从未随后释放的情况）的可能性。</p>
+<h2 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h2><p>当调用一个函数时，它的参数值将被复制到一个保留特定调用的内存区域。只占用几个字节的数据类型可以非常快速方便地复制。然而，对象、字符串和数组要大得多，如果这些类型的数据被定期复制，那将是非常低效的。幸运的是，这是不必要的；大项目的实际存储空间是从堆中分配的，一个小的“指针”值用来记住它的位置。从那时起，只有指针在参数传递过程中需要被复制。只要运行时系统能够定位指针标识的项，就可以经常使用数据的一个副本。<br>在参数传递期间直接存储和复制的类型称为值类型。这些包括整数，浮点数，布尔和Unity的结构类型（例如Color和Vector3）。分配在堆上然后通过指针访问的类型称为引用类型，因为存储在变量中的值仅仅是“引用”到真实数据。引用类型的示例包括对象，字符串和数组。</p>
+<h2 id="内存分配和垃圾收集"><a href="#内存分配和垃圾收集" class="headerlink" title="内存分配和垃圾收集"></a>内存分配和垃圾收集</h2><p>内存管理器跟踪它知道未被使用的堆中的区域。当请求一个新的内存块时（例如当一个对象被实例化时），管理器选择一个未使用的区域，从中分配该块，然后从已知的未使用的空间中移除分配的内存。后续请求以相同的方式处理，直到没有足够大的空闲区域分配所需的块大小。在这一点上，从堆中分配的所有内存仍然在使用中是非常不可能的。只要还存在可以找到它的引用变量，就只能访问堆上的引用项。如果对内存块的所有引用都消失了（即，引用变量已被重新分配，或者它们是现在超出范围的局部变量），则它占用的内存可以安全地重新分配。<br>为了确定哪些堆块不再被使用，内存管理器会搜索所有当前活动的引用变量，并将它们所指的块标记为<code>live</code>。在搜索结束时，内存管理器认为这些<code>live</code>块之间的任何空间都是空的，并且可用于后续分配。由于显而易见的原因，定位和释放未使用的内存的过程被称为垃圾回收（或简称GC）。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>垃圾收集对程序员来说是自动的、不可见的，但是收集过程实际上需要大量的CPU时间。如果正确使用，自动内存管理通常会等于或击败手动分配的整体性能。但是，对于程序员来说，重要的是要避免那些比实际需要触发更多次收集器和在执行中引入暂停的错误。有一些臭名昭著的算法，可能是GC噩梦，尽管他们乍一看是无辜的。重复字符串连接是一个典型的例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void ConcatExample(int[] intArray) &#123;</span><br><span class="line">        string line &#x3D; intArray[0].ToString();</span><br><span class="line">        </span><br><span class="line">        for (i &#x3D; 1; i &lt; intArray.Length; i++) &#123;</span><br><span class="line">            line +&#x3D; &quot;, &quot; + intArray[i].ToString();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return line;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function ConcatExample(intArray: int[]) &#123;</span><br><span class="line">    var line &#x3D; intArray[0].ToString();</span><br><span class="line">    </span><br><span class="line">    for (i &#x3D; 1; i &lt; intArray.Length; i++) &#123;</span><br><span class="line">        line +&#x3D; &quot;, &quot; + intArray[i].ToString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return line;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的关键细节是，新的部分不会被一个接一个地添加到字符串中。实际情况是，每次循环<code>line</code>变量的前一个内容都会变死——一个完整的新字符串被分配到包含原来的部分，再在最后加上新的部分。由于字符串随着<code>i</code>值的增加而变得更长，所以所消耗的堆空间数量也增加了，因此每次调用这个函数时都很容易消耗数百字节的空闲堆空间。如果你需要连接多个字符串，那么一个更好的选择是Mono库的<a href="https://msdn.microsoft.com/en-gb/library/system.text.stringbuilder.aspx" target="_blank" rel="noopener">System.Text.StringBuilder</a>类。然而，即使反复连接也不会引起太多麻烦，除非它被频繁调用，而在Unity中通常意味着帧更新。就像是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    public GUIText scoreBoard;</span><br><span class="line">    public int score;</span><br><span class="line">    </span><br><span class="line">    void Update() &#123;</span><br><span class="line">        string scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">        scoreBoard.text &#x3D; scoreText;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">var scoreBoard: GUIText;</span><br><span class="line">var score: int;</span><br><span class="line"></span><br><span class="line">function Update() &#123;</span><br><span class="line">    var scoreText: String &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">    scoreBoard.text &#x3D; scoreText;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>…每次调用Update将分配新字符串，并不断生成的新垃圾。大多数情况下，只有当分数变化时才更新文本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    public GUIText scoreBoard;</span><br><span class="line">    public string scoreText;</span><br><span class="line">    public int score;</span><br><span class="line">    public int oldScore;</span><br><span class="line">    </span><br><span class="line">    void Update() &#123;</span><br><span class="line">        if (score !&#x3D; oldScore) &#123;</span><br><span class="line">            scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">            scoreBoard.text &#x3D; scoreText;</span><br><span class="line">            oldScore &#x3D; score;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">var scoreBoard: GUIText;</span><br><span class="line">var scoreText: String;</span><br><span class="line">var score: int;</span><br><span class="line">var oldScore: int;</span><br><span class="line"></span><br><span class="line">function Update() &#123;</span><br><span class="line">    if (score !&#x3D; oldScore) &#123;</span><br><span class="line">        scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">        scoreBoard.text &#x3D; scoreText;</span><br><span class="line">        oldScore &#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当函数返回数组值时，会发生另一个潜在的问题：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    float[] RandomList(int numElements) &#123;</span><br><span class="line">        var result &#x3D; new float[numElements];</span><br><span class="line">        </span><br><span class="line">        for (int i &#x3D; 0; i &lt; numElements; i++) &#123;</span><br><span class="line">            result[i] &#x3D; Random.value;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function RandomList(numElements: int) &#123;</span><br><span class="line">    var result &#x3D; new float[numElements];</span><br><span class="line">    </span><br><span class="line">    for (i &#x3D; 0; i &lt; numElements; i++) &#123;</span><br><span class="line">        result[i] &#x3D; Random.value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当创建一个充满值的新数组时，这种函数非常优雅和方便。但是，如果反复调用，那么每次都会分配新的内存。由于数组可能非常大，可用空间可能会迅速消耗，从而导致垃圾收集频繁。避免这个问题的一个方法是利用数组是引用类型的事实。作为参数传递给函数的数组可以在该函数内修改，结果将在函数返回后保留。<br>像上面这样的功能通常可以被替换成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void RandomList(float[] arrayToFill) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; arrayToFill.Length; i++) &#123;</span><br><span class="line">            arrayToFill[i] &#x3D; Random.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function RandomList(arrayToFill: float[]) &#123;</span><br><span class="line">    for (i &#x3D; 0; i &lt; arrayToFill.Length; i++) &#123;</span><br><span class="line">        arrayToFill[i] &#x3D; Random.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这只是用新值替换数组的现有内容。虽然这需要在调用代码中完成数组的初始分配（这似乎有些不雅），但是在调用该函数时不会产生任何新的垃圾。</p>
+<h2 id="主动请求垃圾收集"><a href="#主动请求垃圾收集" class="headerlink" title="主动请求垃圾收集"></a>主动请求垃圾收集</h2><p>如上所述，最好尽量避免分配。然而，鉴于它们不能被完全消除，您可以使用两种主要策略来最大限度地减少其入侵游戏：</p>
+<h3 id="小堆垃圾收集快速可频繁收集"><a href="#小堆垃圾收集快速可频繁收集" class="headerlink" title="小堆垃圾收集快速可频繁收集"></a>小堆垃圾收集快速可频繁收集</h3><p>这个策略通常最适合长期游戏的游戏，其中平滑的帧速率是主要的关注点。这样的游戏通常会频繁地分配小块，但这些块将仅在短时间内使用。在iOS上使用此策略时，典型的堆大小约为200KB，iPhone 3G上的垃圾收集大约需要5ms。如果堆增加到1MB，则收集大约需要7ms。因此，有时候可以以规则的帧间隔请求垃圾回收。这通常会使垃圾收集发生的次数比严格的需要的更多，但是它们将被快速处理，对游戏的影响最小：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (Time.frameCount % 30 &#x3D;&#x3D; 0)</span><br><span class="line">&#123;</span><br><span class="line">   System.GC.Collect();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，您应该谨慎使用此技术，并检查profiler统计信息，以确保它真正减少了游戏的收集时间。</p>
+<h3 id="大堆垃圾收集缓慢且不可频繁收集"><a href="#大堆垃圾收集缓慢且不可频繁收集" class="headerlink" title="大堆垃圾收集缓慢且不可频繁收集"></a>大堆垃圾收集缓慢且不可频繁收集</h3><p>这个策略对于分配（和因此收集）相对不频繁并可以在游戏暂停期间处理的游戏最适用。对于堆来说，尽可能大，而不是因为系统内存太少而导致操作系统杀死你的应用程序。但是，如果可能，Mono运行时会自动避免扩展堆。您可以通过在启动期间预先分配一些占位符空间来手动扩展堆（即，您实例化一个纯粹用于对内存管理器产生影响的“无用”对象）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void Start() &#123;</span><br><span class="line">        var tmp &#x3D; new System.Object[1024];</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; make allocations in smaller blocks to avoid them to be treated in a special way, which is designed for large blocks</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 1024; i++)</span><br><span class="line">            tmp[i] &#x3D; new byte[1024];</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; release reference</span><br><span class="line">        tmp &#x3D; null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function Start() &#123;</span><br><span class="line">    var tmp &#x3D; new System.Object[1024];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; make allocations in smaller blocks to avoid them to be treated in a special way, which is designed for large blocks</span><br><span class="line">        for (var i : int &#x3D; 0; i &lt; 1024; i++)</span><br><span class="line">        tmp[i] &#x3D; new byte[1024];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; release reference</span><br><span class="line">        tmp &#x3D; null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个足够大的堆不应该在游戏中的暂停期间完全被填满，这样可以容纳一次收集。当发生这样的暂停时，您可以显式地请求垃圾收集：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">System.GC.Collect();</span><br></pre></td></tr></table></figure>
+
+<p>同样，在使用此策略时应该小心，并注意Profiler统计数据，而不是仅仅假定它具有所期望的效果。</p>
+<h2 id="可重复使用的对象池"><a href="#可重复使用的对象池" class="headerlink" title="可重复使用的对象池"></a>可重复使用的对象池</h2><p>很多情况下，只要减少创建和销毁对象的数量，就可以避免生成垃圾。游戏中存在着某些类型的物体，如抛射体，尽管一次只会有少量的物体在游戏中，但它们可能会被反复地遇到。在这种情况下，常常可以重用对象，而不是破坏旧对象，并用新的对象替换它们。</p>
+<h2 id="更多信息"><a href="#更多信息" class="headerlink" title="更多信息"></a>更多信息</h2><p>内存管理是一个微妙而复杂的课题，它已经投入了大量的学术研究。如果您有兴趣了解更多信息，那么<a href="http://www.memorymanagement.org/" target="_blank" rel="noopener">memorymanagement.org</a>是一个很好的资源，列出了许多出版物和在线文章。有关对象池的更多信息可以在<a href="https://en.wikipedia.org/wiki/Object_pool_pattern" target="_blank" rel="noopener">维基百科页面</a>和<a href="https://sourcemaking.com/design_patterns/object_pool" target="_blank" rel="noopener">Sourcemaking.com</a>上找到。</p>
+<blockquote>
+<p>原文链接：<a href="https://docs.unity3d.com/Manual/UnderstandingAutomaticMemoryManagement.html" target="_blank" rel="noopener">Understanding Automatic Memory Management</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>unity</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>C#</tag>
+        <tag>游戏</tag>
+        <tag>Unity</tag>
+        <tag>UNITY</tag>
+        <tag>JS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>理解托管堆</title>
     <url>/unity-2020-02-18-BestPracticeUnderstandingPerformanceInUnity/</url>
     <content><![CDATA[<p>另一个Unity开发者面对的普遍问题是托管堆的意外扩展。在Unity中，托管堆的扩张比收缩更加容易。进一步说，Unity的垃圾回收策略倾向于碎片化内存，这可以防止收缩出来一个大的堆。</p>
@@ -6764,58 +6816,6 @@
         <tag>UNITY</tag>
         <tag>Java</tag>
         <tag>mesh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>理解自动内存管理</title>
-    <url>/unity-2020-02-19-UnderstandingAutomaticMemoryManagement/</url>
-    <content><![CDATA[<p>当创建对象、字符串或数组时，存储它所需的内存将从称为堆的中央池中分配。当项目不再使用时，它曾经占用的内存可以被回收并用于别的东西。在过去，通常由程序员通过适当的函数调用明确地分配和释放这些堆内存块。如今，像Unity的Mono引擎这样的运行时系统会自动为您管理内存。自动内存管理需要比显式分配/释放更少的编码工作，并大大降低内存泄漏（内存被分配但从未随后释放的情况）的可能性。</p>
-<h2 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h2><p>当调用一个函数时，它的参数值将被复制到一个保留特定调用的内存区域。只占用几个字节的数据类型可以非常快速方便地复制。然而，对象、字符串和数组要大得多，如果这些类型的数据被定期复制，那将是非常低效的。幸运的是，这是不必要的；大项目的实际存储空间是从堆中分配的，一个小的“指针”值用来记住它的位置。从那时起，只有指针在参数传递过程中需要被复制。只要运行时系统能够定位指针标识的项，就可以经常使用数据的一个副本。<br>在参数传递期间直接存储和复制的类型称为值类型。这些包括整数，浮点数，布尔和Unity的结构类型（例如Color和Vector3）。分配在堆上然后通过指针访问的类型称为引用类型，因为存储在变量中的值仅仅是“引用”到真实数据。引用类型的示例包括对象，字符串和数组。</p>
-<h2 id="内存分配和垃圾收集"><a href="#内存分配和垃圾收集" class="headerlink" title="内存分配和垃圾收集"></a>内存分配和垃圾收集</h2><p>内存管理器跟踪它知道未被使用的堆中的区域。当请求一个新的内存块时（例如当一个对象被实例化时），管理器选择一个未使用的区域，从中分配该块，然后从已知的未使用的空间中移除分配的内存。后续请求以相同的方式处理，直到没有足够大的空闲区域分配所需的块大小。在这一点上，从堆中分配的所有内存仍然在使用中是非常不可能的。只要还存在可以找到它的引用变量，就只能访问堆上的引用项。如果对内存块的所有引用都消失了（即，引用变量已被重新分配，或者它们是现在超出范围的局部变量），则它占用的内存可以安全地重新分配。<br>为了确定哪些堆块不再被使用，内存管理器会搜索所有当前活动的引用变量，并将它们所指的块标记为<code>live</code>。在搜索结束时，内存管理器认为这些<code>live</code>块之间的任何空间都是空的，并且可用于后续分配。由于显而易见的原因，定位和释放未使用的内存的过程被称为垃圾回收（或简称GC）。</p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>垃圾收集对程序员来说是自动的、不可见的，但是收集过程实际上需要大量的CPU时间。如果正确使用，自动内存管理通常会等于或击败手动分配的整体性能。但是，对于程序员来说，重要的是要避免那些比实际需要触发更多次收集器和在执行中引入暂停的错误。有一些臭名昭著的算法，可能是GC噩梦，尽管他们乍一看是无辜的。重复字符串连接是一个典型的例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void ConcatExample(int[] intArray) &#123;</span><br><span class="line">        string line &#x3D; intArray[0].ToString();</span><br><span class="line">        </span><br><span class="line">        for (i &#x3D; 1; i &lt; intArray.Length; i++) &#123;</span><br><span class="line">            line +&#x3D; &quot;, &quot; + intArray[i].ToString();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return line;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function ConcatExample(intArray: int[]) &#123;</span><br><span class="line">    var line &#x3D; intArray[0].ToString();</span><br><span class="line">    </span><br><span class="line">    for (i &#x3D; 1; i &lt; intArray.Length; i++) &#123;</span><br><span class="line">        line +&#x3D; &quot;, &quot; + intArray[i].ToString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return line;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里的关键细节是，新的部分不会被一个接一个地添加到字符串中。实际情况是，每次循环<code>line</code>变量的前一个内容都会变死——一个完整的新字符串被分配到包含原来的部分，再在最后加上新的部分。由于字符串随着<code>i</code>值的增加而变得更长，所以所消耗的堆空间数量也增加了，因此每次调用这个函数时都很容易消耗数百字节的空闲堆空间。如果你需要连接多个字符串，那么一个更好的选择是Mono库的<a href="https://msdn.microsoft.com/en-gb/library/system.text.stringbuilder.aspx" target="_blank" rel="noopener">System.Text.StringBuilder</a>类。然而，即使反复连接也不会引起太多麻烦，除非它被频繁调用，而在Unity中通常意味着帧更新。就像是：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    public GUIText scoreBoard;</span><br><span class="line">    public int score;</span><br><span class="line">    </span><br><span class="line">    void Update() &#123;</span><br><span class="line">        string scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">        scoreBoard.text &#x3D; scoreText;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">var scoreBoard: GUIText;</span><br><span class="line">var score: int;</span><br><span class="line"></span><br><span class="line">function Update() &#123;</span><br><span class="line">    var scoreText: String &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">    scoreBoard.text &#x3D; scoreText;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>…每次调用Update将分配新字符串，并不断生成的新垃圾。大多数情况下，只有当分数变化时才更新文本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    public GUIText scoreBoard;</span><br><span class="line">    public string scoreText;</span><br><span class="line">    public int score;</span><br><span class="line">    public int oldScore;</span><br><span class="line">    </span><br><span class="line">    void Update() &#123;</span><br><span class="line">        if (score !&#x3D; oldScore) &#123;</span><br><span class="line">            scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">            scoreBoard.text &#x3D; scoreText;</span><br><span class="line">            oldScore &#x3D; score;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">var scoreBoard: GUIText;</span><br><span class="line">var scoreText: String;</span><br><span class="line">var score: int;</span><br><span class="line">var oldScore: int;</span><br><span class="line"></span><br><span class="line">function Update() &#123;</span><br><span class="line">    if (score !&#x3D; oldScore) &#123;</span><br><span class="line">        scoreText &#x3D; &quot;Score: &quot; + score.ToString();</span><br><span class="line">        scoreBoard.text &#x3D; scoreText;</span><br><span class="line">        oldScore &#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当函数返回数组值时，会发生另一个潜在的问题：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    float[] RandomList(int numElements) &#123;</span><br><span class="line">        var result &#x3D; new float[numElements];</span><br><span class="line">        </span><br><span class="line">        for (int i &#x3D; 0; i &lt; numElements; i++) &#123;</span><br><span class="line">            result[i] &#x3D; Random.value;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function RandomList(numElements: int) &#123;</span><br><span class="line">    var result &#x3D; new float[numElements];</span><br><span class="line">    </span><br><span class="line">    for (i &#x3D; 0; i &lt; numElements; i++) &#123;</span><br><span class="line">        result[i] &#x3D; Random.value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当创建一个充满值的新数组时，这种函数非常优雅和方便。但是，如果反复调用，那么每次都会分配新的内存。由于数组可能非常大，可用空间可能会迅速消耗，从而导致垃圾收集频繁。避免这个问题的一个方法是利用数组是引用类型的事实。作为参数传递给函数的数组可以在该函数内修改，结果将在函数返回后保留。<br>像上面这样的功能通常可以被替换成：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void RandomList(float[] arrayToFill) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; arrayToFill.Length; i++) &#123;</span><br><span class="line">            arrayToFill[i] &#x3D; Random.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function RandomList(arrayToFill: float[]) &#123;</span><br><span class="line">    for (i &#x3D; 0; i &lt; arrayToFill.Length; i++) &#123;</span><br><span class="line">        arrayToFill[i] &#x3D; Random.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这只是用新值替换数组的现有内容。虽然这需要在调用代码中完成数组的初始分配（这似乎有些不雅），但是在调用该函数时不会产生任何新的垃圾。</p>
-<h2 id="主动请求垃圾收集"><a href="#主动请求垃圾收集" class="headerlink" title="主动请求垃圾收集"></a>主动请求垃圾收集</h2><p>如上所述，最好尽量避免分配。然而，鉴于它们不能被完全消除，您可以使用两种主要策略来最大限度地减少其入侵游戏：</p>
-<h3 id="小堆垃圾收集快速可频繁收集"><a href="#小堆垃圾收集快速可频繁收集" class="headerlink" title="小堆垃圾收集快速可频繁收集"></a>小堆垃圾收集快速可频繁收集</h3><p>这个策略通常最适合长期游戏的游戏，其中平滑的帧速率是主要的关注点。这样的游戏通常会频繁地分配小块，但这些块将仅在短时间内使用。在iOS上使用此策略时，典型的堆大小约为200KB，iPhone 3G上的垃圾收集大约需要5ms。如果堆增加到1MB，则收集大约需要7ms。因此，有时候可以以规则的帧间隔请求垃圾回收。这通常会使垃圾收集发生的次数比严格的需要的更多，但是它们将被快速处理，对游戏的影响最小：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (Time.frameCount % 30 &#x3D;&#x3D; 0)</span><br><span class="line">&#123;</span><br><span class="line">   System.GC.Collect();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>但是，您应该谨慎使用此技术，并检查profiler统计信息，以确保它真正减少了游戏的收集时间。</p>
-<h3 id="大堆垃圾收集缓慢且不可频繁收集"><a href="#大堆垃圾收集缓慢且不可频繁收集" class="headerlink" title="大堆垃圾收集缓慢且不可频繁收集"></a>大堆垃圾收集缓慢且不可频繁收集</h3><p>这个策略对于分配（和因此收集）相对不频繁并可以在游戏暂停期间处理的游戏最适用。对于堆来说，尽可能大，而不是因为系统内存太少而导致操作系统杀死你的应用程序。但是，如果可能，Mono运行时会自动避免扩展堆。您可以通过在启动期间预先分配一些占位符空间来手动扩展堆（即，您实例化一个纯粹用于对内存管理器产生影响的“无用”对象）：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;C# script example</span><br><span class="line">using UnityEngine;</span><br><span class="line">using System.Collections;</span><br><span class="line"></span><br><span class="line">public class ExampleScript : MonoBehaviour &#123;</span><br><span class="line">    void Start() &#123;</span><br><span class="line">        var tmp &#x3D; new System.Object[1024];</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; make allocations in smaller blocks to avoid them to be treated in a special way, which is designed for large blocks</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 1024; i++)</span><br><span class="line">            tmp[i] &#x3D; new byte[1024];</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; release reference</span><br><span class="line">        tmp &#x3D; null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;JS script example</span><br><span class="line">function Start() &#123;</span><br><span class="line">    var tmp &#x3D; new System.Object[1024];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; make allocations in smaller blocks to avoid them to be treated in a special way, which is designed for large blocks</span><br><span class="line">        for (var i : int &#x3D; 0; i &lt; 1024; i++)</span><br><span class="line">        tmp[i] &#x3D; new byte[1024];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; release reference</span><br><span class="line">        tmp &#x3D; null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个足够大的堆不应该在游戏中的暂停期间完全被填满，这样可以容纳一次收集。当发生这样的暂停时，您可以显式地请求垃圾收集：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">System.GC.Collect();</span><br></pre></td></tr></table></figure>
-
-<p>同样，在使用此策略时应该小心，并注意Profiler统计数据，而不是仅仅假定它具有所期望的效果。</p>
-<h2 id="可重复使用的对象池"><a href="#可重复使用的对象池" class="headerlink" title="可重复使用的对象池"></a>可重复使用的对象池</h2><p>很多情况下，只要减少创建和销毁对象的数量，就可以避免生成垃圾。游戏中存在着某些类型的物体，如抛射体，尽管一次只会有少量的物体在游戏中，但它们可能会被反复地遇到。在这种情况下，常常可以重用对象，而不是破坏旧对象，并用新的对象替换它们。</p>
-<h2 id="更多信息"><a href="#更多信息" class="headerlink" title="更多信息"></a>更多信息</h2><p>内存管理是一个微妙而复杂的课题，它已经投入了大量的学术研究。如果您有兴趣了解更多信息，那么<a href="http://www.memorymanagement.org/" target="_blank" rel="noopener">memorymanagement.org</a>是一个很好的资源，列出了许多出版物和在线文章。有关对象池的更多信息可以在<a href="https://en.wikipedia.org/wiki/Object_pool_pattern" target="_blank" rel="noopener">维基百科页面</a>和<a href="https://sourcemaking.com/design_patterns/object_pool" target="_blank" rel="noopener">Sourcemaking.com</a>上找到。</p>
-<blockquote>
-<p>原文链接：<a href="https://docs.unity3d.com/Manual/UnderstandingAutomaticMemoryManagement.html" target="_blank" rel="noopener">Understanding Automatic Memory Management</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>unity</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>C#</tag>
-        <tag>游戏</tag>
-        <tag>Unity</tag>
-        <tag>UNITY</tag>
-        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
@@ -7333,6 +7333,557 @@
         <tag>sync</tag>
         <tag>同步</tag>
         <tag>UNITY</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UNITY性能优化流程</title>
+    <url>/unity-2020-09-10-optimizing-for-performance/</url>
+    <content><![CDATA[<h1 id="资源检查"><a href="#资源检查" class="headerlink" title="资源检查"></a>资源检查</h1><p>首先第一部分.我们要注意在平时工作中需要注意哪些地方养成一套流程规范.避免出现已经被总结出来的问题</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>Unity 的垃圾收集（使用 <a href="https://en.wikipedia.org/wiki/Boehm_garbage_collector" target="_blank" rel="noopener">Boehm GC 算法</a>）是非分代的，也是非压缩的。“非分代”意味着 GC 在执行每遍收集时必须扫描整个堆，因此随着堆的扩展，其性能会下降。“非压缩”意味着不会为内存中的对象重新分配内存地址来消除对象之间的间隙。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-10-optimizing-for-performance/UnderstandingPerformanceinUnity-AssetAuditingSection_image_1.png" alt="img"></p>
+<p>上图为内存碎片化示例。释放对象时，将释放其内存。但是，释放的空间<strong>不会</strong>整合成为整个“可用内存”池的一部分。位于释放的对象两侧的对象可能仍在使用中。因此，释放的空间成为其他内存段之间的“间隙”（该间隙由上图中的红色圆圈指示）。因此，新释放的空间仅可用于存储与释放相同大小或更小的对象的数据。</p>
+<p>分配对象时，请注意对象在内存空间中的分配地址必须始终为连续空间块。</p>
+<p>这导致了内存碎片化这个核心问题：虽然堆中的可用空间总量可能很大，但是可能其中的部分或全部的可分配空间对象之间存在小的“间隙”。这种情况下，即使可用空间总量高于要分配的空间量，托管堆可能也找不到足够大的连续内存块来满足该分配需求。</p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ol>
+<li><p>Unity 不使用字符串名称对 Animator、Material 和 Shader 属性进行内部寻址。为了加快速度，所有属性名称都经过哈希处理为属性 ID，实际上正是这些 ID 用于寻址属性。<a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Animator.StringToHash.html" target="_blank" rel="noopener">Animator.StringToHash</a> 是用于 Animator 属性名称的对应 API，<a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Shader.PropertyToID.html" target="_blank" rel="noopener">Shader.PropertyToID</a> 是用于 Material 和 Shader 属性名称的对应 API。</p>
+</li>
+<li><p>将 <a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Physics.RaycastAll.html" target="_blank" rel="noopener">RaycastAll</a> 调用替换为 <a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Physics.RaycastNonAlloc.html" target="_blank" rel="noopener">RaycastNonAlloc</a>，将 <a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Physics.SphereCastAll.html" target="_blank" rel="noopener">SphereCastAll</a> 调用替换为 <a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Physics.SphereCastNonAlloc.html" target="_blank" rel="noopener">SphereCastNonAlloc</a>，以此类推。对于 2D 应用程序，也存在所有 Physics2D 查询 API 的非分配版本。</p>
+</li>
+<li><p>请避免在紧凑循环中或每帧运行的代码中进行UnityEngine.Object 子类和 Null 比较。Il2cpp中此过程必须执行查找和验证以便将脚本引用转换为对原生代码的引用。</p>
+</li>
+<li><p>整数数学比浮点数学更快，而浮点数学比矢量、矩阵或四元数运算更快。每当交换或关联算术允许时，请尝试最小化单个数学运算的成本</p>
+</li>
+<li><p>最好完全避免在生产代码中使用 <code>Object.Find</code> 和 <code>Object.FindObjectOfType</code>。还有<code>Camera.main</code>也使用了<code>FindGameObjectsWithTag</code>,由于此类 API 要求 Unity 遍历内存中的所有游戏对象和组件，因此它们会随着项目规模的扩大而产生性能问题。(除了单例,因为有缓存)</p>
+</li>
+<li><p>在紧凑循环中尽量少用<code>属性(get,set)</code>和<code>方法</code>,调用的每个方法都必须在内存中找到该方法的地址，并将另一个帧推入栈。所有这些操作都是有成本的，但在大多数代码中，它们都小到可以忽略不计.但是，在紧凑循环中运行较小的方法时，因引入额外方法调用而增加的开销可能会变得非常显著，甚至占主导地位。.例如</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int Accum &#123; get; set; &#125;</span><br><span class="line">Accum &#x3D; 0;</span><br><span class="line"></span><br><span class="line">for(int i &#x3D; 0;</span><br><span class="line">       i &lt; myList.Count;    &#x2F;&#x2F; myList.Count 调用 Count 属性上的 get 方法</span><br><span class="line">       i++) &#123;</span><br><span class="line">    Accum       &#x2F;&#x2F; 通过 set 将加法运算的结果分配给 Accum</span><br><span class="line">+&#x3D;      &#x2F;&#x2F; 通过 get 检索 Accum 的当前值，以便将其传递给加法运算</span><br><span class="line">myList[i];  &#x2F;&#x2F; [] 运算符调用列表的 get_Value 方法来检索列表特定索引位置的项值。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移除空的MonoBehaviour方法start update awake..理由同上</p>
+</li>
+<li><p>不要在运行时使用AddComponent将组件添加到GameObjects可能是一项非常昂贵的操作。因为他会先看组件有没有DisallowMultipleComponent的设置,然后又重复上述的检查一次最后还需要调用所有被加入的monobehaviour的awake方法,这些所有步骤都发生在堆内存上</p>
+</li>
+<li><p>不要使用Texture2D.SetPixels() ,使用Texture2D.SetPixels32() 或者 GetRawTextureData()/Apply() 代替</p>
+</li>
+<li><p>尽量避免调用Object.Instantiate再经常更新的代码。这里可以使用poolmanager代替</p>
+</li>
+</ol>
+<h3 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h3><ol>
+<li>meshreander-&gt;lighting -&gt; cast shadows关闭阴影投射</li>
+<li>尽可能少的light,然后只对特定曾有用</li>
+<li>过高的分辨率会造成手机发热..可以使用Screen.SetResolution(width,height,false)</li>
+</ol>
+<h3 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h3><ol>
+<li>将对象隐藏起来,而不是移动到屏幕外边..因为摄像机依然能看到这些对象,依然会被渲染</li>
+<li>如果UI元素改变数值或是位置,会影响批次处理,造成对Gpu发送更多drawcall,所以将更新频率不同的ui分再不同的画布上</li>
+<li>同张画布中的ui元素要有一样的z值</li>
+<li>ui元素必须拥有一样的材质和纹理</li>
+<li>对象拥有一样的clipping rect(矩形裁剪范围)</li>
+<li>去掉不需要的Graphic Raycaster,每次当用户点击触发事件时,系统就会遍历所有可能接收输入事件的ui元素,这会造成多次”点落再矩形中”检查,来判断对象是否该做出反应</li>
+<li>如果打开了全屏ui,把渲染3d场景的摄像机关掉</li>
+<li>如果打开了全屏ui,隐藏其他被遮蔽的ui,如果可以,建议你关闭canvas组件,而不是游戏对象本身,这样能减少画布再次出现的时间.禁用canvase组件会阻止画布向Gpu发起绘图调用,所以该画布不再可见,然后,此时该画布不会丢弃它的顶点缓冲区,它会保留所有网格和顶点,当重新启用时,不会触发重构过程,它只会重新绘制画布内容.此外禁用canvas组件不会触发canvas层级上性能消耗较大的ondisable/onenable回调,禁用子组件时要小心,注意它是否运行性能消耗较大的每帧代码.</li>
+<li>尽可能的降低帧率,如果有个静态的ui,就没有必要设置帧率到60</li>
+<li>如果texture是中心镂空且切图为九宫格时，可以去除fill center，以减少over draw。</li>
+<li>使用Empty4Raycast代替空的image</li>
+<li>不要使用ugui的outline和shadow,他时把原来的顶点copy多份进行实现的..可以使用shader进行实现</li>
+<li>mask会增加一个drawcall,并且mask里面的图片不会和外面的图片合批,</li>
+<li>Scroll Rect 组件对应的Content填加 Canvas 组件 ，因为对应的Mask 子元素依然参与全局的Depth排序，避免因拖动打乱原有的Depth排序，造成合批失败</li>
+<li>尽量不要使用layout,因为会从变动节点递归向上调用GetComponents</li>
+</ol>
+<h4 id="图集整理"><a href="#图集整理" class="headerlink" title="图集整理"></a>图集整理</h4><p>为什么使用图集?</p>
+<ol>
+<li><p>图片尺寸为2的次幂时，GPU处理起来会快很多，小图自己是做不到每张图都是2的次幂的，但打成一张大图就可以（浪费一点也无所谓）；</p>
+</li>
+<li><p>CPU在传送资源信息给GPU时，只需要传一张大图就可以了，因为GPU可以在这张图中的不同区域进行采样，然后拼出对应的界面。注意，这就是为什么需要用同一个Source Image图集的原因，是Batch的关键，因为一个Drawcall就把所有原材料传过去了，GPU你画去吧</p>
+</li>
+</ol>
+<p>但是显然把所有图片打成一张图集是不合理的，因为这张图可能非常大，所以就要按照一定规则将图片进行分类。在分类思路上，我们希望做到Drawcall尽可能少，同时资源量也尽可能少（多些重用），但这两者某种程度上是互斥的，所以折衷一下，可以遵循以下思路：</p>
+<ul>
+<li>设计UI时要考虑重用性，如一些边框、按钮等，这些作为共享资源，放在1~3张大图集中，称为<strong>重用图集</strong>；</li>
+<li>其它非重用UI按照功能模块进行划分，每个模块使用1~2张图集，为<strong>功能图集</strong>；</li>
+<li>对于一些UI，如果同时用到<strong>功能图集</strong>与<strong>重用图集</strong>，但是其<strong>功能图集</strong>剩下的“空位”较多，则可以考虑将用到的<strong>重用图集</strong>中的元素单独拎出来，合入<strong>功能图集</strong>中，从而做到让UI只依赖于<strong>功能图集</strong>。也就是通过一定的冗余，来达到性能的提升。</li>
+</ul>
+<h4 id="UGUI层级合并规则与批次生成规则"><a href="#UGUI层级合并规则与批次生成规则" class="headerlink" title="UGUI层级合并规则与批次生成规则"></a>UGUI层级合并规则与批次生成规则</h4><p>UGUI的层叠顺序是按照Hierarchy中的顺序从上往下进行的，也就是越靠上的组件，就会被画在越底部。</p>
+<p>所以UI就是这样一层一层地叠上去画出来的。当然这样一个一个地画效率肯定是不能接受的，所以要合并，要Batch，Unity自身就提供了一个算法去决定哪些层应该合并到一起，并以什么样的顺序进行绘制。<strong>所有相邻层的可Batch的UI元素将会在一个Drawcall完成</strong>。接下来就来讨论一下Unity的层级合并与计算算法。</p>
+<p>Unity的UI渲染顺序的确定有2个步骤，第一步计算每个UI元素的<strong>层级号</strong>；第二步合并相同<strong>层级号</strong>中可以Batch的元素作为一个<strong>批次</strong>，并对<strong>批次</strong>进行排序；</p>
+<p>先从直观的角度来解释<strong>计算层级号的算法</strong>：</p>
+<ul>
+<li>如果有一个UI元素，它所占的屏幕范围内（通常是矩形），</li>
+<li>如果没有任何UI在它的底下，那么它的<strong>层级号</strong>就是0（最底下）；</li>
+<li>如果有一个UI在其底下且该UI可以和它Batch，那它的<strong>层级号</strong>与底下的UI层级一样；</li>
+<li>如果有一个UI在其底下但是无法与它Batch，那它的<strong>层级号</strong>为底下的UI的层级+1；</li>
+<li>如果有多个UI都在其下面，那么按前两种方式遍历计算所有的<strong>层级号</strong>，其中最大的那个作为自己的<strong>层级号</strong>。</li>
+</ul>
+<p>这里也给一下伪代码，假设所有UI元素（抛弃层级关系）都按从上往下的顺序被装在一个list中，那么每个UI元素对应的<strong>层级号</strong>计算可以参考以下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function">function <span class="title">CalLayer</span>(<span class="params">List UIEleLst</span>)</span></span><br><span class="line"><span class="function">  <span class="title">if</span>(<span class="params">UIEleLst.Count == <span class="number">0</span> </span>) return</span>;</span><br><span class="line">  <span class="comment">//Initial the first UI Element as layer 0</span></span><br><span class="line">  UIEleLst[<span class="number">0</span>].layer = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">1</span> ~ UIEleLst.Count)&#123;</span><br><span class="line">    <span class="keyword">var</span> IsCollideWithElements = <span class="literal">false</span>; </span><br><span class="line">    <span class="comment">//Compare with all elements beneath</span></span><br><span class="line">    <span class="keyword">for</span>(j = i<span class="number">-1</span> ~ <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//If Element-i collide with Element-j</span></span><br><span class="line">      <span class="keyword">if</span>(UIEleLst[i].Rect.CollideWith(UIEleLst[j].Rect))&#123;</span><br><span class="line">        IsCollideWithElements = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">//If Element-i can be batched with Element-j, same layer as Element-j</span></span><br><span class="line">        <span class="keyword">if</span>(UIEleLst[i].QualifyToBatchWith(UIEleLst[j]))&#123;</span><br><span class="line">          UIEleLst[i].layer = UIEleLst[j].layer;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="comment">//Or else the layer is larger </span></span><br><span class="line">          UIEleLst[i].layer = UIEleLst[j].layer + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//If not collide with any elements beneath, set layer to 0</span></span><br><span class="line">    <span class="keyword">if</span>(!IsCollideWithElements)</span><br><span class="line">    &#123;</span><br><span class="line">      UIEleLst[i].layer = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了层级号之后，就要<strong>合并批次</strong>了，</p>
+<p>此时，Unity会将每一层的所有元素进行一个排序（按照材质、纹理等信息），合并掉可以Batch的元素成为一个<strong>批次</strong>，</p>
+<p><strong>目前已知的排序规则是，Text组件会排在Image组件之前渲染</strong>，而同一类组件的情况下排序规则未知（好像并没什么规则）。</p>
+<p><strong>经过以上排序，就可以得到一个有序的批次序列了</strong>。这时，<strong>Unity会再做一个优化，即如果相邻间的两个批次正好可以Batch的话就会进行Batch</strong>。</p>
+<p>举个栗子，一个层级为0的ImageA，一个层级为1的ImageB（2个Image可Batch）和一个层级为0的TextC，</p>
+<p>Unity排序后的批次为TextC-&gt;ImageA-&gt;ImageB，后两个批次可以合并，所以是2个Drawcall。</p>
+<p>再举个栗子，一个层级为0的TextD，一个层级为1的TextE（2个Text可Batch）和一个层级为0的ImageF，</p>
+<p>Unity排序后的批次为TextD-&gt;ImageF-&gt;TextE，这时就需要3个Drawcall了！（是不是有点晕，再回顾下黑体字）</p>
+<p>以下的伪代码有些偷懒，实在懒得写排序、合并之类的，一长串也不好读，几个步骤列一下，其它诸位看上面那段文字脑补下吧…</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function">function <span class="title">MergeBatch</span>(<span class="params">List UIEleLst</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//Order the UI Elements by their layers and batch-keys, </span></span><br><span class="line">  <span class="comment">//batch-key is a combination of its component type, </span></span><br><span class="line">  <span class="comment">//texture and material info</span></span><br><span class="line">  UIEleLst.OrderBy(</span><br><span class="line">   (uiElement)=&gt;&#123;<span class="keyword">return</span> <span class="keyword">this</span>.layer &gt; uiElement.layer</span><br><span class="line">   || <span class="keyword">this</span>.BatchKey() &gt; uiElement.BatchKey()&#125; </span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Merge the UI Elements with same layer and batch-key as a batch</span></span><br><span class="line">  <span class="keyword">var</span> BatchLst = UIEleLst.MergeSameElementsAsBatch();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Make adjacent batches with same batch-key merged</span></span><br><span class="line">  BatchLst.MergeAdjacentBatches();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> BatchLst;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据以上规则，就可以得出一些“摆UI”的技巧：</p>
+<ul>
+<li>有相同材质和纹理的UI元素是可以Batch的，可以Batch的UI上下叠在一块不会影响性能，但是如果不能Batch的UI元素叠在一块，就会增加Drawcall开销。</li>
+<li>要注意UI元素间的层叠关系，建议用“T”工具查看其矩形大小，因为有些图片透明，但是却叠在其它UI上面了，然后又无法Batch的话，就会无故多许多Drawcall；</li>
+<li>UI中出现最多的就是Image与Text组件，当Text叠在Image上面（如Button)，然后Text上又叠了一个图片时，就会至少多2个Drawcall，可以考虑将字体直接印在下面的图片上；</li>
+<li>有些情况可以考虑人为增加层级从而减少Drawcall，比如一个Text的层级为0，另一个可Batch的Text叠在一个图片A上，层级为1，那此时2个Text因为层级不同会安排2个Drawcall，但如果在第一个Text下放一个透明的图片（与图片A可Batch），那两个Text的层级就一致了，Drawcall就可以减少一个。</li>
+</ul>
+<h4 id="UI优化参考"><a href="#UI优化参考" class="headerlink" title="UI优化参考"></a>UI优化参考</h4><ul>
+<li><p><a href="https://www.jianshu.com/p/061e67308e5f" target="_blank" rel="noopener">Unity GUI(uGUI)使用心得与性能总结 - 简书 (jianshu.com)</a></p>
+</li>
+<li><p><a href="https://unity3d.com/how-to/unity-ui-optimization-tips?_ga=2.147783095.1436155110.1558584716-746267689.1557026511" target="_blank" rel="noopener">Some of the best optimization tips for Unity UI - Unity (unity3d.com)</a></p>
+</li>
+</ul>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><ol>
+<li><p>不要再update中重复实例化对象,使用了ecs同样注意,因为他也是执行在update中</p>
+</li>
+<li><p>不要使用闭包和匿名方法,因为闭包和匿名方法都会都是引用类型(c#将生成一个匿名类)会在堆上进行分配</p>
+</li>
+<li><p>避免装箱..虽然 Unity 的分配器实际会使用不同的内存池进行小型和大型分配，但 Unity 的垃圾回收器“不是”分代的，因此无法有效清除由装箱生成的小型、频繁的临时分配。</p>
+</li>
+<li><p>不要用foreach, Unity 的 C# 编译器生成的 IL 会构造一个通用值类型的枚举器来遍历值集合,而且通过枚举器遍历集合的方法调用成本更高，通常比通过 <code>for</code> 或 <code>while</code> 循环进行的手动迭代慢得多。</p>
+</li>
+<li><p>unityapi.. mesh.vertices和 Input.touches,每次访问 <code>.touches</code> 这些属性时都会发生分配。所以不要在循环和update中使用</p>
+</li>
+<li><p>避免使用<code>GetComponentsInChildren()</code>,<code>GetComponentsInParent()</code>,而是使用GetComponentsInChildren<T>(bool includeInactive, List<T> result);前者会分配托管内存,后者可以传入一个你保存的数组避免重新分配</p>
+</li>
+<li><p>不要使用linq因为会分配大量的托管内存</p>
+</li>
+<li><p>不要使用Texture2D.GetPixels() ,使用<code>Texture2D.GetRawTextureData()</code>代替此方法返回像素数据的NativeArray,前者会有大量的托管内存</p>
+</li>
+</ol>
+<p> 参考 : </p>
+<ul>
+<li><a href="https://docs.unity3d.com/cn/2020.2/Manual/BestPracticeUnderstandingPerformanceInUnity4-1.html" target="_blank" rel="noopener">了解托管堆 - Unity 手册 (unity3d.com)</a></li>
+<li><a href="https://docs.unity3d.com/cn/2020.2/Manual/UnderstandingAutomaticMemoryManagement.html" target="_blank" rel="noopener">了解自动内存管理 - Unity 手册 (unity3d.com)</a></li>
+<li><a href="https://docs.unity3d.com/cn/2020.2/Manual/BestPracticeUnderstandingPerformanceInUnity7.html" target="_blank" rel="noopener">一般优化 - Unity 手册 (unity3d.com)</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Tt4y1X7f6" target="_blank" rel="noopener">Unite Now - （中文字幕）性能优化技巧（上）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a></li>
+</ul>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><h3 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h3><ol>
+<li><p>动画曲线精度过高会增加动画占用内存; 此规则仅面向以文本格式序列化的*.anim文件中的浮点精度Custom Parameters: precision : 5</p>
+<p> 用文本编辑器打开.anim动画文件，修改m_EditorCurves::curve::m_Curve下的float值的精度。建议用脚本直接将此文件中所有float精度都调小。</p>
+</li>
+<li><p>场景中Animator组件的cullingMode是AlwaysAnimate会增加CPU使用率。</p>
+</li>
+</ol>
+<h3 id="Audio"><a href="#Audio" class="headerlink" title="Audio"></a>Audio</h3><ul>
+<li>如果不需要立体声,将音频文件设置为 Force To Mono,这样能省下一半的磁盘和内存</li>
+<li>降低文件比特率</li>
+<li>ios下使用adpcm和mp3格式</li>
+<li>安卓下使用vorbis格式</li>
+<li>如果小型文件&lt;200kb,load type设置成Decompress on Load,</li>
+<li>如果中型文件&gt;=200kb,load type 设置成Compressed in Memory</li>
+<li>大型文件,如背景音乐,load type设置成streaming</li>
+<li>如果时静音模式则销毁audiosourceComponent组件,如果设置成0的话,其实还是会造成不必要的内存与cpu占用</li>
+</ul>
+<h3 id="EditorSetting"><a href="#EditorSetting" class="headerlink" title="EditorSetting"></a>EditorSetting</h3><ol>
+<li>禁用 Accelerometer Frequency 陀螺仪</li>
+<li>尝试开启graphicJobs并测试 检查Editor -&gt; Project Settings -&gt; PlayerSettings -&gt; Graphic Jobs(Experimental)*的设置</li>
+<li>如果在项目中启用了physics, 可以考虑开启Prebake Collision Meshes选项 检查Editor -&gt; Project Settings -&gt; PlayerSettings -&gt; PreBake Collision Meshes的设置,这项设置可以减少加载/初始化的时间, 虽然会增加一些构建时间和包体积</li>
+<li>在Physics设置中LayerCollisionMatrix中的格子不应该都勾选上,这会增加CPU的负担, 应该取消勾选那些没有必要的格子 检查Editor -&gt; Project Settings -&gt; Physics -&gt; Layer Collision Matrix的设置</li>
+<li>在Physics2D设置中LayerCollisionMatrix中的格子不应该都勾选上 同上</li>
+<li>检查Graphics中StandardShaderQuality设置,这会增加编译时间和包体积, 除非你想要支持很多性能跨度很大的设备,检查Editor -&gt; Project Settings -&gt; Graphics -&gt; Tiers -&gt; Standard Shader Quality的设置,StandardShaderQuality选项在所有Graphics Tier中应相同</li>
+<li>检查Android的ManagedStrippingLevel设置 检查Editor -&gt; Project Settings -&gt; PlayerSettings -&gt; Managed Stripping Level的设置,Android设置中的ManagedStrippingLevel选项应为Medium或者High</li>
+</ol>
+<h3 id="Mesh"><a href="#Mesh" class="headerlink" title="Mesh"></a>Mesh</h3><ul>
+<li>开启mesh compression,来减少磁盘容量</li>
+<li>尽量关闭read/write enabled 选项,如果开启unity会存储两份mesh</li>
+<li>如果没有使用动画,关闭Rigs,如石头或者房子</li>
+<li>如果没有用到Blendshapes,ye关闭</li>
+<li>Normals and Tangents..法向量和切线信息,如果材质没用到.也关闭</li>
+</ul>
+<h3 id="Prefab"><a href="#Prefab" class="headerlink" title="Prefab"></a>Prefab</h3><h3 id="Scene"><a href="#Scene" class="headerlink" title="Scene"></a>Scene</h3><h3 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h3><p>导入大小需要设置maxsize和compression,否则将导致文件过大.打包的时候会占体积</p>
+<ul>
+<li>max size 尽可能的设置到最小</li>
+<li>pot(大小为2的幂次方) or atlas</li>
+<li>移除背景纹理和其他不透明纹理的alpha通道</li>
+<li>关闭read/write,以减少内存使用</li>
+<li>如果16bit color足够用了就不要使用 32bit</li>
+<li>如果不需要使用mipmaps 则禁用,例如 ui和sprites,或者相对于z值不会又任何变化的元素</li>
+</ul>
+<h3 id="Resources文件夹"><a href="#Resources文件夹" class="headerlink" title="Resources文件夹"></a>Resources文件夹</h3><p>尽量不要使用resources文件夹.它会打包到包体中.且在启动时会全部加载..</p>
+<h2 id="AssetBundle"><a href="#AssetBundle" class="headerlink" title="AssetBundle"></a>AssetBundle</h2><p>资源包冗余检测</p>
+<h1 id="工具检测"><a href="#工具检测" class="headerlink" title="工具检测"></a>工具检测</h1><h2 id="DrawCall"><a href="#DrawCall" class="headerlink" title="DrawCall"></a>DrawCall</h2><p><strong>一、什么是DrawCall？</strong></p>
+<p>​    在unity中，每次CPU准备数据并通知GPU的过程就称之为一个DrawCall。</p>
+<p>​    具体过程就是：设置颜色–&gt;绘图方式–&gt;顶点坐标–&gt;绘制–&gt;结束，所以在绘制过程中，如果能在一次DrawCall完成所有绘制就会大大提高运行效率，进而达到优化的目的。</p>
+<p><strong>二、DrawCall为什么会影响游戏运行效率？</strong></p>
+<p>说道为什么会影响效率，就首先要了解一下他的工作原理：为了CPU和GPU可以进行并行工作，就需要一个命令缓冲区，就是由CPU向其中添加命令，然后又GPU从中读取命令，这样就实现了通过CPU准备数据，通知GPU进行渲染。</p>
+<p>在每次调用DrawCall之前，CPU需要向GPU发送很多内容，主要是包括数据，渲染状态（就是设置对象需要的材质纹理等），命令等。CPU进行的操作具体就是：</p>
+<ul>
+<li>准备渲染对象，然后将渲染对象从硬盘加载到内存，然后从内存加载到显存，进而方便GPU高速处理</li>
+<li>设置每个对象的渲染状态，也就是设置对象的材质、纹理、着色器等</li>
+<li>输出渲染图元，然后向GPU发送DrawCall命令，并将渲染图元传递给GPU</li>
+</ul>
+<p>所以如果DrawCall数量过多就会导致CPU进行大量计算，进而导致CPU的过载，影响游戏运行效率。</p>
+<p><strong>三、批处理</strong></p>
+<ol>
+<li><p>批处理的目的就是为了减少DrawCall。DrawCall即CPU命令GPU去绘制。</p>
+</li>
+<li><p>如果我们需要渲染一千个三角形，那么把它们按一千个单独的网格进行渲染所花费的时间要远大于直接渲染一个包含了一千个三角形的网格。</p>
+</li>
+<li><p>要想使用批处理，需要物体有相同的材质。这是因为，对于使用同一个材质的物体，它们的不同仅仅在于顶点数据的差别，我们可以把这些顶点数据合并在一起，再一起发送给GPU，就可以完成一次批处理。</p>
+</li>
+<li><p>在unity中，有两种批处理：一是动态批处理，二是静态批处理。</p>
+</li>
+</ol>
+<p>对于动态批处理，unity会自动完成，不需要我们进行操作，而且物体是可以移动的，但是动态批处理有许多限制条件。<br>对于静态批处理，物体不可移动，但是限制条件很少。</p>
+<p> <strong>四、动态批处理</strong></p>
+<p>原理：每一帧把可以进行批处理的模型网格进行合并，再把合并后模型数据传递给GPU，然后使用同一个材质对其渲染。</p>
+<p>限制：</p>
+<ol>
+<li><p>顶点属性要小于900。例如，如果shader中需要使用顶点位置、法线和纹理坐标这三个顶点属性，那么要想让模型能够被动态批处理，它的顶点数目不能超过300。因此，优化策略就是shader的优化，少使用顶点属性，或者模型顶点数要尽可能少。</p>
+</li>
+<li><p>多Pass的shader会中断批处理。</p>
+</li>
+<li><p>在unity5中，动态批处理对于模型缩放的限制已经不存在了。</p>
+</li>
+<li><p>使用光照纹理的物体需要小心处理。为了让这些物体可以被动态批处理，需要保证它们指向光照纹理中的同一位置。</p>
+</li>
+</ol>
+<p><strong>五、静态批处理</strong></p>
+<p>原理：只在运行开始阶段，把需要进行静态批处理的模型合并到一个新的网格中，这意味着这些模型数据不可以在运行时刻被移动。</p>
+<p>优点：因为它只需要进行一次合并操作，因此比动态批处理更加高效。</p>
+<p>缺点：需要占用更多的内存来存储合并后的几何结构。</p>
+<p>操作：将Inspector面板右上角的Static勾选(实际上只需要勾选Batching Static即可)</p>
+<p>参考链接:</p>
+<ul>
+<li><a href="https://connect.unity.com/p/dong-tai-he-pi-yuan-li-ji-ru-he-cheng-gong-he-pi?app=true" target="_blank" rel="noopener">动态合批原理及如何成功合批 - Unity Connect</a></li>
+</ul>
+<h2 id="渲染统计窗口"><a href="#渲染统计窗口" class="headerlink" title="渲染统计窗口"></a>渲染统计窗口</h2><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-10-optimizing-for-performance/20160721173928287" alt="img"></p>
+<p>Batches：相当于DrawCall</p>
+<p>Saved by batching：通过批处理节省的DrawCall</p>
+<p>SetPass calls：跟Shader中Pass的数量有关，Pass越多这个越大</p>
+<p>影响DrawCall的因素：</p>
+<ol>
+<li>Pass越多DrawCall越大。可以通过FrameDebugger来查看DrawCall，当然也可以用Profiler，但后者不能查看DrawCall的具体情况。</li>
+<li>不同材质的物体，无法通过静态批处理减少DC。但是静态批处理可以通过合并网格来提高性能。</li>
+</ol>
+<h2 id="Unity-Profiler"><a href="#Unity-Profiler" class="headerlink" title="Unity Profiler"></a><strong>Unity Profiler</strong></h2><p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-10-optimizing-for-performance/20180715180958140" alt="img"></p>
+<p>在面板的下半部分显示了我们选中的profilers当前帧的详细内容，我们可以通过选择列标题，通过这一列的信息值来排序。<br>在CPU usage profiler中的列表题分别为：<br>Total:当前任务的时间消耗占当前帧cpu消耗的时间比例。<br>Self:任务自身时间消耗占当前帧cpu消耗的时间比例。<br>Calls:当前任务在当前帧内被调用的次数。<br>GC Alloc:当前任务在当前帧内进行过内存回收和分配的次数。   <strong>注意每帧都具有20B以上内存分配的选项 。</strong><br>Time ms:当前任务在当前帧内的耗时总时间。   <strong>注意占用5ms以上的选项</strong><br>Self ms:当前任务自身(不包含内部的子任务)时间消耗。</p>
+<p>在 Unity 的 CPU 性能分析器中，Overview 表有一个“GC Alloc”列。此列显示了在特定帧中的托管堆上分配的字节数(4)（<strong>注意：</strong>这与给定帧期间临时分配的字节数不同。性能分析器会显示特定帧中分配的字节数，不考虑在后续帧中是否重用了部分/全部已分配的内存）。启用“Deep Profiling”选项后，可以跟踪执行这些分配的方法。</p>
+<p><strong>Unity Profiler 不会跟踪在主线程之外发生的分配。</strong>因此，“GC Alloc”列不能用于统计用户创建的线程中发生的托管分配。请将代码执行从单独线程切换到主线程以进行调试，或使用 <a href="https://docs.unity3d.com/cn/2020.2/ScriptReference/Profiling.Profiler.BeginThreadProfiling.html" target="_blank" rel="noopener">BeginThreadProfiling</a> API 在时间轴性能分析器 (Timeline Profiler) 中显示例程。</p>
+]]></content>
+      <categories>
+        <category>unity</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>C#</tag>
+        <tag>游戏</tag>
+        <tag>Unity</tag>
+        <tag>UNITY</tag>
+        <tag>ugui</tag>
+        <tag>mesh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆栈内存Stack和堆内存Heap</title>
+    <url>/unity-2020-09-11-stack-heap/</url>
+    <content><![CDATA[<h2 id="堆与栈：有什么不同？"><a href="#堆与栈：有什么不同？" class="headerlink" title="堆与栈：有什么不同？"></a>堆与栈：有什么不同？</h2><p><strong>栈</strong>，或多或少负责跟踪正在程序中运行的代码。</p>
+<p><strong>堆</strong>，或多或少负责跟踪程序对象或数据。</p>
+<p>栈，把它想像成叠在一起的盒子(像搭积木一样)。每一次调用一个方法就会在最上面叠一个盒子，用来跟踪程序运行情况。我们只能使用栈中叠在最上面的盒子里的东西。当某一最上面的盒子里的代码执行完毕（如方法执行完成），就把它扔掉并继续去使用下一个盒子。</p>
+<p>堆，与栈类似，只是它是用来保存信息而不是跟踪执行。所以，堆里的任何信息都可以在任何时间被访问。有了堆，访问信息没有约束，而不像栈只能访问最上面的盒子。</p>
+<p>堆的情况就像你把一堆刚洗完的衣服放在床上还没有时间来的及收走，你可以迅速拿到你想要拿的衣服。栈的情况就像你叠在一起的鞋盒子，你需要拿走最上面的盒子才能拿到下一个盒子。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131125031529515" alt="img"></p>
+<p>上图并不上真正的内存运行情况，只是为了让大家区分堆和栈。</p>
+<p>栈，会自我管理，它有自己的内存管理机制。当最上面的盒子不再使用时，会自动被扔掉。</p>
+<p>堆，相反，我们要控制它的垃圾回收(GC)。我们要去管理堆是否干净，就像管理床上的脏衣服。你不手动扔掉它，就会在床上变臭。</p>
+<h2 id="什么在堆和栈里"><a href="#什么在堆和栈里" class="headerlink" title="什么在堆和栈里"></a>什么在堆和栈里</h2><p>当程序执行时，我们主要有4种类型的东西放进堆和栈里：值类型，引用类型，指针，指令。</p>
+<h3 id="值类型"><a href="#值类型" class="headerlink" title="值类型:"></a><strong>值类型:</strong></h3><ul>
+<li>bool</li>
+<li>byte</li>
+<li>char</li>
+<li>decimal</li>
+<li>double</li>
+<li>enum</li>
+<li>float</li>
+<li>int</li>
+<li>long</li>
+<li>sbyte</li>
+<li>short</li>
+<li>struct</li>
+<li>uint</li>
+<li>ulong</li>
+<li>ushort</li>
+</ul>
+<p>它们都衍生于System.ValueType。</p>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型:"></a><strong>引用类型:</strong></h3><ul>
+<li>class</li>
+<li>interface</li>
+<li>delegate</li>
+<li>object</li>
+<li>string</li>
+</ul>
+<p>它们都衍生于System.Object。当然object就是System.Object。</p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针:"></a><strong>指针:</strong></h3><p>第三种被放于内存管理体制中的是类型的引用。这个引用通常被叫作指针。我们并不具体的使用指针，它们由CLR管理。一个指针（引用）是不同于引用类型的。我们定义它是一个引用类型，意味着我们可以通过指针访问它。一个指针占有一小块内存，这块内存指向另一块内存。指针占用在内存中的存储和其它的相同，只是存放的值既不是内存地址也不是空null。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131125034525859" alt="img"></p>
+<h2 id="两个黄金规则"><a href="#两个黄金规则" class="headerlink" title="两个黄金规则"></a>两个黄金规则</h2><ol>
+<li>引用类型永远存储在堆里。</li>
+<li><code>值类型</code>和<code>指针</code>永远存储在它们声明时所在的<code>堆</code>或<code>栈</code>里。</li>
+</ol>
+<h2 id="栈工作原理"><a href="#栈工作原理" class="headerlink" title="栈工作原理"></a>栈工作原理</h2><p>栈，如第一节所说，在代码运行时负责跟踪每一个线程的所在(什么被调用了)。你可以把它想像成一个线程“状态”，而每一个线程都有它自己的栈。当我们的代码执行一次方法调用，线程开始执行寄存在方法(Method)表里的JIT编译过的指令，并且把该方法的参数存放到当前线程栈里。然后，随着代码的执行每遇见方法中的变量，该变量都会被放到栈的最上面，如此重复把所有变量都放到栈上(当然引用类型只存放指针)。</p>
+<p>为了方便理解，让我们看代码与图例。</p>
+<p>执行下面的方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">AddFive</span>(<span class="params"><span class="keyword">int</span> pValue</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> result;</span><br><span class="line">    result = pValue + <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>下面是栈里发生的情况.  有必要提醒的是，我们现在假设当前代码产生的栈存储会放到所有既有项(栈里已经存储的数据)之上。一旦我们开始执行该方法，方法参数pValue会被放到栈上（以后的文章里会介绍参数传递）。</p>
+<p>注意：方法并不存在栈里，图只是为了阐述原理而放的引用。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126034830281" alt="img"></p>
+<p>下一步，控制(线程执行方法)被传递到寄存在方法类型表里的AddFive()方法对应的指令集中。如果方法是第一次被触发，会执行JIT编译。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126035529343" alt="img"></p>
+<p>随着方法的执行，栈会分配一块内存给变量result存放。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126035747203" alt="img"></p>
+<p>方法执行完成，返回result。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126035907203" alt="img"></p>
+<p>该次任务在栈里所占的所有内存将被清理，仅一个指针被移动到AddFive()开始时所在的可用内存地址上。接着会执行栈里AddFive()下面一个方法（图里看不到）。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126040806812" alt="img"></p>
+<p>在这个例子当中，变量result被放到了栈里。事实上，方法体内每次定义的值类型变量都会被放到栈里。</p>
+<h2 id="值类型会存储在堆里？"><a href="#值类型会存储在堆里？" class="headerlink" title="值类型会存储在堆里？"></a>值类型会存储在堆里？</h2><p>是的，值类型有时候就是会存储在堆里。上一节中介绍的<strong>黄金规则2:值类型和指针永远存储在它们声明时所在的堆或栈里</strong>。如果一个值类型不是在方法中定义的，而是在一个引用类型里，那么此值类型将会被放在这个引用类型里并存储在堆上。</p>
+<h2 id="代码图例"><a href="#代码图例" class="headerlink" title="代码图例"></a>代码图例</h2><p>我们定义一个引用类型：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyInt</span></span><br><span class="line">&#123;          </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> MyValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>里面包含一个值类型MyValue。</p>
+<p>执行下面的方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> MyInt <span class="title">AddFive</span>(<span class="params"><span class="keyword">int</span> pValue</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MyInt result = <span class="keyword">new</span> MyInt();</span><br><span class="line">    result.MyValue = pValue + <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>就像上一节介绍的一样，线程开始执行此方法，参数pValue将会被放到当前线程栈上。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126052252140" alt="img"></p>
+<p>接下来不同于上一节所介绍的是MyInt是一个引用类型，它将被放到堆上并在栈上放一个指针指向它在堆里的存储。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126052522859" alt="img"></p>
+<p>当AddFive()执行完成后，如上一节所讲栈开始清理。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131126052806703" alt="img"></p>
+<p>现在是需要C#垃圾回收GC的时候了。当我们的程序所占内存到达临界值时(即将溢出)，我们会需要更多的堆空间，GC就会开始运行。GC停止所有当前运行线程(整体停止)，找到堆里所有主程序不会访问到的对象并删除它们。然后，GC会识别所有堆里剩下的对象并分配内存空间给它们，同时调整堆和栈里指向它们的指针。你可以想像这是非常耗资源的，这会影响到程序的性能。这就是为什么我们需要理解和注意堆栈的使用，进而写出高性能代码。</p>
+<h2 id="堆栈原理对代码的影响"><a href="#堆栈原理对代码的影响" class="headerlink" title="堆栈原理对代码的影响"></a>堆栈原理对代码的影响</h2><p>当我们使用引用类型时，我们在和指向引用类型的指针打交道，而不是引用类型本身。</p>
+<p>当我们使用值类型时，我们就是在和值类型本身打交道。</p>
+<h3 id="代码图例-1"><a href="#代码图例-1" class="headerlink" title="代码图例"></a>代码图例</h3><p>假设执行方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ReturnValue</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="keyword">new</span> <span class="keyword">int</span>();</span><br><span class="line">    x = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">int</span> y = <span class="keyword">new</span> <span class="keyword">int</span>();</span><br><span class="line">    y = x;      </span><br><span class="line">    y = <span class="number">4</span>;         </span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们会得到值 <strong>3</strong>。</p>
+<p>使用引用类型：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyInt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> MyValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果执行方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ReturnValue2</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MyInt x = <span class="keyword">new</span> MyInt();</span><br><span class="line">    x.MyValue = <span class="number">3</span>;</span><br><span class="line">    MyInt y = <span class="keyword">new</span> MyInt();</span><br><span class="line">    y = x;        </span><br><span class="line">    y.MyValue = <span class="number">4</span>;         </span><br><span class="line">    <span class="keyword">return</span> x.MyValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们得到的值是４而不是３！（译外话：这是很简单，但相信还是有很多人不知道原理的）</p>
+<p>第一个示例中：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ReturnValue</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">int</span> y = x;    </span><br><span class="line">    y = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128043217031" alt="img"></p>
+<p>x就是3，y就是4。操作两个不同对象。</p>
+<p>第二个示例：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ReturnValue2</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MyInt x;</span><br><span class="line">    x.MyValue = <span class="number">3</span>;</span><br><span class="line">    MyInt y;</span><br><span class="line">    y = x;              </span><br><span class="line">    y.MyValue = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">return</span> x.MyValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128043332000" alt="img"></p>
+<p>得到的值是4不是3是因为我们操作栈里两个指针并且它们指向堆里同一个对象。</p>
+<h2 id="参数，大画面"><a href="#参数，大画面" class="headerlink" title="参数，大画面"></a>参数，大画面</h2><p>下面是当代码运行时会产生的一个详细过程。上几节已经介绍过当一个方法被调用时会产生的基本情况，让我们来看一下更加详细的内容。</p>
+<p>当我们调用一个方法时会发生以下情形：</p>
+<ol>
+<li>栈会分配一块内存空间给程序执行所需要的信息(我们叫它栈结构Stack Frame)。一个栈结构包含方法调用地址(指针)，它以一个GOTO指令的形式存在栈里。因此，当程序执行完方法(method)时，它会知道怎么样返回进而曳继续执行代码。</li>
+<li>方法的所有参数将被复制到栈里，这是我们将要更加详细介绍的部分。</li>
+<li>控制被传递到JIT编译过的方法里，同时线程开始执行代码。此时，我们将有另一个方法呈现在栈结构的“回调栈”里。</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">AddFive</span>(<span class="params"><span class="keyword">int</span> pValue</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result;</span><br><span class="line">    result = pValue + <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>栈像下图所示：</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128042641203" alt="img"></p>
+<p>注意：ReturnValue方法不会存在栈上，图中把ReturnValue作为此栈结构的开始只是为了解释栈原理。</p>
+<p>像前几节介绍的，值类型和引用类型在栈里的存储是不同的。栈为任何值类型创建副本，栈也为任何引用类型的指针创建副本。</p>
+<h2 id="值类型传递"><a href="#值类型传递" class="headerlink" title="值类型传递"></a><strong>值类型传递</strong></h2><p>下面是值类型传递在栈里的内幕。</p>
+<p>首先，当我们传递一个值类型变量时，栈会为它分配一块内存空间并把值类型变量的值存储进去。看下面的代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Class1</span>  </span><br><span class="line">&#123;  </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>     &#123;  </span><br><span class="line">         <span class="keyword">int</span> x = <span class="number">5</span>;  </span><br><span class="line">         AddFive(x);  </span><br><span class="line">         Console.WriteLine(x.ToString());  </span><br><span class="line">     &#125;  </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">AddFive</span>(<span class="params"><span class="keyword">int</span> pValue</span>)  </span></span><br><span class="line"><span class="function"></span>     &#123;  </span><br><span class="line">         pValue += <span class="number">5</span>;  </span><br><span class="line">         <span class="keyword">return</span> pValue;  </span><br><span class="line">     &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>当代码执行时，栈为x分配一块内存空间并存储值5</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127050637031" alt="img"></p>
+<p>然后，AddFive()被放到栈上，同时栈分配内存空间给参数pValue并复制x的值给它。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127051251531" alt="img"></p>
+<p>当AddFive()执行完成，线程被传递回Go()。同时因为AddFive()执行完，它的参数pValue也实质上被移除。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127051718640" alt="img"></p>
+<p>所以结果是5是合理的。关键点是任何被传递的值类型参数仅是一个碳复制，因为我们希望保护原始变量的值。</p>
+<p>有一点要记住的是，如果我们有一个非常庞大的值类型(如，庞大的struct类型)传递到栈里，当处理器循环复制它并循环占有栈空间时将会非常耗资源。栈没有无限的空间去使用，就像用水杯不断的接水早晚会溢出一样。Struct类型可以变得非常庞大，我们要小心并清醒的使用它。</p>
+<p>下面是一个比较大的struct结构类型：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> MyStruct  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">long</span> a, b, c, d, e, f, g, h, i, j, k, l, m;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>让我们看看执行下面代码Go()方法时再到DoSomething()方法会发生的情况：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   MyStruct x = <span class="keyword">new</span> MyStruct();  </span><br><span class="line">   DoSomething(x);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoSomething</span>(<span class="params">MyStruct pValue</span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   <span class="comment">// DO SOMETHING HERE....  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127054659921" alt="img"></p>
+<p>这可能会非常低效。想像一下如果我们传递MyStruct几千次，它会怎么样让程序死掉。</p>
+<p>那么，我们怎么才能回避这样的问题呢？那就是仅传递原始值类型的引用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void Go()  </span><br><span class="line">&#123;  </span><br><span class="line">   MyStruct x &#x3D; new MyStruct();  </span><br><span class="line">   DoSomething(ref x);  </span><br><span class="line">&#125;  </span><br><span class="line"> public struct MyStruct  </span><br><span class="line"> &#123;  </span><br><span class="line">     long a, b, c, d, e, f, g, h, i, j, k, l, m;  </span><br><span class="line"> &#125;  </span><br><span class="line"> public void DoSomething(ref MyStruct pValue)  </span><br><span class="line"> &#123;  </span><br><span class="line">          &#x2F;&#x2F; DO SOMETHING HERE....  </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这样就能节省内存并提升内存使用效率</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127055230375" alt="img"></p>
+<p>唯一需要注意的是传递引用时我们在访问原始变量x的值，任可对pValue的改变都会影响到x。</p>
+<p>下面的代码会将x改变成”12345”，因为pValue.a实际上指向原始x声明时所在的内存地址。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   MyStruct x = <span class="keyword">new</span> MyStruct();  </span><br><span class="line">   x.a = <span class="number">5</span>;  </span><br><span class="line">   DoSomething(<span class="keyword">ref</span> x);  </span><br><span class="line">   Console.WriteLine(x.a.ToString());  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoSomething</span>(<span class="params"><span class="keyword">ref</span> MyStruct pValue</span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">         pValue.a = <span class="number">12345</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="引用类型传递"><a href="#引用类型传递" class="headerlink" title="引用类型传递"></a><strong>引用类型传递</strong></h2><p>传递引用类型跟上一节所示例中用引用的方式传递值类型相似。</p>
+<p>如果使用引用类型（原文可能笔误，写的是值类型）：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyInt</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> MyValue;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>然后调用Go()方法，MyInt会被放到堆里因为它是一个引用类型。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   MyInt x = <span class="keyword">new</span> MyInt();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127070913796" alt="img"></p>
+<p>如果执行下面代码中的Go()：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   MyInt x = <span class="keyword">new</span> MyInt();  </span><br><span class="line">   x.MyValue = <span class="number">2</span>;  </span><br><span class="line">   DoSomething(x);  </span><br><span class="line">   Console.WriteLine(x.MyValue.ToString());  </span><br><span class="line">&#125;  </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoSomething</span>(<span class="params">MyInt pValue</span>)  </span></span><br><span class="line"><span class="function"></span> &#123;  </span><br><span class="line">     pValue.MyValue = <span class="number">12345</span>;  </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>会发生这种情况：</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127071131421" alt="img"></p>
+<ol>
+<li>开始调用Go()，栈分配一块内存空间给x。</li>
+<li>执行行到DoSomething()，栈分配一块内在空间给pValue。</li>
+<li>x的值是堆中MyInt对应在栈里的内存地址，复制x给pValue。</li>
+</ol>
+<p>因此，我们用pValue改变MyInt的MyValue的值时，x最终也会获得这个改变的值”12345“。</p>
+<p>如果我们用引用的方式传递一个引用类型变量呢？</p>
+<h2 id="用引用的方式传递引用类型"><a href="#用引用的方式传递引用类型" class="headerlink" title="用引用的方式传递引用类型"></a>用引用的方式传递引用类型</h2><p>我们有一个类Thing, 类Animal和Vegetables衍生于Thing：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Thing</span>  </span><br><span class="line">&#123;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Animal</span>:<span class="title">Thing</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Weight;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Vegetable</span>:<span class="title">Thing</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Length;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>执行下面的Go()方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Go</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   Thing x = <span class="keyword">new</span> Animal();  </span><br><span class="line">   Switcharoo(<span class="keyword">ref</span> x);  </span><br><span class="line">    Console.WriteLine(  </span><br><span class="line">      <span class="string">"x is Animal    :   "</span>  </span><br><span class="line">      + (x <span class="keyword">is</span> Animal).ToString());  </span><br><span class="line">    Console.WriteLine(  </span><br><span class="line">        <span class="string">"x is Vegetable :   "</span>  </span><br><span class="line">        + (x <span class="keyword">is</span> Vegetable).ToString());  </span><br><span class="line">&#125;  </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Switcharoo</span>(<span class="params"><span class="keyword">ref</span> Thing pValue</span>)  </span></span><br><span class="line"><span class="function"></span> &#123;  </span><br><span class="line">     pValue = <span class="keyword">new</span> Vegetable();  </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>x最终变成Vegetable。</p>
+<p>打印结果：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">x is Animal    :</span>   <span class="literal">False</span></span><br><span class="line"><span class="attr">x is Vegetable :</span>   <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+
+<p>让我们看看堆栈里到底发生了什么情况</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127073852765" alt="img"></p>
+<ol>
+<li>调用Go()方法，栈分配一块内存空间给x。</li>
+<li>堆分配一块内存空间给Animal。</li>
+<li>开始执行Switcharoo()方法，栈分配一块内存空间给pValue并指向x。</li>
+<li><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131127074345953" alt="img"></li>
+<li>栈分配一块内存空间给Vegetable。</li>
+<li>pValue改变了x的值使其指向Vegetable的内在地址。</li>
+</ol>
+<p>如果我们不是用ref传递的，打印结果正相反。</p>
+<h2 id="复制不仅仅是复制"><a href="#复制不仅仅是复制" class="headerlink" title="复制不仅仅是复制"></a>复制不仅仅是复制</h2><p>为了更清晰的阐述这个问题，让我们测试一下在堆中存储值类型变量和引用类型变量时会产生的不同情况。</p>
+<h3 id="值类型测试"><a href="#值类型测试" class="headerlink" title="值类型测试"></a>值类型测试</h3><p>首先，我们看一下值类型。下面是一个类和一个结构类型(值类型)，Dude类包含一个Name元素和两个Shoe元素。我们有一个CopyDude()方法用来复制生成新Dude。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> Shoe&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Color;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Dude</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name;</span><br><span class="line">    <span class="keyword">public</span> Shoe RightShoe;</span><br><span class="line">    <span class="keyword">public</span> Shoe LeftShoe;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Dude <span class="title">CopyDude</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Dude newPerson = <span class="keyword">new</span> Dude();</span><br><span class="line">        newPerson.Name = Name;</span><br><span class="line">        newPerson.LeftShoe = LeftShoe;</span><br><span class="line">        newPerson.RightShoe = RightShoe;</span><br><span class="line">        <span class="keyword">return</span> newPerson;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> (Name + <span class="string">" : Dude!, I have a "</span> + RightShoe.Color + <span class="string">" shoe on my right foot, and a "</span> + LeftShoe.Color + <span class="string">" on my left foot."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>Dude类是一个复杂类型，因为值 类型结构Shoe是它的成员， 它们都将存储在堆中。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128023045765" alt="img"></p>
+<p>当我们执行下面的方法时：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Class1 pgm = <span class="keyword">new</span> Class1();</span><br><span class="line">    Dude Bill = <span class="keyword">new</span> Dude();</span><br><span class="line">    Bill.Name = <span class="string">"Bill"</span>;</span><br><span class="line">    Bill.LeftShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.RightShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.LeftShoe.Color = Bill.RightShoe.Color = <span class="string">"Blue"</span>;</span><br><span class="line">    Dude Ted = Bill.CopyDude();</span><br><span class="line">    Ted.Name = <span class="string">"Ted"</span>;</span><br><span class="line">    Ted.LeftShoe.Color = Ted.RightShoe.Color = <span class="string">"Red"</span>;</span><br><span class="line">    Console.WriteLine(Bill.ToString());</span><br><span class="line">    Console.WriteLine(Ted.ToString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们得到了期望的结果：</p>
+<figure class="highlight vbscript"><table><tr><td class="code"><pre><span class="line">Bill : Dude!, I have a Blue shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Blue <span class="keyword">on</span> my <span class="built_in">left</span> foot.</span><br><span class="line">Ted : Dude!, I have a Red shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Red <span class="keyword">on</span> my <span class="built_in">left</span> foot.</span><br></pre></td></tr></table></figure>
+
+<p>如果我们把Shoe换成引用类型呢？</p>
+<h3 id="引用类型测试"><a href="#引用类型测试" class="headerlink" title="引用类型测试"></a>引用类型测试</h3><p>当我们把Shoe改成引用类型时，问题就产生了。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Shoe</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>执行同样上面的Main()方法，结果改变了，如下：</p>
+<figure class="highlight vbscript"><table><tr><td class="code"><pre><span class="line">Bill : Dude!, I have a Red shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Red <span class="keyword">on</span> my <span class="built_in">left</span> foot</span><br><span class="line">Ted : Dude!, I have a Red shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Red <span class="keyword">on</span> my <span class="built_in">left</span> foot</span><br></pre></td></tr></table></figure>
+
+
+<p>这并不是我们期望的结果。很明显，出错了！看下面的图解：</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128023756781" alt="img"></p>
+<p>因为现在Shoe是引用类型而不是值类型，当我们进行复制时仅是复制了指针，我们并没有复制指针真正对应的对象。这就需要我们做一些额外的工作使引用类型Shoe像值类型一样工作。</p>
+<p>很幸运，我们有一个接口可以帮我们实现：ICloneable。当Dude类实现它时，我们会声明一个Clone()方法用来产生新的Dude复制类。（译外话：复制类及其成员跟原始类不产生任何重叠，即我们所说的深复制)  看下面代码：<br>ICloneable consists of one method: Clone()</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">object</span> <span class="title">Clone</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>Here’s how we’ll implement it in the Shoe class:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Shoe : ICloneable</span><br><span class="line">&#123;</span><br><span class="line">    public string Color;</span><br><span class="line">    #region ICloneable Members</span><br><span class="line">    public object Clone()</span><br><span class="line">    &#123;</span><br><span class="line">        Shoe newShoe &#x3D; new Shoe();</span><br><span class="line">        newShoe.Color &#x3D; Color.Clone() as string;</span><br><span class="line">        return newShoe;</span><br><span class="line">    &#125;</span><br><span class="line">    #endregion</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在Clone()方法里，我们创建了一个新的Shoe，克隆所有引用类型变量，复制所有值类型变量，最后返回新的对象Shoe。有些既有类已经实现了ICloneable，我们直接使用即可，如String。因此，我们直接使用Color.Clone()。因为Clone()返回object对象，我们需要进行一下类型转换。</p>
+<p>下一步，我们在CopyDude()方法里，用克隆Clone()代替复制：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Dude <span class="title">CopyDude</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Dude newPerson = <span class="keyword">new</span> Dude();</span><br><span class="line">    newPerson.Name = Name;</span><br><span class="line">    newPerson.LeftShoe = LeftShoe.Clone() <span class="keyword">as</span> Shoe;</span><br><span class="line">    newPerson.RightShoe = RightShoe.Clone() <span class="keyword">as</span> Shoe;</span><br><span class="line">    <span class="keyword">return</span> newPerson;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>再次执行主方法Main()：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Class1 pgm = <span class="keyword">new</span> Class1();</span><br><span class="line">    Dude Bill = <span class="keyword">new</span> Dude();</span><br><span class="line">    Bill.Name = <span class="string">"Bill"</span>;</span><br><span class="line">    Bill.LeftShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.RightShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.LeftShoe.Color = Bill.RightShoe.Color = <span class="string">"Blue"</span>;</span><br><span class="line">    Dude Ted = Bill.CopyDude();</span><br><span class="line">    Ted.Name = <span class="string">"Ted"</span>;</span><br><span class="line">    Ted.LeftShoe.Color = Ted.RightShoe.Color = <span class="string">"Red"</span>;</span><br><span class="line">    Console.WriteLine(Bill.ToString());</span><br><span class="line">    Console.WriteLine(Ted.ToString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们得到了期望的结果：</p>
+<figure class="highlight vbscript"><table><tr><td class="code"><pre><span class="line">Bill : Dude!, I have a Blue shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Blue <span class="keyword">on</span> my <span class="built_in">left</span> foot</span><br><span class="line">Ted : Dude!, I have a Red shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Red <span class="keyword">on</span> my <span class="built_in">left</span> foot</span><br></pre></td></tr></table></figure>
+
+
+<p>下面是图解：</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20131128030404656" alt="img"></p>
+<h3 id="整理我们的代码"><a href="#整理我们的代码" class="headerlink" title="整理我们的代码"></a>整理我们的代码</h3><p>在实践中，我们是希望克隆引用类型并复制值类型的。这会让你回避很多不易察觉的错误，就像上面演示的一样。这种错误有时不易被调试出来，会让你很头疼。</p>
+<p>因此，为了减轻头疼，让我们更进一步清理上面的代码。我们让Dude类实现IConeable代替使用CopyDude()方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Dude</span>: <span class="title">ICloneable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name;</span><br><span class="line">    <span class="keyword">public</span> Shoe RightShoe;</span><br><span class="line">    <span class="keyword">public</span> Shoe LeftShoe;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> (Name + <span class="string">" : Dude!, I have a "</span> + RightShoe.Color + <span class="string">" shoe on my right foot, and a "</span> + LeftShoe.Color + <span class="string">" on my left foot."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">region</span> ICloneable Members</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">object</span> <span class="title">Clone</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Dude newPerson = <span class="keyword">new</span> Dude();</span><br><span class="line">        newPerson.Name = Name.Clone() <span class="keyword">as</span> <span class="keyword">string</span>;</span><br><span class="line">        newPerson.LeftShoe = LeftShoe.Clone() <span class="keyword">as</span> Shoe;</span><br><span class="line">        newPerson.RightShoe = RightShoe.Clone() <span class="keyword">as</span> Shoe;</span><br><span class="line">        <span class="keyword">return</span> newPerson;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endregion</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在主方法Main()使用Dude.Clone()：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Class1 pgm = <span class="keyword">new</span> Class1();</span><br><span class="line">    Dude Bill = <span class="keyword">new</span> Dude();</span><br><span class="line">    Bill.Name = <span class="string">"Bill"</span>;</span><br><span class="line">    Bill.LeftShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.RightShoe = <span class="keyword">new</span> Shoe();</span><br><span class="line">    Bill.LeftShoe.Color = Bill.RightShoe.Color = <span class="string">"Blue"</span>;</span><br><span class="line">    Dude Ted = Bill.Clone() <span class="keyword">as</span> Dude;</span><br><span class="line">    Ted.Name = <span class="string">"Ted"</span>;</span><br><span class="line">    Ted.LeftShoe.Color = Ted.RightShoe.Color = <span class="string">"Red"</span>;</span><br><span class="line">    Console.WriteLine(Bill.ToString());</span><br><span class="line">    Console.WriteLine(Ted.ToString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>最后得到期望的结果：</p>
+<figure class="highlight vbscript"><table><tr><td class="code"><pre><span class="line">Bill : Dude!, I have a Blue shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Blue <span class="keyword">on</span> my <span class="built_in">left</span> foot.</span><br><span class="line">Ted : Dude!, I have a Red shoe <span class="keyword">on</span> my <span class="built_in">right</span> foot, <span class="keyword">and</span> a Red <span class="keyword">on</span> my <span class="built_in">left</span> foot.</span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊引用类型String"><a href="#特殊引用类型String" class="headerlink" title="特殊引用类型String"></a>特殊引用类型String</h3><p>在C#中有趣的是，当System.String 使用操作符“=”时，实际上是进行了克隆(深复制)。你不必担心你只是在操作一个指针，它会在内存中创建一个新的对象。但是，你一定要注意内存的占用问题(<strong>译外话：比如为什么在一定情况下我们使用StringBuilder代替String+String+String+String…前者速度稍慢初始化耗多点内存但在大字符串操作上节省内存，后者速度稍快初始化简单但在大字符串操作上耗内存</strong>)。如果我们回头去看上面的图解中，你会发现Stirng类型在图中并不是一个针指向另一个内存对象，而是为了尽可能的简单，把它当成值类型来演示了。</p>
+<p><strong>绘图Graphing</strong></p>
+<p>让我们站在GC的角度研究一下。如果我们负责“扔垃圾”，我们需要制定一个有效的“扔垃圾”计划。显然，我们需要判断哪些是垃圾，哪些不是。</p>
+<p>为了决定哪些需要保留，我们假设任何没有正在被使用的东西都是垃圾（如角落里堆积的破旧纸张，阁楼里一箱箱没有用的过时产品,柜子里不用的衣服）。想像一下我们跟两个好朋友生活在一起：JIT 和CLR。<strong>JIT和CLR</strong>不断的跟踪他们正在使用的东西，并给我们一个他们需要保留的东西列表。这个初始列表我们叫它“根(root)”列表。因为我们用它做起点。我们将保持一个主列表去绘制一张图，图中分布着所有我们在房子中需要保留东西。任何与主列表中有关联的东西也被画入图中。如，我们保留电视就不要扔掉电视遥控器，所以电视遥控器也会被画入图中。我们保留电脑就不能扔掉显示器键盘鼠标，同样也把它们画入图中。</p>
+<p>这就是GC怎么决定去保留对象的。<strong>GC会保留从JIT和CLR那收到的一个根(root)对象引用列表，然后递归搜索对象引用并决定什么需要保留。</strong></p>
+<p>这个根的构成如下：</p>
+<ul>
+<li>全局/静态 指针。通过以静态变量的方式保持对象的引用，来确保对象不会被GC回收。</li>
+<li>栈里的指针。为了程序的执行，我们不想扔掉那些程序线程始终需要的对象。</li>
+<li>CPU寄存器指针。托管堆里任何被CPU内存地址指向的对象都需要被保留。</li>
+</ul>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173037464.png" alt="在这里插入图片描述"><br>在上面的图中，托管堆中的对象1，5被根Roots引用，3被1引用。对象1，5是被直接引用，3是通过递归查询找到。如果关联到我们之前的假设，对象1是我们的电视，对象3则是电视遥控器。当所有对象画完后，我们开始进行下一阶段：垃圾清理。</p>
+<p><strong>GC垃圾清理Compacting</strong></p>
+<p>现在我们有了一张需要保留对象的关系图，接下来进行GC的清理。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173106186.png" alt="在这里插入图片描述"><br>图中对象2和4被认定为垃圾将被清理。清理对象2，复制（memcpy ）对象3到2的位置。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173121251.png" alt="在这里插入图片描述"><br>由于对象3的地址变了，GC需要修复指针（红色箭头）。然后清理对象4，复制（memcpy ）对象5到原来3的位置（译外话：GC原则：堆中对象之间是没有间隙的，以后会有文章专门介绍GC原理）。<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173159935.png" alt="在这里插入图片描述"><br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173215230.png" alt="在这里插入图片描述"><br>最后清理完毕，新对象将被放到对象5的上面(译外话：GC对一直管理一个指针指向新对象将被放置的地址，如黄色箭头，以后会有文章专门介绍)。</p>
+<p>了解GC原理可以帮助我们理解GC清理(复制memcpy ，指针修复等)是怎么消耗掉很多资源的。很明显，减少托管堆里对象的移动（复制memcpy ）可以提高GC清理的效率。</p>
+<p><strong>托管堆之外的终止化队列Finalization Queue和终止化-可达队列Freachable Queue</strong></p>
+<p>有些情况下，GC需要执行特定代码去清理非托管资源，如文件操作，数据库连接，网络连接等。一种可行性方案是使用析构函数（终结器）：<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173419800.png" alt="在这里插入图片描述"><br>译外话：析构函数会被内部转换成终结器override Finializer()</p>
+<p>有终结器的对象在创建时，同时在Finalization Queue里创建指向它们的指针（更正原文说的把对象放到Finalization Queue里）：</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173504552.png" alt="在这里插入图片描述"><br>上图对象1,4,5实现了终结器，因此在Finalization Queue里创建指向它们的指针。让我们看一下，当对象2和4没有被程序引用要被GC清理时会发生什么情况。<br>对象2会被以常规模式清理掉(见文章开始部分)。GC发现对象4有终结器，则会把Finalization Queue里指向它的指针移到Freachable Queue中，如下图：<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173647141.png" alt="在这里插入图片描述"><br>但是对象4并不被清理掉。有一个专门处理Freachable Queue的线程，当它处理完对象4在Freachable Queue里的指针后，会把它移除。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173729593.png" alt="在这里插入图片描述"><br>这时对象4可以被清理了。当下次GC清理时会把它移除掉。换句话说，至少执行两次GC清理才能把对象4清理掉，显然会影响程序性能。</p>
+<p>创建终结器，意味着创建了更多的工作给GC，也就会消耗更多资源影响程序性能。因此，当你使用终结器时一定要确保你确实需要使用它。<br>更好的方法是使用IDisposable接口。</p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173836793.png" alt="在这里插入图片描述"><br>实现IDisposable接口的对象可以使用using关键字：<br><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919173851233.png" alt="在这里插入图片描述"><br>变量rec的作用域是大括号内，大括号外不可访问。</p>
+<p><strong>静态变量</strong></p>
+<p><img src="//cdn.jsdelivr.net/gh/zhepama/igiven.github.io@gh-pages///../../assets/images/2020-09-11-stack-heap/20190919174039786.png" alt="在这里插入图片描述"></p>
+<p>如果你初始化了TryoutRunners，那么它将永远不会被GC清理，因为有静态指针一直指向初始化的对象。一旦调用了Runner里GetStats()方法，因为GetStats()里面没有文件关闭操作，它将永远被打开也不会被GC清理。我们可以看到程序的崩溃即将来临。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-i/" target="_blank" rel="noopener">C# Heap(ing) Vs Stack(ing) In .NET - Part One (c-sharpcorner.com)</a></li>
+<li><a href="https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-ii/" target="_blank" rel="noopener">C# Heap(ing) Vs Stack(ing) In .NET - Part Two (c-sharpcorner.com)</a></li>
+<li><a href="https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-iii/" target="_blank" rel="noopener">C# Heap(ing) Vs Stack(ing) In .NET - Part Three (c-sharpcorner.com)</a></li>
+<li><a href="https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-iv/" target="_blank" rel="noopener">C# Heap(ing) Vs Stack(ing) In .NET - Part Four (c-sharpcorner.com)</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Tt4y1X7f6" target="_blank" rel="noopener">Unite Now - （中文字幕）性能优化技巧（上）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>unity</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>C#</tag>
       </tags>
   </entry>
 </search>
